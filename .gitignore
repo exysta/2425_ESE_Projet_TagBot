@@ -50,3 +50,42 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# KiCad files to ignore
+## Backup files
+*.bak
+
+## Autosave files
+*.kicad_pcb-bak
+
+## User-specific files
+*-cache.lib
+*-rescue.lib
+*.pro.user
+
+## Simulation files
+*.cir
+*.vcd
+
+## Output files (generated)
+*.net
+*.cmp
+*.dsn
+*.sch-bak
+*.b#*
+*.k#*
+*.gbr
+*.gtl
+*.gbl
+*.gts
+*.gbs
+*.gto
+*.gbo
+*.drl
+*.plt
+*.ses
+*.log
+
+## Other KiCad temporary files
+__* 
+*-rescue/
