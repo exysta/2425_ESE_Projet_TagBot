@@ -23,6 +23,8 @@ void X4_StartScan(void)
 {
     X4_SendCommand(X4_CMD_START_SCAN);
     // Additional logic to handle sustained responses if needed
+    X4_HandleResponse();
+
 }
 
 void X4_StopScan(void)
@@ -30,22 +32,61 @@ void X4_StopScan(void)
     X4_SendCommand(X4_CMD_STOP_SCAN);
 }
 
-void X4_GetDeviceInfo(void)
-{
-    X4_SendCommand(X4_CMD_GET_INFO);
-    // Logic to receive and parse device info
-}
-
-void X4_GetHealthStatus(void)
-{
-    X4_SendCommand(X4_CMD_GET_HEALTH);
-    // Logic to receive and parse health status
-}
-
 void X4_SoftRestart(void)
 {
     X4_SendCommand(X4_CMD_SOFT_RESTART);
 }
+
+// Function to send the Get Device Information command (A5 90) and handle the response
+void X4_GetDeviceInfo()
+{
+    // Send the device info command
+    X4_SendCommand(X4_CMD_GET_INFO);
+
+    // Wait for and handle response
+    X4_HandleResponse();
+}
+
+// Function to send the Get Device health command (A5 91) and handle the response
+void X4_GetDeviceHealth()
+{
+    // Send the device health command
+    X4_SendCommand(X4_CMD_GET_HEALTH);
+
+    // Wait for and handle response
+    X4_HandleResponse();
+}
+
+// Function to handle Device Info response (0xà4)
+void X4_HandleDeviceInfoResponse(const X4_ResponseMessage* response) {
+    X4_DeviceInfo device_info;
+    device_info.model = response->content[0];
+    device_info.firmware[0] = response->content[1];  // Major firmware version
+    device_info.firmware[1] = response->content[2];  // Minor firmware version
+    device_info.hardware_version = response->content[3];
+
+    // Copy serial number
+    for (int i = 0; i < X4_SERIAL_NUMBER_SIZE; i++) {
+        device_info.serial_number[i] = response->content[4 + i];
+    }
+
+    // Log device information or update system state with device_info
+}
+
+// Function to handle Device Health response (0x06)
+void X4_HandleDeviceHealthResponse(const X4_ResponseMessage* response)
+{
+	uint8_t status_code = response->content[0];
+	uint8_t error_code[2];
+	error_code [0] = response->content[1];
+	error_code [1] = response->content[2];
+}
+
+void X4_HandleScanResponse(const X4_ResponseMessage* response)
+{
+
+}
+
 
 void X4_HandleResponse(void) {
     uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE];
@@ -61,11 +102,14 @@ void X4_HandleResponse(void) {
         if (response.response_mode == X4_RESPONSE_SINGLE_MODE) {
             // Process the single response based on the type code
             switch (response.type_code) {
-                case 0x90:  // Device info response
+                case 0x04:  // Device info response
                 	X4_HandleDeviceInfoResponse(response);
                     break;
-                case 0x91:  // Health status response
-                    // Parse and handle health status
+                case 0x06:  // Health status response
+                	X4_HandleDeviceHealthResponse(response);
+                    break;
+                case 0x81:  // Health status response
+                	X4_HandleScanResponse(response);
                     break;
                 // Add more case handling as necessary
                 default:
@@ -80,6 +124,7 @@ void X4_HandleResponse(void) {
         // Handle UART receive error
     }
 }
+
 
 // Function to parse a raw message received from X4
 void X4_ParseMessage(const uint8_t *raw_data, X4_ResponseMessage *response) {
@@ -105,33 +150,3 @@ void X4_ParseMessage(const uint8_t *raw_data, X4_ResponseMessage *response) {
         response->content[i] = raw_data[4 + i];
     }
 }
-
-// Function to send the Get Device Information command (A5 90) and handle the response
-void X4_GetDeviceInfo()
-{
-    uint8_t info_cmd[2] = {0xA5, 0x90};  // Command to get device info
-
-    // Send the device info command
-    HAL_UART_Transmit(&huart4, info_cmd, sizeof(info_cmd), HAL_MAX_DELAY);
-
-    // Wait for and handle response
-    X4_HandleResponse();
-}
-
-// Function to handle Device Info response (0x90)
-void X4_HandleDeviceInfoResponse(const X4_ResponseMessage* response) {
-    X4_DeviceInfo device_info;
-    device_info.model = response->content[0];
-    device_info.firmware[0] = response->content[1];  // Major firmware version
-    device_info.firmware[1] = response->content[2];  // Minor firmware version
-    device_info.hardware_version = response->content[3];
-
-    // Copy serial number
-    for (int i = 0; i < X4_SERIAL_NUMBER_SIZE; i++) {
-        device_info.serial_number[i] = response->content[4 + i];
-    }
-
-    // Log device information or update system state with device_info
-}
-
-
