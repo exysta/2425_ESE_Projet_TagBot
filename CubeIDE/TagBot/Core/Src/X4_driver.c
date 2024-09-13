@@ -8,7 +8,7 @@
 #include <X4_driver.h>
 #include "main.h"
 #include <string.h>
-
+#include <stdlib.h>
 
 extern UART_HandleTypeDef huart4;
 
@@ -84,7 +84,28 @@ void X4_HandleDeviceHealthResponse(const X4_ResponseMessage* response)
 
 void X4_HandleScanResponse(const X4_ResponseMessage* response)
 {
+	X4_ScanData scan_data;
 
+	scan_data.packet_header[0] = response->content[0];
+	scan_data.packet_header[1] = response->content[1];
+	scan_data.packet_type = response->content[2];
+	scan_data.sample_quantity = response->content[3];
+	scan_data.start_angle[0] = response->content [4];
+	scan_data.start_angle[1] = response->content [5];
+	scan_data.end_angle[0] = response->content [6];
+	scan_data.end_angle[1] = response->content [7];
+	scan_data.check_code[0] = response->content [8];
+	scan_data.check_code[1] = response->content [9];
+
+	scan_data.sample_data =  malloc(scan_data.sample_quantity * sizeof(uint8_t));
+	//sample_quantity indicate the number of sample data to be received
+	for(int i =0;i<scan_data.sample_quantity;i+=2)
+	{
+		scan_data.sample_data[i]=response->content[10 + i];
+		scan_data.sample_data[i]=response->content[11 + i];
+
+	}
+	//free(scan_data.sample_data);
 }
 
 
@@ -93,7 +114,7 @@ void X4_HandleResponse(void) {
     X4_ResponseMessage response;
 
     // Receive data from the UART (HAL_UART_Receive should be non-blocking or with timeout)
-    HAL_StatusTypeDef status = HAL_UART_Receive(&huart1, raw_data, sizeof(raw_data), HAL_TIMEOUT);
+    HAL_StatusTypeDef status = HAL_UART_Receive(&huart4, raw_data, sizeof(raw_data), HAL_TIMEOUT);
     if (status == HAL_OK) {
         // Parse the received message
         X4_ParseMessage(raw_data, &response);
@@ -103,13 +124,13 @@ void X4_HandleResponse(void) {
             // Process the single response based on the type code
             switch (response.type_code) {
                 case 0x04:  // Device info response
-                	X4_HandleDeviceInfoResponse(response);
+                	X4_HandleDeviceInfoResponse(&response);
                     break;
                 case 0x06:  // Health status response
-                	X4_HandleDeviceHealthResponse(response);
+                	X4_HandleDeviceHealthResponse(&response);
                     break;
                 case 0x81:  // Health status response
-                	X4_HandleScanResponse(response);
+                	X4_HandleScanResponse(&response);
                     break;
                 // Add more case handling as necessary
                 default:
@@ -149,4 +170,28 @@ void X4_ParseMessage(const uint8_t *raw_data, X4_ResponseMessage *response) {
     for (int i = 0; i < content_length; i++) {
         response->content[i] = raw_data[4 + i];
     }
+}
+
+void X4_HandleScanData(const X4_ScanData *scan_data)
+{
+	//calculate distance
+	//sample quantity should only be a pair value
+	float sample_distance[scan_data->sample_quantity/2];
+	int j = 0; // Separate index for sample_distance array
+	for(int i = 0 ; i < scan_data->sample_quantity/2 ; i += 2)
+	{
+		//change from little endian to big endian for calculation
+		uint8_t low_byte = scan_data->sample_data[i];
+		uint8_t high_byte = scan_data->sample_data[i+1];
+
+
+		uint16_t hex_distance = (high_byte << 8) |low_byte;
+		//the distance is in mm according to the development manual
+		// we discard sub 10-3 meter precision because it is probably irrelevant considering the lidar's precision
+	    float scaling_factor = 4.0;
+		float mm_distance = hex_distance/scaling_factor;
+
+	    sample_distance[j] = mm_distance;  // Use separate index for storing
+	    j++;  // Increment j for the next distance
+	}
 }

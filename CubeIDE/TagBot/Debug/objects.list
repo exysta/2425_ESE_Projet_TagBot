@@ -1,4 +1,4 @@
-"./Core/Src/X4Lidar_driver.o"
+"./Core/Src/X4_driver.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32g4xx_hal_msp.o"
 "./Core/Src/stm32g4xx_it.o"

@@ -8,6 +8,7 @@
 #ifndef INC_X4_DRIVER_H_
 #define INC_X4_DRIVER_H_
 
+#include "stdint.h"
 // System command bytes
 // a command always start by CMD_START, the following byte in the command content
 #define X4_CMD_START 0xA5
@@ -50,15 +51,25 @@ typedef struct {
     uint8_t content[X4_MAX_RESPONSE_SIZE];
 } X4_ResponseMessage;
 
-// Structure for parsed response message
+// Structure for device info
 typedef struct {
 	uint8_t model;
-	uint8_t firmware[X4_SERIAL_FIRMWARE_SIZE]; //30 bits in reality
-    uint8_t hardware_version; //2 bits in reality
+	uint8_t firmware[X4_SERIAL_FIRMWARE_SIZE];
+    uint8_t hardware_version;
     uint8_t serial_number[X4_SERIAL_NUMBER_SIZE];
-    uint8_t content[X4_MAX_RESPONSE_SIZE];
 } X4_DeviceInfo;
 
+
+// Structure for parsed response message
+typedef struct {
+	uint8_t packet_header[2];
+	uint8_t packet_type;
+	uint8_t sample_quantity;
+	uint8_t start_angle[2];
+	uint8_t end_angle[2];
+	uint8_t check_code[2];
+	uint8_t * sample_data;
+} X4_ScanData;
 
 void X4_HandleResponse(void);
 void X4_ParseMessage(const uint8_t *raw_data, X4_ResponseMessage *response);
