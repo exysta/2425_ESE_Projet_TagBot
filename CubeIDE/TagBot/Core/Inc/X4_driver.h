@@ -29,12 +29,6 @@
 #define X4_SERIAL_NUMBER_SIZE 16
 #define X4_SERIAL_FIRMWARE_SIZE 2
 
-
-// Define response mode values
-#define X4_RESPONSE_SINGLE_MODE 0x0
-#define X4_RESPONSE_CONTINUOUS_MODE 0x1
-
-
 // Function prototypes
 void X4_StartScan(void);
 void X4_StopScan(void);
@@ -69,9 +63,19 @@ typedef struct {
 	uint8_t end_angle[2];
 	uint8_t check_code[2];
 	uint8_t * sample_data;
+	int * distances;
+	float * angles;
 } X4_ScanData;
+
+// Function prototypes
+void X4_StartScan(void);
+void X4_StopScan(void);
+void X4_GetDeviceInfo(void);
+void X4_GetHealthStatus(void);
+void X4_SoftRestart(void);
 
 void X4_HandleResponse(void);
 void X4_ParseMessage(const uint8_t *raw_data, X4_ResponseMessage *response);
+uint16_t convertBytesToUint16(const uint8_t* byte_array);
 
 #endif /* INC_X4_DRIVER_H_ */
