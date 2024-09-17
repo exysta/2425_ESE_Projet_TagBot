@@ -69,16 +69,18 @@ void Error_Handler(void);
 #define Accelerometer_MISO_GPIO_Port GPIOA
 #define Accelerometer_MOSI_Pin GPIO_PIN_7
 #define Accelerometer_MOSI_GPIO_Port GPIOA
-#define Accelerometer_CS_Pin GPIO_PIN_4
-#define Accelerometer_CS_GPIO_Port GPIOC
+#define STLINK_TX_Pin GPIO_PIN_9
+#define STLINK_TX_GPIO_Port GPIOA
+#define STLINK_RX_Pin GPIO_PIN_10
+#define STLINK_RX_GPIO_Port GPIOA
+#define Right_Motor_REV_Pin GPIO_PIN_12
+#define Right_Motor_REV_GPIO_Port GPIOA
 #define LIDAR_Input_Pin GPIO_PIN_10
 #define LIDAR_Input_GPIO_Port GPIOC
 #define LIDAR_Output_Pin GPIO_PIN_11
 #define LIDAR_Output_GPIO_Port GPIOC
 #define Right_Motor_FWD_Pin GPIO_PIN_6
 #define Right_Motor_FWD_GPIO_Port GPIOB
-#define Right_Motor_REV_Pin GPIO_PIN_7
-#define Right_Motor_REV_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
