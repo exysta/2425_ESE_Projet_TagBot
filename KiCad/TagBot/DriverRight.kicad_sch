@@ -3,7 +3,7 @@
 	(generator "eeschema")
 	(generator_version "8.0")
 	(uuid "4cc5e6a2-05fd-4db7-8407-e967ef91d0e3")
-	(paper "A4")
+	(paper "A3")
 	(lib_symbols
 		(symbol "Device:C"
 			(pin_numbers hide)
@@ -655,42 +655,6 @@
 		)
 		(uuid "ac6f1182-7cc8-46c2-8faf-c22f78740517")
 	)
-	(hierarchical_label "Batt_PWR"
-		(shape input)
-		(at 140.97 64.77 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0a5b071b-8df6-46a0-bd9a-e765288c08b0")
-	)
-	(hierarchical_label "RIGHT_OUT2"
-		(shape input)
-		(at 152.4 90.17 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "47a89a2e-6e99-4e21-bbc1-da49bb870268")
-	)
-	(hierarchical_label "RIGHT_FWD"
-		(shape input)
-		(at 120.65 87.63 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "60c702e3-0d24-4867-8222-54c5049da3f7")
-	)
 	(hierarchical_label "RIGHT_REV"
 		(shape input)
 		(at 120.65 90.17 180)
@@ -701,7 +665,19 @@
 			)
 			(justify right)
 		)
-		(uuid "64608bce-098c-4a76-9e3a-605334d94da7")
+		(uuid "402b0ea6-c340-4838-b17e-7197ea67ead4")
+	)
+	(hierarchical_label "Batt_PWR"
+		(shape input)
+		(at 140.97 64.77 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4d9d7853-aafb-4e53-9c1d-61859d2165cd")
 	)
 	(hierarchical_label "RIGHT_OUT1"
 		(shape input)
@@ -713,7 +689,31 @@
 			)
 			(justify left)
 		)
-		(uuid "c0717da6-084e-4636-8be5-75fbc9af9d39")
+		(uuid "7d87e70f-7305-4618-a91e-9095db48e875")
+	)
+	(hierarchical_label "RIGHT_OUT2"
+		(shape input)
+		(at 152.4 90.17 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "938e3756-fb13-4036-9dc1-30dd9548093c")
+	)
+	(hierarchical_label "RIGHT_FWD"
+		(shape input)
+		(at 120.65 87.63 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bb4f1f67-91be-40a3-b860-f21ca284766d")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -724,7 +724,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "1b939cb5-15f3-4392-baf0-d8d5d9ae855b")
+		(uuid "49d50737-f402-453b-b76b-72a880d2b964")
 		(property "Reference" "#PWR0303"
 			(at 163.83 73.66 0)
 			(effects
@@ -783,25 +783,93 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 124.46 73.66 90)
+		(lib_id "power:GND")
+		(at 120.65 73.66 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "1d3959f9-5407-4507-995b-cc2e9895e7ec")
-		(property "Reference" "C301"
-			(at 124.46 66.04 90)
+		(uuid "5b9758c6-c0c3-487c-aa2d-5adc25a39350")
+		(property "Reference" "#PWR0301"
+			(at 114.3 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "Value" "500nF"
-			(at 124.46 68.58 90)
+		(property "Value" "GND"
+			(at 116.84 73.6599 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 120.65 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 120.65 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 120.65 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "73fe34c9-23b0-4e07-a978-7a6bb08c34ad")
+		)
+		(instances
+			(project "TagBot"
+				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
+					(reference "#PWR0301")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 140.97 99.06 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5dfedf61-4eb2-4fa2-8521-8093c91aecb9")
+		(property "Reference" "#PWR0302"
+			(at 140.97 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 140.97 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -809,7 +877,72 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 128.27 72.6948 0)
+			(at 140.97 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 140.97 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 140.97 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9628ac69-5ec9-452e-a3e8-a0cee5f888ad")
+		)
+		(instances
+			(project "TagBot"
+				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
+					(reference "#PWR0302")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 153.67 73.66 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "99fee075-e5cf-4273-a995-c08a8396683d")
+		(property "Reference" "C302"
+			(at 153.67 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "500nf"
+			(at 153.67 68.58 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 149.86 74.6252 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -818,7 +951,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 124.46 73.66 0)
+			(at 153.67 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -827,7 +960,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 124.46 73.66 0)
+			(at 153.67 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -836,15 +969,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "6ec37502-0d44-49d3-99f4-19e9f71ebe7d")
+			(uuid "781385ab-47da-4f21-ae8a-a6adaccb33a0")
 		)
 		(pin "1"
-			(uuid "4515fe1d-e763-437d-9e73-ffd29d8ee609")
+			(uuid "ab9edea4-447d-4bba-88cc-85ddfaf333da")
 		)
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
-					(reference "C301")
+					(reference "C302")
 					(unit 1)
 				)
 			)
@@ -859,7 +992,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "2582d2a0-0433-402b-b135-420a3fc70923")
+		(uuid "9d90fcbe-895e-4f75-ae63-46747de53d53")
 		(property "Reference" "U301"
 			(at 143.1641 95.25 0)
 			(effects
@@ -942,92 +1075,25 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 120.65 73.66 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5c64d605-0693-4530-a943-7c48f2cc06ba")
-		(property "Reference" "#PWR0301"
-			(at 114.3 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 116.84 73.6599 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 120.65 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 120.65 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 120.65 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "73fe34c9-23b0-4e07-a978-7a6bb08c34ad")
-		)
-		(instances
-			(project "TagBot"
-				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
-					(reference "#PWR0301")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
-		(at 153.67 73.66 270)
+		(at 124.46 73.66 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "c368efef-0355-415e-8378-0eece5488b3a")
-		(property "Reference" "C302"
-			(at 153.67 66.04 90)
+		(uuid "f823f17a-3f02-449d-9270-225502c4d44a")
+		(property "Reference" "C301"
+			(at 124.46 66.04 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "500nf"
-			(at 153.67 68.58 90)
+		(property "Value" "500nF"
+			(at 124.46 68.58 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1035,7 +1101,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 149.86 74.6252 0)
+			(at 128.27 72.6948 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1044,7 +1110,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 153.67 73.66 0)
+			(at 124.46 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1053,7 +1119,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 153.67 73.66 0)
+			(at 124.46 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1062,81 +1128,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "781385ab-47da-4f21-ae8a-a6adaccb33a0")
+			(uuid "6ec37502-0d44-49d3-99f4-19e9f71ebe7d")
 		)
 		(pin "1"
-			(uuid "ab9edea4-447d-4bba-88cc-85ddfaf333da")
+			(uuid "4515fe1d-e763-437d-9e73-ffd29d8ee609")
 		)
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
-					(reference "C302")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 140.97 99.06 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "faa78825-113b-4aa9-89cd-1bcd6fbdc0ab")
-		(property "Reference" "#PWR0302"
-			(at 140.97 105.41 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 140.97 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 140.97 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 140.97 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 140.97 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9628ac69-5ec9-452e-a3e8-a0cee5f888ad")
-		)
-		(instances
-			(project "TagBot"
-				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
-					(reference "#PWR0302")
+					(reference "C301")
 					(unit 1)
 				)
 			)

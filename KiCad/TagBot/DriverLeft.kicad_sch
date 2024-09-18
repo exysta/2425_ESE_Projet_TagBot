@@ -3,7 +3,7 @@
 	(generator "eeschema")
 	(generator_version "8.0")
 	(uuid "4cc5e6a2-05fd-4db7-8407-e967ef91d0e3")
-	(paper "A4")
+	(paper "A3")
 	(lib_symbols
 		(symbol "Device:C"
 			(pin_numbers hide)
@@ -725,7 +725,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1b939cb5-15f3-4392-baf0-d8d5d9ae855b")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR0203"
 			(at 163.83 73.66 0)
 			(effects
 				(font
@@ -776,7 +776,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "#PWR021")
+					(reference "#PWR0203")
 					(unit 1)
 				)
 			)
@@ -792,7 +792,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1d3959f9-5407-4507-995b-cc2e9895e7ec")
-		(property "Reference" "C?"
+		(property "Reference" "C201"
 			(at 124.46 66.04 90)
 			(effects
 				(font
@@ -844,7 +844,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "C?")
+					(reference "C201")
 					(unit 1)
 				)
 			)
@@ -860,7 +860,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2582d2a0-0433-402b-b135-420a3fc70923")
-		(property "Reference" "U2"
+		(property "Reference" "U201"
 			(at 143.1641 95.25 0)
 			(effects
 				(font
@@ -935,7 +935,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "U2")
+					(reference "U201")
 					(unit 1)
 				)
 			)
@@ -951,7 +951,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5c64d605-0693-4530-a943-7c48f2cc06ba")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR0201"
 			(at 114.3 73.66 0)
 			(effects
 				(font
@@ -1002,7 +1002,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "#PWR020")
+					(reference "#PWR0201")
 					(unit 1)
 				)
 			)
@@ -1018,7 +1018,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c368efef-0355-415e-8378-0eece5488b3a")
-		(property "Reference" "C9"
+		(property "Reference" "C202"
 			(at 153.67 66.04 90)
 			(effects
 				(font
@@ -1070,7 +1070,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "C9")
+					(reference "C202")
 					(unit 1)
 				)
 			)
@@ -1086,7 +1086,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "faa78825-113b-4aa9-89cd-1bcd6fbdc0ab")
-		(property "Reference" "#PWR?"
+		(property "Reference" "#PWR0202"
 			(at 140.97 105.41 0)
 			(effects
 				(font
@@ -1136,7 +1136,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "#PWR?")
+					(reference "#PWR0202")
 					(unit 1)
 				)
 			)

@@ -586,6 +586,14 @@
     [
       "4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed",
       "DriverRight"
+    ],
+    [
+      "285c948d-5578-4bb8-8119-b871ade4552f",
+      "Régulateur 5V"
+    ],
+    [
+      "f641a0e6-7f59-4351-93f4-c346a0d5b8a7",
+      "Régulateur 3.3V"
     ]
   ],
   "text_variables": {}
