@@ -69,6 +69,8 @@ void Error_Handler(void);
 #define Accelerometer_INT1_GPIO_Port GPIOA
 #define Accelerometer_INT2_Pin GPIO_PIN_3
 #define Accelerometer_INT2_GPIO_Port GPIOA
+#define Accelerometer_NSS_Pin GPIO_PIN_4
+#define Accelerometer_NSS_GPIO_Port GPIOA
 #define Accelerometer_SCK_Pin GPIO_PIN_5
 #define Accelerometer_SCK_GPIO_Port GPIOA
 #define Accelerometer_MISO_Pin GPIO_PIN_6
@@ -101,8 +103,6 @@ void Error_Handler(void);
 #define LEFT_MOTOR_FWD_GPIO_Port GPIOA
 #define LEFT_MOTOR_REV_Pin GPIO_PIN_11
 #define LEFT_MOTOR_REV_GPIO_Port GPIOA
-#define Accelerometer_NSS_Pin GPIO_PIN_15
-#define Accelerometer_NSS_GPIO_Port GPIOA
 #define STLINK_TX_Pin GPIO_PIN_10
 #define STLINK_TX_GPIO_Port GPIOC
 #define STLINK_RX_Pin GPIO_PIN_11
