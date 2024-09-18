@@ -792,7 +792,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1d3959f9-5407-4507-995b-cc2e9895e7ec")
-		(property "Reference" "C8"
+		(property "Reference" "C?"
 			(at 124.46 66.04 90)
 			(effects
 				(font
@@ -840,6 +840,14 @@
 		)
 		(pin "1"
 			(uuid "4515fe1d-e763-437d-9e73-ffd29d8ee609")
+		)
+		(instances
+			(project "TagBot"
+				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
+					(reference "C?")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -1078,7 +1086,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "faa78825-113b-4aa9-89cd-1bcd6fbdc0ab")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR?"
 			(at 140.97 105.41 0)
 			(effects
 				(font
@@ -1124,6 +1132,14 @@
 		)
 		(pin "1"
 			(uuid "9628ac69-5ec9-452e-a3e8-a0cee5f888ad")
+		)
+		(instances
+			(project "TagBot"
+				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
+					(reference "#PWR?")
+					(unit 1)
+				)
+			)
 		)
 	)
 )
