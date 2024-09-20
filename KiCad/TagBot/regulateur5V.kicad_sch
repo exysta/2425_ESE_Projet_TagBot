@@ -2365,7 +2365,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "27ca296c-4c1d-470d-98d7-050a1ce49a56")
-		(property "Reference" "R?"
+		(property "Reference" "R404"
 			(at 198.12 144.78 90)
 			(effects
 				(font
@@ -2417,7 +2417,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "R?")
+					(reference "R404")
 					(unit 1)
 				)
 			)
@@ -2433,7 +2433,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3244a9e6-4216-4ed8-b3f4-23229d90bb71")
-		(property "Reference" "R?"
+		(property "Reference" "R402"
 			(at 142.24 132.0799 0)
 			(effects
 				(font
@@ -2487,7 +2487,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "R?")
+					(reference "R402")
 					(unit 1)
 				)
 			)
@@ -2503,7 +2503,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "39ea8854-019b-4cd6-85a3-4f88c8d1be2d")
-		(property "Reference" "C?"
+		(property "Reference" "C407"
 			(at 229.87 123.1962 0)
 			(effects
 				(font
@@ -2557,7 +2557,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "C?")
+					(reference "C407")
 					(unit 1)
 				)
 			)
@@ -2640,7 +2640,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "41b30526-7df1-4ff6-b41f-680cbb7c3cd6")
-		(property "Reference" "U?"
+		(property "Reference" "U401"
 			(at 172.085 111.76 0)
 			(effects
 				(font
@@ -2710,7 +2710,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "U?")
+					(reference "U401")
 					(unit 1)
 				)
 			)
@@ -2726,7 +2726,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4d13244c-8a40-4c5a-bac8-81d42bd397ef")
-		(property "Reference" "R?"
+		(property "Reference" "R403"
 			(at 190.5 105.41 90)
 			(effects
 				(font
@@ -2778,7 +2778,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "R?")
+					(reference "R403")
 					(unit 1)
 				)
 			)
@@ -2859,7 +2859,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5b592b7a-c298-40c4-9655-207bb0c7fcc8")
-		(property "Reference" "R?"
+		(property "Reference" "R401"
 			(at 122.936 118.11 0)
 			(effects
 				(font
@@ -2913,7 +2913,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "R?")
+					(reference "R401")
 					(unit 1)
 				)
 			)
@@ -2929,7 +2929,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "62a3d5d4-ccea-4897-85e0-642884a67e05")
-		(property "Reference" "C?"
+		(property "Reference" "C404"
 			(at 201.93 113.0362 0)
 			(effects
 				(font
@@ -2983,7 +2983,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "C?")
+					(reference "C404")
 					(unit 1)
 				)
 			)
@@ -3065,7 +3065,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7c5814da-11c1-4876-86ea-74c4a339d49d")
-		(property "Reference" "L?"
+		(property "Reference" "L401"
 			(at 208.28 116.84 90)
 			(effects
 				(font
@@ -3117,7 +3117,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "L?")
+					(reference "L401")
 					(unit 1)
 				)
 			)
@@ -3267,7 +3267,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9f6a42d3-7856-4a07-b4a5-12e5512c37db")
-		(property "Reference" "R?"
+		(property "Reference" "R407"
 			(at 280.67 128.2699 0)
 			(effects
 				(font
@@ -3321,7 +3321,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "R?")
+					(reference "R407")
 					(unit 1)
 				)
 			)
@@ -3402,7 +3402,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ac8bb0ec-69ef-41bd-9a66-dcdaf09c2210")
-		(property "Reference" "C?"
+		(property "Reference" "C402"
 			(at 135.382 114.046 0)
 			(effects
 				(font
@@ -3456,7 +3456,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "C?")
+					(reference "C402")
 					(unit 1)
 				)
 			)
@@ -3472,7 +3472,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b9da9e17-b44c-434c-a8f8-100c629bcf62")
-		(property "Reference" "C?"
+		(property "Reference" "C401"
 			(at 129.54 130.8162 0)
 			(effects
 				(font
@@ -3526,7 +3526,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "C?")
+					(reference "C401")
 					(unit 1)
 				)
 			)
@@ -3542,7 +3542,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bd0d1b37-19b1-4997-a941-0d19c213f778")
-		(property "Reference" "R?"
+		(property "Reference" "R405"
 			(at 210.82 157.4799 0)
 			(effects
 				(font
@@ -3596,7 +3596,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "R?")
+					(reference "R405")
 					(unit 1)
 				)
 			)
@@ -3679,7 +3679,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c4b1e9e4-5bca-4505-9f13-c479651b2118")
-		(property "Reference" "C?"
+		(property "Reference" "C405"
 			(at 219.71 123.1962 0)
 			(effects
 				(font
@@ -3733,7 +3733,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "C?")
+					(reference "C405")
 					(unit 1)
 				)
 			)
@@ -3748,7 +3748,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d8e5b497-2350-48f9-a477-e9fcb6a85cee")
-		(property "Reference" "R?"
+		(property "Reference" "R406"
 			(at 223.52 152.908 90)
 			(effects
 				(font
@@ -3800,7 +3800,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "R?")
+					(reference "R406")
 					(unit 1)
 				)
 			)
@@ -3883,7 +3883,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e820e5b3-3f88-4ed0-b4ef-869b9449802e")
-		(property "Reference" "C?"
+		(property "Reference" "C406"
 			(at 223.5263 133.35 90)
 			(effects
 				(font
@@ -3935,7 +3935,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "C?")
+					(reference "C406")
 					(unit 1)
 				)
 			)
@@ -3951,7 +3951,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ea039651-03c8-4d58-bb7a-51222788c6dc")
-		(property "Reference" "D?"
+		(property "Reference" "D401"
 			(at 281.94 140.6525 90)
 			(effects
 				(font
@@ -4005,7 +4005,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "D?")
+					(reference "D401")
 					(unit 1)
 				)
 			)
@@ -4020,7 +4020,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "eacc25eb-0e5f-44df-bdeb-5c6b27888d71")
-		(property "Reference" "C?"
+		(property "Reference" "C403"
 			(at 149.098 114.808 0)
 			(effects
 				(font
@@ -4083,7 +4083,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
-					(reference "C?")
+					(reference "C403")
 					(unit 1)
 				)
 			)
