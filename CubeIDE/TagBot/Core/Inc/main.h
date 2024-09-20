@@ -61,6 +61,8 @@ void Error_Handler(void);
 #define LED_CHAT_GPIO_Port GPIOC
 #define LED_SOURIS_Pin GPIO_PIN_14
 #define LED_SOURIS_GPIO_Port GPIOC
+#define BTN_CAT_MOUSE_Pin GPIO_PIN_15
+#define BTN_CAT_MOUSE_GPIO_Port GPIOC
 #define USER_LED_1_Pin GPIO_PIN_0
 #define USER_LED_1_GPIO_Port GPIOA
 #define USER_LED_2_Pin GPIO_PIN_1
