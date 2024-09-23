@@ -11,8 +11,8 @@
 #define WINDOW_SIZE 5 // Size of the moving average window
 
 //coeff used are from using a 7 degree polynomial fitting of the datasheet sensor values
-float coeffs[] = {6.26665431e+00, -1.45135461e+00, 1.92197356e-01, -1.51209042e-02,
-				  7.14541059e-04, -1.98341074e-05, 2.97141924e-07, -1.84921938e-09};
+float coeffs[] = { -23.67560604  , 299.24647087 ,-1567.5164766  , 4408.38686151,
+					 -7211.95874456  ,6959.22725692 ,-3844.96742449 , 1114.78386014};
 
 
 
