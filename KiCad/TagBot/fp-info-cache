@@ -1,4 +1,4 @@
-23839629114512328
+23843082937180309
 430182070816
 430182070816
 430182070816-2
@@ -6,6 +6,13 @@ Switch
 0
 4
 4
+ADXL343BCCZ-RL
+ADXL343BCCZRL
+14-Terminal Land Grid Array [LGA] (CC-14-1)
+Integrated Circuit
+0
+14
+14
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -96746,3 +96753,10 @@ Varistor VF
 0
 2
 2
+wurth_472121020311
+472121020311
+<b>WS-TOTV Ø 6.35mm Panel Cut-Out Vertical Operation Toggle Switch
+
+0
+3
+3

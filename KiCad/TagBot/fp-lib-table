@@ -1,4 +1,6 @@
 (fp_lib_table
   (version 7)
   (lib (name "430182070816")(type "Legacy")(uri "C:/Users/charl/Documents/2425_Projet_ese/2425_ESE_Projet_TagBot/KiCad/Ressources/Bouton_Poussoir_430182070816/KiCad/430182070816.mod")(options "")(descr ""))
+  (lib (name "ADXL343BCCZ-RL")(type "KiCad")(uri "C:/Users/charl/Documents/2425_Projet_ese/2425_ESE_Projet_TagBot/KiCad/Ressources/ADXL343BCCZ-RL/KiCad")(options "")(descr ""))
+  (lib (name "wurth_472121020311")(type "KiCad")(uri "C:/Users/charl/Documents/2425_Projet_ese/2425_ESE_Projet_TagBot/KiCad/Ressources/Bouton_472121020311")(options "")(descr ""))
 )

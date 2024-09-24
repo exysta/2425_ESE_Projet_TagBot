@@ -6201,6 +6201,16 @@
 	)
 	(wire
 		(pts
+			(xy 361.95 157.48) (xy 365.76 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1c1a8b1a-b4b1-4858-a3f4-6fe94bc953ae")
+	)
+	(wire
+		(pts
 			(xy 313.69 162.56) (xy 316.23 162.56)
 		)
 		(stroke
@@ -6308,6 +6318,16 @@
 			(type default)
 		)
 		(uuid "2c46b7c1-3aa2-476c-97db-e23a24d2e760")
+	)
+	(wire
+		(pts
+			(xy 361.95 160.02) (xy 365.76 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2cd33765-f680-4575-b4ef-06450ba7b42b")
 	)
 	(wire
 		(pts
@@ -6598,6 +6618,16 @@
 			(type default)
 		)
 		(uuid "4cb4751c-0efb-498b-9190-2e7d71a93645")
+	)
+	(wire
+		(pts
+			(xy 361.95 162.56) (xy 361.95 165.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4cf27cfa-24fd-4966-b03c-71fc6b479789")
 	)
 	(wire
 		(pts
@@ -7071,6 +7101,16 @@
 	)
 	(wire
 		(pts
+			(xy 57.15 26.67) (xy 57.15 29.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7dfee078-6eb0-438f-89ed-bac523a72d30")
+	)
+	(wire
+		(pts
 			(xy 340.36 41.91) (xy 345.44 41.91)
 		)
 		(stroke
@@ -7238,6 +7278,16 @@
 			(type default)
 		)
 		(uuid "91df8911-c173-45ee-96de-e137c4df57c1")
+	)
+	(wire
+		(pts
+			(xy 365.76 162.56) (xy 361.95 162.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "921f206f-6bcf-42fa-b3ad-f82cb0295150")
 	)
 	(wire
 		(pts
@@ -7811,6 +7861,16 @@
 	)
 	(wire
 		(pts
+			(xy 361.95 154.94) (xy 365.76 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ddea0ba6-edeb-4f67-991f-48d2c3e7c844")
+	)
+	(wire
+		(pts
 			(xy 205.74 92.71) (xy 218.44 92.71)
 		)
 		(stroke
@@ -8261,6 +8321,18 @@
 			(justify right bottom)
 		)
 		(uuid "1a16b22a-df82-4234-b46e-7a03652403ac")
+	)
+	(text "doit-on ajouter un AOP entre capteurs et stm ?\n(dépasse 3.6V ?)"
+		(exclude_from_sim no)
+		(at 18.796 120.396 0)
+		(effects
+			(font
+				(size 1 1)
+				(italic yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "41e251e0-cfb5-42a7-93d1-40919b3711cb")
 	)
 	(text "Batterie\n"
 		(exclude_from_sim no)
@@ -8808,7 +8880,7 @@
 		(uuid "69fd1430-acff-44f3-aa90-d2b673d14389")
 	)
 	(label "OLED_SCL"
-		(at 355.6 153.67 180)
+		(at 361.95 157.48 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9281,7 +9353,7 @@
 		(uuid "ea70f348-2830-435a-8480-a0bca5b02d09")
 	)
 	(label "OLED_SDA"
-		(at 355.6 160.02 180)
+		(at 361.95 154.94 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9392,6 +9464,28 @@
 		(uuid "3655f72b-eb8b-42f1-9489-3453443f4247")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 73.1376 170.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "7.2V"
+		(shape input)
+		(at 57.15 26.67 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6fc997ce-0408-46c5-ba6e-b000f5150e24")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 57.15 19.5724 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9563,7 +9657,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_AMASS:AMASS_XT60-F_1x02_P7.20mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 220.98 157.48 0)
 			(effects
 				(font
@@ -9675,7 +9769,7 @@
 	(symbol
 		(lib_name "GND_5")
 		(lib_id "power:GND")
-		(at 354.33 166.37 0)
+		(at 361.95 165.1 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9684,7 +9778,7 @@
 		(fields_autoplaced yes)
 		(uuid "0bbfcbbb-b858-4486-bb0f-763e5a7bfd49")
 		(property "Reference" "#PWR0148"
-			(at 354.33 172.72 0)
+			(at 361.95 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9693,7 +9787,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 354.33 171.45 0)
+			(at 361.95 170.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9701,7 +9795,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 354.33 166.37 0)
+			(at 361.95 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9710,7 +9804,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 354.33 166.37 0)
+			(at 361.95 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9719,7 +9813,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 354.33 166.37 0)
+			(at 361.95 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9767,7 +9861,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical"
 			(at 370.84 157.48 0)
 			(effects
 				(font
@@ -10178,7 +10272,7 @@
 				)
 			)
 		)
-		(property "Value" "1µF"
+		(property "Value" "1u"
 			(at 63.246 234.696 90)
 			(effects
 				(font
@@ -10186,7 +10280,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 63.5 238.76 0)
 			(effects
 				(font
@@ -10300,16 +10394,15 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 360.68 154.94 0)
+		(at 361.95 160.02 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "17d2eeaf-b888-4e20-a1d4-50afb9c84e17")
 		(property "Reference" "#PWR0149"
-			(at 360.68 158.75 0)
+			(at 365.76 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10318,7 +10411,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 360.68 149.86 0)
+			(at 359.664 162.306 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10326,7 +10419,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 360.68 154.94 0)
+			(at 361.95 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10335,7 +10428,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 360.68 154.94 0)
+			(at 361.95 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10344,7 +10437,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 360.68 154.94 0)
+			(at 361.95 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10721,7 +10814,7 @@
 				)
 			)
 		)
-		(property "Value" "1µF"
+		(property "Value" "1u"
 			(at 63.754 261.874 90)
 			(effects
 				(font
@@ -10729,7 +10822,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 63.5 257.81 0)
 			(effects
 				(font
@@ -10797,7 +10890,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm"
 			(at 306.07 113.03 0)
 			(effects
 				(font
@@ -11509,7 +11602,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "wurth_472121020311:472121020311"
 			(at 219.71 204.47 0)
 			(effects
 				(font
@@ -11830,72 +11923,6 @@
 		)
 	)
 	(symbol
-		(lib_name "+3.3V_1")
-		(lib_id "power:+3.3V")
-		(at 57.15 29.21 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "4bda14d4-551a-415b-94f9-72cd92e5383f")
-		(property "Reference" "#PWR0102"
-			(at 57.15 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 57.15 22.86 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 57.15 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 57.15 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 57.15 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "453b4609-5516-453e-a1cb-007a0bbf5a9c")
-		)
-		(instances
-			(project ""
-				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19"
-					(reference "#PWR0102")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 250.19 193.04 0)
 		(unit 1)
@@ -12059,7 +12086,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B8B-XH-A_1x08_P2.50mm_Vertical"
 			(at 321.31 113.03 0)
 			(effects
 				(font
@@ -12211,7 +12238,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_AMASS:AMASS_XT60-F_1x02_P7.20mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 220.98 173.99 0)
 			(effects
 				(font
@@ -12279,7 +12306,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm"
 			(at 306.07 107.95 0)
 			(effects
 				(font
@@ -12483,7 +12510,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 370.84 140.97 0)
 			(effects
 				(font
@@ -12747,7 +12774,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "100n"
 			(at 39.116 27.686 90)
 			(effects
 				(font
@@ -12755,7 +12782,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 39.37 31.75 0)
 			(effects
 				(font
@@ -13158,7 +13185,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm"
 			(at 306.07 110.49 0)
 			(effects
 				(font
@@ -13496,7 +13523,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 370.84 107.95 0)
 			(effects
 				(font
@@ -13698,7 +13725,7 @@
 				)
 			)
 		)
-		(property "Value" "10R"
+		(property "Value" "10"
 			(at 218.44 45.72 90)
 			(effects
 				(font
@@ -15049,7 +15076,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical"
 			(at 321.31 162.56 0)
 			(effects
 				(font
@@ -15198,7 +15225,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 370.84 118.11 0)
 			(effects
 				(font
@@ -15621,7 +15648,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ADXL343BCCZRL"
+		(property "Footprint" "ADXL343BCCZ-RL:ADXL343BCCZRL"
 			(at 115.57 323.52 0)
 			(effects
 				(font
@@ -15748,6 +15775,10 @@
 					(reference "IC101")
 					(unit 1)
 				)
+				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/285c948d-5578-4bb8-8119-b871ade4552f"
+					(reference "IC101")
+					(unit 1)
+				)
 			)
 		)
 	)
@@ -15849,7 +15880,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 370.84 129.54 0)
 			(effects
 				(font
@@ -16594,7 +16625,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical"
 			(at 321.31 143.51 0)
 			(effects
 				(font
