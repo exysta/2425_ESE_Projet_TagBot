@@ -22,11 +22,6 @@
 
 /* USER CODE BEGIN 0 */
 
-// function for write in a register with SPI
-void SPI_Write(uint8_t reg, uint8_t data){
-
-}
-
 /* USER CODE END 0 */
 
 SPI_HandleTypeDef hspi1;
