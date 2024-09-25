@@ -7,6 +7,9 @@
 *.obj
 *.elf
 
+# Debug floder of cubeIDE
+/Debug/
+
 # Linker output
 *.ilk
 *.map
