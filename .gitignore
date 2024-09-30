@@ -41,7 +41,7 @@
 *.pdb
 
 # settings files
-*.settings
+*.settings.*
 
 # Kernel Module Compile Results
 *.cmd

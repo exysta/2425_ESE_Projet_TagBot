@@ -1,6 +1,0 @@
-../Core/Src/ADXL343_driver.c:22:6:ADXL343_Init	2
-../Core/Src/ADXL343_driver.c:41:6:ADxl343_Configure	1
-../Core/Src/ADXL343_driver.c:51:6:ADXL343_ReadRegister	2
-../Core/Src/ADXL343_driver.c:67:6:ADXL343_WriteRegister	1
-../Core/Src/ADXL343_driver.c:78:6:ADXL343_DetectTap	2
-../Core/Src/ADXL343_driver.c:87:6:ADXL343_ReadXYZ	1
