@@ -8,7 +8,7 @@
 *.elf
 
 # Debug floder of cubeIDE
-/Debug/
+**/Debug/
 
 # Linker output
 *.ilk
