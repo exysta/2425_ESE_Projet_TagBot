@@ -933,7 +933,7 @@
 				)
 			)
 		)
-		(property "Value" "500n"
+		(property "Value" "10u"
 			(at 153.67 68.58 90)
 			(effects
 				(font
@@ -1092,7 +1092,7 @@
 				)
 			)
 		)
-		(property "Value" "500n"
+		(property "Value" "1u"
 			(at 124.46 68.58 90)
 			(effects
 				(font

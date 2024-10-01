@@ -620,6 +620,30 @@
     [
       "f641a0e6-7f59-4351-93f4-c346a0d5b8a7",
       "Régulateur 3.3V"
+    ],
+    [
+      "cf063d69-af26-4a53-85bf-5da650298da7",
+      "LED"
+    ],
+    [
+      "749bc4ce-f5ad-49bc-96d6-41722e423715",
+      "Boutons"
+    ],
+    [
+      "08eeab39-8116-4f58-bbaa-3618715ee0b0",
+      "Capteur bords"
+    ],
+    [
+      "5d545e42-e36b-45db-b7b1-dd52666f3cd8",
+      "Lidar"
+    ],
+    [
+      "1f9661bd-4856-4de9-980c-d39e1adf6a94",
+      "Moteurs"
+    ],
+    [
+      "df8e8a24-314e-4c08-93cb-87fdb3fa14e6",
+      "Ecran"
     ]
   ],
   "text_variables": {}
