@@ -33,7 +33,10 @@ You may chose the language for the project description.
   Session 7 and 8 -> Routing
   Session 9 and 10 -> Routing Corrections, Export
   
-  
+  # Code Documentation
+
+[View the documentation](./Documents/Doxygen_Documentation/html/index.html)
+
   # Lidar X4 Driver
   
   The file `X4_driver.c` provides an implementation to interface with the X4 device via UART communication. This driver supports various functionalities, including starting and stopping scans, retrieving device information and status, and processing scan data. The driver uses a protocol defined in the header file `X4_driver.h` and handles responses from the X4 device.
@@ -222,7 +225,10 @@ You may chose the language for the project description.
   Séance 7 et 8 -> Routage
   Séance 9 et 10 -> Corrections Routage, export
   
-  
+    
+  # Documentation Code
+
+[voir la documentation](./Documents/Doxygen_Documentation/html/index.html)
     
   # Pilote Lidar X4
   
