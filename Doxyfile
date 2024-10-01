@@ -1,0 +1,74 @@
+# Doxyfile 1.9.8 - Project documentation configuration for CubeIDE project
+
+# General configuration
+PROJECT_NAME           = "2425_ESE_Projet_TagBot"
+PROJECT_NUMBER         = "1.0"
+PROJECT_BRIEF          = "This is the documentation for the TagBot CubeIDE project."
+OUTPUT_DIRECTORY       = ./Documents/Doxygen_Documentation
+QUIET                  = NO
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+
+# Input configuration
+INPUT                  = ./CubeIDE/TagBot/Core//Src ./CubeIDE/TagBot/Core//Src/Inc ./CubeIDE/TagBot/Core//Src/Drivers
+RECURSIVE              = YES
+FILE_PATTERNS          = *.c *.h
+EXCLUDE                = ./build ./Debug
+EXCLUDE_PATTERNS       = */.git/*
+
+# Markdown settings
+USE_MDFILE_AS_MAINPAGE = README.md
+MARKDOWN_SUPPORT       = YES
+
+# Documentation generation options
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_TREEVIEW      = YES
+FULL_PATH_NAMES        = YES
+HAVE_DOT               = YES  # Enables graph generation (requires Graphviz)
+CALL_GRAPH             = YES  # Enable call graphs for visualizing function calls
+CALLER_GRAPH           = YES  # Enable caller graphs
+CLASS_DIAGRAMS         = YES  # Enables generation of class diagrams
+DOT_IMAGE_FORMAT       = png  # Choose the image format for the generated graphs
+
+GENERATE_LATEX         = NO   # Set to YES if you need PDF documentation
+GENERATE_XML           = NO   # Disable XML unless you need it for further processing
+
+# Build settings
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTRACT_ALL            = YES  # Extracts docs even if there's no explicit comments
+JAVADOC_AUTOBRIEF      = YES  # Enables simplified doc style (use Javadoc-like comments)
+INLINE_SOURCES         = NO   # Disable inline source display in documentation
+
+# Call graphs and cross-referencing
+CALL_GRAPH             = YES  # Enable call graphs for visualizing function calls
+CALLER_GRAPH           = YES  # Enable caller graphs
+
+# Class and function documentation
+HAVE_DOT               = YES  # Enables graph generation (requires Graphviz)
+DOT_IMAGE_FORMAT       = png
+DOT_PATH               = /usr/bin/dot  # Update to your Graphviz installation path
+CLASS_DIAGRAMS         = YES
+
+# External search engine (optional)
+SEARCHENGINE           = YES  # Enable search functionality in the HTML output
+
+# Group settings (to group functions, modules, etc.)
+ENABLE_GROUPS          = YES  # Grouping for better organization (e.g., for HAL layers)
+DISTRIBUTE_GROUP_DOC   = NO   # Do not distribute group documentation to member pages
+
+# Optional headers and footers
+HTML_HEADER            = 
+HTML_FOOTER            = 
+
+# LaTeX/PDF output settings (optional)
+# GENERATE_LATEX         = YES
+# LATEX_OUTPUT           = latex
+# PDF_HYPERLINKS         = YES
+
+# Expert options for fine-tuning
+TAB_SIZE               = 4  # Set to your preferred tab width
+EXPAND_ONLY_PREDEF     = NO
+SKIP_FUNCTION_MACROS   = YES  # Skip macros when generating function documentation
+
