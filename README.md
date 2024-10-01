@@ -1,5 +1,6 @@
 # 2425_ESE_Project_TagBot
-Welcome to the TagBot project, you may chose the language for the project description.
+Welcome to the TagBot project created by the amazing team consisted of Lucas Chapart, Charlotte Fricto and Marie Caronello.
+You may chose the language for the project description.
 
 <details>
   <summary><strong>English description</strong></summary>  
