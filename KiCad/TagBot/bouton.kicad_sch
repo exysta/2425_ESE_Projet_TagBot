@@ -649,12 +649,6 @@
 		(uuid "5f06a427-acef-4074-85e2-9ed145e0add6")
 	)
 	(junction
-		(at 223.52 129.54)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8e8c3da7-d139-4a3f-b13d-5b44ce45ba31")
-	)
-	(junction
 		(at 177.8 133.35)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -839,16 +833,6 @@
 			(type default)
 		)
 		(uuid "f7d9e03b-5c19-4067-838a-2344ddd4af26")
-	)
-	(wire
-		(pts
-			(xy 223.52 125.73) (xy 223.52 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fd703254-0bc1-4699-9486-8e84fedf80c0")
 	)
 	(hierarchical_label "NRST"
 		(shape input)
@@ -1141,73 +1125,6 @@
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/749bc4ce-f5ad-49bc-96d6-41722e423715"
 					(reference "R701")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "+3.3V_2")
-		(lib_id "power:+3.3V")
-		(at 223.52 125.73 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "962b0180-bae5-497f-95fe-19aafa1e16f6")
-		(property "Reference" "#PWR0704"
-			(at 223.52 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 223.52 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 223.52 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 223.52 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 223.52 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "3935367e-9b30-4585-9ab2-c9b027b28913")
-		)
-		(instances
-			(project "TagBot"
-				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/749bc4ce-f5ad-49bc-96d6-41722e423715"
-					(reference "#PWR0704")
 					(unit 1)
 				)
 			)

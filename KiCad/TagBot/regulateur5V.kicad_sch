@@ -3061,7 +3061,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
+		(property "Footprint" "Library:Power Inductors - SMD WE-LQS 4.7uH"
 			(at 208.28 121.92 0)
 			(effects
 				(font
@@ -3070,7 +3070,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.we-online.com/components/products/datasheet/74404052047.pdf"
 			(at 208.28 121.92 0)
 			(effects
 				(font
@@ -3081,6 +3081,15 @@
 		)
 		(property "Description" "Inductor, small symbol"
 			(at 208.28 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field5" "74404052047"
+			(at 208.28 121.92 90)
 			(effects
 				(font
 					(size 1.27 1.27)

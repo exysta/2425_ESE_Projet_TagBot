@@ -937,6 +937,12 @@
 		(color 0 0 0 0)
 		(uuid "cae0df92-846b-4ac2-b566-917a13639192")
 	)
+	(junction
+		(at 175.26 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d781faa3-273b-428e-ad3f-adaf1f95de0e")
+	)
 	(wire
 		(pts
 			(xy 148.59 102.87) (xy 144.78 102.87)
@@ -976,16 +982,6 @@
 			(type default)
 		)
 		(uuid "12e7520b-3a37-40cc-a5fc-6b4c45ae8fa0")
-	)
-	(wire
-		(pts
-			(xy 175.26 100.33) (xy 168.91 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1b29a57c-f0b5-4f9e-b361-790f0518e050")
 	)
 	(wire
 		(pts
@@ -1029,6 +1025,16 @@
 	)
 	(wire
 		(pts
+			(xy 175.26 100.33) (xy 175.26 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5b954dd8-0173-4fef-917d-67e1a8c46205")
+	)
+	(wire
+		(pts
 			(xy 144.78 102.87) (xy 144.78 100.33)
 		)
 		(stroke
@@ -1046,6 +1052,16 @@
 			(type default)
 		)
 		(uuid "b62c8e13-6e1e-4b1c-9990-968717150294")
+	)
+	(wire
+		(pts
+			(xy 168.91 100.33) (xy 175.26 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cbc1e16c-f48c-4039-98eb-0343ccbe2d1e")
 	)
 	(wire
 		(pts
@@ -1101,7 +1117,7 @@
 	)
 	(hierarchical_label "+3.3V"
 		(shape input)
-		(at 175.26 100.33 90)
+		(at 175.26 99.06 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
