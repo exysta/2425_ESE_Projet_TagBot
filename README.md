@@ -196,8 +196,15 @@ You may chose the language for the project description.
 
 <details>
   <summary><strong>French description</strong></summary>
+
+  # Sommaire
   
-  ## Introduction
+1. [Introduction](#introduction)
+2. [PCB](#pcb)
+3. [Code](#code)
+
+  
+  # Introduction
   
   Vous vous trouvez actuellement dans le projet TagBot (ou chat robot), il s'intègre à un projet de classe ou chaque équipe doit concevoir un robot, ces robots doivent pouvoir jouer au chat ensemble, avec un chat et des souris, sur une table sans bords. 
   
@@ -226,11 +233,189 @@ You may chose the language for the project description.
   Séance 9 et 10 -> Corrections Routage, export
   
     
-  # Documentation Code
+  ## Documentation Code
 
 [voir la documentation](./Documents/Doxygen_Documentation/html/index.html)
-    
-  # Pilote Lidar X4
+
+
+  ## Le materiel
+  
+  L'essentiel du materiel nous a été imposé, mais nous devons trouver par nous même le moyen par lequel nous voulons détetecter les bords pour ne pas tomber de la table. 
+  Pour cela on aimerait utiliser les capteurs IR ce capteur sera placer sous le robot et recevra donc une tension qui déterminera sa distance par rapport au sol, quand ce signal diminue fortement (donc la distance augmente) cela signifie qu'on est sur un bord. Comme il sera sous le robot il nous faut un capteur qui est capable de detecté des petites distances comme le capteur sharp GP2Y0A21SK0F. 
+  
+  On aimerai aussi ajouter une led visible qui nous permettrait de savoir quel est l'état de notre robot chat.
+
+  # PCB
+  La première étape de la conception de notre PCB a été de réaliser le schéma électronique de notre carte. Voici une liste des composants utilisés :
+
+- **Microprocesseur** : STM32G431x6
+- **Régulateurs de tension** : 5V et 3.3V
+- **Drivers de moteurs** : ZXBM5210
+- **Système de batterie** : LiPo 7.4V
+- **ST Link** : Interface de programmation et débogage
+- **Oscillateur Quartz**
+- **Connecteurs** : Divers connecteurs pour l'alimentation et les signaux
+- **Accéléromètre** : ADXL343
+
+## Détail des Composants et Branchements
+
+### 1. Microprocesseur : STM32G431x6
+
+Le microprocesseur STM32G431x6 est au cœur du robot. Il gère la logique du jeu et communique avec les autres composants. Le schéma de branchement du microprocesseur est disponible [ici](./Documents/datasheets/stm32g431cb.pdf).
+
+<div align="center">
+<img src="./Images/Kicad_microprocesseur.png" width="400">
+</div>
+
+Les principaux branchements incluent :
+
+- **VDDA** : Connecté à un filtrage LC pour lisser l'alimentation analogique.
+- **VSS / VDD** : Alimentations principales.
+- **GPIOs** : Utilisés pour le contrôle des LED de débogage et la communication avec les drivers de moteur.
+
+Pour configurer les broches du microcontrôleur, nous utilisons le logiciel CubeIDE. Une fois la configuration effectuée, nous générons le fichier `.ioc` qui documente l'ensemble des options choisies pour chaque pin. Le fait d'utiliser l'ioc du microprocesseur nous permet de savoir au mieux quel pin choisir pour quelle entrée/sortie du microprocesseur.
+
+### 2. LED de Debug
+
+Le robot comporte 4 LED : deux vertes, une rouge et une bleue, connectées à des résistances de limitation de courant. Elles indiquent l'état du robot :
+
+- **Rouge** : Indique un état d'erreur.
+- **Bleue** : Indique un état de débogage.
+- **Vertes** : Indiquent les états de fonctionnement normal.
+
+<div align="center">
+<img src="./Images/Kicad_microprocesseur_led.png" width="400">
+</div>
+
+### 3. Boutons
+
+Le robot dispose de deux boutons :
+
+- **NRST** : Bouton de réinitialisation.
+- **Mode** : Permet de changer l'état du robot entre "chat" et "souris".
+
+<div align="center">
+<img src="./Images/Kicad_microprocesseur_boutons.png" width="400">
+</div>
+
+### 4. Drivers de Moteurs : ZXBM5210
+
+Les drivers de moteurs permettent de contrôler les moteurs à courant continu utilisés pour déplacer le robot. Nous utilisons le driver ZXBM5210, connecté selon le schéma de la [documentation](./Documents/datasheets/driver_ZXBM5210.pdf).
+
+Le branchement des drivers inclut :
+
+- **Vref** : Tension de référence pour le contrôle de vitesse.
+- **VDD** : Alimentation des moteurs.
+- **Entrées de contrôle** : Connectées aux GPIOs du microprocesseur.
+
+<div align="center">
+<img src="./Images/Kicad_driver.png" width="400">
+</div>
+
+### 5. Régulateurs de Tension
+
+Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la batterie :
+
+1. **Régulateur 7V → 5V : MP1475S**
+   - Construit selon la [documentation](./Documents/datasheets/regulateur_MP1475S.pdf).
+   - Assure une tension de 5V en sortie pour l'alimentation des composants logiques.
+   - On prend donc la résistance R = 7.68k cette valeur est disponible donc nous pouvons garder la valeur. Si ca n’avait pas été le cas on aurait du réaliser un diviseur de tension pour retrouver les valeurs des résistances pour qu en sortie on est du 5V et 3A.
+
+<div align="center">
+<img src="./Images/Kicad_regulateur_MP1475S.png" width="400">
+</div>
+
+2. **Régulateur 5V → 3.3V : BU33SD5WG-TR**
+   - Construit selon la [documentation](./Documents/datasheets/regulateur_buxxsd5wg-e.pdf).
+   - Alimente le microprocesseur et les capteurs en 3.3V.
+
+<div align="center">
+<img src="./Images/Kicad_regulateur_BU33SD5WG.png" width="400">
+</div>
+
+### 6. Oscillateur Quartz
+
+L'oscillateur quartz est utilisé pour fournir une horloge stable au microprocesseur. Il est connecté selon le schéma standard, avec des condensateurs de découplage.
+
+<div align="center">
+<img src="./Images/Kicad_quartz.png" width="400">
+</div>
+
+### 7. ST Link
+
+La ST Link est utilisée pour la programmation et le débogage du microprocesseur STM32. Elle permet de flasher le code sur le microprocesseur et d'assurer une communication série pour le débogage.
+
+- **VCC** : Alimentation de la ST Link (3.3V).
+- **SWDIO / SWCLK** : Broches de communication pour le débogage.
+- **NRST** : Connecté au bouton de réinitialisation pour permettre un reset matériel lors de la programmation.
+
+<div align="center">
+<img src="./Images/Kicad_STlink.png" width="400">
+</div>
+
+### 8. Accéléromètre : ADXL343
+
+L'accéléromètre ADXL343 permet de mesurer les mouvements du robot. Il est connecté au microprocesseur via une communication **SPI**. La configuration SPI a été choisie car elle offre une communication plus rapide et fiable dans notre application. Le schéma de branchement est basé sur la [documentation](./Documents/datasheets/accelerometre_adxl343.pdf).
+
+<div align="center">
+<img src="./Images/Kicad_accelerometre.png" width="400">
+</div>
+
+### 9. Connecteurs
+
+Le robot dispose de plusieurs connecteurs pour interfacer différents périphériques :
+
+
+1. **Connecteur Moteur**
+
+- Les connecteurs moteurs permettent de relier le PCB aux moteurs DC utilisés pour déplacer le robot.
+- Chaque connecteur est relié à un driver de moteur ZXBM5210 pour gérer la vitesse et la direction.
+
+<div align="center">
+<img src="./Images/Kicad_connecteur_moteur.png" width="400">
+</div>
+
+
+2. **Connecteur Lidar**
+
+- Le connecteur Lidar est utilisé pour interfacer un capteur Lidar au robot, permettant la détection de la distance et des obstacles.
+- Il est connecté à l'un des ports de communication du microprocesseur (SPI ou UART).
+
+<div align="center">
+<img src="./Images/Kicad_connecteur_lidar.png" width="400">
+</div>
+
+3. **Connecteur Écran**
+
+- Le connecteur écran permet d'ajouter un petit écrat pour afficher l'état du robot (chat ou souris).
+- Ce connecteur est relié à l'interface I2C du microprocesseur.
+
+<div align="center">
+<img src="./Documents/Images/Kicad_connecteur_ecran.png" width="400">
+</div>
+
+4. **Connecteur Capteur Bords**
+
+- Le capteur bords est utilisé pour détecter les bords de la table et éviter que le robot ne tombe.
+- Le capteur est reié intrinséquement à un DAC
+
+<div align="center">
+<img src="./Images/Kicad_connecteur_capteur_bords.png" width="400">
+</div>
+
+
+### 10. Batterie
+
+Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie aux régulateurs de tension pour les différents composants du circuit, la documentation utilisé est [ici](./Documents/datasheets/batterie_0900766b81582941.pdf).
+
+<div align="center">
+<img src="./Images/Kicad_batterie.png" width="400">
+</div>
+
+  
+  # Code
+  
+  ## Pilote Lidar X4
   
   Le fichier `X4_driver.c` fournit une implémentation pour interfacer avec le périphérique X4 via la communication UART. Ce pilote prend en charge diverses fonctionnalités, y compris le démarrage et l'arrêt des analyses, la récupération des informations et de l'état de l'appareil, et le traitement des données d'analyse. Le pilote utilise un protocole défini dans le fichier d'en-tête `X4_driver.h` et gère les réponses du périphérique X4.
   
@@ -240,9 +425,9 @@ You may chose the language for the project description.
   <details>
     <summary><strong>Fichier header X4_driver.h</strong></summary>
   
-    ## Fichier d'en-tête : `X4_driver.h`
+  ### Fichier d'en-tête : `X4_driver.h`
   
-    ### Macros
+  #### Macros
   
     - **Octets de Commande :**
       - `X4_CMD_START` - Début d'une séquence de commande.
@@ -263,7 +448,7 @@ You may chose the language for the project description.
       - `X4_SERIAL_NUMBER_SIZE` - Taille du numéro de série.
       - `X4_SERIAL_FIRMWARE_SIZE` - Taille de la version du firmware.
   
-    ### Structures
+  #### Structures
   
     - **`X4_ResponseMessage`**
       - Contient des champs pour l'analyse du message de réponse, y compris la signature de début, la longueur de la réponse, le mode, le code de type et le contenu.
@@ -274,7 +459,7 @@ You may chose the language for the project description.
     - **`X4_ScanData`**
       - Contient des champs pour l'en-tête du paquet, le type de paquet, la quantité d'échantillons, les angles, le code de vérification, et des données échantillons, distances et angles allouées dynamiquement.
   
-    ### Prototypes de Fonction
+  #### Prototypes de Fonction
   
     - **`void X4_StartScan(void);`**
       - Démarre une analyse sur le périphérique X4.
@@ -305,7 +490,7 @@ You may chose the language for the project description.
   <details>
     <summary><strong>Fichier Source : X4_driver.c</strong></summary>
   
-    ## Fonctions Clés
+  ### Fonctions Clés
   
     - **`static void X4_SendCommand(uint8_t command)`**
       - Envoie une commande au périphérique X4 via UART.
@@ -374,16 +559,11 @@ You may chose the language for the project description.
   
   <details>
     <summary><strong>Remarques </strong></summary>
-    ## Remarques
+    
+  ### Remarques
   
     - Assurez-vous que la fonction `HAL_UART_Receive` est configurée avec un délai d'attente approprié et une gestion des erreurs selon les besoins de votre application.
     - Ajustez `X4_MAX_RESPONSE_SIZE` dans le fichier d'en-tête si nécessaire en fonction de la taille de réponse attendue du périphérique.
   </details>
   
-  ## Le materiel
-  
-  L'essentiel du materiel nous a été imposé, mais nous devons trouver par nous même le moyen par lequel nous voulons détetecter les bords pour ne pas tomber de la table. 
-  Pour cela on aimerait utiliser les capteurs IR ce capteur sera placer sous le robot et recevra donc une tension qui déterminera sa distance par rapport au sol, quand ce signal diminue fortement (donc la distance augmente) cela signifie qu'on est sur un bord. Comme il sera sous le robot il nous faut un capteur qui est capable de detecté des petites distances comme le capteur sharp GP2Y0A21SK0F. 
-  
-  On aimerai aussi ajouter une led visible qui nous permettrait de savoir quel est l'état de notre robot chat.
 </details>
