@@ -391,7 +391,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 - Ce connecteur est relié à l'interface I2C du microprocesseur.
 
 <div align="center">
-<img src="./Documents/Images/Kicad_connecteur_ecran.png" width="400">
+<img src="./Images/Kicad_connecteur_ecran.png" width="400">
 </div>
 
 4. **Connecteur Capteur Bords**
@@ -400,7 +400,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 - Le capteur est reié intrinséquement à un DAC
 
 <div align="center">
-<img src="./Images/Kicad_connecteur_capteur_bords.png" width="400">
+<img src="./Images/Kicad_connecteur_capteurbords.png" width="400">
 </div>
 
 
@@ -413,7 +413,7 @@ Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie 
 </div>
 
   
-  # Code
+# Code
   
   ## Pilote Lidar X4
   
@@ -565,5 +565,6 @@ Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie 
     - Assurez-vous que la fonction `HAL_UART_Receive` est configurée avec un délai d'attente approprié et une gestion des erreurs selon les besoins de votre application.
     - Ajustez `X4_MAX_RESPONSE_SIZE` dans le fichier d'en-tête si nécessaire en fonction de la taille de réponse attendue du périphérique.
   </details>
-  
+
+## 
 </details>
