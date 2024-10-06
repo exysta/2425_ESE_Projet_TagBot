@@ -1,0 +1,7 @@
+[LIDAR]
+M_SCTR (pour controler vitesse rotation) PWM à 10 kHZ
+
+[ADC SENSORS]
+sharp sensor measuring cycle : 16,5 ms
+sysclock stm32 = 170 Mhz
+Total conversion time adc = 0.25 -> 10.883 us
