@@ -86,3 +86,7 @@ fp-info-cache
 *.log
 *.raw
 .svg2shenzhen-cache
+
+CubeIDE/TagBot/.settings/
+
+KiCad/TagBot/#auto_saved_files#
