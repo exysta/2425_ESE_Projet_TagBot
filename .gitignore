@@ -8,7 +8,7 @@
 *.elf
 
 # Debug floder of cubeIDE
-/Debug/
+**/Debug/
 
 # Linker output
 *.ilk
@@ -19,11 +19,6 @@
 *.gch
 *.pch
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -46,10 +41,9 @@
 *.pdb
 
 # settings files
-*.settings
+*.settings.*
 
 # Kernel Module Compile Results
-*.mod*
 *.cmd
 .tmp_versions/
 modules.order
@@ -83,12 +77,10 @@ fp-info-cache
 *.dsn
 *.ses
 
-# Exported BOM files
-*.xml
-*.csv
-*.tsv
 
 # Misc
 *.log
 *.raw
 .svg2shenzhen-cache
+
+CubeIDE/TagBot/.settings/
