@@ -7,8 +7,8 @@
 
 #include <distSensor_driver.h>
 
-ADC_HandleTypeDef hadc1;  ///< ADC handle for the first ADC instance
-ADC_HandleTypeDef hadc2;  ///< ADC handle for the second ADC instance
+extern ADC_HandleTypeDef hadc1;  ///< ADC handle for the first ADC instance
+extern ADC_HandleTypeDef hadc2;  ///< ADC handle for the second ADC instance
 
 /**
  * @brief Reads the ADC value from a specified channel.
