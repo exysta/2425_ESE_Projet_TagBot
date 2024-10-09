@@ -206,19 +206,43 @@ You may choose the language for the project description.
   
   # Introduction
   
-  Vous vous trouvez actuellement dans le projet TagBot (ou chat robot), il s'intègre à un projet de classe ou chaque équipe doit concevoir un robot, ces robots doivent pouvoir jouer au chat ensemble, avec un chat et des souris, sur une table sans bords. 
+  Vous vous trouvez actuellement dans le projet TagBot (ou robot chat), il s'intègre à un projet de classe où chaque équipe doit concevoir un robot. Ces robots doivent pouvoir jouer au chat ensemble, avec un chat et des souris, sur une table sans bords. 
   
-  Ce projet est la conception d'un chat robot il doit:
-  - se déplacer sur une table sans bord (sans tomber)
-  - pouvoir changer d'état (chat ou souris)
+  Au terme de ce projet, notre chat robot doit pouvoir:
+  - se déplacer sur une table sans bordure (sans tomber)
+  - changer d'état (chat ou souris)
     - si le robot est chat il doit pouvoir attraper la souris
-    - si le robot est souris il doit pouvoir échaper au chat
+    - si le robot est souris il doit pouvoir échapper au chat
   
   Nous avons plusieurs niveaux d'objectifs à atteindre: 
   Niveau 0 : robot se déplace + ne tombe pas de la table
   Niveau 1 : détecte un robot et s'en rapproche (chat) ou s'en éloigne (souris)
   Niveau 2 : change de comportement après un contact + fonctionne avec plusieurs robots
   Niveau 3 : capable de se localiser + n'est pas affecté par les obstacles hors de la table
+
+  Nous devons réaliser ce projet en un semestre, au cours duquel plusieurs de nos cours et travaux pratiques y sont consacrés. Nous sommes donc limités en temps et nous avons mettre en place un planning précis :
+  - Avant les vacances toussaint, c'est-à-dire le Samedi 26 octobre, nous devons finir le pcb. Plus précisement, 
+Entre la toussaint et noel
+Bibliothèques logicielles
+Drivers
+Organisation du code
+TP de Noyaux temps-réel
+Stratégie et comportements
+TP d’Introduction à la robotique
+Vacances noel : Samedi 21 décembre au Dimanche 5 janvier
+Après noel
+Dernière séance : stratégie et comportements
+TP d’Introduction à la robotique
+Challenge le vendredi 10 janvier
+Fin du semestre : Samedi 11 janvier
+
+  Séance 1 : Schéma architectural / BOM
+  Séance 2 et 3 : Schéma électronique annoté
+  Séance 4 : Corrections Schéma / BOM Finale
+  Séance 5 : Placement
+  Séance 6 : Placement corrigé
+  Séance 7 et 8 : Routage
+  Séance 9 et 10 : Corrections Routage, export
   
   ## Systeme à microprocessuers
   
