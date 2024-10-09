@@ -222,7 +222,8 @@ You may choose the language for the project description.
 
   Le projet doit être réalisé sur un semestre, du mois de septembre au mois de janvier, avec un certain nombre de livrables à fournir avant chaque étape clé. Les   différentes étapes techniques incluent des phases de conception, de développement et de validation sur un système embarqué.
 
-  ## Planning détaillé
+  <details>
+  <summary><strong>Plan détaillé</strong></summary>  
 
   ### Avant les vacances de la Toussaint
   
@@ -243,6 +244,8 @@ You may choose the language for the project description.
   ### Après les vacances de Noël
 
   L'accent est mis sur les derniers ajustements et les tests finaux avant la présentation. En effet, les dernières séances consacrées à ce projet vont nous permettre de finaliser les algorithmes de stratégie et les comportements robotiques. Le challenge final aura lieu le vendredi 10 janvier, ce challenge consistera en un test et une présentation du projet où tous les robots chats de notre classe s'affronteront.
+
+   </details>
 
   ## Schéma architectural et materiel
 
