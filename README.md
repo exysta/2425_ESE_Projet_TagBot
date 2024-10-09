@@ -234,8 +234,10 @@ You may choose the language for the project description.
   - Séance 4 → Corrections Schéma / BOM Finale
   - Séance 5 → Placement
   - Séance 6 → Placement corrigé
-  - Séance 7 et 8 → Routage
-  - Séance 9 et 10 → Corrections Routage, export
+  - Séance 7 → Routage
+  - Séance 8, 9 et 10 → Corrections Routage, export
+
+  Dans le même temps, nous avons débuté la partie informatique avec la création du projet sur CubeIDE. Nous avons configuré les pins et commencé la rédaction des librairies pour les différents composants. 
 
   ### Entre la Toussaint et Noël
 
@@ -288,13 +290,16 @@ Les principaux branchements incluent :
 
 Pour configurer les broches du microcontrôleur, nous utilisons le logiciel CubeIDE. Une fois la configuration effectuée, nous générons le fichier `.ioc` qui documente l'ensemble des options choisies pour chaque pin. Le fait d'utiliser l'ioc du microprocesseur nous permet de choisir au mieux chaque pin pour les entrée/sortie du microprocesseur.
 
-### 2. LED de Debug
+### 2. LED
 
-Le robot comporte 4 LED : deux vertes, une rouge et une bleue, connectées à des résistances de limitation de courant. Elles indiquent l'état du robot :
+Le robot comporte 7 LEDs connectées à des résistances de limitation de courant.
 
-- **Rouge** : Indique un état d'erreur.
-- **Bleue** : Indique un état de débogage.
-- **Vertes** : Indiquent les états de fonctionnement normal.
+- **Une LED rouge** : indique que le robot est le chat.
+- **Une LED Bleue** : indique que le robot est une souris.
+- **Deux LED vertes** : qui sont des LEDs de debug.
+- **Une LED jaune** : 5V
+- **Une LED verte** : 3.3V
+- **Une LED verte** : 7.2V
 
 <div align="center">
 <img src="./Images/Kicad_microprocesseur_led.png" width="400">
@@ -305,7 +310,7 @@ Le robot comporte 4 LED : deux vertes, une rouge et une bleue, connectées à de
 Le robot dispose de deux boutons :
 
 - **NRST** : Bouton de réinitialisation.
-- **Mode** : Permet de changer l'état du robot entre "chat" et "souris".
+- **Mode** : Bouton qui permet de changer l'état du robot entre "chat" et "souris".
 
 <div align="center">
 <img src="./Images/Kicad_microprocesseur_boutons.png" width="400">
@@ -341,6 +346,7 @@ Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la 
    - Construit selon la [documentation](./Documents/datasheets/regulateur_MP1475S.pdf).
    - Assure une tension de 5V en sortie pour l'alimentation du LIDAR et des capteurs de bords.
    - On prend donc la résistance R = 7.68k cette valeur est disponible donc nous pouvons garder la valeur. Si ca n’avait pas été le cas on aurait du réaliser un diviseur de tension pour retrouver les valeurs des résistances pour qu en sortie on est du 5V et 3A.
+   - Pour s'assurer que nous recevons bien une tension de 5V, nous avons ajouter une LED jaune connectée à une résistance de limitation de courant.
 
 <div align="center">
 <img src="./Images/Kicad_regulateur_MP1475S.png" width="400">
@@ -349,6 +355,7 @@ Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la 
 2. **Régulateur 5V → 3.3V : BU33SD5WG-TR**
    - Construit selon la [documentation](./Documents/datasheets/regulateur_buxxsd5wg-e.pdf).
    - Alimente le microprocesseur et l'écran en 3.3V.
+   - Pour s'assurer que nous recevons bien une tension de 3V, nous avons ajouter une LED verte connectée à une résistance de limitation de courant.
 
 <div align="center">
 <img src="./Images/Kicad_regulateur_BU33SD5WG.png" width="400">
@@ -421,7 +428,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 4. **Connecteur Capteur Bords**
 
 - Le capteur bords est utilisé pour détecter les bords de la table et éviter que le robot ne tombe.
-- Le capteur est reié intrinséquement à un DAC
+- Le capteur est relié intrinséquement à un DAC
 
 <div align="center">
 <img src="./Images/Kicad_connecteur_capteurbords.png" width="400">
@@ -430,7 +437,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 
 ### 10. Batterie
 
-Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie aux régulateurs de tension pour les différents composants du circuit, la documentation utilisé est [ici](./Documents/datasheets/batterie_0900766b81582941.pdf).
+Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie aux régulateurs de tension pour les différents composants du circuit, la documentation utilisé est [ici](./Documents/datasheets/batterie_0900766b81582941.pdf). Pour s'assurer que nous recevons bien une tension de 7,2V, nous avons ajouté une LED verte connectée à une résistance de limitation de courant.
 
 <div align="center">
 <img src="./Images/Kicad_batterie.png" width="400">
@@ -442,6 +449,10 @@ Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie 
   ## Documentation Code
 
 [voir la documentation](./Documents/Doxygen_Documentation/html/index.html)
+  
+  ## Introduction
+
+  Dans le cadre du projet, nous devons utiliser plusieurs moyens de communications tels que le SPI pour l'accéléromètre, l'I2C pour l'écran OLED
   
   ## Pilote Lidar X4
   
