@@ -215,54 +215,40 @@ You may choose the language for the project description.
     - si le robot est souris il doit pouvoir échapper au chat
   
   Nous avons plusieurs niveaux d'objectifs à atteindre: 
-  Niveau 0 : robot se déplace + ne tombe pas de la table
-  Niveau 1 : détecte un robot et s'en rapproche (chat) ou s'en éloigne (souris)
-  Niveau 2 : change de comportement après un contact + fonctionne avec plusieurs robots
-  Niveau 3 : capable de se localiser + n'est pas affecté par les obstacles hors de la table
+  - Niveau 0 : robot se déplace + ne tombe pas de la table
+  - Niveau 1 : détecte un robot et s'en rapproche (chat) ou s'en éloigne (souris)
+  - Niveau 2 : change de comportement après un contact + fonctionne avec plusieurs robots
+  - Niveau 3 : capable de se localiser + n'est pas affecté par les obstacles hors de la table
 
-  Nous devons réaliser ce projet en un semestre, au cours duquel plusieurs de nos cours et travaux pratiques y sont consacrés. Nous sommes donc limités en temps et nous avons mettre en place un planning précis :
-  - Avant les vacances toussaint, c'est-à-dire le Samedi 26 octobre, nous devons finir le pcb. Plus précisement, 
-Entre la toussaint et noel
-Bibliothèques logicielles
-Drivers
-Organisation du code
-TP de Noyaux temps-réel
-Stratégie et comportements
-TP d’Introduction à la robotique
-Vacances noel : Samedi 21 décembre au Dimanche 5 janvier
-Après noel
-Dernière séance : stratégie et comportements
-TP d’Introduction à la robotique
-Challenge le vendredi 10 janvier
-Fin du semestre : Samedi 11 janvier
+  Le projet doit être réalisé sur un semestre, du mois de septembre au mois de janvier, avec un certain nombre de livrables à fournir avant chaque étape clé. Les   différentes étapes techniques incluent des phases de conception, de développement et de validation sur un système embarqué.
 
-  Séance 1 : Schéma architectural / BOM
-  Séance 2 et 3 : Schéma électronique annoté
-  Séance 4 : Corrections Schéma / BOM Finale
-  Séance 5 : Placement
-  Séance 6 : Placement corrigé
-  Séance 7 et 8 : Routage
-  Séance 9 et 10 : Corrections Routage, export
+  ## Planning détaillé
+
+  ### Avant les vacances de la Toussaint
   
-  ## Systeme à microprocessuers
+  Les 10 premières séances sont consacrées à la création du PCB que l'on doit commander avant les vacances de la Toussaint. 
   
-  Les 10 premières séances sont consacrées à la création du PCB que l'on doit commander avant les vacances de Toussaint. 
-  
-  Séance 1 -> Schéma architectural / BOM
-  Séance 2 et 3 -> Schéma électronique annoté
-  Séance 4 -> Corrections Schéma / BOM Finale
-  Séance 5 -> Placement
-  Séance 6 -> Placement corrigé
-  Séance 7 et 8 -> Routage
-  Séance 9 et 10 -> Corrections Routage, export
-  
-    
-  ## Documentation Code
+  - Séance 1 → Schéma architectural / BOM
+  - Séance 2 et 3 → Schéma électronique annoté
+  - Séance 4 → Corrections Schéma / BOM Finale
+  - Séance 5 → Placement
+  - Séance 6 → Placement corrigé
+  - Séance 7 et 8 → Routage
+  - Séance 9 et 10 → Corrections Routage, export
 
-[voir la documentation](./Documents/Doxygen_Documentation/html/index.html)
+  ### Entre la Toussaint et Noël
 
+  Cette période est centrée sur le développement logiciel et l'intégration.
 
-  ## Le materiel
+  ### Après les vacances de Noël
+
+  L'accent est mis sur les derniers ajustements et les tests finaux avant la présentation. En effet, les dernières séances consacrées à ce projet vont nous permettre de finaliser les algorithmes de stratégie et les comportements robotiques. Le challenge final aura lieu le vendredi 10 janvier, ce challenge consistera en un test et une présentation du projet où tous les robots chats de notre classe s'affronteront.
+
+  ## Schéma architectural et materiel
+
+  <div align="center">
+<img src="./Images/Schema_architecture.png" width="400">
+</div>
   
   L'essentiel du materiel nous a été imposé, mais nous devons trouver par nous même le moyen par lequel nous voulons détetecter les bords pour ne pas tomber de la table. 
   Pour cela on aimerait utiliser les capteurs IR ce capteur sera placer sous le robot et recevra donc une tension qui déterminera sa distance par rapport au sol, quand ce signal diminue fortement (donc la distance augmente) cela signifie qu'on est sur un bord. Comme il sera sous le robot il nous faut un capteur qui est capable de detecté des petites distances comme le capteur sharp GP2Y0A21SK0F. 
@@ -449,6 +435,10 @@ Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie 
 
   
 # Code
+
+  ## Documentation Code
+
+[voir la documentation](./Documents/Doxygen_Documentation/html/index.html)
   
   ## Pilote Lidar X4
   
