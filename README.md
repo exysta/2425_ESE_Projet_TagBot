@@ -1,6 +1,6 @@
 # 2425_ESE_Project_TagBot
 Welcome to the TagBot project created by the amazing team consisted of Lucas Chapart, Charlotte Fricot and Marie Caronello.
-You may chose the language for the project description.
+You may choose the language for the project description.
 
 <details>
   <summary><strong>English description</strong></summary>  
@@ -248,18 +248,18 @@ You may chose the language for the project description.
   # PCB
   La première étape de la conception de notre PCB a été de réaliser le schéma électronique de notre carte. Voici une liste des composants utilisés :
 
-- **Microprocesseur** : STM32G431x6
+- **Microprocesseur** : STM32G431CBU6
 - **Régulateurs de tension** : 5V et 3.3V
-- **Drivers de moteurs** : ZXBM5210
-- **Système de batterie** : LiPo 7.4V
+- **Drivers de moteurs** : ZXBM5210-SP-13
+- **Système de batterie** : Batterie NIMH 7.2V 1.3Ah 
 - **ST Link** : Interface de programmation et débogage
-- **Oscillateur Quartz**
+- **Oscillateur Quartz** : 16MHz
 - **Connecteurs** : Divers connecteurs pour l'alimentation et les signaux
 - **Accéléromètre** : ADXL343
 
 ## Détail des Composants et Branchements
 
-### 1. Microprocesseur : STM32G431x6
+### 1. Microprocesseur : STM32G431CBU6
 
 Le microprocesseur STM32G431x6 est au cœur du robot. Il gère la logique du jeu et communique avec les autres composants. Le schéma de branchement du microprocesseur est disponible [ici](./Documents/datasheets/stm32g431cb.pdf).
 
@@ -273,7 +273,7 @@ Les principaux branchements incluent :
 - **VSS / VDD** : Alimentations principales.
 - **GPIOs** : Utilisés pour le contrôle des LED de débogage et la communication avec les drivers de moteur.
 
-Pour configurer les broches du microcontrôleur, nous utilisons le logiciel CubeIDE. Une fois la configuration effectuée, nous générons le fichier `.ioc` qui documente l'ensemble des options choisies pour chaque pin. Le fait d'utiliser l'ioc du microprocesseur nous permet de savoir au mieux quel pin choisir pour quelle entrée/sortie du microprocesseur.
+Pour configurer les broches du microcontrôleur, nous utilisons le logiciel CubeIDE. Une fois la configuration effectuée, nous générons le fichier `.ioc` qui documente l'ensemble des options choisies pour chaque pin. Le fait d'utiliser l'ioc du microprocesseur nous permet de choisir au mieux chaque pin pour les entrée/sortie du microprocesseur.
 
 ### 2. LED de Debug
 
@@ -298,9 +298,13 @@ Le robot dispose de deux boutons :
 <img src="./Images/Kicad_microprocesseur_boutons.png" width="400">
 </div>
 
-### 4. Drivers de Moteurs : ZXBM5210
+### 4. Drivers de Moteurs : ZXBM5210-SP-13
 
 Les drivers de moteurs permettent de contrôler les moteurs à courant continu utilisés pour déplacer le robot. Nous utilisons le driver ZXBM5210, connecté selon le schéma de la [documentation](./Documents/datasheets/driver_ZXBM5210.pdf).
+
+<div align="center">
+<img src="./Images/Kicad_drivers.png" width="400">
+</div>
 
 Le branchement des drivers inclut :
 
@@ -316,9 +320,13 @@ Le branchement des drivers inclut :
 
 Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la batterie :
 
-1. **Régulateur 7V → 5V : MP1475S**
+<div align="center">
+<img src="./Images/Kicad_regulateurs.png" width="400">
+</div>
+
+1. **Régulateur 7.2V → 5V : MP1475S**
    - Construit selon la [documentation](./Documents/datasheets/regulateur_MP1475S.pdf).
-   - Assure une tension de 5V en sortie pour l'alimentation des composants logiques.
+   - Assure une tension de 5V en sortie pour l'alimentation du LIDAR et des capteurs de bords.
    - On prend donc la résistance R = 7.68k cette valeur est disponible donc nous pouvons garder la valeur. Si ca n’avait pas été le cas on aurait du réaliser un diviseur de tension pour retrouver les valeurs des résistances pour qu en sortie on est du 5V et 3A.
 
 <div align="center">
@@ -327,13 +335,13 @@ Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la 
 
 2. **Régulateur 5V → 3.3V : BU33SD5WG-TR**
    - Construit selon la [documentation](./Documents/datasheets/regulateur_buxxsd5wg-e.pdf).
-   - Alimente le microprocesseur et les capteurs en 3.3V.
+   - Alimente le microprocesseur et l'écran en 3.3V.
 
 <div align="center">
 <img src="./Images/Kicad_regulateur_BU33SD5WG.png" width="400">
 </div>
 
-### 6. Oscillateur Quartz
+### 6. Oscillateur Quartz 16MHz
 
 L'oscillateur quartz est utilisé pour fournir une horloge stable au microprocesseur. Il est connecté selon le schéma standard, avec des condensateurs de découplage.
 
@@ -365,8 +373,11 @@ L'accéléromètre ADXL343 permet de mesurer les mouvements du robot. Il est con
 
 Le robot dispose de plusieurs connecteurs pour interfacer différents périphériques :
 
+<div align="center">
+<img src="./Images/Kicad_connecteurs.png" width="400">
+</div>
 
-1. **Connecteur Moteur**
+1. **Connecteur Moteurs**
 
 - Les connecteurs moteurs permettent de relier le PCB aux moteurs DC utilisés pour déplacer le robot.
 - Chaque connecteur est relié à un driver de moteur ZXBM5210 pour gérer la vitesse et la direction.
@@ -376,7 +387,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 </div>
 
 
-2. **Connecteur Lidar**
+2. **Connecteur LIDAR**
 
 - Le connecteur Lidar est utilisé pour interfacer un capteur Lidar au robot, permettant la détection de la distance et des obstacles.
 - Il est connecté à l'un des ports de communication du microprocesseur (SPI ou UART).
