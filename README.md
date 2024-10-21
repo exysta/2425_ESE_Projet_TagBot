@@ -250,7 +250,44 @@ Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie 
 <img src="./Images/Kicad_batterie.png" width="400">
 </div>
 
+
+
+## Ajustements à considérer pour un routage optimal
+<details>
+  <summary><strong> Détails</strong></summary>
+
+### Attentions aux antennes
+
+### Placer les vias proches des pads
+
+### Éviter les discontuinités des plans de masse
+
+### Répartitions des roles des couches du PCB
+Répartition des 4 couches du PCB :
+- **Couche 1 (Front)** :
   
+    Couche sur laquelle sont placés tout nos composants. La plupart d'entre eux est en CMS à part les connecteurs en traversant. La plupart des pistes de data se trouvent sur cette couche.
+    Une partie des pistes de data passent pas la couche bottom. Cela permet de garder des plans de masse (couche 2) et d'alimentation (couche 3) le plus homogène possible.
+    Cette homogénéité va protéger l'intégrité de nos signaux de data.
+- **Couche 2** :
+  
+    Plan de masse. On essaye d'espacer nos vias pour ne pas couper le plan de masse.
+- **Couche 3** :
+  
+    Couche d'alimentation. Elle est constituée des plans d'alimentations pour les composants demandant beaucoup de puissance. Cela permet une meilleure dissipation thermique.
+- **Couche 4 (Bottom)** :
+  
+    Une partie des pistes de data ainsi que des points de test se situent sur cette couche. Lors du routage des pistes sur cette couche, il faut essayer de ne pas faire passer nos pistes par les discontinuités des plans d'alimentations
+    présent sur notre couche 3. En effet cette discontinuité peut poser des problèmes de CEM pour nos signaux de data les plus rapides tels que:
+    UART, I2C, SPI, signaux de debug.
+### Taille des pistes
+
+### Rapprocher capacités de découplages
+
+### Tests points
+
+</details>
+
 # Code
 
   ## Documentation Code
