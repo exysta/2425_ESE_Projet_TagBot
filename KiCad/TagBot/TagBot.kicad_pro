@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.762,
-          "height": 1.524,
-          "width": 1.524
+          "drill": 0.0,
+          "height": 1.5,
+          "width": 1.5
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -48,10 +48,21 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.5
+          "min_clearance": 0.2
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        },
+        {
+          "gap": 0.2032,
+          "via_gap": 0.2032,
+          "width": 0.261112
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -171,7 +182,14 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0,
+        0.25,
+        0.3,
+        0.5,
+        0.75,
+        1.0
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -198,7 +216,16 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        },
+        {
+          "diameter": 0.7,
+          "drill": 0.3
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -438,7 +465,7 @@
     "classes": [
       {
         "bus_width": 12,
-        "clearance": 0.2,
+        "clearance": 0.15,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -448,8 +475,8 @@
         "name": "Default",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.2,
-        "via_diameter": 0.6,
+        "track_width": 0.3,
+        "via_diameter": 0.5,
         "via_drill": 0.3,
         "wire_width": 6
       }
@@ -477,7 +504,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
-    "bom_export_filename": "",
+    "bom_export_filename": "TagBot.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -499,7 +526,7 @@
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "Value",
           "name": "Value",
           "show": true
@@ -523,17 +550,53 @@
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "DNP",
           "name": "${DNP}",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Fab",
+          "name": "Fab",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Field5",
+          "name": "Field5",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Vmax",
+          "name": "Vmax",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "reference",
+          "name": "reference",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Description",
+          "name": "Description",
           "show": true
         }
       ],
       "filter_string": "",
       "group_symbols": true,
-      "name": "Grouped By Value",
+      "name": "",
       "sort_asc": true,
-      "sort_field": "Référence"
+      "sort_field": "Reference"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -577,7 +640,47 @@
   "sheets": [
     [
       "6db08f37-7cb3-4000-93f1-ba0d0ffbeb19",
-      "Racine"
+      "Root"
+    ],
+    [
+      "3ab50834-de79-4373-bbc0-542f9f81e0c6",
+      "DriverLeft"
+    ],
+    [
+      "4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed",
+      "DriverRight"
+    ],
+    [
+      "285c948d-5578-4bb8-8119-b871ade4552f",
+      "Régulateur 5V"
+    ],
+    [
+      "f641a0e6-7f59-4351-93f4-c346a0d5b8a7",
+      "Régulateur 3.3V"
+    ],
+    [
+      "cf063d69-af26-4a53-85bf-5da650298da7",
+      "LED"
+    ],
+    [
+      "749bc4ce-f5ad-49bc-96d6-41722e423715",
+      "Boutons"
+    ],
+    [
+      "08eeab39-8116-4f58-bbaa-3618715ee0b0",
+      "Capteur bords"
+    ],
+    [
+      "5d545e42-e36b-45db-b7b1-dd52666f3cd8",
+      "Lidar"
+    ],
+    [
+      "1f9661bd-4856-4de9-980c-d39e1adf6a94",
+      "Moteurs"
+    ],
+    [
+      "df8e8a24-314e-4c08-93cb-87fdb3fa14e6",
+      "Ecran"
     ]
   ],
   "text_variables": {}

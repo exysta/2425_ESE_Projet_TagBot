@@ -1,0 +1,9 @@
+Manufacturer=Analog Devices
+PartNumber=ADXL343BCCZ-RL
+PartCategory=Integrated Circuit
+PackageCategory=Other
+PinCount=14
+Version=1.2
+Released=2023-10-26 05:15:02
+Downloaded=2024-09-16 14:03:46
+3D=Y

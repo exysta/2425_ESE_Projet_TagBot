@@ -1,0 +1,17 @@
+../Core/Src/X4_driver.c:25:13:X4_SendCommand	1
+../Core/Src/X4_driver.c:37:6:X4_StartScan	1
+../Core/Src/X4_driver.c:49:6:X4_StopScan	1
+../Core/Src/X4_driver.c:59:6:X4_SoftRestart	1
+../Core/Src/X4_driver.c:70:6:X4_GetDeviceInfo	1
+../Core/Src/X4_driver.c:85:6:X4_GetDeviceHealth	1
+../Core/Src/X4_driver.c:105:6:X4_HandleDeviceInfoResponse	2
+../Core/Src/X4_driver.c:130:6:X4_HandleDeviceHealthResponse	1
+../Core/Src/X4_driver.c:149:6:X4_HandleScanResponse	3
+../Core/Src/X4_driver.c:189:6:X4_HandleResponse	6
+../Core/Src/X4_driver.c:233:6:X4_ParseMessage	4
+../Core/Src/X4_driver.c:268:6:X4_HandleScanDataDistances	4
+../Core/Src/X4_driver.c:305:6:X4_HandleScanDataAngles	8
+../Core/Src/X4_driver.c:375:10:calculateXOR	2
+../Core/Src/X4_driver.c:397:6:verifyCheckCode	1
+../Core/Src/X4_driver.c:415:6:X4_HandleScanData	1
+../Core/Src/X4_driver.c:429:10:convertBytesToUint16	1
