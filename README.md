@@ -1,9 +1,8 @@
 # 2425_ESE_Project_TagBot
 Welcome to the TagBot project created by the amazing team consisted of Lucas Chapart, Charlotte Fricot and Marie Caronello.
-You may choose the language for the project description.
+The following description is in french but you can find the english description there :
 
-<details>
-  <summary><strong>French description</strong></summary>
+- [English](README_english.md)
 
   # Sommaire
   
@@ -414,4 +413,3 @@ Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie 
   </details>
 
 ## 
-</details>
