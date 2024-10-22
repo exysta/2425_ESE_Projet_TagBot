@@ -981,7 +981,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "10260582-7031-487f-8e3c-a126309328fe")
-		(property "Reference" "TP2"
+		(property "Reference" "LEFT_REV201"
 			(at 125.73 92.2019 0)
 			(effects
 				(font
@@ -1032,7 +1032,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "TP2")
+					(reference "LEFT_REV201")
 					(unit 1)
 				)
 			)
@@ -1408,7 +1408,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "83060041-2356-4f65-a949-45446be6914a")
-		(property "Reference" "TP1"
+		(property "Reference" "TPLEFT_FWD201"
 			(at 125.73 83.0579 0)
 			(effects
 				(font
@@ -1459,7 +1459,7 @@
 		(instances
 			(project ""
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/3ab50834-de79-4373-bbc0-542f9f81e0c6"
-					(reference "TP1")
+					(reference "TPLEFT_FWD201")
 					(unit 1)
 				)
 			)

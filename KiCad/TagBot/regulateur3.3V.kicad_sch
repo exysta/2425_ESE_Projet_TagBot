@@ -1434,7 +1434,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8770dd49-ee46-4983-8b65-6aafcb515516")
-		(property "Reference" "#PWR0501"
+		(property "Reference" "#PWR0503"
 			(at 198.12 123.19 0)
 			(effects
 				(font
@@ -1484,7 +1484,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/f641a0e6-7f59-4351-93f4-c346a0d5b8a7"
-					(reference "#PWR0501")
+					(reference "#PWR0503")
 					(unit 1)
 				)
 			)
@@ -1571,7 +1571,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ca6f26c4-4324-4c72-a9f2-7e573c7661b2")
-		(property "Reference" "#FLG0502"
+		(property "Reference" "#FLG0501"
 			(at 144.78 98.425 0)
 			(effects
 				(font
@@ -1621,7 +1621,7 @@
 		(instances
 			(project ""
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/f641a0e6-7f59-4351-93f4-c346a0d5b8a7"
-					(reference "#FLG0502")
+					(reference "#FLG0501")
 					(unit 1)
 				)
 			)
@@ -1638,7 +1638,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dd2963b3-c0ac-4219-8833-1ac3d5386b67")
-		(property "Reference" "#PWR0502"
+		(property "Reference" "#PWR0501"
 			(at 135.89 119.38 0)
 			(effects
 				(font
@@ -1688,7 +1688,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/f641a0e6-7f59-4351-93f4-c346a0d5b8a7"
-					(reference "#PWR0502")
+					(reference "#PWR0501")
 					(unit 1)
 				)
 			)
@@ -1705,7 +1705,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e840f2f3-34ed-417f-bb33-3006493fa82a")
-		(property "Reference" "#PWR0504"
+		(property "Reference" "#PWR0502"
 			(at 198.12 93.98 0)
 			(effects
 				(font
@@ -1755,7 +1755,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/f641a0e6-7f59-4351-93f4-c346a0d5b8a7"
-					(reference "#PWR0504")
+					(reference "#PWR0502")
 					(unit 1)
 				)
 			)

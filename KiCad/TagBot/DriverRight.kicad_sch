@@ -1218,7 +1218,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "aa53d4b6-6631-4289-b14c-3f15f50dbab1")
-		(property "Reference" "TP3"
+		(property "Reference" "RIGHT_FWD301"
 			(at 125.73 83.0579 0)
 			(effects
 				(font
@@ -1269,7 +1269,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
-					(reference "TP3")
+					(reference "RIGHT_FWD301")
 					(unit 1)
 				)
 			)
@@ -1285,7 +1285,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dc10b8fe-6edf-45c2-8310-0ea22c4ba5e4")
-		(property "Reference" "TP4"
+		(property "Reference" "RIGHT_REV301"
 			(at 125.73 92.2019 0)
 			(effects
 				(font
@@ -1336,7 +1336,7 @@
 		(instances
 			(project "TagBot"
 				(path "/6db08f37-7cb3-4000-93f1-ba0d0ffbeb19/4de9ab2c-d9ad-4c73-a2d5-dcacc317a2ed"
-					(reference "TP4")
+					(reference "RIGHT_REV301")
 					(unit 1)
 				)
 			)
