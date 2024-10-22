@@ -141,10 +141,11 @@ int main(void)
 	ssd1306_Init();
 
 #endif
-    uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_INFO}; /**< Array holding the command data */
+    uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_HEALTH}; /**< Array holding the command data */
     uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
     memset(raw_data, 0, sizeof(raw_data));
-
+    X4_handle_t X4_handle;
+    X4_GetDeviceInfo(&X4_handle);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */

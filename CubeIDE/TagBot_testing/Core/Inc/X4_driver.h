@@ -96,45 +96,6 @@
 #define X4_SERIAL_FIRMWARE_SIZE 2
 
 /**
- * @brief Starts a scan operation on the X4 LiDAR.
- *
- * This function sends the command to start a scanning operation,
- * continuously acquiring distance measurements.
- */
-void X4_StartScan(void);
-
-/**
- * @brief Stops the scanning operation on the X4 LiDAR.
- *
- * This function sends the command to stop the ongoing scanning operation.
- */
-void X4_StopScan(void);
-
-/**
- * @brief Retrieves the device information from the X4 LiDAR.
- *
- * This function requests and retrieves the device model, firmware version,
- * hardware version, and serial number from the LiDAR.
- */
-void X4_GetDeviceInfo(void);
-
-/**
- * @brief Retrieves the health status of the X4 LiDAR.
- *
- * This function requests and retrieves the health status of the LiDAR,
- * indicating whether the device is functioning properly.
- */
-void X4_GetHealthStatus(void);
-
-/**
- * @brief Performs a soft restart of the X4 LiDAR.
- *
- * This function sends the command to perform a soft restart,
- * reinitializing the device without physically powering it off.
- */
-void X4_SoftRestart(void);
-
-/**
  * @brief Structure to represent a parsed response message from the X4 LiDAR.
  */
 typedef struct {
@@ -170,13 +131,58 @@ typedef struct {
     float *angles;                  /**< Pointer to the array of angle values. */
 } X4_ScanData;
 
+typedef struct {
+	X4_DeviceInfo device_info;
+	X4_ScanData scan_data;
+} X4_handle_t;
+
+/**
+ * @brief Starts a scan operation on the X4 LiDAR.
+ *
+ * This function sends the command to start a scanning operation,
+ * continuously acquiring distance measurements.
+ */
+void X4_StartScan(X4_handle_t * X4_handle);
+
+/**
+ * @brief Stops the scanning operation on the X4 LiDAR.
+ *
+ * This function sends the command to stop the ongoing scanning operation.
+ */
+void X4_StopScan(void);
+
+/**
+ * @brief Retrieves the device information from the X4 LiDAR.
+ *
+ * This function requests and retrieves the device model, firmware version,
+ * hardware version, and serial number from the LiDAR.
+ */
+void X4_GetDeviceInfo(X4_handle_t * X4_handle);
+
+/**
+ * @brief Retrieves the health status of the X4 LiDAR.
+ *
+ * This function requests and retrieves the health status of the LiDAR,
+ * indicating whether the device is functioning properly.
+ */
+void X4_GetHealthStatus(X4_handle_t * X4_handle);
+
+/**
+ * @brief Performs a soft restart of the X4 LiDAR.
+ *
+ * This function sends the command to perform a soft restart,
+ * reinitializing the device without physically powering it off.
+ */
+void X4_SoftRestart(void);
+
+
 /**
  * @brief Handles the response received from the X4 LiDAR.
  *
  * This function processes the incoming response and determines
  * the appropriate action based on the type and content of the message.
  */
-void X4_HandleResponse(void);
+void X4_HandleResponse(X4_handle_t * X4_handle);
 
 /**
  * @brief Parses a raw response message from the X4 LiDAR.
