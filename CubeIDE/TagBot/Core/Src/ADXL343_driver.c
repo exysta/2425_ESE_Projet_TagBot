@@ -3,6 +3,7 @@
  *
  *  Created on: Sep 16, 2024
  *      Author: marie
+ *  Code pour l'accéleromètre ADXL343
  */
 
 #include <ADXL343_driver.h>

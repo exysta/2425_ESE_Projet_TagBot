@@ -8,12 +8,16 @@
 #ifndef INC_DISTSENSOR_DRIVER_H_
 #define INC_DISTSENSOR_DRIVER_H_
 
+
+#include <stddef.h>
+#include <stdint.h>
+
+
+
 #define WINDOW_SIZE 5 // Size of the moving average window
 
 //coeff used are from using a 7 degree polynomial fitting of the datasheet sensor values
-float coeffs[] = { -23.67560604  , 299.24647087 ,-1567.5164766  , 4408.38686151,
-					 -7211.95874456  ,6959.22725692 ,-3844.96742449 , 1114.78386014};
-
+float coeffs[] = { -23.67560604  , 299.24647087 ,-1567.5164766  , 4408.38686151, -7211.95874456  ,6959.22725692 ,-3844.96742449 , 1114.78386014};
 
 
 float Vmin = 61;

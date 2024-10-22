@@ -3,12 +3,20 @@
  *
  *  Created on: Sep 22, 2024
  *      Author: exysta
+ *  Code pour les capteurs de distance
+ *
  */
+
+//ATTENTION CODE FAUX POUR LE MOMENT
+
+#include <adc.h>
 #include <distSensor_driver.h>
 
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 
+#define Vmax  0	// (CHANGER) mettre la vrai valeur de Vmax du capteur (tension max qu on veut)
+#define Vmin  0 	// (CHANGER) mettre la vrai valeur de Vmin du capteur que l'on souhaite (tension min que l'on veut)
 
 uint16_t distSensor_ReadADCChannel(ADC_HandleTypeDef* hadc, uint32_t channel)
 {
@@ -44,7 +52,7 @@ uint16_t distSensor_ReadADCChannel(ADC_HandleTypeDef* hadc, uint32_t channel)
 uint16_t distSensor_ConvertVoltToDistance(uint32_t sensVal)
 {
 	// Constrain sensor values to remain within set min-max range
-	sensVal = constrain(sensVal);
+	sensVal = constrain(&sensVal);
 
 	uint16_t dist = 0;
 
@@ -63,16 +71,13 @@ uint16_t distSensor_ConvertVoltToDistance(uint32_t sensVal)
 	return filtered_dist;
 }
 
-void constrain(uint16_t * sensVal)
-{
-	if (sensVal > Vmax)
-	{
-		sensVal = Vmax;
-	}
-	if (sensVal < Vmin)
-	{
-		sensVal = Vmin;
-	}
+void constrain(uint16_t * sensVal) {
+    if (*sensVal > Vmax) {
+        *sensVal = Vmax;
+    }
+    if (*sensVal < Vmin) {
+        *sensVal = Vmin;
+    }
 }
 
 // Function to calculate the moving average
