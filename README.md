@@ -251,52 +251,67 @@ Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie 
 </div>
 
 
-
 ## Ajustements à considérer pour un routage optimal
 <details>
   <summary><strong> Détails</strong></summary>
   
 ### Répartitions des roles des couches du PCB
+
 Répartition des 4 couches du PCB :
 - **Couche 1 (Front)** :
+Couche sur laquelle sont placés tous nos composants, la plupart étant en CMS, à l'exception des connecteurs qui sont en traversants. La majoté des pistes de données se trouvent sur cette couche, tandis qu'une partie d'entre elles passent par la couche bottom. Cela permet de maintenir l'homogénéité des plans de masse (couche 2) et d'alimentation (couche 3), ce qui protège l'intégrité des signaux de données.
   
-    Couche sur laquelle sont placés tout nos composants. La plupart d'entre eux est en CMS à part les connecteurs en traversant. La plupart des pistes de data se trouvent sur cette couche.
-    Une partie des pistes de data passent pas la couche bottom. Cela permet de garder des plans de masse (couche 2) et d'alimentation (couche 3) le plus homogène possible.
-    Cette homogénéité va protéger l'intégrité de nos signaux de data.
 - **Couche 2** :
+Plan de masse. Il est important d'espacer nos vias pour ne pas couper le plan de masse.
   
-    Plan de masse. On essaye d'espacer nos vias pour ne pas couper le plan de masse.
 - **Couche 3** :
+Couche d'alimentation. Elle contient les plans d'alimentations pour les composants à forte consommation de puissance. Cela permet une meilleure dissipation thermique.
   
-    Couche d'alimentation. Elle est constituée des plans d'alimentations pour les composants demandant beaucoup de puissance. Cela permet une meilleure dissipation thermique.
 - **Couche 4 (Bottom)** :
-  
-    Une partie des pistes de data ainsi que des points de test se situent sur cette couche. Lors du routage des pistes sur cette couche, il faut essayer de ne pas faire passer nos pistes par les discontinuités des plans d'alimentations
-    présent sur notre couche 3. En effet cette discontinuité peut poser des problèmes de CEM pour nos signaux de data les plus rapides tels que:
-    UART, I2C, SPI, signaux de debug.
+Une partie des pistes de données ainsi que les points de test se situent sur cette couche. Lors du routage des pistes sur cette couche, il faut essayer de ne pas faire passer les pistes par les discontinuités des plans d'alimentations présents sur la couche 3. En effet, cette discontinuité peut poser des problèmes de CEM pour les signaux de données les plus rapides tels que : UART, I2C, SPI et signaux de debug.
   
 ### Bonnes pratiques pour les plans
 
 - **Attention aux antennes** :
-Les pistes ou zones de cuivre non connectées peuvent se comporter comme des antennes et générer des interférences électromagnétiques (EMI). Afin de minimiser ce risque, il est essentiel d’éviter la création de segments de cuivre flottants, en particulier dans les plans de masse et d’alimentation.
+Les pistes ou zones de cuivre non connectées peuvent se comporter comme des antennes et générer des interférences électromagnétiques (EMI). Pour minimiser ce risque, il est essentiel d’éviter la création de segments de cuivre flottants, en particulier dans les plans de masse et d’alimentation. Sur l'image ci-dessous, des antennes sont visibles. Ce problème peut être évité en ajoutant des vias aux extrémités de ces antennes ou en définissant une zone d'exclusion pour empêcher le remplissage.
+
+<div align="center">
+<img src="./Images/Kicad/PCB/antennes.png" width="400">
+</div>
 
 - **Éviter les discontuinités des plans de masse** :
-Les interruptions dans les plans de masse peuvent créer des chemins de retour de courant indésirables, affectant la performance globale du circuit, notamment pour les signaux à haute fréquence. Un plan de masse continu garantit un retour propre des courants et prévient les problèmes d’intégrité du signal. Il est recommandé de s'assurer que les pistes de signal ou d’alimentation ne créent pas de coupures dans ce plan.
+Les interruptions dans les plans de masse peuvent créer des chemins de retour de courant indésirables, affectant la performance globale du circuit, notamment pour les signaux à haute fréquence. Un plan de masse continu garantit un retour propre des courants et prévient les problèmes d’intégrité du signal. Il est recommandé de s'assurer que les pistes de signal, d’alimentation ou les vias ne créent pas de coupures dans ce plan, comme on peut le voir sur l'image ci-dessous.
+
+<div align="center">
+<img src="./Images/Kicad/PCB/coupure_plan_via.png" width="400">
+</div>
 
 ### Bonnes pratiques pour les pistes et vias
 
 - **Placer les vias proches des pads lorsque cela est possible** :
-  Les vias doivent être placés aussi près que possible des pads des composants afin de réduire la longueur des pistes et ainsi limiter l'inductance parasite.
+  Les vias doivent être placés aussi près que possible des pads des composants pour réduire la longueur des pistes et ainsi limiter l'inductance parasite.
+
+<div align="center">
+<img src="./Images/Kicad/PCB/via_près_pad.png" width="400">
+</div>
   
 - **Adapter la largeur des pistes en fonction du type de signal pour des raisons thermiques**:
 Il est important de dimensionner correctement la largeur des pistes selon le type de courant qui les traverse. Les pistes de puissance, par exemple, doivent être suffisamment larges pour assurer une bonne dissipation thermique et limiter les pertes résistives. Une largeur insuffisante pourrait entraîner une surchauffe ou une dégradation des performances du circuit. À l'inverse, les pistes de signal, qui véhiculent des courants plus faibles, peuvent être plus fines.
+
+<div align="center">
+<img src="./Images/Kicad/PCB/comparaison_taille_piste.png" width="400">
+</div>
 
 - **Éviter les angles droits ou inférieurs à 90° sur les pistes** :
 Les pistes présentant des angles droits ou très aigus peuvent entraîner des discontinuités d’impédance, causant des réflexions de signal et des perturbations électromagnétiques, notamment dans les circuits haute fréquence. Ces angles peuvent également constituer des points de faiblesse thermique ou mécanique. Il est recommandé d’utiliser des angles de 45° ou des courbes douces pour maintenir la continuité du signal et réduire les effets de réflexion et d’interférence.
 
 ###  Bonnes pratiques pour les composants
-- **Condensateurs de découplage à faible valeur** : Les condensateurs de plus petite capacité (souvent des céramiques, typiquement dans les gammes de 100nF à 1µF) sont destinés à filtrer les hautes fréquences et doivent être placés aussi près que possible des pins d'alimentation des composants. Leur faible constante de temps leur permet de répondre rapidement aux fluctuations rapides de la tension causées par des commutations rapides dans les circuits numériques.
-- **Condensateurs de plus grande valeur**: Les condensateurs de plus grande capacité (souvent dans les gammes de 10µF à 100µF ou plus, et souvent des électrolytiques ou des tantales) servent à fournir une énergie plus conséquente pour des fluctuations de tension plus lentes, mais ne sont pas aussi efficaces pour les hautes fréquences. Ils peuvent être placés un peu plus loin des composants, mais idéalement, ils devraient rester dans le même plan d'alimentation. Leur rôle est de compléter les condensateurs de faible valeur, en offrant une stabilisation à des fréquences plus basses.
+
+- **Condensateurs de découplage à faible valeur** :
+Les condensateurs de plus petite capacité (souvent des céramiques, typiquement dans les gammes de 100nF à 1µF) sont destinés à filtrer les hautes fréquences et doivent être placés aussi près que possible des pins d'alimentation des composants. Leur faible constante de temps leur permet de répondre rapidement aux fluctuations rapides de la tension causées par des commutations rapides dans les circuits numériques.
+
+- **Condensateurs de plus grande valeur**:
+Les condensateurs de plus grande capacité (souvent dans les gammes de 10µF à 100µF ou plus, et souvent des électrolytiques ou des tantales) servent à fournir une énergie plus conséquente pour des fluctuations de tension plus lentes, mais ne sont pas aussi efficaces pour les hautes fréquences. Ils peuvent être placés un peu plus loin des composants, mais idéalement, ils devraient rester dans le même plan d'alimentation. Leur rôle est de compléter les condensateurs de faible valeur, en offrant une stabilisation à des fréquences plus basses.
 
 ### Tests points
 L'ajout de points de test accessibles facilite la vérification des tensions d'alimentation, des signaux critiques ou d'autres tests en cours de fabrication et de débogage.
