@@ -16,6 +16,7 @@
 
 #include "stdint.h"
 
+#define X4_UART huart3
 /**
  * @def X4_CMD_START
  * @brief Start command identifier for LiDAR communication.

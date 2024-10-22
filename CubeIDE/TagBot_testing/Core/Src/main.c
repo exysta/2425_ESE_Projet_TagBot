@@ -28,8 +28,8 @@
 #include "ssd1306.h"
 #include "ssd1306_tests.h"
 #include <stdbool.h>
-
-
+#include <stdio.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -39,7 +39,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SSD1306TEST
+//#define SSD1306TEST
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -61,6 +61,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#ifdef SSD1306TEST
 const uint8_t garfield_32x32 [] = {
 		0xff, 0xff, 0xff, 0xff, 	/*Color of index 0*/
 		0xff, 0xff, 0xff, 0xff, 	/*Color of index 1*/
@@ -98,6 +99,7 @@ const uint8_t garfield_32x32 [] = {
 		0xfc, 0x00, 0x00, 0x7f,
 		0xff, 0xff, 0xff, 0xff,
 };
+#endif
 /* USER CODE END 0 */
 
 /**
@@ -135,19 +137,28 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 	//  X4_SendCommand(X4_CMD_GET_INFO); /**< Command to get device information */
 	//  HAL_UART_Receive(&huart3, pData, Size, Timeout)
+#ifdef SSD1306TEST
 	ssd1306_Init();
-	ssd1306_Fill(White);
-	ssd1306_UpdateScreen();
+
+#endif
+    uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_INFO}; /**< Array holding the command data */
+    uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
+    memset(raw_data, 0, sizeof(raw_data));
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
+#ifdef SSD1306TEST
+		ssd1306_Fill(White);
 		ssd1306_UpdateScreen();
-
-		/* USER CODE END WHILE */
-
+		HAL_Delay(3000);
+#endif
+	    HAL_UART_Transmit(&huart3, data, 2, HAL_MAX_DELAY);  // Transmit command over UART
+	    HAL_StatusTypeDef status = HAL_UART_Receive(&huart3, raw_data, sizeof(raw_data), 100);		/* USER CODE END WHILE */
+	    HAL_Delay(100);
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */

@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-extern UART_HandleTypeDef huart4; /**< UART handle for UART4 communication */
+extern UART_HandleTypeDef huart3; /**< UART handle for UART4 communication */
 
 /**
  * @brief Sends a command to the device via UART.
@@ -25,7 +25,7 @@ extern UART_HandleTypeDef huart4; /**< UART handle for UART4 communication */
 static void X4_SendCommand(uint8_t command)
 {
     uint8_t data[2] = {X4_CMD_START, command}; /**< Array holding the command data */
-    HAL_UART_Transmit(&huart4, data, 2, HAL_MAX_DELAY);  // Transmit command over UART
+    HAL_UART_Transmit(&huart3, data, 2, HAL_MAX_DELAY);  // Transmit command over UART
 }
 
 /**
@@ -191,7 +191,7 @@ void X4_HandleResponse(void) {
     X4_ResponseMessage response;  /**< Structure to hold parsed response message */
 
     // Receive data from the UART (HAL_UART_Receive should be non-blocking or with timeout)
-    HAL_StatusTypeDef status = HAL_UART_Receive(&huart4, raw_data, sizeof(raw_data), HAL_TIMEOUT);
+    HAL_StatusTypeDef status = HAL_UART_Receive(&huart3, raw_data, sizeof(raw_data), HAL_TIMEOUT);
     if (status == HAL_OK) {
         // Parse the received message
         X4_ParseMessage(raw_data, &response);
