@@ -4,6 +4,8 @@
  *  Created on: Sep 22, 2024
  *      Author: exysta
  *  Code pour les capteurs de distance
+ *  Based on https://github.com/DrGFreeman/SharpDistSensor
+ *
  *
  */
 
