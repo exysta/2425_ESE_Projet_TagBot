@@ -305,6 +305,13 @@ Il est important de dimensionner correctement la largeur des pistes selon le typ
 - **Éviter les angles droits ou inférieurs à 90° sur les pistes** :
 Les pistes présentant des angles droits ou très aigus peuvent entraîner des discontinuités d’impédance, causant des réflexions de signal et des perturbations électromagnétiques, notamment dans les circuits haute fréquence. Ces angles peuvent également constituer des points de faiblesse thermique ou mécanique. Il est recommandé d’utiliser des angles de 45° ou des courbes douces pour maintenir la continuité du signal et réduire les effets de réflexion et d’interférence.
 
+- **Position des vias par rapport aux pastilles de brasage**:
+Sur l'image ci-dessous, les vias ne sont pas placés directement sur les pastilles de brasage. Cette configuration peut être choisie pour éviter des problèmes de soudure ou pour permettre une meilleure dissipation thermique.
+
+<div align="center">
+<img src="./Images/Kicad/PCB/via_et_pad.png" width="400">
+</div>
+
 ###  Bonnes pratiques pour les composants
 
 - **Condensateurs de découplage à faible valeur** :
