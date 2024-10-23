@@ -202,10 +202,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 <div align="center">
 <img src="./Images/Kicad_connecteurs.png" width="400">
 </div>
-
-<details>
-  <summary><strong> Détails</strong></summary>
-  
+ 
 1. **Connecteur Moteurs**
 
 - Les connecteurs moteurs permettent de relier le PCB aux moteurs DC utilisés pour déplacer le robot.
@@ -252,7 +249,6 @@ Le robot est alimenté par une batterie LiPo de 7.2V, qui fournit de l'énergie 
 <img src="./Images/Kicad_batterie.png" width="400">
 </div>
 
-</details>
 
 ## Ajustements à considérer pour un routage optimal
 <details>
