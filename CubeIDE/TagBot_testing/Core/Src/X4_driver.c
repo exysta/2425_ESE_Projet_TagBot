@@ -223,6 +223,7 @@ void X4_HandleResponse(X4_handle_t * X4_handle)
 	{
 		// Handle continuous mode response
 		X4_HandleScanResponse(&response,X4_handle);
+		X4_HandleScanData(X4_handle);
 	}
 
 	else
@@ -241,9 +242,9 @@ void X4_HandleResponse(X4_handle_t * X4_handle)
  * @param raw_data Pointer to the raw data received from the device.
  * @param response Pointer to the X4_ResponseMessage structure to store the parsed response.
  */
-void X4_ParseMessage(const uint8_t *raw_data, X4_ResponseMessage *response) {
+void X4_ParseMessage(const uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE], X4_ResponseMessage *response) {
 	// Parse the start sign
-	response->start_sign = (raw_data[1] << 8) | raw_data[0];  /**< Combine two bytes for the start sign */
+	response->start_sign = (raw_data[0] << 8) | raw_data[1];  /**< Combine two bytes for the start sign */
 
 	if (response->start_sign != X4_RESPONSE_START_SIGN) {
 		// Invalid message, handle error (log, return, etc.)

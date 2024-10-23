@@ -141,11 +141,15 @@ int main(void)
 	ssd1306_Init();
 
 #endif
-    uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_HEALTH}; /**< Array holding the command data */
-    uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
-    memset(raw_data, 0, sizeof(raw_data));
-    X4_handle_t X4_handle;
-    X4_GetDeviceInfo(&X4_handle);
+	X4_handle_t X4_handle;
+
+	//    uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_HEALTH}; /**< Array holding the command data */
+	//    uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
+	//    memset(raw_data, 0, sizeof(raw_data));
+	//    X4_GetDeviceInfo(&X4_handle);
+
+	X4_GetDeviceInfo(&X4_handle);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -157,9 +161,10 @@ int main(void)
 		ssd1306_UpdateScreen();
 		HAL_Delay(3000);
 #endif
-	    HAL_UART_Transmit(&huart3, data, 2, HAL_MAX_DELAY);  // Transmit command over UART
-	    HAL_StatusTypeDef status = HAL_UART_Receive(&huart3, raw_data, sizeof(raw_data), 100);		/* USER CODE END WHILE */
-	    HAL_Delay(100);
+		//	    HAL_UART_Transmit(&huart3, data, 2, HAL_MAX_DELAY);  // Transmit command over UART
+		//	    HAL_StatusTypeDef status = HAL_UART_Receive(&huart3, raw_data, sizeof(raw_data), 100);		/* USER CODE END WHILE */
+		//	    HAL_Delay(100);
+
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
