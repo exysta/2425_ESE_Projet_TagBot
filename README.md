@@ -13,19 +13,19 @@ The following description is in french but you can find the english description 
   
   # Introduction
   
-  Vous vous trouvez actuellement dans le projet TagBot (ou robot chat), il s'intègre à un projet de classe où chaque équipe doit concevoir un robot. Ces robots doivent pouvoir jouer au chat ensemble, avec un chat et des souris, sur une table sans bords. 
+Vous vous trouvez actuellement dans le projet TagBot (ou robot chat), qui s'intègre à un projet de classe où chaque équipe doit concevoir un robot. Ces robots doivent pouvoir jouer au chat ensemble, avec un chat et des souris, sur une table sans bords. 
   
-  Au terme de ce projet, notre chat robot doit pouvoir:
-  - se déplacer sur une table sans bordure (sans tomber)
-  - changer d'état (chat ou souris)
-    - si le robot est chat il doit pouvoir attraper la souris
-    - si le robot est souris il doit pouvoir échapper au chat
+Au terme de ce projet, notre chat robot doit pouvoir:
+ - se déplacer sur une table sans bordure (sans tomber)
+ - changer d'état (chat ou souris)
+  - si le robot est chat, il doit pouvoir attraper la souris
+  - si le robot est souris, il doit pouvoir échapper au chat
   
-  Nous avons plusieurs niveaux d'objectifs à atteindre: 
-  - Niveau 0 : robot se déplace + ne tombe pas de la table
-  - Niveau 1 : détecte un robot et s'en rapproche (chat) ou s'en éloigne (souris)
-  - Niveau 2 : change de comportement après un contact + fonctionne avec plusieurs robots
-  - Niveau 3 : capable de se localiser + n'est pas affecté par les obstacles hors de la table
+Nous avons plusieurs niveaux d'objectifs à atteindre : 
+  - Niveau 0 : le robot se déplace + ne tombe pas de la table
+  - Niveau 1 : détection d'un robot et s'en rapprocher (chat) ou s'en éloigner (souris)
+  - Niveau 2 : changement de comportement après un contact + fonctionnement avec plusieurs robots
+  - Niveau 3 : capacité de se localiser + ne pas être affecté par les obstacles hors de la table
 
   Le projet doit être réalisé sur un semestre, du mois de septembre au mois de janvier, avec un certain nombre de livrables à fournir avant chaque étape clé. Les   différentes étapes techniques incluent des phases de conception, de développement et de validation sur un système embarqué.
 
@@ -58,17 +58,16 @@ The following description is in french but you can find the english description 
 
   ## Schéma architectural et materiel
 
-  <div align="center">
+<div align="center">
 <img src="./Images/Schema_architecture.png" width="400">
 </div>
   
-  L'essentiel du materiel nous a été imposé, mais nous devons trouver par nous même le moyen par lequel nous voulons détetecter les bords pour ne pas tomber de la table. 
-  Pour cela on aimerait utiliser les capteurs IR ce capteur sera placer sous le robot et recevra donc une tension qui déterminera sa distance par rapport au sol, quand ce signal diminue fortement (donc la distance augmente) cela signifie qu'on est sur un bord. Comme il sera sous le robot il nous faut un capteur qui est capable de detecté des petites distances comme le capteur sharp GP2Y0A21SK0F. 
-  
-  On aimerai aussi ajouter une led visible qui nous permettrait de savoir quel est l'état de notre robot chat.
+  L'essentiel du matériel a été imposé, mais il restait à déterminer le moyen par lequel le robot détecterait les bords pour éviter de tomber de la table. Pour cela, des capteurs infrarouges (IR) ont été choisis. Placés sous le robot, ces capteur reçoivent une tension qui détermine la distance par rapport au sol. Lorsque ce signal diminue fortement (ce qui correspond à une augmentation de la distance), cela indique la présence d'un bord. Étant donné que les capteurs sont situés sous le robot, il est nécessaire de détecter de faibles distances, comme le permet le capteur Sharp GP2Y0A21SK0F.
+
+  Il est également envisagé d'ajouter une LED visible par l'utilisateur, permettant de connaître l'état du robot chat à tout moment.
 
   # PCB
-  La première étape de la conception de notre PCB a été de réaliser le schéma électronique de notre carte. Voici une liste des composants utilisés :
+  La première étape de la conception du PCB a été de réaliser le schéma électronique de la carte. Voici une liste des composants utilisés :
 
 - **Microprocesseur** : STM32G431CBU6
 - **Régulateurs de tension** : 5V et 3.3V
@@ -79,7 +78,7 @@ The following description is in french but you can find the english description 
 - **Connecteurs** : Divers connecteurs pour l'alimentation et les signaux
 - **Accéléromètre** : ADXL343
 
-## Détail des Composants et Branchements
+## Détail des composants et branchements
 
 ### 1. Microprocesseur : STM32G431CBU6
 
@@ -95,7 +94,7 @@ Les principaux branchements incluent :
 - **VSS / VDD** : Alimentations principales.
 - **GPIOs** : Utilisés pour le contrôle des LED de débogage et la communication avec les drivers de moteur.
 
-Pour configurer les broches du microcontrôleur, nous utilisons le logiciel CubeIDE. Une fois la configuration effectuée, nous générons le fichier `.ioc` qui documente l'ensemble des options choisies pour chaque pin. Le fait d'utiliser l'ioc du microprocesseur nous permet de choisir au mieux chaque pin pour les entrée/sortie du microprocesseur.
+Pour configurer les broches du microcontrôleur, le logiciel CubeIDE est utilisé. Une fois la configuration effectuée, la génération du fichier `.ioc` permet de documenter l'ensemble des options choisies pour chaque broche. Le fait d'utiliser l'ioc du microprocesseur permet de choisir au mieux chaque broche pour les entrée/sortie du microprocesseur.
 
 ### 2. LED
 
@@ -103,7 +102,7 @@ Le robot comporte 7 LEDs connectées à des résistances de limitation de couran
 
 - **Une LED rouge** : indique que le robot est le chat.
 - **Une LED Bleue** : indique que le robot est une souris.
-- **Deux LED vertes** : qui sont des LEDs de debug.
+- **Deux LED vertes** : sont des LEDs de débogage.
 - **Une LED jaune** : 5V
 - **Une LED verte** : 3.3V
 - **Une LED verte** : 7.2V
@@ -125,7 +124,7 @@ Le robot dispose de deux boutons :
 
 ### 4. Drivers de Moteurs : ZXBM5210-SP-13
 
-Les drivers de moteurs permettent de contrôler les moteurs à courant continu utilisés pour déplacer le robot. Nous utilisons le driver ZXBM5210, connecté selon le schéma de la [documentation](./Documents/datasheets/driver_ZXBM5210.pdf).
+Les drivers de moteurs permettent de contrôler les moteurs à courant continu utilisés pour déplacer le robot. Le driver ZXBM5210 est connecté selon le schéma de la [documentation](./Documents/datasheets/driver_ZXBM5210.pdf).
 
 <div align="center">
 <img src="./Images/Kicad_drivers.png" width="400">
@@ -133,9 +132,9 @@ Les drivers de moteurs permettent de contrôler les moteurs à courant continu u
 
 Le branchement des drivers inclut :
 
-- **Vref** : Tension de référence pour le contrôle de vitesse.
-- **VDD** : Alimentation des moteurs.
-- **Entrées de contrôle** : Connectées aux GPIOs du microprocesseur.
+- **Vref** : Tension de référence pour le contrôle de vitesse
+- **VDD** : Alimentation des moteurs
+- **Entrées de contrôle** : Connectées aux GPIOs du microprocesseur
 
 <div align="center">
 <img src="./Images/Kicad_driver.png" width="400">
@@ -143,7 +142,7 @@ Le branchement des drivers inclut :
 
 ### 5. Régulateurs de Tension
 
-Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la batterie :
+Deux régulateurs de tension sont utilisés pour convertir l'alimentation de la batterie :
 
 <div align="center">
 <img src="./Images/Kicad_regulateurs.png" width="400">
@@ -152,8 +151,8 @@ Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la 
 1. **Régulateur 7.2V → 5V : MP1475S**
    - Construit selon la [documentation](./Documents/datasheets/regulateur_MP1475S.pdf).
    - Assure une tension de 5V en sortie pour l'alimentation du LIDAR et des capteurs de bords.
-   - On prend donc la résistance R = 7.68k cette valeur est disponible donc nous pouvons garder la valeur. Si ca n’avait pas été le cas on aurait du réaliser un diviseur de tension pour retrouver les valeurs des résistances pour qu en sortie on est du 5V et 3A.
-   - Pour s'assurer que nous recevons bien une tension de 5V, nous avons ajouter une LED jaune connectée à une résistance de limitation de courant.
+   - Concernant la résistance R = 7.68k, cette valeur est disponible et a donc été conservée. Si cela n’avait pas été le cas, il aurait été nécessaire de réaliser un diviseur de tension pour déterminer les valeurs des résistances permettant d'obtenir une sortie de 5V et 3A.
+   - Pour vérifier la présence de la tension de 5V, une LED jaune a été ajoutée, et a été connectée à une résistance de limitation de courant.
 
 <div align="center">
 <img src="./Images/Kicad_regulateur_MP1475S.png" width="400">
@@ -162,7 +161,7 @@ Nous utilisons deux régulateurs de tension pour convertir l'alimentation de la 
 2. **Régulateur 5V → 3.3V : BU33SD5WG-TR**
    - Construit selon la [documentation](./Documents/datasheets/regulateur_buxxsd5wg-e.pdf).
    - Alimente le microprocesseur et l'écran en 3.3V.
-   - Pour s'assurer que nous recevons bien une tension de 3V, nous avons ajouter une LED verte connectée à une résistance de limitation de courant.
+   - Pour vérifier la précence de la tension de 3V, une LED verte a été ajoutée et a été connectée à une résistance de limitation de courant.
 
 <div align="center">
 <img src="./Images/Kicad_regulateur_BU33SD5WG.png" width="400">
@@ -204,6 +203,9 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 <img src="./Images/Kicad_connecteurs.png" width="400">
 </div>
 
+<details>
+  <summary><strong> Détails</strong></summary>
+  
 1. **Connecteur Moteurs**
 
 - Les connecteurs moteurs permettent de relier le PCB aux moteurs DC utilisés pour déplacer le robot.
@@ -225,7 +227,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 
 3. **Connecteur Écran**
 
-- Le connecteur écran permet d'ajouter un petit écrat pour afficher l'état du robot (chat ou souris).
+- Le connecteur écran permet d'ajouter un petit écran pour afficher l'état du robot (chat ou souris).
 - Ce connecteur est relié à l'interface I2C du microprocesseur.
 
 <div align="center">
@@ -235,7 +237,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 4. **Connecteur Capteur Bords**
 
 - Le capteur bords est utilisé pour détecter les bords de la table et éviter que le robot ne tombe.
-- Le capteur est relié intrinséquement à un DAC
+- Le capteur est relié intrinséquement à un DAC.
 
 <div align="center">
 <img src="./Images/Kicad_connecteur_capteurbords.png" width="400">
@@ -244,12 +246,13 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 
 ### 10. Batterie
 
-Le robot est alimenté par une batterie LiPo de 7.4V, qui fournit de l'énergie aux régulateurs de tension pour les différents composants du circuit, la documentation utilisé est [ici](./Documents/datasheets/batterie_0900766b81582941.pdf). Pour s'assurer que nous recevons bien une tension de 7,2V, nous avons ajouté une LED verte connectée à une résistance de limitation de courant.
+Le robot est alimenté par une batterie LiPo de 7.2V, qui fournit de l'énergie aux régulateurs de tension pour les différents composants du circuit, la documentation utilisé est [ici](./Documents/datasheets/batterie_0900766b81582941.pdf). Pour vérifier la présence de la tension de 7.2V, une LED verte a été ajoutée et connectée à une résistance de limitation de courant.
 
 <div align="center">
 <img src="./Images/Kicad_batterie.png" width="400">
 </div>
 
+</details>
 
 ## Ajustements à considérer pour un routage optimal
 <details>
@@ -289,7 +292,7 @@ Les interruptions dans les plans de masse peuvent créer des chemins de retour d
 ### Bonnes pratiques pour les pistes et vias
 
 - **Placer les vias proches des pads lorsque cela est possible** :
-  Les vias doivent être placés aussi près que possible des pads des composants pour réduire la longueur des pistes et ainsi limiter l'inductance parasite.
+Les vias doivent être placés aussi près que possible des pads des composants pour réduire la longueur des pistes et ainsi limiter l'inductance parasite.
 
 <div align="center">
 <img src="./Images/Kicad/PCB/via_près_pad.png" width="400">
@@ -306,7 +309,7 @@ Il est important de dimensionner correctement la largeur des pistes selon le typ
 Les pistes présentant des angles droits ou très aigus peuvent entraîner des discontinuités d’impédance, causant des réflexions de signal et des perturbations électromagnétiques, notamment dans les circuits haute fréquence. Ces angles peuvent également constituer des points de faiblesse thermique ou mécanique. Il est recommandé d’utiliser des angles de 45° ou des courbes douces pour maintenir la continuité du signal et réduire les effets de réflexion et d’interférence.
 
 - **Position des vias par rapport aux pastilles de brasage**:
-Sur l'image ci-dessous, les vias ne sont pas placés directement sur les pastilles de brasage. Cette configuration peut être choisie pour éviter des problèmes de soudure ou pour permettre une meilleure dissipation thermique.
+Sur l'image ci-dessous, les vias ne sont pas placés directement sur les pastilles de brasage. Cette configuration a été choisie pour éviter des problèmes de soudure et pour permettre une meilleure dissipation thermique.
 
 <div align="center">
 <img src="./Images/Kicad/PCB/via_et_pad.png" width="400">
