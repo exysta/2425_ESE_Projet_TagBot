@@ -15,8 +15,6 @@
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 
-#define Vmax  0	// (CHANGER) mettre la vrai valeur de Vmax du capteur (tension max qu on veut)
-#define Vmin  0 	// (CHANGER) mettre la vrai valeur de Vmin du capteur que l'on souhaite (tension min que l'on veut)
 
 uint16_t distSensor_ReadADCChannel(ADC_HandleTypeDef* hadc, uint32_t channel)
 {
