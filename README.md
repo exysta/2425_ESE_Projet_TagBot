@@ -234,7 +234,7 @@ Le robot dispose de plusieurs connecteurs pour interfacer différents périphér
 4. **Connecteur Capteur Bords**
 
 - Le capteur bords est utilisé pour détecter les bords de la table et éviter que le robot ne tombe.
-- Le capteur est relié intrinséquement à un DAC.
+- Le capteur est relié intrinséquement à un ADC.
 
 <div align="center">
 <img src="./Images/Kicad_connecteur_capteurbords.png" width="400">
