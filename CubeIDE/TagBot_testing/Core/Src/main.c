@@ -21,7 +21,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "i2c.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -43,6 +45,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 //#define SSD1306TEST
+#define ADC_DMA
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -70,6 +73,22 @@ int __io_putchar(int chr)
 	HAL_UART_Transmit(&huart2, (uint8_t*)&chr, 1, HAL_MAX_DELAY);
 	return chr;
 }
+
+uint32_t adc_value = 0;
+volatile uint8_t adc_ready = 0; // Flag pour indiquer que la valeur est prête à être afficher
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+	if (ADC2 == hadc->Instance)
+	{
+		//adc_ready = 1;
+		// Si la valeur ADC est supérieure à 1000 (la distance avec le capteur est élevée, mettre le flag à 1
+		if (adc_value < 1000)
+		{
+			adc_ready = 1;
+		}
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -80,7 +99,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint32_t adc_value = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -101,32 +119,59 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   MX_ADC2_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+
+	//printf("hello\r\n");
+
+#ifdef ADC_DMA
+
+	HAL_ADC_Start_DMA(&hadc2, &adc_value, 1);
+	HAL_TIM_Base_Start(&htim6);
+
+#endif
 
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-	  /*uint16_t distance = DistanceSensor_GetDistance();
+	while (1)
+	{
+		/*uint16_t distance = DistanceSensor_GetDistance();
 
-	  // Faire quelque chose avec la distance (par exemple, l'envoyer par UART)
-	  printf("adc_value: %lu \r\n", distance);
-	  HAL_Delay(1000);  // Délai de 1000 ms*/
+  // Faire quelque chose avec la distance (par exemple, l'envoyer par UART)
+  printf("adc_value: %lu \r\n", distance);
+  HAL_Delay(1000);  // Délai de 1000 ms*/
 
-	  HAL_ADC_Start(&hadc2);
-	  HAL_ADC_PollForConversion(&hadc2, HAL_MAX_DELAY);
-	  adc_value = HAL_ADC_GetValue(&hadc2);
+#ifdef ADC
 
-	  printf("adc_value %lu\r\n", adc_value);
-	  HAL_Delay(1000);
+	HAL_ADC_Start(&hadc2);
+	HAL_ADC_PollForConversion(&hadc2, HAL_MAX_DELAY);
+	adc_value = HAL_ADC_GetValue(&hadc2);
 
+	printf("adc_value %lu\r\n", adc_value);
+	HAL_Delay(500);
+#endif
+
+#ifdef ADC_DMA
+
+	// Vérifier si une nouvelle valeur ADC est prête et que le flag est actif
+	if (adc_ready == 1)
+	{
+
+		printf("adc_value %lu\r\n", adc_value);
+		// Réinitialiser le flag après l'affichage
+		adc_ready = 0;
+	}
+
+	HAL_Delay(500);
+#endif
 
 
     /* USER CODE END WHILE */
@@ -211,7 +256,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-	/* User can add his own implementation to report the file name and line number,
+		/* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
