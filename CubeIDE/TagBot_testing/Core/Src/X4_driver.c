@@ -190,13 +190,13 @@ void X4_HandleScanResponse(const X4_ResponseMessage* response,X4_handle_t * X4_h
  */
 void X4_HandleResponse(X4_handle_t * X4_handle)
 {
-	uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
-	memset(raw_data, 0, sizeof(raw_data));//to reset raw_data
+	uint8_t raw_data[X4_MAX_RESPONSE_SIZE]; /**< Buffer for raw received data */
+	memset(raw_data, 0, X4_MAX_RESPONSE_SIZE);//to reset raw_data
 
 	X4_ResponseMessage response;  /**< Structure to hold parsed response message */
 
 	// Receive data from the UART (HAL_UART_Receive should be non-blocking or with timeout)
-	HAL_StatusTypeDef status = HAL_UART_Receive(&huart3, raw_data, sizeof(raw_data), 10);
+	HAL_StatusTypeDef status = HAL_UART_Receive(&huart3, raw_data, X4_MAX_RESPONSE_SIZE, 10);
 
 	// Parse the received message
 	X4_ParseMessage(raw_data, &response);
@@ -242,27 +242,31 @@ void X4_HandleResponse(X4_handle_t * X4_handle)
  * @param raw_data Pointer to the raw data received from the device.
  * @param response Pointer to the X4_ResponseMessage structure to store the parsed response.
  */
-void X4_ParseMessage(const uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE], X4_ResponseMessage *response) {
+void X4_ParseMessage(uint8_t *raw_data, X4_ResponseMessage *response)
+{
 	// Parse the start sign
 	response->start_sign = (raw_data[0] << 8) | raw_data[1];  /**< Combine two bytes for the start sign */
 
-	if (response->start_sign != X4_RESPONSE_START_SIGN) {
+	if (response->start_sign != X4_RESPONSE_START_SIGN)
+	{
 		// Invalid message, handle error (log, return, etc.)
 		return;
 	}
 
 	// Parse response length (lower 6 bits of the 6th byte) and mode (upper 2 bits)
 	response->response_length = raw_data[2] & 0x3F;  // Lower 6 bits
-	response->response_mode = (raw_data[2] >> 6) & 0x03;  // Upper 2 bits
+	response->response_mode = (raw_data[5] >> 6) & 0x03;  // Upper 2 bits
 
 	// Parse the type code
-	response->type_code = raw_data[3];  /**< Type code of the response */
+	response->type_code = raw_data[6];  /**< Type code of the response */
 
 	// Copy the content (assuming fixed-length content for simplicity)
 	uint32_t content_length = (response->response_mode == X4_RESPONSE_CONTINUOUS_MODE) ?
-			X4_MAX_RESPONSE_SIZE : response->response_length; /**< Determine content length based on mode */
+			X4_MAX_RESPONSE_SIZE : response->response_length ; /**< Determine content length based on mode */
 
-	for (int i = 0; i < content_length; i++) {
+
+	for (int i = 0; i < content_length; i++)
+	{
 		response->content[i] = raw_data[4 + i];  /**< Copy content from raw data */
 	}
 }
@@ -277,19 +281,22 @@ void X4_ParseMessage(const uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_H
  *
  * @param scan_data Pointer to the X4_ScanData structure containing sample data.
  */
-void X4_HandleScanDataDistances(X4_handle_t * X4_handle) {
+void X4_HandleScanDataDistances(X4_handle_t * X4_handle)
+{
 	// Calculate the number of distances to be processed
 	int num_distances = X4_handle->scan_data.sample_quantity;  /**< Number of distance samples */
 
 	// Allocate memory for distances
 	X4_handle->scan_data.distances = malloc(num_distances * sizeof(int));
-	if (X4_handle->scan_data.distances == NULL) {
+	if (X4_handle->scan_data.distances == NULL)
+	{
 		// Handle memory allocation failure
 		return; // Or add error handling as needed
 	}
 
 	// Each sample has 2 bytes; process each sample
-	for (int i = 0; i < num_distances * 2; i += 2) {
+	for (int i = 0; i < num_distances * 2; i += 2)
+	{
 		uint8_t sample[2];
 		sample[0] = X4_handle->scan_data.sample_data[i];
 		sample[1] = X4_handle->scan_data.sample_data[i + 1];
@@ -314,7 +321,8 @@ void X4_HandleScanDataDistances(X4_handle_t * X4_handle) {
  *
  * @param scan_data Pointer to the X4_ScanData structure containing angle data.
  */
-void X4_HandleScanDataAngles(X4_handle_t * X4_handle) {
+void X4_HandleScanDataAngles(X4_handle_t * X4_handle)
+{
 	// Get the number of samples in the frame (LSN)
 	uint8_t LSN = X4_handle->scan_data.sample_quantity;  /**< Number of samples in the scan */
 
@@ -342,16 +350,19 @@ void X4_HandleScanDataAngles(X4_handle_t * X4_handle) {
 
 	// Step 2: Calculate intermediate angles
 	X4_handle->scan_data.angles[0] = AngleFSA;  // First sample angle (FSA)
-	for (int i = 1; i < LSN; ++i) {
+	for (int i = 1; i < LSN; ++i)
+	{
 		X4_handle->scan_data.angles[i] = (angle_diff / (LSN - 1)) * (i - 1) + AngleFSA;  /**< Interpolated angles */
 	}
 
 	// Step 3: Second-level angle correction based on distances
-	for (int i = 0; i < LSN; ++i) {
+	for (int i = 0; i < LSN; ++i)
+	{
 		uint16_t distance = X4_handle->scan_data.distances[i];  /**< Distance of the current sample */
 		float AngCorrect = 0.0f;  /**< Angle correction factor */
 
-		if (distance > 0) {
+		if (distance > 0)
+		{
 			// Apply the angle correction formula
 			AngCorrect = atanf(21.8f * (155.3f - (float)distance) / (155.3f * (float)distance));
 			AngCorrect = AngCorrect * (180.0f / M_PI);  // Convert from radians to degrees
@@ -361,9 +372,11 @@ void X4_HandleScanDataAngles(X4_handle_t * X4_handle) {
 		X4_handle->scan_data.angles[i] += AngCorrect;
 
 		// Ensure angle is within [0, 360) range
-		if (X4_handle->scan_data.angles[i] >= 360.0f) {
+		if (X4_handle->scan_data.angles[i] >= 360.0f)
+		{
 			X4_handle->scan_data.angles[i] -= 360.0f;
-		} else if (X4_handle->scan_data.angles[i] < 0.0f) {
+		} else if (X4_handle->scan_data.angles[i] < 0.0f)
+		{
 			X4_handle->scan_data.angles[i] += 360.0f;
 		}
 
@@ -384,11 +397,13 @@ void X4_HandleScanDataAngles(X4_handle_t * X4_handle) {
  * @param packet_length Length of the packet in bytes.
  * @return The calculated XOR value as a 16-bit unsigned integer.
  */
-uint16_t calculateXOR(const X4_ScanData *scan_data, size_t packet_length) {
+uint16_t calculateXOR(const X4_ScanData *scan_data, size_t packet_length)
+{
 	uint16_t xor_result = 0;
 
 	// XOR all bytes in the packet except the check code
-	for (size_t i = 0; i < (packet_length - 2); ++i) {
+	for (size_t i = 0; i < (packet_length - 2); ++i)
+	{
 		// Use XOR operation on each byte of the packet
 		xor_result ^= ((const uint8_t*)scan_data)[i];
 	}
@@ -406,7 +421,8 @@ uint16_t calculateXOR(const X4_ScanData *scan_data, size_t packet_length) {
  * @param packet_length Length of the packet in bytes.
  * @return True if the calculated XOR matches the check code, false otherwise.
  */
-bool verifyCheckCode(const X4_ScanData *scan_data, size_t packet_length) {
+bool verifyCheckCode(const X4_ScanData *scan_data, size_t packet_length)
+{
 	// Calculate XOR for verification
 	uint16_t calculated_xor = calculateXOR(scan_data, packet_length);
 
@@ -439,7 +455,8 @@ void X4_HandleScanData(X4_handle_t * X4_handle)
  * @param byte_array Pointer to a 2-byte array containing the data.
  * @return The converted value as a 16-bit unsigned integer.
  */
-uint16_t convertBytesToUint16(const uint8_t* byte_array) {
+uint16_t convertBytesToUint16(const uint8_t* byte_array)
+{
 	return (uint16_t)(byte_array[1] << 8 | byte_array[0]);
 }
 

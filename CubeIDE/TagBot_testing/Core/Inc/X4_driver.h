@@ -193,7 +193,7 @@ void X4_HandleResponse(X4_handle_t * X4_handle);
  * @param raw_data Pointer to the raw data buffer.
  * @param response Pointer to the X4_ResponseMessage structure to store the parsed data.
  */
-void X4_ParseMessage(const uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE], X4_ResponseMessage *response);
+void X4_ParseMessage( uint8_t *raw_data, X4_ResponseMessage *response);
 
 
 void X4_HandleScanData(X4_handle_t * X4_handle);
