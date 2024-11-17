@@ -14,9 +14,14 @@
 #ifndef INC_X4_DRIVER_H_
 #define INC_X4_DRIVER_H_
 
-#include "stdint.h"
+#include <stdint.H>
+#include "usart.h"
 
-#define X4_UART huart3
+
+#define RX_BUFFER_SIZE 1  // Size of the RX buffer
+
+#define X4_BAUDRATE 					128000
+
 /**
  * @def X4_CMD_START
  * @brief Start command identifier for LiDAR communication.
@@ -95,6 +100,13 @@
  */
 #define X4_SERIAL_FIRMWARE_SIZE 2
 
+typedef enum {
+	IDLE,
+	STOP,
+	START_SYNC_CONTENT_HEADER,
+	START_WAIT_CONTENT,
+} X4_State;
+
 /**
  * @brief Structure to represent a parsed response message from the X4 LiDAR.
  */
@@ -134,8 +146,14 @@ typedef struct {
 typedef struct {
 	X4_DeviceInfo device_info;
 	X4_ScanData scan_data;
+	UART_HandleTypeDef *huart;
+	uint8_t newData;
+	int trame_id;
+	uint8_t rx_buffer[RX_BUFFER_SIZE];
+
 } X4_handle_t;
 
+extern X4_handle_t X4_handle;
 /**
  * @brief Starts a scan operation on the X4 LiDAR.
  *

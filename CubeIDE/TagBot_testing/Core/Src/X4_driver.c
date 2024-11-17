@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-extern UART_HandleTypeDef huart3; /**< UART handle for UART4 communication */
+X4_handle_t X4_handle;
 
 /**
  * @brief Sends a command to the device via UART.
@@ -22,7 +22,7 @@ extern UART_HandleTypeDef huart3; /**< UART handle for UART4 communication */
  *
  * @param command The command byte to be sent to the device.
  */
-static void X4_SendCommand(uint8_t command)
+static void X4_SendCommand(X4_handle_t *X4_handle,uint8_t command)
 {
 	uint8_t data[2] = {X4_CMD_START, command}; /**< Array holding the command data */
 	HAL_UART_Transmit(&huart3, data, 2, HAL_MAX_DELAY);  // Transmit command over UART
@@ -36,7 +36,7 @@ static void X4_SendCommand(uint8_t command)
  */
 void X4_StartScan(X4_handle_t * X4_handle)
 {
-	X4_SendCommand(X4_CMD_START_SCAN); /**< Command to start scanning */
+	X4_SendCommand(X4_handle,X4_CMD_START_SCAN); /**< Command to start scanning */
 	// Additional logic to handle sustained responses if needed
 	X4_HandleResponse(X4_handle); /**< Process the device's response */
 }
@@ -46,9 +46,9 @@ void X4_StartScan(X4_handle_t * X4_handle)
  *
  * This function sends a command to stop scanning on the device.
  */
-void X4_StopScan(void)
+void X4_StopScan(X4_handle_t * X4_handle)
 {
-	X4_SendCommand(X4_CMD_STOP_SCAN); /**< Command to stop scanning */
+	X4_SendCommand(X4_handle,X4_CMD_STOP_SCAN); /**< Command to stop scanning */
 }
 
 /**
@@ -56,9 +56,9 @@ void X4_StopScan(void)
  *
  * This function sends a command to the device to perform a soft restart.
  */
-void X4_SoftRestart(void)
+void X4_SoftRestart(X4_handle_t * X4_handle)
 {
-	X4_SendCommand(X4_CMD_SOFT_RESTART); /**< Command to perform soft restart */
+	X4_SendCommand(X4_handle,X4_CMD_SOFT_RESTART); /**< Command to perform soft restart */
 }
 
 /**
@@ -70,7 +70,7 @@ void X4_SoftRestart(void)
 void X4_GetDeviceInfo(X4_handle_t * X4_handle)
 {
 	// Send the device info command
-	X4_SendCommand(X4_CMD_GET_INFO); /**< Command to get device information */
+	X4_SendCommand(X4_handle,X4_CMD_GET_INFO); /**< Command to get device information */
 
 	// Wait for and handle response
 	X4_HandleResponse(X4_handle); /**< Process the device's response */
@@ -85,13 +85,35 @@ void X4_GetDeviceInfo(X4_handle_t * X4_handle)
 void X4_GetDeviceHealth(X4_handle_t * X4_handle)
 {
 	// Send the device health command
-	X4_SendCommand(X4_CMD_GET_HEALTH); /**< Command to get device health */
+	X4_SendCommand(X4_handle,X4_CMD_GET_HEALTH); /**< Command to get device health */
 
 	// Wait for and handle response
 	X4_HandleResponse(X4_handle); /**< Process the device's response */
 }
 
+HAL_StatusTypeDef X4_Init(X4_handle_t *X4_handle, UART_HandleTypeDef *huart){
+	X4_handle->huart = huart;
+	X4_handle->state = IDLE;
+	X4_handle->trame_id = 0;
+	X4_handle->newData = 0;
+	X4_handle->scan_data.id_data = 0;
 
+    HAL_UART_Receive_DMA(&X4_handle->huart, X4_handle->rx_buffer, RX_BUFFER_SIZE);
+
+	X4_SendCommand(X4_handle, X4_CMD_SOFT_RESTART);
+	HAL_Delay(20);
+
+//	YDLIDAR_X4_Get_Device_Informations(YDLIDAR_X4_Handle);
+//	YDLIDAR_X4_Print_Device_Informations(YDLIDAR_X4_Handle);
+//
+//	YDLIDAR_X4_Get_Health_Status(YDLIDAR_X4_Handle);
+//	YDLIDAR_X4_Print_Health_Status(YDLIDAR_X4_Handle);
+//	HAL_Delay(200);
+
+//	HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
+	X4_Start_Scan(YDLIDAR_X4_Handle);
+	return HAL_OK;
+}
 
 /**
  * @brief Handles the Device Info response from the device.
@@ -196,7 +218,7 @@ void X4_HandleResponse(X4_handle_t * X4_handle)
 	X4_ResponseMessage response;  /**< Structure to hold parsed response message */
 
 	// Receive data from the UART (HAL_UART_Receive should be non-blocking or with timeout)
-	HAL_StatusTypeDef status = HAL_UART_Receive(&huart3, raw_data, X4_MAX_RESPONSE_SIZE, 10);
+	HAL_StatusTypeDef status = HAL_UART_Receive_IT(&huart3, raw_data, X4_MAX_RESPONSE_SIZE, 10);
 
 	// Parse the received message
 	X4_ParseMessage(raw_data, &response);
@@ -446,6 +468,129 @@ void X4_HandleScanData(X4_handle_t * X4_handle)
 	X4_HandleScanDataAngles(X4_handle);
 }
 
+HAL_StatusTypeDef YDLIDAR_X4_State_Machine(X4_handle_t * X4_handle){
+	switch(X4_handle->state){
+	case IDLE:
+		X4_handle->state = IDLE;
+		break;
+	case STOP:
+		X4_handle->state = STOP;
+		/************************************************************************
+		 * START_WAIT_CONTENT_HEADER											*
+		 * After sync, get header of content part								*
+		 * PH 	2 bytes		packet header										*
+		 * CT 	1 byte 		packet type (bit(0)=point cloud data packet			*
+		 * LSN  1 byte		Sample quantity in hald-word, 1 point = uint16_t	*
+		 * FSA 	2 bytes		Start angle											*
+		 * LSA  2 bytes		End angle											*
+		 ************************************************************************/
+	case START_SYNC_CONTENT_HEADER:
+		switch(X4_handle->scan_response.id_data){
+		case 0 :
+			if(X4_handle->rx_buffer[0] == 0xAA){
+				X4_handle->scan_response.id_data = 1;
+				X4_handle->scan_response.packet_header[0] = X4_handle->rx_buffer[0];
+//				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
+				HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			}
+			else{
+				X4_handle->scan_response.id_data = 0;
+//				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
+				HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			}
+			break;
+		case 1 :
+			if(X4_handle->rx_buffer[0] == 0x55){
+				X4_handle->scan_response.id_data = 2;
+				X4_handle->scan_response.packet_header[1] = X4_handle->rx_buffer[0];
+				HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			}
+			else{
+				X4_handle->scan_response.id_data = 0;
+//				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
+				HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			}
+			break;
+		case 2 :
+			if(X4_handle->rx_buffer[0] == 0x00){
+//				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, SET);
+				X4_handle->scan_response.id_data = 3;
+				X4_handle->scan_response.package_type = X4_handle->rx_buffer[0];
+				HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			}
+			else{
+				X4_handle->scan_response.id_data = 0;
+//				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
+				HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			}
+			break;
+		case 3 :
+			if(X4_handle->scan_response.id_data == 3){
+				X4_handle->scan_response.id_data = 4;
+				X4_handle->scan_response.sample_quantity = X4_handle->rx_buffer[0];
+				HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			}
+			break;
+		case 4 :
+			X4_handle->scan_response.id_data = 5;
+			X4_handle->scan_response.start_angle = X4_handle->rx_buffer[0];
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			break;
+
+		case 5 :
+			X4_handle->scan_response.id_data = 6;
+			X4_handle->scan_response.start_angle |= X4_handle->rx_buffer[0]<<8;
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			break;
+
+		case 6 :
+			X4_handle->scan_response.id_data = 7;
+			X4_handle->scan_response.end_angle = X4_handle->rx_buffer[0];
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			break;
+
+		case 7 :
+			X4_handle->scan_response.id_data = 8;
+			X4_handle->scan_response.end_angle |= X4_handle->rx_buffer[0]<<8;
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			break;
+
+		case 8 :
+			X4_handle->scan_response.id_data = 9;
+			X4_handle->scan_response.check_code = X4_handle->rx_buffer[0];
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			break;
+
+		case 9 :
+			X4_handle->scan_response.id_data = 0;
+			X4_handle->scan_response.check_code |= X4_handle->rx_buffer[0]<<8;
+			X4_handle->state = START_WAIT_CONTENT;
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->scan_response.buffer_data, X4_handle->scan_response.sample_quantity*2);
+			break;
+
+		default :
+			X4_handle->scan_response.id_data = 0;
+//			HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			break;
+		}
+
+		break;
+
+		case START_WAIT_CONTENT:
+			X4_handle->state=START_SYNC_CONTENT_HEADER;
+			X4_handle->trame_id++;
+			X4_handle->newData = 1;
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+			break;
+
+		default:
+			X4_handle->state = START_SYNC_CONTENT_HEADER;
+			HAL_UART_Receive_IT(X4_handle->huart, X4_handle->rx_buffer, 1);
+	}
+
+	return HAL_OK;
+}
 /**
  * @brief Convert a 2-byte little-endian array to a uint16_t value.
  *
@@ -460,3 +605,12 @@ uint16_t convertBytesToUint16(const uint8_t* byte_array)
 	return (uint16_t)(byte_array[1] << 8 | byte_array[0]);
 }
 
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart->Instance==huart3.Instance)
+	{
+		YDLIDAR_X4_State_Machine(&hlidar);
+        HAL_UART_Receive_DMA(&huart1, rxBuffer, RX_BUFFER_SIZE);
+
+	}
+}
