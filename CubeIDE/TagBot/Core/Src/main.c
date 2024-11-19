@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2024 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -32,6 +32,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include "distSensor_driver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,8 +42,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_DMA
-//#define ADC
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -70,26 +70,6 @@ int __io_putchar(int chr)
 	return chr;
 }
 
-uint32_t adc_value = 0;
-
-#ifdef ADC_DMA
-
-volatile uint8_t adc_ready = 0; // Flag pour indiquer que la valeur est prête à être afficher
-
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
-{
-	if (ADC2 == hadc->Instance)
-	{
-		//adc_ready = 1;
-		// Si la valeur ADC est supérieure à 1000 (la distance avec le capteur est élevée, mettre le flag à 1
-		if (adc_value < 1000)
-		{
-			adc_ready = 1;
-		}
-	}
-}
-
-#endif
 
 /* USER CODE END 0 */
 
@@ -135,56 +115,40 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-	printf("bonjour\r\n");
 
-	#ifdef ADC_DMA
-
-	HAL_ADC_Start_DMA(&hadc2, &adc_value, 1);
-	HAL_TIM_Base_Start(&htim6);
-
-	#endif
+  distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
+  //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
 
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-
+	while (1)
+	{
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 
 
-	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
-	  HAL_Delay(100);
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+		HAL_Delay(100);
 
-#ifdef ADC
-	  HAL_ADC_Start(&hadc2);
-	  HAL_ADC_PollForConversion(&hadc2, HAL_MAX_DELAY);
-	  adc_value = HAL_ADC_GetValue(&hadc2);
+		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
+		//printf("adc_value : %lu\r\n", distance);
+		//HAL_Delay(100);
 
-	  printf("adc_value %lu\r\n", adc_value);
-	  HAL_Delay(500);
-#endif
+		if (distance == 1){
+			printf("error\r\n");
+			HAL_Delay(100);
+		}
+		else{
+			printf("adv_value : %lu\r\n", distance);
+			HAL_Delay(100);
+		}
 
-#ifdef ADC_DMA
-
-	// Vérifier si une nouvelle valeur ADC est prête et que le flag est actif
-	if (adc_ready == 1)
-	{
-
-		printf("adc_value %lu\r\n", adc_value);
-		// Réinitialiser le flag après l'affichage
-		adc_ready = 0;
 	}
-
-	HAL_Delay(500);
-#endif
-
-  }
   /* USER CODE END 3 */
 }
 
@@ -244,11 +208,11 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
+	/* User can add his own implementation to report the HAL error return state */
+	__disable_irq();
+	while (1)
+	{
+	}
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -263,7 +227,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+	/* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
