@@ -135,9 +135,9 @@ int main(void)
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 		HAL_Delay(100);
 
+/* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
+
 		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
-		//printf("adc_value : %lu\r\n", distance);
-		//HAL_Delay(100);
 
 		if (distance == 1){
 			printf("error\r\n");

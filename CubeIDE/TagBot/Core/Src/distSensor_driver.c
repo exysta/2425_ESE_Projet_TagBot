@@ -55,9 +55,9 @@ uint32_t distSensor_ReadADC_DMA(ADC_HandleTypeDef* hadc)
     if (adc_ready == 1) // Vérifie si une nouvelle valeur est prête
     {
         //distance = falling_dist; // Donne la dernière valeur valide
-    	return adc_value;
+
         adc_ready = 0;            // Réinitialise le flag
-        //return 1;
+        return adc_value;
     }
     return 1;
 }
