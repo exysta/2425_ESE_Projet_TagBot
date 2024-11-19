@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dma.h"
 #include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
@@ -26,6 +25,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "X4_driver.h"
+#include "ydlidar_x4.h"
+
 #include "ssd1306.h"
 #include "ssd1306_tests.h"
 #include <stdbool.h>
@@ -41,6 +42,9 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 //#define SSD1306TEST
+#define ANGLE_MIN 120
+#define ANGLE_MAX 240
+#define DISTANCE_MIN 200
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -111,7 +115,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	float min_distance = 10000;
+	int idx_angle_min_distance;
+	uint8_t object_detected = 1;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -132,38 +138,50 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 	//  X4_SendCommand(X4_CMD_GET_INFO); /**< Command to get device information */
 	//  HAL_UART_Receive(&huart3, pData, Size, Timeout)
-#ifdef SSD1306TEST
-	ssd1306_Init();
 
-#endif
-	X4_handle_t X4_handle;
+//	X4_handle_t X4_handle;
+//
+//	uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_HEALTH}; /**< Array holding the command data */
+//	uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
+//	memset(raw_data, 0, sizeof(raw_data));
 
-	uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_HEALTH}; /**< Array holding the command data */
-	uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
-	memset(raw_data, 0, sizeof(raw_data));
+//	X4_Init(&X4_handle);
+//	X4_GetDeviceInfo(&X4_handle);
+//	X4_StartScan(&X4_handle);
+	YDLIDAR_X4_Init(&hlidar, &huart3);
 
-	X4_Init(&X4_handle);
-	X4_GetDeviceInfo(&X4_handle);
-	X4_StartScan(&X4_handle);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-#ifdef SSD1306TEST
-		ssd1306_Fill(White);
-		ssd1306_UpdateScreen();
-		HAL_Delay(3000);
-#endif
-//			    HAL_UART_Transmit(&huart3, data, 2, HAL_MAX_DELAY);  // Transmit command over UART
+		if(hlidar.newData){
+			YDLIDAR_X4_Compute_Payload(&hlidar);
+			min_distance = 10000;
+			for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
+				if((10 < hlidar.scan_response.distance[idx_angle]) &&
+						(hlidar.scan_response.distance[idx_angle] < min_distance)){
+					idx_angle_min_distance = idx_angle;
+					min_distance = hlidar.scan_response.distance[idx_angle];
+				}
+			}
+			if(min_distance < DISTANCE_MIN){
+				object_detected = 1;
+
+			}
+			else{
+				object_detected = 0;
+			}
+
+			hlidar.newData = 0;
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

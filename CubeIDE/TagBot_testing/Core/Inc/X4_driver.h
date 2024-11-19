@@ -14,7 +14,7 @@
 #ifndef INC_X4_DRIVER_H_
 #define INC_X4_DRIVER_H_
 
-#include <stdint.H>
+#include <stdint.h>
 #include "usart.h"
 
 
@@ -100,12 +100,12 @@
  */
 #define X4_SERIAL_FIRMWARE_SIZE 2
 
-typedef enum {
-	IDLE,
-	STOP,
-	START_SYNC_CONTENT_HEADER,
-	START_WAIT_CONTENT,
-} X4_State;
+//typedef enum {
+//	IDLE,
+//	STOP,
+//	START_SYNC_CONTENT_HEADER,
+//	START_WAIT_CONTENT,
+//} X4_State;
 
 /**
  * @brief Structure to represent a parsed response message from the X4 LiDAR.
@@ -150,7 +150,7 @@ typedef struct {
 	uint8_t newData;
 	int trame_id;
 	uint8_t rx_buffer[RX_BUFFER_SIZE];
-
+	//X4_State state;
 } X4_handle_t;
 
 extern X4_handle_t X4_handle;
@@ -167,7 +167,7 @@ void X4_StartScan(X4_handle_t * X4_handle);
  *
  * This function sends the command to stop the ongoing scanning operation.
  */
-void X4_StopScan(void);
+void X4_StopScan(X4_handle_t * X4_handle);
 
 /**
  * @brief Retrieves the device information from the X4 LiDAR.
@@ -191,7 +191,7 @@ void X4_GetHealthStatus(X4_handle_t * X4_handle);
  * This function sends the command to perform a soft restart,
  * reinitializing the device without physically powering it off.
  */
-void X4_SoftRestart(void);
+void X4_SoftRestart(X4_handle_t * X4_handle);
 
 
 /**
