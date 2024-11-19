@@ -70,21 +70,22 @@ int __io_putchar(int chr)
 	return chr;
 }
 
+uint32_t adc_value = 0;
+
 #ifdef ADC_DMA
 
-uint32_t adc_value = 0;
 volatile uint8_t adc_ready = 0; // Flag pour indiquer que la valeur est prête à être afficher
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	if (ADC2 == hadc->Instance)
 	{
-		adc_ready = 1;
+		//adc_ready = 1;
 		// Si la valeur ADC est supérieure à 1000 (la distance avec le capteur est élevée, mettre le flag à 1
-//		if (adc_value < 1000)
-//		{
-//			adc_ready = 1;
-//		}
+		if (adc_value < 1000)
+		{
+			adc_ready = 1;
+		}
 	}
 }
 
@@ -134,6 +135,14 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+	printf("bonjour\r\n");
+
+	#ifdef ADC_DMA
+
+	HAL_ADC_Start_DMA(&hadc2, &adc_value, 1);
+	HAL_TIM_Base_Start(&htim6);
+
+	#endif
 
 
   /* USER CODE END 2 */
