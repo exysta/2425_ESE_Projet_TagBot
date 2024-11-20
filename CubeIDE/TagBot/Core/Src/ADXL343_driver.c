@@ -35,8 +35,9 @@ int ADXL343_Init(void) {
 
 
 	// Configuration of registers
-	ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x04); 			// init the power control (sleep)
+	//ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x04); 			// init the power control (sleep)
 	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x08);  			// establish format for data :full resolution and ±2g
+	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x0B);  			// establish format for data :full resolution and ±16g
 	ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x08);  			// measurement mode of power control (active)
 
 	printf("Initialization done\r\n");
@@ -50,7 +51,7 @@ void ADXL343_Configure(void){
 	ADXL343_WriteRegister(ADXL343_REG_THRESH_TAP, TAP_THRESHOLD);  	// Set tap threshold : 2g
 	ADXL343_WriteRegister(ADXL343_REG_DUR, TAP_DURATION);         	// Set tap duration : 10ms
 	ADXL343_WriteRegister(ADXL343_REG_LATENT, TAP_LATENT);
-	ADXL343_WriteRegister(ADXL343_REG_TAP_AXES, 0x06);				// Enable axe X Y for tap
+	ADXL343_WriteRegister(ADXL343_REG_TAP_AXES, 0x07);				// Enable axe X Y Z for tap
 	//ADXL343_WriteRegister(ADXL343_REG_INT_ENABLE, 0x40);			// Enable interruption for single tap
 	printf("Configuration done\r\n");
 
@@ -94,11 +95,32 @@ void ADXL343_DetectTap(void){
 }
 
 //Function to read the accelerometer data
-void ADXL343_ReadXYZ(int16_t* x, int16_t* y, int16_t* z) {
+void ADXL343_ReadXYZ(uint8_t reg, int16_t* x, int16_t* y, int16_t* z) {
     uint8_t buffer[6];
-    ADXL343_ReadRegister(ADXL343_REG_DATAX0, buffer, 6);		// read 6 octets from DATAx0 address
+    ADXL343_ReadRegister(reg, buffer, 6);		// read 6 octets from DATAx0 address
 
     *x = (int16_t)((buffer[1] << 8) | buffer[0]);
     *y = (int16_t)((buffer[3] << 8) | buffer[2]);
     *z = (int16_t)((buffer[5] << 8) | buffer[4]);
+}
+
+
+void printAccelerometerData(uint8_t reg) {
+    int16_t X = 0, Y = 0, Z = 0;
+    ADXL343_ReadXYZ(reg, &X, &Y, &Z);  // Lire les valeurs X, Y, Z de l'accéléromètre
+
+    // Afficher les valeurs brutes avant toute conversion
+    printf("Brut X : %d\r\n", X);
+    printf("Brut Y : %d\r\n", Y);
+    printf("Brut Z : %d\r\n", Z);
+
+//    int16_t Xg = (int16_t)X / 256;  // Diviser par 256 pour la plage ±16g
+//    int16_t Yg = (int16_t)Y / 256;
+//    int16_t Zg = (int16_t)Z / 256;
+//
+//    printf("X : %d g\r\n", Xg);
+//    printf("Y : %d g\r\n", Yg);
+//    printf("Z : %d g\r\n", Zg);
+
+    HAL_Delay(2000);  // Attendre 500 ms entre les lectures
 }

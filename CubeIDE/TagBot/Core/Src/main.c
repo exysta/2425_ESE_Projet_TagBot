@@ -83,6 +83,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+
 	//to disable timer in debug mode
 
   /* USER CODE END 1 */
@@ -117,6 +118,12 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+
+	printf(" _____________________________\r\n");
+	printf("|                             |\r\n");
+	printf("|--WELCOME ON TAGBOT PROJECT--|\r\n");
+	printf("|                             |\r\n");
+	printf("|_____________________________|\r\n");
 
   /* Ce code initialise l'adc en dma*/
   //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
@@ -159,15 +166,17 @@ int main(void)
 	/* Code pour l 'accéléromètre*/
 
 		//ADXL343_DetectTap();
-		int16_t X=0;
-		int16_t Y=0;
-		int16_t Z=0;
-		ADXL343_ReadXYZ(&X, &Y, &Z);
-		printf("X : %d\r\n", X);
-		printf("Y : %d\r\n", Y);
-		printf("Z : %d\r\n", Z);
-		HAL_Delay(500);
+		printf("values on X0 and X1: \r\n");
+		printAccelerometerData(ADXL343_REG_DATAX0);
+		printf("\r\n");
 
+		printf("values on Y0 and Y1: \r\n");
+		printAccelerometerData(ADXL343_REG_DATAY0);
+		printf("\r\n");
+
+		printf("values on Z0 and Z1: \r\n");
+		printAccelerometerData(ADXL343_REG_DATAZ0);
+		printf("\r\n");
 
 
 

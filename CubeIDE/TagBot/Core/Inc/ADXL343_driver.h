@@ -36,7 +36,9 @@ void ADXL343_ReadRegister(uint8_t reg, uint8_t* rx_data, size_t length);
 
 void ADXL343_WriteRegister(uint8_t reg, uint8_t data);
 void ADXL343_DetectTap(void);
-void ADXL343_ReadXYZ(int16_t* x, int16_t* y, int16_t* z);
+void ADXL343_ReadXYZ(uint8_t reg, int16_t* x, int16_t* y, int16_t* z);
+
+void printAccelerometerData(uint8_t reg);
 
 
 
