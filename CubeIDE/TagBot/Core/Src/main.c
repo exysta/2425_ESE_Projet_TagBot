@@ -33,6 +33,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "distSensor_driver.h"
+#include "ADXL343_driver.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -116,8 +118,12 @@ int main(void)
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 
-  distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
+  /* Ce code initialise l'adc en dma*/
+  //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
   //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
+
+
+
 
 
   /* USER CODE END 2 */
@@ -131,22 +137,30 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-
+/* Ce code permet d allumer la led */
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 		HAL_Delay(100);
 
-/* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
+///* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
+//		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
+//
+//		if (distance == 1){
+//			printf("error\r\n");
+//			HAL_Delay(100);
+//		}
+//		else{
+//			printf("adv_value : %lu\r\n", distance);
+//			HAL_Delay(100);
+//		}
+//
 
-		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
 
-		if (distance == 1){
-			printf("error\r\n");
-			HAL_Delay(100);
-		}
-		else{
-			printf("adv_value : %lu\r\n", distance);
-			HAL_Delay(100);
-		}
+	/* Code pour l 'accéléromètre*/
+		ADXL343_Init();
+	    HAL_Delay(500);
+
+
+
 
 	}
   /* USER CODE END 3 */

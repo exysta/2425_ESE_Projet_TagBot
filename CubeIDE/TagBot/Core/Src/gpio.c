@@ -54,7 +54,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, LED_CHAT_Pin|LED_SOURIS_Pin|LIDAR_M_EN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, USER_LED_1_Pin|USER_LED_2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, USER_LED_1_Pin|USER_LED_2_Pin|Accelerometer_NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LIDAR_DEV_EN_GPIO_Port, LIDAR_DEV_EN_Pin, GPIO_PIN_RESET);
@@ -72,8 +72,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BTN_CAT_MOUSE_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PAPin PAPin */
-  GPIO_InitStruct.Pin = USER_LED_1_Pin|USER_LED_2_Pin;
+  /*Configure GPIO pins : PAPin PAPin PAPin */
+  GPIO_InitStruct.Pin = USER_LED_1_Pin|USER_LED_2_Pin|Accelerometer_NSS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

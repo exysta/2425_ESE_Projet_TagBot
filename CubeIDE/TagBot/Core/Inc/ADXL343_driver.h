@@ -30,8 +30,9 @@
 
 // functions for the accelerometer
 void ADXL343_Init(void);
-void ADxl343_Configure(void);
-void ADXL343_ReadRegister(uint8_t reg, uint8_t* data, size_t length);
+void ADXL343_Configure(void);
+void ADXL343_ReadRegister(uint8_t reg, uint8_t* rx_data, size_t length);
+
 void ADXL343_WriteRegister(uint8_t reg, uint8_t data);
 void ADXL343_DetectTap(void);
 void ADXL343_ReadXYZ(int16_t* x, int16_t* y, int16_t* z);

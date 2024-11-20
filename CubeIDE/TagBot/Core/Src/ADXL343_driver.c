@@ -27,7 +27,8 @@ void ADXL343_Init(void) {
 	ADXL343_ReadRegister(ADXL343_REG_DEVID, &id, 1);
 
 	if (id != 0xE5) {
-		printf("ADXL343 no detected ! ID: 0x%X\n", id);
+
+		printf("ADXL343 no detected ! ID: %02X\r\n", id);
 		return;
 	}
 
@@ -36,10 +37,12 @@ void ADXL343_Init(void) {
 	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x08);  			// establish format for data :full resolution and ±2g
 	ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x08);  			// measurement mode of power control (active)
 
+	printf("ADXL 343 is configured\r\n");
+
 }
 
 //Function to configure the accelerometer
-void ADxl343_Configure(void){
+void ADXL343_Configure(void){
 	ADXL343_WriteRegister(ADXL343_REG_THRESH_TAP, TAP_THRESHOLD);  	// Set tap threshold : 2g
 	ADXL343_WriteRegister(ADXL343_REG_DUR, TAP_DURATION);         	// Set tap duration : 10ms
 
@@ -49,20 +52,40 @@ void ADxl343_Configure(void){
 }
 
 // Function to read from a register
-void ADXL343_ReadRegister(uint8_t reg, uint8_t* data, size_t length) {
+void ADXL343_ReadRegister(uint8_t reg, uint8_t* rx_data, size_t length) {
 
-	//-----------------------------------------------------------------------------------//
-    reg |= 0x80;  		// Set the MSB to indicate a read operation (Data ready)
-    if (length > 1) {
-        reg |= 0x40;  	//  Set the bit for multi-byte read
-    }
-    //-----------------------------------------------------------------------------------//
+    uint8_t tx_data = reg | 0x80; // MSB = 1 pour la lecture
 
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); // enable NSS (PA15)
-    HAL_SPI_Transmit(&hspi1, &reg, 1, HAL_MAX_DELAY); // send address for register
-    HAL_SPI_Receive(&hspi1, data, length, HAL_MAX_DELAY); // get data thanks to SPI
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET); // disable NSS (PA15)
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
+    HAL_SPI_Transmit(&hspi1, &tx_data, 1, HAL_MAX_DELAY); // Envoyer l'adresse
+    HAL_SPI_Receive(&hspi1, rx_data, 1, HAL_MAX_DELAY);  // Lire la donnée
+    //HAL_SPI_TransmitReceive(hspi, pTxData, pRxData, Size, Timeout);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);   // Désactiver NSS
+
 }
+
+//void ADXL343_ReadRegister(uint8_t reg, uint8_t* rx_data, size_t length)
+//{
+//    uint8_t txBuffer[2]; // Transmit buffer
+//    uint8_t rxBuffer[2]; // Receive buffer
+//
+//    // Construct the read command (R/W = 1, MB = 0, address = reg_address)
+//    txBuffer[0] = 0x80 | (reg & 0x3F); // Ensure only the lower 6 bits are used
+//    txBuffer[1] = 0x00; // Dummy byte
+//
+//    // Pull CS low to select the device
+//    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
+//
+//    // Transmit the read command and receive the response
+//    HAL_SPI_TransmitReceive(&hspi1, txBuffer, rxBuffer, 2, HAL_MAX_DELAY);
+//
+//    // Pull CS high to end the transaction
+//    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);   // Désactiver NSS
+//
+//
+//    // Return the received data (second byte of rxBuffer)
+//    *rx_data = rxBuffer[1];
+//}
 
 //Function to write in the register
 void ADXL343_WriteRegister(uint8_t reg, uint8_t data) {
@@ -70,9 +93,9 @@ void ADXL343_WriteRegister(uint8_t reg, uint8_t data) {
     buffer[0] = reg;	//register
     buffer[1] = data;	//data
 
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); // enable NSS (PA15)
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // enable NSS (PA4)
     HAL_SPI_Transmit(&hspi1, buffer, 2, HAL_MAX_DELAY); // Send data thanks to SPI
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET); // disable NSS (PA15)
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // disable NSS (PA4)
 }
 
 //Function to detect a tap
