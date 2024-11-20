@@ -15,7 +15,7 @@
 #include "ydlidar_x4.h"
 //#define SERIAL_DEBUG
 __YDLIDAR_X4_HandleTypeDef hlidar;
-
+volatile uint8_t uart_processing = 0;
 
 
 HAL_StatusTypeDef YDLIDAR_X4_Send_Cmd(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle, uint8_t cmd){
@@ -64,7 +64,7 @@ HAL_StatusTypeDef YDLIDAR_X4_Get_Device_Informations(__YDLIDAR_X4_HandleTypeDef 
 
 	uint8_t rx_buffer[HEADER_SIZE + DEVICE_INFORMATION_PAYLOAD_SIZE];
 
-	if(HAL_UART_Receive(YDLIDAR_X4_Handle->huart, rx_buffer, HEADER_SIZE+DEVICE_INFORMATION_PAYLOAD_SIZE, 5000) != HAL_OK){
+	if(HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, rx_buffer, HEADER_SIZE+DEVICE_INFORMATION_PAYLOAD_SIZE) != HAL_OK){
 //		txBufferSize = snprintf((char *)uart2TxBuffer, UART_TX_BUFFER_SIZE, "Device not responding...\r\n");
 		//HAL_UART_Transmit(&huart2, uart2TxBuffer, txBufferSize, 10);
 		return HAL_ERROR;
@@ -199,7 +199,7 @@ HAL_StatusTypeDef YDLIDAR_X4_Start_Scan(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_H
 	YDLIDAR_X4_Send_Cmd(YDLIDAR_X4_Handle, CMD_START_SCAN);
 	YDLIDAR_X4_Handle->state = START_SYNC_CONTENT_HEADER;
 	HAL_UART_Abort(YDLIDAR_X4_Handle->huart);
-	HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+	HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 	return HAL_OK;
 }
 HAL_StatusTypeDef YDLIDAR_X4_Soft_Reboot(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle){
@@ -278,24 +278,24 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 				YDLIDAR_X4_Handle->scan_response.id_data = 1;
 				YDLIDAR_X4_Handle->scan_response.packet_header[0] = YDLIDAR_X4_Handle->rx_buffer[0];
 //				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-				HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+				HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			}
 			else{
 				YDLIDAR_X4_Handle->scan_response.id_data = 0;
 //				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-				HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+				HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			}
 			break;
 		case 1 :
 			if(YDLIDAR_X4_Handle->rx_buffer[0] == 0x55){
 				YDLIDAR_X4_Handle->scan_response.id_data = 2;
 				YDLIDAR_X4_Handle->scan_response.packet_header[1] = YDLIDAR_X4_Handle->rx_buffer[0];
-				HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+				HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			}
 			else{
 				YDLIDAR_X4_Handle->scan_response.id_data = 0;
 //				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-				HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+				HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			}
 			break;
 		case 2 :
@@ -303,62 +303,73 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 //				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, SET);
 				YDLIDAR_X4_Handle->scan_response.id_data = 3;
 				YDLIDAR_X4_Handle->scan_response.package_type = YDLIDAR_X4_Handle->rx_buffer[0];
-				HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+				HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			}
 			else{
 				YDLIDAR_X4_Handle->scan_response.id_data = 0;
 //				HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-				HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+				HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			}
 			break;
 		case 3 :
 			if(YDLIDAR_X4_Handle->scan_response.id_data == 3){
 				YDLIDAR_X4_Handle->scan_response.id_data = 4;
 				YDLIDAR_X4_Handle->scan_response.sample_quantity = YDLIDAR_X4_Handle->rx_buffer[0];
-				HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+				HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			}
 			break;
 		case 4 :
 			YDLIDAR_X4_Handle->scan_response.id_data = 5;
 			YDLIDAR_X4_Handle->scan_response.start_angle = YDLIDAR_X4_Handle->rx_buffer[0];
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			break;
 
 		case 5 :
 			YDLIDAR_X4_Handle->scan_response.id_data = 6;
 			YDLIDAR_X4_Handle->scan_response.start_angle |= YDLIDAR_X4_Handle->rx_buffer[0]<<8;
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			break;
 
 		case 6 :
 			YDLIDAR_X4_Handle->scan_response.id_data = 7;
 			YDLIDAR_X4_Handle->scan_response.end_angle = YDLIDAR_X4_Handle->rx_buffer[0];
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			break;
 
 		case 7 :
 			YDLIDAR_X4_Handle->scan_response.id_data = 8;
 			YDLIDAR_X4_Handle->scan_response.end_angle |= YDLIDAR_X4_Handle->rx_buffer[0]<<8;
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			break;
 
 		case 8 :
 			YDLIDAR_X4_Handle->scan_response.id_data = 9;
 			YDLIDAR_X4_Handle->scan_response.check_code = YDLIDAR_X4_Handle->rx_buffer[0];
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			break;
 
 		case 9 :
 			YDLIDAR_X4_Handle->scan_response.id_data = 0;
 			YDLIDAR_X4_Handle->scan_response.check_code |= YDLIDAR_X4_Handle->rx_buffer[0]<<8;
 			YDLIDAR_X4_Handle->state = START_WAIT_CONTENT;
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.buffer_data, YDLIDAR_X4_Handle->scan_response.sample_quantity*2);
+			//HAL_UART_DMAStop(YDLIDAR_X4_Handle->huart); // Stops DMA and resets states
+			HAL_StatusTypeDef test1 = 0;
+			HAL_UART_StateTypeDef test2 = 0;
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.buffer_data, YDLIDAR_X4_Handle->scan_response.sample_quantity*2);
+//			if (HAL_UART_GetState(YDLIDAR_X4_Handle->huart) == HAL_UART_STATE_READY)
+//			{
+//				test1 = HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.buffer_data, YDLIDAR_X4_Handle->scan_response.sample_quantity*2);
+//			}
+//			else{
+//				test2 = HAL_UART_GetState(YDLIDAR_X4_Handle->huart);
+//			}
+
 			break;
 
 		default :
 			YDLIDAR_X4_Handle->scan_response.id_data = 0;
 //			HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			break;
 		}
 
@@ -368,12 +379,12 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 			YDLIDAR_X4_Handle->state=START_SYNC_CONTENT_HEADER;
 			YDLIDAR_X4_Handle->trame_id++;
 			YDLIDAR_X4_Handle->newData = 1;
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 			break;
 
 		default:
 			YDLIDAR_X4_Handle->state = START_SYNC_CONTENT_HEADER;
-			HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->rx_buffer, 1);
 	}
 
 	return HAL_OK;
@@ -381,17 +392,21 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if(huart->Instance==huart3.Instance){
-//		HAL_GPIO_WritePin(DEBUG_GPIO_Port, DEBUG_Pin, SET);
-		YDLIDAR_X4_State_Machine(&hlidar);
-//		HAL_GPIO_WritePin(DEBUG_GPIO_Port, DEBUG_Pin, RESET);
-	}
+    if (huart->Instance == huart3.Instance)
+    {
+        if (uart_processing == 0)
+       {
+            uart_processing = 1;
+            YDLIDAR_X4_State_Machine(&hlidar);
+            uart_processing = 0;
+        }
+    }
 
 //	if(huart->Instance==huart2.Instance){
 //		uart1TxBuffer[0] = uart2RxBuffer[0];
 //		uart2TxBuffer[0] = uart2RxBuffer[0];
 //		HAL_UART_Transmit(&huart1, uart1TxBuffer, 1, 10);
 //		HAL_UART_Transmit(&huart2, uart2TxBuffer, 1, 10);
-//		HAL_UART_Receive_IT(&huart2, uart2RxBuffer, 1);
+//		HAL_UART_Receive_DMA(&huart2, uart2RxBuffer, 1);
 //	}
 }
