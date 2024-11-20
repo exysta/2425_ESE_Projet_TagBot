@@ -122,9 +122,11 @@ int main(void)
   //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
   //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
 
+  /* Code init l'accélérometre*/
 
-
-
+	while(1 == ADXL343_Init())
+	{}
+	ADXL343_Configure();
 
   /* USER CODE END 2 */
 
@@ -137,9 +139,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-/* Ce code permet d allumer la led */
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
-		HAL_Delay(100);
+///* Ce code permet d allumer la led */
+//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+//		HAL_Delay(100);
 
 ///* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
 //		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
@@ -154,10 +156,17 @@ int main(void)
 //		}
 //
 
-
 	/* Code pour l 'accéléromètre*/
-		ADXL343_Init();
-	    HAL_Delay(500);
+
+		//ADXL343_DetectTap();
+		int16_t X=0;
+		int16_t Y=0;
+		int16_t Z=0;
+		ADXL343_ReadXYZ(&X, &Y, &Z);
+		printf("X : %d\r\n", X);
+		printf("Y : %d\r\n", Y);
+		printf("Z : %d\r\n", Z);
+		HAL_Delay(500);
 
 
 

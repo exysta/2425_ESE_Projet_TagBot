@@ -15,6 +15,7 @@
 #define ADXL343_REG_DEVID 0x00
 #define ADXL343_REG_THRESH_TAP 0x1D
 #define ADXL343_REG_DUR 0X21
+#define ADXL343_REG_LATENT 0X22
 #define ADXL343_REG_THRESH_ACT 0x24
 #define ADXL343_REG_TAP_AXES 0x2A
 #define ADXL343_REG_POWER_CTL 0x2D
@@ -29,7 +30,7 @@
 #define ADXL343_REG_DATAZ1 0x37
 
 // functions for the accelerometer
-void ADXL343_Init(void);
+int ADXL343_Init(void);
 void ADXL343_Configure(void);
 void ADXL343_ReadRegister(uint8_t reg, uint8_t* rx_data, size_t length);
 
