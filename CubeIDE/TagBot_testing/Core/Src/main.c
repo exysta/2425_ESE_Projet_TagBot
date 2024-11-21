@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "dma.h"
 #include "usart.h"
 #include "gpio.h"
@@ -40,9 +41,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ANGLE_MIN 120
-#define ANGLE_MAX 240
-#define DISTANCE_MIN 200
+extern TaskHandle_t UART_Processing_TaskHandle;
+extern TaskHandle_t LiDAR_Processing_TaskHandle;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -58,6 +58,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -113,9 +114,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	float min_distance = 10000;
-	int idx_angle_min_distance;
-	uint8_t object_detected = 1;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -141,33 +140,30 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	YDLIDAR_X4_Init(&hlidar, &huart3);
+	// Create the UART processing task with higher priority
+	xTaskCreate(UART_Processing_Task, "UART Task", 1024, (void *)&hlidar, 3, &UART_Processing_TaskHandle);
 
+	// Create the LiDAR processing task with lower priority
+	xTaskCreate(LiDAR_Processing_Task, "LiDAR Processing", 1024, NULL, 2, NULL);
+
+
+    /* Start the FreeRTOS scheduler */
+    vTaskStartScheduler();
   /* USER CODE END 2 */
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(hlidar.newData){
-		YDLIDAR_X4_Compute_Payload(&hlidar);
-		min_distance = 10000;
-		for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
-			if((10 < hlidar.scan_response.distance[idx_angle]) &&
-					(hlidar.scan_response.distance[idx_angle] < min_distance)){
-				idx_angle_min_distance = idx_angle;
-				min_distance = hlidar.scan_response.distance[idx_angle];
-			}
-		}
-		if(min_distance < DISTANCE_MIN){
-			object_detected = 1;
 
-		}
-		else{
-			object_detected = 0;
-		}
-
-		hlidar.newData = 0;
-	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -223,6 +219,27 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM6) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
