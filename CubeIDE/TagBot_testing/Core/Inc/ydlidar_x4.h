@@ -26,6 +26,24 @@
 #define SCAN_CONTENT_HEADER_SIZE		10
 #define SCAN_CONTENT_START_INDEX		10
 
+// the following define are for parsing the header of scan command
+// it is to be noted that hte index consist of 7 elements of the default header + 10 element of the scan header
+// the following index starting from 7 are to be used in a buffer containing message header + scan_header
+#define SCAN_CONTENT_HEADER_PH_1		7  //index of packet header 1
+#define SCAN_CONTENT_HEADER_PH_2		8  //index of packet header 2
+#define SCAN_CONTENT_HEADER_CT		9  //index of packet type.Indicates the number of sampling points contained in the current packet.
+										// There is only one initial point of data in the zero packet. The value is 1.
+#define SCAN_CONTENT_HEADER_LSN_INDEX		10 //index of sample_quantity
+#define SCAN_CONTENT_HEADER_FSA_1		11  //index of start angle 1
+#define SCAN_CONTENT_HEADER_FSA_2		12  //index of start angle 2
+#define SCAN_CONTENT_HEADER_LSA_1		13  //index of start angle 1
+#define SCAN_CONTENT_HEADER_LSA_2		14  //index of start angle 2
+#define SCAN_CONTENT_HEADER_CS_1		15  //index of check code 1
+#define SCAN_CONTENT_HEADER_CS_2		16  //index of check code 2
+
+
+#define SCAN_CONTENT_CT_START_PACKET		1  //the value of package tpye for the scan header if the packet data is a start packet
+
 
 #define LAST_DATA_BUFFER_SIZE			10
 

@@ -213,21 +213,30 @@ HAL_StatusTypeDef YDLIDAR_X4_Soft_Reboot(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_
 HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle){
 	// 50us to compute this function approx, 4000 cyles.
 
+	//
+	if(YDLIDAR_X4_Handle->scan_response.package_type == SCAN_CONTENT_CT_START_PACKET ) // we check if the message is the start packet representing the beginning of a cycle of data
+	{
+		free(YDLIDAR_X4_Handle->scan_response.scan_content_buffer);
+		return HAL_OK;
+	}
 	float start_angle = ((float)(YDLIDAR_X4_Handle->scan_response.start_angle >> 1))/64;
 	float end_angle = ((float)(YDLIDAR_X4_Handle->scan_response.end_angle >> 1))/64;
 	float diff_angle = end_angle - start_angle;
 	float angle, distance;
 	uint16_t distance_raw;
-	if(diff_angle<0){ // Check not negative (one turn)
+	if(diff_angle<0)// Check not negative (one turn)
+	{
 		diff_angle = (diff_angle+360)/(YDLIDAR_X4_Handle->scan_response.sample_quantity-1);
 	}
-	else{
+	else
+	{
 		diff_angle /= YDLIDAR_X4_Handle->scan_response.sample_quantity;
 	}
 
 	// Compute distance
 	//HAL_GPIO_WritePin(DEBUG_GPIO_Port, DEBUG_Pin, SET);
-	for(int idx=0; idx<YDLIDAR_X4_Handle->scan_response.sample_quantity; idx++){
+	for(int idx=0; idx<YDLIDAR_X4_Handle->scan_response.sample_quantity; idx++)
+	{
 		distance_raw = YDLIDAR_X4_Handle->scan_response.scan_content_buffer[2*idx];
 		distance_raw |= YDLIDAR_X4_Handle->scan_response.scan_content_buffer[2*idx+1]<<8;
 		distance = ((float)distance_raw)/4;
@@ -278,12 +287,12 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 		 ************************************************************************/
 	case START_SYNC_CONTENT_HEADER:
 
-		YDLIDAR_X4_Handle->scan_response.sample_quantity = YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 3];
+		YDLIDAR_X4_Handle->scan_response.sample_quantity = YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_LSN_INDEX];
 		YDLIDAR_X4_Handle->scan_response.scan_content_buffer = malloc(YDLIDAR_X4_Handle->scan_response.sample_quantity*2);//*2 car 2 bytes par data
 
 		YDLIDAR_X4_Handle->state = START_WAIT_CONTENT;
-		HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.scan_content_buffer,
-				YDLIDAR_X4_Handle->scan_response.sample_quantity*2);//*2 car 2 bytes par data
+//		HAL_StatusTypeDef status = HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.scan_content_buffer,
+//				YDLIDAR_X4_Handle->scan_response.sample_quantity*2);//*2 car 2 bytes par data
 		break;
 
 	case START_WAIT_CONTENT:
@@ -291,12 +300,12 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 		// we handle the rest of the header processing here
 		// it ensure a smooth transition between the receive of the header and the receive of the content
 		// it is needed as data is technially sent as one message by the lidar with no pause but we process it as two separate messages.
-		YDLIDAR_X4_Handle->scan_response.packet_header[0] = YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 0];
-		YDLIDAR_X4_Handle->scan_response.packet_header[1] = YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 1];
-		YDLIDAR_X4_Handle->scan_response.package_type = YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 2];
-		YDLIDAR_X4_Handle->scan_response.start_angle = YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 5] >> 8 | YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 4];
-		YDLIDAR_X4_Handle->scan_response.end_angle = YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 7] >> 8 | YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 6];
-		YDLIDAR_X4_Handle->scan_response.check_code = YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 9] >> 8 | YDLIDAR_X4_Handle->scan_header_buffer[(HEADER_SIZE-1) + 8];
+		YDLIDAR_X4_Handle->scan_response.packet_header[0] = YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_PH_1];
+		YDLIDAR_X4_Handle->scan_response.packet_header[1] = YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_PH_2];
+		YDLIDAR_X4_Handle->scan_response.package_type = YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_CT];
+		YDLIDAR_X4_Handle->scan_response.start_angle = YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_FSA_2] >> 8 | YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_FSA_1];
+		YDLIDAR_X4_Handle->scan_response.end_angle = YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_LSA_2] >> 8 | YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_LSA_1];
+		YDLIDAR_X4_Handle->scan_response.check_code = YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_CS_2] >> 8 | YDLIDAR_X4_Handle->scan_header_buffer[SCAN_CONTENT_HEADER_CS_1];
 
 		YDLIDAR_X4_Handle->state=START_SYNC_CONTENT_HEADER;
 		YDLIDAR_X4_Handle->trame_id++;
@@ -311,14 +320,23 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 	return HAL_OK;
 }
 
+void test_fun(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+{
+			HAL_StatusTypeDef status = HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.scan_content_buffer,
+					YDLIDAR_X4_Handle->scan_response.sample_quantity*2);//*2 car 2 bytes par data
+}
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart->Instance == huart3.Instance) {
-		if (!uart_lidar_processing) {
-			uart_lidar_processing = 1;
-			YDLIDAR_X4_State_Machine(&hlidar);
-			uart_lidar_processing = 0;
-		}
+	if (huart->Instance == huart3.Instance)
+	{
+		YDLIDAR_X4_State_Machine(&hlidar);
+		test_fun(&hlidar);
+//		if (!uart_lidar_processing) {
+//			uart_lidar_processing = 1;
+//			YDLIDAR_X4_State_Machine(&hlidar);
+//			uart_lidar_processing = 0;
+//		}
 	}
 
 
