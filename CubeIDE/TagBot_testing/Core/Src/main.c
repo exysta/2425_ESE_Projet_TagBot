@@ -1,25 +1,24 @@
 /* USER CODE BEGIN Header */
 /**
- ******************************************************************************
- * @file           : main.c
- * @brief          : Main program body
- ******************************************************************************
- * @attention
- *
- * Copyright (c) 2024 STMicroelectronics.
- * All rights reserved.
- *
- * This software is licensed under terms that can be found in the LICENSE file
- * in the root directory of this software component.
- * If no LICENSE file comes with this software, it is provided AS-IS.
- *
- ******************************************************************************
- */
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2024 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
-#include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -28,8 +27,7 @@
 #include "X4_driver.h"
 #include "ydlidar_x4.h"
 
-#include "ssd1306.h"
-#include "ssd1306_tests.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -42,7 +40,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define SSD1306TEST
 #define ANGLE_MIN 120
 #define ANGLE_MAX 240
 #define DISTANCE_MIN 200
@@ -140,54 +137,41 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_USART2_UART_Init();
   MX_USART3_UART_Init();
-  MX_I2C1_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-	//  X4_SendCommand(X4_CMD_GET_INFO); /**< Command to get device information */
-	//  HAL_UART_Receive(&huart3, pData, Size, Timeout)
-
-//	X4_handle_t X4_handle;
-//
-//	uint8_t data[2] = {X4_CMD_START, X4_CMD_GET_HEALTH}; /**< Array holding the command data */
-//	uint8_t raw_data[X4_MAX_RESPONSE_SIZE + X4_RESPONSE_HEADER_SIZE]; /**< Buffer for raw received data */
-//	memset(raw_data, 0, sizeof(raw_data));
-
-//	X4_Init(&X4_handle);
-//	X4_GetDeviceInfo(&X4_handle);
-//	X4_StartScan(&X4_handle);
 	YDLIDAR_X4_Init(&hlidar, &huart3);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	while (1)
-	{
-		if(hlidar.newData){
-			YDLIDAR_X4_Compute_Payload(&hlidar);
-			min_distance = 10000;
-			for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
-				if((10 < hlidar.scan_response.distance[idx_angle]) &&
-						(hlidar.scan_response.distance[idx_angle] < min_distance)){
-					idx_angle_min_distance = idx_angle;
-					min_distance = hlidar.scan_response.distance[idx_angle];
-				}
+  while (1)
+  {
+	  if(hlidar.newData){
+		YDLIDAR_X4_Compute_Payload(&hlidar);
+		min_distance = 10000;
+		for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
+			if((10 < hlidar.scan_response.distance[idx_angle]) &&
+					(hlidar.scan_response.distance[idx_angle] < min_distance)){
+				idx_angle_min_distance = idx_angle;
+				min_distance = hlidar.scan_response.distance[idx_angle];
 			}
-			if(min_distance < DISTANCE_MIN){
-				object_detected = 1;
-
-			}
-			else{
-				object_detected = 0;
-			}
-
-			hlidar.newData = 0;
 		}
+		if(min_distance < DISTANCE_MIN){
+			object_detected = 1;
+
+		}
+		else{
+			object_detected = 0;
+		}
+
+		hlidar.newData = 0;
+	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	}
+  }
   /* USER CODE END 3 */
 }
 
@@ -247,11 +231,11 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-	/* User can add his own implementation to report the HAL error return state */
-	__disable_irq();
-	while (1)
-	{
-	}
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -266,7 +250,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-	/* User can add his own implementation to report the file name and line number,
+  /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
