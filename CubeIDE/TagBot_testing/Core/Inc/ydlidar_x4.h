@@ -24,12 +24,14 @@
 #define DEVICE_INFORMATION_PAYLOAD_SIZE	20
 #define HEALTH_STATUS_PAYLOAD_SIZE		3
 #define SCAN_CONTENT_HEADER_SIZE		10
+#define SCAN_CONTENT_START_INDEX		10
+
 
 #define LAST_DATA_BUFFER_SIZE			10
 
 #define LIDAR_BAUDRATE 					128000
 
-#define RX_BUFFER_SIZE					1
+#define RX_BUFFER_SIZE					100
 
 typedef enum {
 	IDLE,
@@ -46,7 +48,8 @@ typedef struct YDLIDAR_Scan_Response{
 	uint16_t 	start_angle;
 	uint16_t 	end_angle;
 	uint16_t 	check_code;
-	uint8_t 	buffer_data[80];
+	uint8_t * scan_content_buffer;
+
 	float 		distance[360];
 }YDLIDAR_Scan_Response;
 
@@ -61,7 +64,11 @@ typedef struct __YDLIDAR_X4_HandleTypeDef
 	uint8_t	serial_number[16];
 	uint8_t health_status;
 	uint8_t health_error_code[2];
+
+	uint8_t scan_header_buffer[HEADER_SIZE+SCAN_CONTENT_HEADER_SIZE];
+
 	uint8_t rx_buffer[RX_BUFFER_SIZE];
+
 	YDLIDAR_Scan_Response scan_response;
 	uint8_t newData;
 	int trame_id;
