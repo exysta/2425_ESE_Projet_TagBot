@@ -141,10 +141,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	YDLIDAR_X4_Init(&hlidar, &huart3);
 	// Create the UART processing task with higher priority
-	xTaskCreate(UART_Processing_Task, "UART Task", 1024, (void *)&hlidar, 3, &UART_Processing_TaskHandle);
+	xTaskCreate(UART_Processing_Task, "UART Task", 2048, (void *)&hlidar, 3, &UART_Processing_TaskHandle);
 
 	// Create the LiDAR processing task with lower priority
-	xTaskCreate(LiDAR_Processing_Task, "LiDAR Processing", 1024, NULL, 2, NULL);
+	//xTaskCreate(LiDAR_Processing_Task, "LiDAR Processing", 2048, NULL, 2, NULL);
 
 
     /* Start the FreeRTOS scheduler */

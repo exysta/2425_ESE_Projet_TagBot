@@ -1,7 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
 BSP_IP_NAME=NUCLEO-G431RB
-CAD.formats=
-CAD.pinconfig=
+CAD.formats=[]
+CAD.pinconfig=Dual
 CAD.provider=
 Dma.Request0=USART3_RX
 Dma.Request1=USART3_TX
@@ -40,10 +40,13 @@ Dma.USART3_TX.1.SyncEnable=DISABLE
 Dma.USART3_TX.1.SyncPolarity=HAL_DMAMUX_SYNC_NO_EVENT
 Dma.USART3_TX.1.SyncRequestNumber=1
 Dma.USART3_TX.1.SyncSignalID=NONE
-FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,configTOTAL_HEAP_SIZE
+FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,configTOTAL_HEAP_SIZE,configGENERATE_RUN_TIME_STATS,configUSE_TRACE_FACILITY,configUSE_STATS_FORMATTING_FUNCTIONS
 FREERTOS.Tasks01=defaultTask,0,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL
+FREERTOS.configGENERATE_RUN_TIME_STATS=1
 FREERTOS.configTOTAL_HEAP_SIZE=20000
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
+FREERTOS.configUSE_STATS_FORMATTING_FUNCTIONS=1
+FREERTOS.configUSE_TRACE_FACILITY=1
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
 KeepUserPlacement=false

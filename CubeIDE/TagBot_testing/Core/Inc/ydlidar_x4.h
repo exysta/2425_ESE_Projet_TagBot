@@ -50,14 +50,14 @@
 
 #define LIDAR_BAUDRATE 					128000
 
-#define RX_BUFFER_SIZE					100
+#define SCAN_CONTENT_BUFFER_SIZE					100
 
 typedef enum {
 	IDLE,
 	STOP,
 	START_SYNC_CONTENT_HEADER, // for the first receive where header is message header + scan_data header of len 7 + 10
 	START_SCAN_DATA_HEADER, // to handle scan header begining by t 0x55AA
-	START_WAIT_CONTENT,
+	START_SCAN_DATA_CONTENT,
 
 } YDLIDAR_State;
 
@@ -69,8 +69,18 @@ typedef struct YDLIDAR_Scan_Response{
 	uint16_t 	start_angle;
 	uint16_t 	end_angle;
 	uint16_t 	check_code;
-	uint8_t scan_header_buffer[SCAN_CONTENT_HEADER_SIZE];
-	uint8_t * scan_content_buffer;
+	//double buffering
+	uint8_t * scan_header_buffer_current;
+	uint8_t * scan_header_buffer_old;
+
+	uint8_t scan_header_buffer_1[SCAN_CONTENT_HEADER_SIZE];
+	uint8_t scan_header_buffer_2[SCAN_CONTENT_HEADER_SIZE];
+
+	uint8_t * scan_content_buffer_current;
+	uint8_t * scan_content_buffer_old;
+
+	uint8_t scan_content_buffer_1[SCAN_CONTENT_BUFFER_SIZE];
+	uint8_t scan_content_buffer_2[SCAN_CONTENT_BUFFER_SIZE];
 
 	float 		distance[360];
 }YDLIDAR_Scan_Response;
@@ -88,7 +98,6 @@ typedef struct __YDLIDAR_X4_HandleTypeDef
 	uint8_t health_error_code[2];
 
 	uint8_t header_buffer[HEADER_SIZE];
-	uint8_t rx_buffer[RX_BUFFER_SIZE];
 
 	YDLIDAR_Scan_Response scan_response;
 	uint8_t newData;
