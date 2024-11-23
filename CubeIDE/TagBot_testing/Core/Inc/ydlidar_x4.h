@@ -28,18 +28,20 @@
 #define X4_REPLY_TYPE_CODE_INDEX 	6 // index of the type code in the reply message
 // the following define are for parsing the header of scan command
 
-#define SCAN_CONTENT_HEADER_PH_1       0  // index of packet header 1
-#define SCAN_CONTENT_HEADER_PH_2       1  // index of packet header 2
-#define SCAN_CONTENT_HEADER_CT         2  // index of packet type. Indicates the number of sampling points contained in the current packet.
+#define SCAN_CONTENT_HEADER_PH_1_INDEX       0  // index of packet header 1
+#define SCAN_CONTENT_HEADER_PH_2_INDEX        1  // index of packet header 2
+#define SCAN_CONTENT_HEADER_CT_INDEX          2  // index of packet type. Indicates the number of sampling points contained in the current packet.
                                           // There is only one initial point of data in the zero packet. The value is 1.
-#define SCAN_CONTENT_HEADER_LSN_INDEX  3  // index of sample_quantity
-#define SCAN_CONTENT_HEADER_FSA_1      4  // index of start angle 1
-#define SCAN_CONTENT_HEADER_FSA_2      5  // index of start angle 2
-#define SCAN_CONTENT_HEADER_LSA_1      6  // index of start angle 1
-#define SCAN_CONTENT_HEADER_LSA_2      7  // index of start angle 2
-#define SCAN_CONTENT_HEADER_CS_1       8  // index of check code 1
-#define SCAN_CONTENT_HEADER_CS_2       9  // index of check code 2
+#define SCAN_CONTENT_HEADER_LSN_INDEX   3  // index of sample_quantity
+#define SCAN_CONTENT_HEADER_FSA_1_INDEX       4  // index of start angle 1
+#define SCAN_CONTENT_HEADER_FSA_2_INDEX       5  // index of start angle 2
+#define SCAN_CONTENT_HEADER_LSA_1_INDEX       6  // index of start angle 1
+#define SCAN_CONTENT_HEADER_LSA_2_INDEX       7  // index of start angle 2
+#define SCAN_CONTENT_HEADER_CS_1_INDEX        8  // index of check code 1
+#define SCAN_CONTENT_HEADER_CS_2_INDEX        9  // index of check code 2
 
+#define SCAN_CONTENT_HEADER_PH_1_VALUE       0xAA  // index of check code 1
+#define SCAN_CONTENT_HEADER_PH_2_VALUE       0x55  // index of check code 2
 
 #define SCAN_COMMAND_REPLY_TYPE_CODE		0x81  //the type code of the reply message to the start command
 
@@ -51,15 +53,20 @@
 #define LIDAR_BAUDRATE 					128000
 
 #define SCAN_CONTENT_BUFFER_SIZE					100
+#define SCAN_CONTENT_DMA_BUFFER_SIZE					500
 
 typedef enum {
 	IDLE,
 	STOP,
 	START_SYNC_CONTENT_HEADER, // for the first receive where header is message header + scan_data header of len 7 + 10
-	START_SCAN_DATA_HEADER, // to handle scan header begining by t 0x55AA
-	START_SCAN_DATA_CONTENT,
-
+	START_SCANNING, // to handle the first half of circular buffer
 } YDLIDAR_State;
+
+//check if we are processing the first half or the second half of the buffer
+typedef enum {
+	START_SCAN_DATA_HALF_CPLT,
+	START_SCAN_DATA_FULL_CPLT
+} DMA_State;
 
 typedef struct YDLIDAR_Scan_Response{
 	uint8_t 	id_data;
@@ -70,17 +77,15 @@ typedef struct YDLIDAR_Scan_Response{
 	uint16_t 	end_angle;
 	uint16_t 	check_code;
 	//double buffering
-	uint8_t * scan_header_buffer_current;
-	uint8_t * scan_header_buffer_old;
+	DMA_State dma_state;
+	uint8_t scan_content_buffer_dma[SCAN_CONTENT_DMA_BUFFER_SIZE];
+	uint8_t scan_content_buffer_raw_distances[SCAN_CONTENT_BUFFER_SIZE];;
 
-	uint8_t scan_header_buffer_1[SCAN_CONTENT_HEADER_SIZE];
-	uint8_t scan_header_buffer_2[SCAN_CONTENT_HEADER_SIZE];
-
-	uint8_t * scan_content_buffer_current;
-	uint8_t * scan_content_buffer_old;
-
-	uint8_t scan_content_buffer_1[SCAN_CONTENT_BUFFER_SIZE];
-	uint8_t scan_content_buffer_2[SCAN_CONTENT_BUFFER_SIZE];
+//	uint8_t * scan_content_buffer_current;
+//	uint8_t * scan_content_buffer_old;
+//
+//	uint8_t scan_content_buffer_1[SCAN_CONTENT_BUFFER_SIZE];
+//	uint8_t scan_content_buffer_2[SCAN_CONTENT_BUFFER_SIZE];
 
 	float 		distance[360];
 }YDLIDAR_Scan_Response;

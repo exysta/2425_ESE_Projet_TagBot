@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include "cmsis_os.h"
 
-#define ANGLE_MIN 120
-#define ANGLE_MAX 240
+#define ANGLE_MIN 0
+#define ANGLE_MAX 360
 #define DISTANCE_MIN 200
 //#define SERIAL_DEBUG
 __YDLIDAR_X4_HandleTypeDef hlidar;
@@ -45,10 +45,7 @@ HAL_StatusTypeDef YDLIDAR_X4_Init(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle,
 	YDLIDAR_X4_Handle->trame_id = 0;
 	YDLIDAR_X4_Handle->newData = 0;
 	YDLIDAR_X4_Handle->scan_response.id_data = 0;
-	YDLIDAR_X4_Handle->scan_response.scan_header_buffer_current = YDLIDAR_X4_Handle->scan_response.scan_header_buffer_1;
-	YDLIDAR_X4_Handle->scan_response.scan_content_buffer_current = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_1;
-	YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old = YDLIDAR_X4_Handle->scan_response.scan_header_buffer_2;
-	YDLIDAR_X4_Handle->scan_response.scan_content_buffer_old = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_2;
+
 	YDLIDAR_X4_Send_Cmd(YDLIDAR_X4_Handle, CMD_SOFT_RESTART);
 	HAL_Delay(20);
 
@@ -211,23 +208,25 @@ HAL_StatusTypeDef YDLIDAR_X4_Get_Health_Status(__YDLIDAR_X4_HandleTypeDef *YDLID
 //	txBufferSize+=4;
 //	HAL_UART_Transmit(&huart2, uart2TxBuffer, txBufferSize, 10);
 //}
-HAL_StatusTypeDef YDLIDAR_X4_Start_Scan(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle){
+HAL_StatusTypeDef YDLIDAR_X4_Start_Scan(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+{
 	YDLIDAR_X4_Send_Cmd(YDLIDAR_X4_Handle, CMD_START_SCAN);
 	YDLIDAR_X4_Handle->state = START_SYNC_CONTENT_HEADER;  //we notify the state machine that we are processing the header
+
 	HAL_UART_Abort(YDLIDAR_X4_Handle->huart);
-	HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->header_buffer, HEADER_SIZE  );
+	HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->header_buffer, HEADER_SIZE);
 	return HAL_OK;
 }
-HAL_StatusTypeDef YDLIDAR_X4_Soft_Reboot(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle){
+
+HAL_StatusTypeDef YDLIDAR_X4_Soft_Reboot(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+{
 	return YDLIDAR_X4_Send_Cmd(YDLIDAR_X4_Handle, CMD_SOFT_RESTART);
 }
+
 HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle){
 	// 50us to compute this function approx, 4000 cyles.
 
-	if(YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old [0] == 170)
-	{
-		int a = YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old [1];
-	}
+
 	float start_angle = ((float)(YDLIDAR_X4_Handle->scan_response.start_angle >> 1))/64;
 	float end_angle = ((float)(YDLIDAR_X4_Handle->scan_response.end_angle >> 1))/64;
 	float diff_angle = end_angle - start_angle;
@@ -246,8 +245,8 @@ HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(__YDLIDAR_X4_HandleTypeDef *YDLIDAR
 	//HAL_GPIO_WritePin(DEBUG_GPIO_Port, DEBUG_Pin, SET);
 	for(int idx=0; idx<YDLIDAR_X4_Handle->scan_response.sample_quantity; idx++)
 	{
-		distance_raw = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_old[2*idx];
-		distance_raw |= YDLIDAR_X4_Handle->scan_response.scan_content_buffer_old[2*idx+1]<<8;
+		distance_raw = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[2*idx];
+		distance_raw |= YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[2*idx+1] << 8;
 		distance = ((float)distance_raw)/4;
 		angle = diff_angle*idx+start_angle;
 		YDLIDAR_X4_Handle->scan_response.distance[(uint32_t)angle]=distance;
@@ -277,6 +276,88 @@ HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(__YDLIDAR_X4_HandleTypeDef *YDLIDAR
 	return HAL_OK;
 }
 
+
+
+HAL_StatusTypeDef YDLIDAR_X4_Process_Scan_Data(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle,uint16_t start_index)
+{
+	YDLIDAR_X4_Handle->scan_response.package_type =
+			YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CT_INDEX];
+
+	YDLIDAR_X4_Handle->scan_response.sample_quantity = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_LSN_INDEX];
+
+	YDLIDAR_X4_Handle->scan_response.start_angle =
+			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_FSA_2_INDEX] << 8) |
+			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_FSA_1_INDEX]);
+
+	YDLIDAR_X4_Handle->scan_response.end_angle =
+			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_LSA_2_INDEX] << 8) |
+			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_LSA_1_INDEX]);
+
+	YDLIDAR_X4_Handle->scan_response.check_code =
+			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CS_2_INDEX] << 8) |
+			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CS_1_INDEX]);
+
+	for(int idx = 0; idx < YDLIDAR_X4_Handle->scan_response.sample_quantity * 2; idx++)
+	{
+		YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[idx] = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma [start_index + SCAN_CONTENT_HEADER_SIZE +idx ];
+	}
+
+	if(YDLIDAR_X4_Handle->scan_response.package_type != SCAN_CONTENT_CT_START_PACKET)
+	{
+		YDLIDAR_X4_Handle->trame_id++;
+		YDLIDAR_X4_Handle->newData = 1;
+	}
+	return HAL_OK;
+
+}
+
+HAL_StatusTypeDef YDLIDAR_X4_Parse_Buffer(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+{
+	uint16_t start_idx, end_idx;
+
+	if (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_HALF_CPLT)
+	{
+		start_idx = 0;
+		end_idx = (SCAN_CONTENT_DMA_BUFFER_SIZE / 2) - 1;
+	}
+	else if (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_FULL_CPLT) {
+		start_idx = SCAN_CONTENT_DMA_BUFFER_SIZE / 2;
+		end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE - 1;
+	}
+	else
+	{
+		return HAL_ERROR; // Invalid DMA state
+	}
+
+	// Iterate over the specified half of the buffer
+	for (uint16_t i = start_idx; i < end_idx; i++)
+	{
+		// Check for header pattern
+		if ((YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[i] == SCAN_CONTENT_HEADER_PH_1_VALUE) &&
+				(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[i + 1] == SCAN_CONTENT_HEADER_PH_2_VALUE))
+		{
+			if ((YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[i] != SCAN_CONTENT_HEADER_PH_1_VALUE) ||
+					(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[i + 1] != SCAN_CONTENT_HEADER_PH_2_VALUE))
+			{
+				return HAL_ERROR;
+
+			}
+			// Process header and associated data
+			HAL_StatusTypeDef status = YDLIDAR_X4_Process_Scan_Data(YDLIDAR_X4_Handle, i);
+
+			if (status != HAL_OK)
+			{
+				return status; // Return error if processing fails
+			}
+			// Skip past header to avoid redundant checks
+			i++; // Skip the second header byte
+		}
+	}
+	return HAL_OK;
+
+}
+
+
 HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
 {
 
@@ -301,79 +382,24 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 		//
 		if(YDLIDAR_X4_Handle->header_buffer[X4_REPLY_TYPE_CODE_INDEX] == SCAN_COMMAND_REPLY_TYPE_CODE ) // we check if the message is the start packet representing the beginning of a cycle of data
 		{
-			YDLIDAR_X4_Handle->state = START_SCAN_DATA_HEADER;
-			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.scan_header_buffer_current, SCAN_CONTENT_HEADER_SIZE);
+			YDLIDAR_X4_Handle->state = START_SCANNING;
+			YDLIDAR_X4_Handle->scan_response.dma_state = START_SCAN_DATA_FULL_CPLT; // le prochain interrupt sera celui du half complete
+
+			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma, SCAN_CONTENT_DMA_BUFFER_SIZE);
 			break;
 		}
 		return HAL_ERROR;
 
-	case START_SCAN_DATA_HEADER:
+	case START_SCANNING:
+		YDLIDAR_X4_Handle->scan_response.dma_state = (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_HALF_CPLT)
+		                                  ? START_SCAN_DATA_FULL_CPLT
+		                                  : START_SCAN_DATA_HALF_CPLT;
+		YDLIDAR_X4_Parse_Buffer(YDLIDAR_X4_Handle);
 
-	    // Swap the old and current header buffers
-	    uint8_t* temp_header = YDLIDAR_X4_Handle->scan_response.scan_header_buffer_current;
-	    YDLIDAR_X4_Handle->scan_response.scan_header_buffer_current = YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old;
-	    YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old = temp_header;
-
-
-
-
-	    // Parse header data from the "old" buffer
-	    YDLIDAR_X4_Handle->scan_response.package_type =
-	        YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_CT];
-
-	    YDLIDAR_X4_Handle->scan_response.sample_quantity = YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_LSN_INDEX];
-
-	    YDLIDAR_X4_Handle->scan_response.start_angle =
-	        (YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_FSA_2] << 8) |
-	        (YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_FSA_1]);
-
-	    YDLIDAR_X4_Handle->scan_response.end_angle =
-	        (YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_LSA_2] << 8) |
-	        (YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_LSA_1]);
-
-	    YDLIDAR_X4_Handle->scan_response.check_code =
-	        (YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_CS_2] << 8) |
-	        (YDLIDAR_X4_Handle->scan_response.scan_header_buffer_old[SCAN_CONTENT_HEADER_CS_1]);
-
-
-		YDLIDAR_X4_Handle->state = START_SCAN_DATA_CONTENT;
-
-
-	     //Re-arm DMA for receiving content
-	    HAL_UART_Receive_DMA(
-	        YDLIDAR_X4_Handle->huart,
-	        YDLIDAR_X4_Handle->scan_response.scan_content_buffer_current,
-	        YDLIDAR_X4_Handle->scan_response.sample_quantity * 2 // 2 bytes per data
-	    );
-
-//	    HAL_UART_Receive_DMA(
-//	        YDLIDAR_X4_Handle->huart,
-//	        YDLIDAR_X4_Handle->scan_response.scan_content_buffer_current,
-//	        100// 2 bytes per data
-//	    );
-	    break;
-
-	case START_SCAN_DATA_CONTENT:
-
-	    // Swap the old and current header buffers
-	    uint8_t* temp_content = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_current;
-	    YDLIDAR_X4_Handle->scan_response.scan_content_buffer_current = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_old;
-	    YDLIDAR_X4_Handle->scan_response.scan_content_buffer_old = temp_content;
-
-
-
-		YDLIDAR_X4_Handle->state=START_SCAN_DATA_HEADER;
-		YDLIDAR_X4_Handle->trame_id++;
-		YDLIDAR_X4_Handle->newData = 1;
-
-
-		HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.scan_header_buffer_current, SCAN_CONTENT_HEADER_SIZE);
-		break;
 
 	default:
-		YDLIDAR_X4_Handle->state = START_SCAN_DATA_HEADER;
+		YDLIDAR_X4_Handle->state = STOP;
 
-		HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->scan_response.scan_header_buffer_current, SCAN_CONTENT_HEADER_SIZE);
 	}
 	return HAL_OK;
 }
@@ -382,23 +408,23 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 void UART_Processing_Task(void *argument)
 {
 
-    // Retrieve the handle (hlidar) passed as argument
+	// Retrieve the handle (hlidar) passed as argument
 	__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle = (__YDLIDAR_X4_HandleTypeDef*) argument;
 
-    for (;;)
-    {
+	for (;;)
+	{
 
-        // Wait for the DMA completion notification
-        ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(100)); // Blocks indefinitely until notified
+		// Wait for the DMA completion notification
+		ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(100)); // Blocks indefinitely until notified
 
-        // Process the received data
-        YDLIDAR_X4_State_Machine(YDLIDAR_X4_Handle);
-        // Start UART DMA to receive data in the buffer
+		// Process the received data
+		YDLIDAR_X4_State_Machine(YDLIDAR_X4_Handle);
+		// Start UART DMA to receive data in the buffer
 
 
-        // Delay (optional)
-        vTaskDelay(pdMS_TO_TICKS(1));
-    }
+		// Delay (optional)
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}
 }
 
 void LiDAR_Processing_Task(void *argument)
@@ -408,46 +434,68 @@ void LiDAR_Processing_Task(void *argument)
 	uint8_t object_detected = 1;
 
 	__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle = (__YDLIDAR_X4_HandleTypeDef*) argument;
-    for (;;)
-    {
-  	  if(hlidar.newData)
-  	  {
-  		YDLIDAR_X4_Compute_Payload(&hlidar);
-  		min_distance = 10000;
-  		for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
-  			if((10 < hlidar.scan_response.distance[idx_angle]) &&
-  					(hlidar.scan_response.distance[idx_angle] < min_distance)){
-  				idx_angle_min_distance = idx_angle;
-  				min_distance = hlidar.scan_response.distance[idx_angle];
-  			}
-  		}
-  		if(min_distance < DISTANCE_MIN){
-  			object_detected = 1;
+	for (;;)
+	{
+		if(YDLIDAR_X4_Handle->newData)
+		{
+			YDLIDAR_X4_Compute_Payload(YDLIDAR_X4_Handle);
+     			min_distance = 10000;
+			for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
+				if((10 < YDLIDAR_X4_Handle->scan_response.distance[idx_angle]) &&
+						(YDLIDAR_X4_Handle->scan_response.distance[idx_angle] < min_distance)){
+					idx_angle_min_distance = idx_angle;
+					min_distance =YDLIDAR_X4_Handle->scan_response.distance[idx_angle];
+				}
+			}
+			if(min_distance < DISTANCE_MIN){
+				object_detected = 1;
 
-  		}
-  		else{
-  			object_detected = 0;
-  		}
+			}
+			else{
+				object_detected = 0;
+			}
 
-  		hlidar.newData = 0;
-  	}
+			YDLIDAR_X4_Handle->newData = 0;
+		}
 
-        // Optional delay
-        vTaskDelay(pdMS_TO_TICKS(10));
-    }
+		// Optional delay
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}
 }
 
+
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+{
+	if (huart->Instance == huart3.Instance)
+	{
+		if(hlidar.state == START_SCANNING)
+		{
+			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
+			vTaskNotifyGiveFromISR(UART_Processing_TaskHandle, &xHigherPriorityTaskWoken);
+
+			// Perform context switch if required
+			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		}
+	}
+
+
+}
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if (huart->Instance == huart3.Instance)
 	{
-        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-        vTaskNotifyGiveFromISR(UART_Processing_TaskHandle, &xHigherPriorityTaskWoken);
+		if(hlidar.state == START_SCANNING || hlidar.state ==START_SYNC_CONTENT_HEADER)
+		{
+			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-        // Perform context switch if required
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+			vTaskNotifyGiveFromISR(UART_Processing_TaskHandle, &xHigherPriorityTaskWoken);
+
+			// Perform context switch if required
+			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		}
 
 	}
 }
