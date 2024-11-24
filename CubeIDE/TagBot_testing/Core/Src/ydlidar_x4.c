@@ -215,6 +215,7 @@ HAL_StatusTypeDef YDLIDAR_X4_Start_Scan(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_H
 
 	HAL_UART_Abort(YDLIDAR_X4_Handle->huart);
 	HAL_UART_Receive_IT(YDLIDAR_X4_Handle->huart, YDLIDAR_X4_Handle->header_buffer, HEADER_SIZE);
+
 	return HAL_OK;
 }
 
@@ -297,15 +298,25 @@ HAL_StatusTypeDef YDLIDAR_X4_Process_Scan_Data(__YDLIDAR_X4_HandleTypeDef *YDLID
 			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CS_2_INDEX] << 8) |
 			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CS_1_INDEX]);
 
+	int buffer_index;
 	for(int idx = 0; idx < YDLIDAR_X4_Handle->scan_response.sample_quantity * 2; idx++)
 	{
-		YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[idx] = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma [start_index + SCAN_CONTENT_HEADER_SIZE +idx ];
+		if(start_index + SCAN_CONTENT_HEADER_SIZE + idx > SCAN_CONTENT_DMA_BUFFER_SIZE-1 )
+		{
+			buffer_index = start_index + SCAN_CONTENT_HEADER_SIZE + idx - SCAN_CONTENT_DMA_BUFFER_SIZE;
+		}
+		else
+		{
+			buffer_index = start_index + SCAN_CONTENT_HEADER_SIZE + idx;
+		}
+		YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[idx] = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma [buffer_index];
 	}
 
 	if(YDLIDAR_X4_Handle->scan_response.package_type != SCAN_CONTENT_CT_START_PACKET)
 	{
 		YDLIDAR_X4_Handle->trame_id++;
 		YDLIDAR_X4_Handle->newData = 1;
+		YDLIDAR_X4_Compute_Payload(YDLIDAR_X4_Handle);
 	}
 	return HAL_OK;
 
@@ -415,7 +426,7 @@ void UART_Processing_Task(void *argument)
 	{
 
 		// Wait for the DMA completion notification
-		ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(100)); // Blocks indefinitely until notified
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY); // Blocks indefinitely until notified
 
 		// Process the received data
 		YDLIDAR_X4_State_Machine(YDLIDAR_X4_Handle);
@@ -438,8 +449,8 @@ void LiDAR_Processing_Task(void *argument)
 	{
 		if(YDLIDAR_X4_Handle->newData)
 		{
-			YDLIDAR_X4_Compute_Payload(YDLIDAR_X4_Handle);
-     			min_distance = 10000;
+			//YDLIDAR_X4_Compute_Payload(YDLIDAR_X4_Handle);
+     		min_distance = 10000;
 			for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
 				if((10 < YDLIDAR_X4_Handle->scan_response.distance[idx_angle]) &&
 						(YDLIDAR_X4_Handle->scan_response.distance[idx_angle] < min_distance)){
@@ -463,6 +474,14 @@ void LiDAR_Processing_Task(void *argument)
 	}
 }
 
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == huart3.Instance)
+    {
+        uint32_t error = HAL_UART_GetError(huart);
+        // Log or handle the error
+    }
+}
 
 void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 {

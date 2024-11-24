@@ -104,9 +104,12 @@ const uint8_t garfield_32x32 [] = {
 		0xff, 0xff, 0xff, 0xff,
 };
 #endif
-void vApplicationStackOverflowHook( void ) {
+void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
+{
 	Error_Handler();
 }
+
+
 /* USER CODE END 0 */
 
 /**
@@ -144,10 +147,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	YDLIDAR_X4_Init(&hlidar, &huart3);
 	// Create the UART processing task with higher priority
-	xTaskCreate(UART_Processing_Task, "UART Task", 2048, (void *)&hlidar, 3, &UART_Processing_TaskHandle);
+	xTaskCreate(UART_Processing_Task, "UART Task", 2048, (void *)&hlidar, 4 , &UART_Processing_TaskHandle);
 
 	// Create the LiDAR processing task with lower priority
-	xTaskCreate(LiDAR_Processing_Task, "LiDAR Processing", 2048, (void *)&hlidar, 2, &LiDAR_Processing_TaskHandle);
+	xTaskCreate(LiDAR_Processing_Task, "LiDAR Processing", 2048, (void *)&hlidar, 3, &LiDAR_Processing_TaskHandle);
 
     /* Start the FreeRTOS scheduler */
     vTaskStartScheduler();

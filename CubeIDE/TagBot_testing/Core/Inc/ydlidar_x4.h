@@ -53,7 +53,7 @@
 #define LIDAR_BAUDRATE 					128000
 
 #define SCAN_CONTENT_BUFFER_SIZE					100
-#define SCAN_CONTENT_DMA_BUFFER_SIZE					500
+#define SCAN_CONTENT_DMA_BUFFER_SIZE					1000
 
 typedef enum {
 	IDLE,
@@ -81,11 +81,6 @@ typedef struct YDLIDAR_Scan_Response{
 	uint8_t scan_content_buffer_dma[SCAN_CONTENT_DMA_BUFFER_SIZE];
 	uint8_t scan_content_buffer_raw_distances[SCAN_CONTENT_BUFFER_SIZE];;
 
-//	uint8_t * scan_content_buffer_current;
-//	uint8_t * scan_content_buffer_old;
-//
-//	uint8_t scan_content_buffer_1[SCAN_CONTENT_BUFFER_SIZE];
-//	uint8_t scan_content_buffer_2[SCAN_CONTENT_BUFFER_SIZE];
 
 	float 		distance[360];
 }YDLIDAR_Scan_Response;
