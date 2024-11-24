@@ -126,8 +126,10 @@ HAL_StatusTypeDef YDLIDAR_X4_Soft_Reboot(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_
 HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
 HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
 
-void UART_Processing_Task(void *argument);
-void LiDAR_Processing_Task(void *argument);
+void YDLIDAR_X4_UART_Processing_Task(void *argument);
+void YDLIDAR_X4_LiDAR_Processing_Task(void *argument);
+void YDLIDAR_X4_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
+void YDLIDAR_X4_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 
 
 #endif /* INC_YDLIDAR_X4_H_ */

@@ -416,7 +416,7 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 }
 
 
-void UART_Processing_Task(void *argument)
+void YDLIDAR_X4_UART_Processing_Task(void *argument)
 {
 
 	// Retrieve the handle (hlidar) passed as argument
@@ -438,7 +438,7 @@ void UART_Processing_Task(void *argument)
 	}
 }
 
-void LiDAR_Processing_Task(void *argument)
+void YDLIDAR_X4_LiDAR_Processing_Task(void *argument)
 {
 	float min_distance = 10000;
 	int idx_angle_min_distance;
@@ -449,7 +449,6 @@ void LiDAR_Processing_Task(void *argument)
 	{
 		if(YDLIDAR_X4_Handle->newData)
 		{
-			//YDLIDAR_X4_Compute_Payload(YDLIDAR_X4_Handle);
      		min_distance = 10000;
 			for(int idx_angle=ANGLE_MIN; idx_angle<ANGLE_MAX; idx_angle++){
 				if((10 < YDLIDAR_X4_Handle->scan_response.distance[idx_angle]) &&
@@ -470,22 +469,24 @@ void LiDAR_Processing_Task(void *argument)
 		}
 
 		// Optional delay
-		vTaskDelay(pdMS_TO_TICKS(10));
+		vTaskDelay(pdMS_TO_TICKS(100));
 	}
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 {
-    if (huart->Instance == huart3.Instance)
+    if (huart->Instance == hlidar.huart->Instance)
     {
         uint32_t error = HAL_UART_GetError(huart);
         // Log or handle the error
     }
 }
 
-void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+// to be called inside the callback function in the main.
+//
+void YDLIDAR_X4_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart->Instance == huart3.Instance)
+	if (huart->Instance == hlidar.huart->Instance)
 	{
 		if(hlidar.state == START_SCANNING)
 		{
@@ -497,13 +498,13 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 		}
 	}
-
-
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+
+
+void YDLIDAR_X4_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart->Instance == huart3.Instance)
+	if (huart->Instance == hlidar.huart->Instance)
 	{
 
 		if(hlidar.state == START_SCANNING || hlidar.state ==START_SYNC_CONTENT_HEADER)
