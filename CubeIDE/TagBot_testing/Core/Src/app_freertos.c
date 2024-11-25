@@ -48,6 +48,8 @@
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
+uint32_t defaultTaskBuffer[ 128 ];
+osStaticThreadDef_t defaultTaskControlBlock;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -62,22 +64,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
 
 /* Hook prototypes */
-void configureTimerForRunTimeStats(void);
-unsigned long getRunTimeCounterValue(void);
 void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName);
-
-/* USER CODE BEGIN 1 */
-/* Functions needed when configGENERATE_RUN_TIME_STATS is on */
-__weak void configureTimerForRunTimeStats(void)
-{
-
-}
-
-__weak unsigned long getRunTimeCounterValue(void)
-{
-return 0;
-}
-/* USER CODE END 1 */
 
 /* USER CODE BEGIN 4 */
 __weak void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
@@ -129,7 +116,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadStaticDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128, defaultTaskBuffer, &defaultTaskControlBlock);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */

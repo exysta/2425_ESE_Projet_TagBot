@@ -12,6 +12,8 @@
 #include "usart.h"
 #include <string.h>
 #include <stdio.h>
+#include "FreeRTOS.h"
+#include "task.h"
 
 #define CMD_PREFIX						0xA5
 #define CMD_START_SCAN  				0x60
@@ -46,6 +48,7 @@
 #define SCAN_COMMAND_REPLY_TYPE_CODE		0x81  //the type code of the reply message to the start command
 
 #define SCAN_CONTENT_CT_START_PACKET		1  //the value of package tpye for the scan header if the packet data is a start packet
+#define SCAN_CONTENT_CT_DATA_PACKET		0  //the value of package tpye for the scan header if the packet data is a start packet
 
 
 #define LAST_DATA_BUFFER_SIZE			10
@@ -53,7 +56,15 @@
 #define LIDAR_BAUDRATE 					128000
 
 #define SCAN_CONTENT_BUFFER_SIZE					100
-#define SCAN_CONTENT_DMA_BUFFER_SIZE					1000
+
+#define SCAN_CONTENT_DMA_BUFFER_SIZE					500
+
+#define UART_STACK_SIZE 4096
+#define LIDAR_PROCESSING_STACK_SIZE 256
+
+#define UART_TASK_PRIORITY 4
+#define LIDAR_PROCESSING_TASK_PRIORITY 3
+
 
 typedef enum {
 	IDLE,
@@ -76,7 +87,7 @@ typedef struct YDLIDAR_Scan_Response{
 	uint16_t 	start_angle;
 	uint16_t 	end_angle;
 	uint16_t 	check_code;
-	//double buffering
+
 	DMA_State dma_state;
 	uint8_t scan_content_buffer_dma[SCAN_CONTENT_DMA_BUFFER_SIZE];
 	uint8_t scan_content_buffer_raw_distances[SCAN_CONTENT_BUFFER_SIZE];;
@@ -98,7 +109,8 @@ typedef struct __YDLIDAR_X4_HandleTypeDef
 	uint8_t health_error_code[2];
 
 	uint8_t header_buffer[HEADER_SIZE];
-
+	TaskHandle_t UART_Processing_Task_Handle;
+	TaskHandle_t LiDAR_Processing_Task_Handle;
 	YDLIDAR_Scan_Response scan_response;
 	uint8_t newData;
 	int trame_id;

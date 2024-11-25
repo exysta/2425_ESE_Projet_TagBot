@@ -16,19 +16,19 @@
 #include <stdlib.h>
 #include "cmsis_os.h"
 
+
 #define ANGLE_MIN 0
 #define ANGLE_MAX 360
 #define DISTANCE_MIN 200
 //#define SERIAL_DEBUG
 __YDLIDAR_X4_HandleTypeDef hlidar;
-TaskHandle_t UART_Processing_TaskHandle;
-TaskHandle_t LiDAR_Processing_TaskHandle;
-
-volatile uint8_t uart_lidar_processing = 0;
-
-//variable to be used in stat machine
 
 
+StaticTask_t UART_Processing_Task_Buffer;
+StaticTask_t LiDAR_Processing_Task_Buffer;
+
+StackType_t UART_Processing_Stack_Buffer[UART_STACK_SIZE];
+StackType_t LiDAR_Processing_Stack_Buffer[LIDAR_PROCESSING_STACK_SIZE];
 
 HAL_StatusTypeDef YDLIDAR_X4_Send_Cmd(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle, uint8_t cmd){
 	uint8_t cmdBuffer[2] = {CMD_PREFIX, cmd};
@@ -39,6 +39,27 @@ HAL_StatusTypeDef YDLIDAR_X4_Send_Cmd(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Han
 		return HAL_ERROR;
 	}
 }
+
+HAL_StatusTypeDef YDLIDAR_X4_Task_Create_UART(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+{
+	YDLIDAR_X4_Handle->UART_Processing_Task_Handle = xTaskCreateStatic(YDLIDAR_X4_UART_Processing_Task, "UART_Task", UART_STACK_SIZE,  (void *)&hlidar, UART_TASK_PRIORITY, UART_Processing_Stack_Buffer, &UART_Processing_Task_Buffer);
+
+	return HAL_OK;
+}
+HAL_StatusTypeDef YDLIDAR_X4_Task_Create_LidarProcessing(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+{
+	YDLIDAR_X4_Handle->LiDAR_Processing_Task_Handle = xTaskCreateStatic(YDLIDAR_X4_LiDAR_Processing_Task, "LiDAR_Processing_Task", LIDAR_PROCESSING_STACK_SIZE,  (void *)&hlidar, LIDAR_PROCESSING_TASK_PRIORITY, LiDAR_Processing_Stack_Buffer, &LiDAR_Processing_Task_Buffer);
+	return HAL_OK;
+}
+
+HAL_StatusTypeDef YDLIDAR_X4_Task_Create(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+{
+	YDLIDAR_X4_Task_Create_UART(YDLIDAR_X4_Handle);
+	YDLIDAR_X4_Task_Create_LidarProcessing(YDLIDAR_X4_Handle);
+	return HAL_OK;
+}
+
+
 HAL_StatusTypeDef YDLIDAR_X4_Init(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle, UART_HandleTypeDef *huart){
 	YDLIDAR_X4_Handle->huart = huart;
 	YDLIDAR_X4_Handle->state = IDLE;
@@ -58,8 +79,12 @@ HAL_StatusTypeDef YDLIDAR_X4_Init(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle,
 
 	//	HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
 	YDLIDAR_X4_Start_Scan(YDLIDAR_X4_Handle);
+	YDLIDAR_X4_Task_Create(YDLIDAR_X4_Handle);
 	return HAL_OK;
 }
+
+
+
 HAL_StatusTypeDef YDLIDAR_X4_Get_Device_Informations(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle){
 	YDLIDAR_header_response header;
 
@@ -312,12 +337,13 @@ HAL_StatusTypeDef YDLIDAR_X4_Process_Scan_Data(__YDLIDAR_X4_HandleTypeDef *YDLID
 		YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[idx] = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma [buffer_index];
 	}
 
-	if(YDLIDAR_X4_Handle->scan_response.package_type != SCAN_CONTENT_CT_START_PACKET)
+	if (YDLIDAR_X4_Handle->scan_response.package_type == SCAN_CONTENT_CT_DATA_PACKET)
 	{
 		YDLIDAR_X4_Handle->trame_id++;
 		YDLIDAR_X4_Handle->newData = 1;
 		YDLIDAR_X4_Compute_Payload(YDLIDAR_X4_Handle);
 	}
+
 	return HAL_OK;
 
 }
@@ -379,6 +405,8 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 		break;
 	case STOP:
 		YDLIDAR_X4_Handle->state = STOP;
+		break;
+
 		/************************************************************************
 		 * START_WAIT_CONTENT_HEADER											*
 		 * After sync, get header of content part								*
@@ -406,6 +434,8 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X
 		                                  ? START_SCAN_DATA_FULL_CPLT
 		                                  : START_SCAN_DATA_HALF_CPLT;
 		YDLIDAR_X4_Parse_Buffer(YDLIDAR_X4_Handle);
+		break;
+
 
 
 	default:
@@ -434,7 +464,7 @@ void YDLIDAR_X4_UART_Processing_Task(void *argument)
 
 
 		// Delay (optional)
-		vTaskDelay(pdMS_TO_TICKS(10));
+		//vTaskDelay(pdMS_TO_TICKS(10));
 	}
 }
 
@@ -478,6 +508,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
     if (huart->Instance == hlidar.huart->Instance)
     {
         uint32_t error = HAL_UART_GetError(huart);
+        volatile int a = 5;
         // Log or handle the error
     }
 }
@@ -492,7 +523,7 @@ void YDLIDAR_X4_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 		{
 			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-			vTaskNotifyGiveFromISR(UART_Processing_TaskHandle, &xHigherPriorityTaskWoken);
+			vTaskNotifyGiveFromISR(hlidar.UART_Processing_Task_Handle, &xHigherPriorityTaskWoken);
 
 			// Perform context switch if required
 			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
@@ -511,7 +542,7 @@ void YDLIDAR_X4_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		{
 			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-			vTaskNotifyGiveFromISR(UART_Processing_TaskHandle, &xHigherPriorityTaskWoken);
+			vTaskNotifyGiveFromISR(hlidar.UART_Processing_Task_Handle, &xHigherPriorityTaskWoken);
 
 			// Perform context switch if required
 			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
