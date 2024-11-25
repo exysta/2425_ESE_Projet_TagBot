@@ -113,7 +113,7 @@ typedef struct __YDLIDAR_X4_HandleTypeDef
 	TaskHandle_t LiDAR_Processing_Task_Handle;
 	YDLIDAR_Scan_Response scan_response;
 	uint8_t newData;
-	int trame_id;
+	uint8_t trame_id;
 } __YDLIDAR_X4_HandleTypeDef;
 
 typedef struct YDLIDAR_header_response{
@@ -125,7 +125,6 @@ typedef struct YDLIDAR_header_response{
 
 
 
-extern __YDLIDAR_X4_HandleTypeDef hlidar;
 
 HAL_StatusTypeDef YDLIDAR_X4_Send_Cmd(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle, uint8_t cmd);
 HAL_StatusTypeDef YDLIDAR_X4_Init(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle, UART_HandleTypeDef *huart);
@@ -135,13 +134,14 @@ HAL_StatusTypeDef YDLIDAR_X4_Get_Health_Status(__YDLIDAR_X4_HandleTypeDef *YDLID
 HAL_StatusTypeDef YDLIDAR_X4_Print_Health_Status(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
 HAL_StatusTypeDef YDLIDAR_X4_Start_Scan(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
 HAL_StatusTypeDef YDLIDAR_X4_Soft_Reboot(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
-HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
-HAL_StatusTypeDef YDLIDAR_X4_State_Machine(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
+HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(volatile  __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
+HAL_StatusTypeDef YDLIDAR_X4_State_Machine(volatile  __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
 
 void YDLIDAR_X4_UART_Processing_Task(void *argument);
 void YDLIDAR_X4_LiDAR_Processing_Task(void *argument);
-void YDLIDAR_X4_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
-void YDLIDAR_X4_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
+void YDLIDAR_X4_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart,volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
+void YDLIDAR_X4_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart,volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
+void YDLIDAR_X4_HAL_UART_ErrorCallback(UART_HandleTypeDef *huart,volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle);
 
 
 #endif /* INC_YDLIDAR_X4_H_ */
