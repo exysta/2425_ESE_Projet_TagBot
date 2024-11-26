@@ -34,11 +34,12 @@ int ADXL343_Init(void) {
 		return 1;
 	}
 
-
 	// Configuration of registers
-	//ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x04); 			// init the power control (sleep)
 
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+	ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x04); 			// init the power control (sleep)
+
+     // Activer NSS
 	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x08);  			// establish format for data :full resolution and ±2g
 	//ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x0B);  			// establish format for data :full resolution and ±16g
 

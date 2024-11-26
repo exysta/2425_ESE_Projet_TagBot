@@ -135,7 +135,7 @@ int main(void)
 	while(1 == ADXL343_Init())
 	{}
 	ADXL343_Configure();
-	//calibrateOffsets();
+	calibrateOffsets();
 
   /* USER CODE END 2 */
 
@@ -170,8 +170,9 @@ int main(void)
 		int16_t x, y, z;
 
 		ADXL343_Read_CHAT(&x, &y, &z);
-		HAL_Delay(1000);
 	    printf("data read x :%i , y: %i, z:%i\r\n", x, y, z);
+		HAL_Delay(1000);
+
 
 
 
