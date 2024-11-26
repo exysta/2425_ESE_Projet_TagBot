@@ -104,7 +104,36 @@ const uint8_t garfield_32x32 [] = {
 		0xfc, 0x00, 0x00, 0x7f,
 		0xff, 0xff, 0xff, 0xff,
 };
+__io_put_char
 #endif
+
+// Declare your UART handle (make sure it's initialized in your code, usually in main or a separate UART initialization function)
+extern UART_HandleTypeDef huart2;  // Example for UART2, modify according to your setup
+
+// The function to send a character to UART
+int __io_putchar(int ch)
+{
+    // Send the character using HAL_UART_Transmit
+    HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+
+    return ch;  // Return the character back to the caller
+}
+
+void print_lidar_distances(h_shell_t *h_shell,int argc, char **argv)
+{
+	for(int i = ANGLE_MIN;i < ANGLE_MAX; i++)
+	{
+		int size;
+		memset(h_shell->print_buffer, 0, BUFFER_SIZE);
+		size = snprintf(h_shell->print_buffer, BUFFER_SIZE, "%s %d: %d \r\n",
+				"angle ",
+				i,
+				(int)hlidar.scan_response.distance[i]);
+
+		h_shell->drv_shell.drv_shell_transmit(h_shell->print_buffer, size);
+		shell_drv_uart_waitTransmitComplete();  // Wait for transmission to complete
+	}
+}
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 {
 	Error_Handler();
@@ -146,7 +175,10 @@ int main(void)
 	MX_USART2_UART_Init();
 	/* USER CODE BEGIN 2 */
 	YDLIDAR_X4_Init(&hlidar, &huart3);
-	shell_init(&h_shell);
+
+//	shell_init(&h_shell);
+//	shell_add(&h_shell, "print_dist", print_lidar_distances, "print lidar buffer containing scanned distances");
+//	shell_createShellTask(&h_shell);
 
 	vTaskStartScheduler();
 
@@ -216,6 +248,11 @@ void SystemClock_Config(void)
 	}
 }
 
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+	YDLIDAR_X4_HAL_UART_ErrorCallback(huart,&hlidar);
+
+}
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 {
@@ -232,6 +269,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	YDLIDAR_X4_HAL_UART_RxCpltCallback(huart,&hlidar);
 
 }
+
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
 	shell_drv_uart_HAL_UART_TxCpltCallback(huart);
@@ -240,7 +278,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 /**
  * @brief  Period elapsed callback in non blocking mode
- * @note   This function is called  when TIM8 interrupt took place, inside
+ * @note   This function is called  when TIM6 interrupt took place, inside
  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
  * a global variable "uwTick" used as application time base.
  * @param  htim : TIM handle
@@ -251,7 +289,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	/* USER CODE BEGIN Callback 0 */
 
 	/* USER CODE END Callback 0 */
-	if (htim->Instance == TIM8) {
+	if (htim->Instance == TIM6) {
 		HAL_IncTick();
 	}
 	/* USER CODE BEGIN Callback 1 */

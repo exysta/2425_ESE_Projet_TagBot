@@ -17,9 +17,7 @@
 #include "cmsis_os.h"
 
 
-#define ANGLE_MIN 0
-#define ANGLE_MAX 360
-#define DISTANCE_MIN 200
+
 //#define SERIAL_DEBUG
 
 
@@ -77,7 +75,6 @@ HAL_StatusTypeDef YDLIDAR_X4_Init(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle,
 	HAL_Delay(200);
 
 	//	HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-	YDLIDAR_X4_Start_Scan(YDLIDAR_X4_Handle);
 	YDLIDAR_X4_Task_Create(YDLIDAR_X4_Handle);
 	return HAL_OK;
 }
@@ -277,34 +274,19 @@ HAL_StatusTypeDef YDLIDAR_X4_Compute_Payload(volatile __YDLIDAR_X4_HandleTypeDef
 		YDLIDAR_X4_Handle->scan_response.distance[(uint32_t)angle]=distance;
 	}
 
-	//	int idx_angle_min_distance = -1;
-	//	float min_distance = 10000;
-	//	for(int idx_angle=120; idx_angle<240; idx_angle++){
-	//		if((10 < YDLIDAR_X4_Handle->scan_response.distance[idx_angle]) &&
-	//				(YDLIDAR_X4_Handle->scan_response.distance[idx_angle] < min_distance)){
-	//			idx_angle_min_distance = idx_angle;
-	//			min_distance = YDLIDAR_X4_Handle->scan_response.distance[idx_angle];
-	//		}
-	//	}
-	//	if(min_distance < 200){
-	//		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, SET);
-	//	}
-	//	else{
-	//		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, RESET);
-	//	}
-	//HAL_GPIO_WritePin(DEBUG_GPIO_Port, DEBUG_Pin, RESET);
-	//txBufferSize = snprintf((char *)uart2TxBuffer, UART_TX_BUFFER_SIZE, "Angle %3d , Distance : %4.3f mm\r\n", idx_angle_min_distance, min_distance);
-	//HAL_UART_Transmit(&huart2, uart2TxBuffer, txBufferSize, 10);
-
-
-
 	return HAL_OK;
 }
 
 
 
-HAL_StatusTypeDef YDLIDAR_X4_Process_Scan_Data(volatile  __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle,uint16_t start_index)
+HAL_StatusTypeDef YDLIDAR_X4_Process_Scan_Data(volatile  __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
 {
+	uint16_t start_index = YDLIDAR_X4_Handle->scan_response.data_start_idx;
+
+	YDLIDAR_X4_Handle->scan_response.packet_header[0] =	YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_PH_1_INDEX];
+	YDLIDAR_X4_Handle->scan_response.packet_header[1] =	YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_PH_2_INDEX];
+
+
 	YDLIDAR_X4_Handle->scan_response.package_type =
 			YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CT_INDEX];
 
@@ -322,18 +304,33 @@ HAL_StatusTypeDef YDLIDAR_X4_Process_Scan_Data(volatile  __YDLIDAR_X4_HandleType
 			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CS_2_INDEX] << 8) |
 			(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[start_index + SCAN_CONTENT_HEADER_CS_1_INDEX]);
 
-	int buffer_index;
-	for(int idx = 0; idx < YDLIDAR_X4_Handle->scan_response.sample_quantity * 2; idx++)
+	uint16_t max_index;
+
+	//this variable is the theoretical index at which the data sample ends.
+	//it cannot always be reached so a verification is set in place to ensure it isn't more than the YDLIDAR_X4_Handle->scan_response.end_idx;
+	uint16_t end_of_data_index = start_index +SCAN_CONTENT_HEADER_SIZE + YDLIDAR_X4_Handle->scan_response.sample_quantity * 2;
+
+	if( end_of_data_index > YDLIDAR_X4_Handle->scan_response.end_idx)
 	{
-		if(start_index + SCAN_CONTENT_HEADER_SIZE + idx > SCAN_CONTENT_DMA_BUFFER_SIZE-1 )
-		{
-			buffer_index = start_index + SCAN_CONTENT_HEADER_SIZE + idx - SCAN_CONTENT_DMA_BUFFER_SIZE;
-		}
-		else
-		{
-			buffer_index = start_index + SCAN_CONTENT_HEADER_SIZE + idx;
-		}
-		YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[idx] = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma [buffer_index];
+		max_index = YDLIDAR_X4_Handle->scan_response.end_idx;
+	}
+	else
+	{
+		max_index = end_of_data_index ;
+	}
+
+	// index of dma buffer that must be contained between the scan_response.start_idx and scan_response.end_idx
+	uint16_t dma_buffer_index ;
+	//a seprate index to fill the raw_distances buffer from the dma buffer
+	uint16_t raw_distances_buffer_index = 0;
+
+	//memset(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances, 0, SCAN_CONTENT_BUFFER_SIZE); // we reset the raw_distances buffer values to 0 to overwrite leftover data from previous data
+
+	//the first 10 bytes are for the header, dma_buffer_index starts at the begining of data.
+	for(dma_buffer_index = start_index + SCAN_CONTENT_HEADER_SIZE; dma_buffer_index < max_index; dma_buffer_index++)
+	{
+		YDLIDAR_X4_Handle->scan_response.scan_content_buffer_raw_distances[raw_distances_buffer_index] = YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma [dma_buffer_index];
+		raw_distances_buffer_index++;
 	}
 
 	if (YDLIDAR_X4_Handle->scan_response.package_type == SCAN_CONTENT_CT_DATA_PACKET)
@@ -349,18 +346,17 @@ HAL_StatusTypeDef YDLIDAR_X4_Process_Scan_Data(volatile  __YDLIDAR_X4_HandleType
 
 HAL_StatusTypeDef YDLIDAR_X4_Parse_Buffer(volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
 {
-	uint16_t start_idx, end_idx;
 
 	// Determine the DMA state and set the corresponding buffer range
 	if (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_HALF_CPLT)
 	{
-		start_idx = 0;
-		end_idx = (SCAN_CONTENT_DMA_BUFFER_SIZE / 2) - 1;
+		YDLIDAR_X4_Handle->scan_response.start_idx = 0;
+		YDLIDAR_X4_Handle->scan_response.end_idx = (SCAN_CONTENT_DMA_BUFFER_SIZE / 2);
 	}
 	else if (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_FULL_CPLT)
 	{
-		start_idx = SCAN_CONTENT_DMA_BUFFER_SIZE / 2;
-		end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE - 1;
+		YDLIDAR_X4_Handle->scan_response.start_idx = SCAN_CONTENT_DMA_BUFFER_SIZE / 2;
+		YDLIDAR_X4_Handle->scan_response.end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE;
 	}
 	else
 	{
@@ -368,14 +364,15 @@ HAL_StatusTypeDef YDLIDAR_X4_Parse_Buffer(volatile __YDLIDAR_X4_HandleTypeDef *Y
 	}
 
 	// Iterate over the specified half of the buffer
-	for (uint16_t i = start_idx; i < end_idx - 1; i++) // Ensure there's room to check i+1
+	for (uint16_t i = YDLIDAR_X4_Handle->scan_response.start_idx; i < YDLIDAR_X4_Handle->scan_response.end_idx-1; i++) // Ensure there's room to check i+1
 	{
 		// Check for header pattern
 		if ((YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[i] == SCAN_CONTENT_HEADER_PH_1_VALUE) &&
 				(YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma[i + 1] == SCAN_CONTENT_HEADER_PH_2_VALUE))
 		{
+			YDLIDAR_X4_Handle->scan_response.data_start_idx = i;
 			// Process header and associated data
-			HAL_StatusTypeDef status = YDLIDAR_X4_Process_Scan_Data(YDLIDAR_X4_Handle, i);
+			HAL_StatusTypeDef status = YDLIDAR_X4_Process_Scan_Data(YDLIDAR_X4_Handle);
 			if (status != HAL_OK)
 			{
 				return status; // Return error if processing fails
@@ -448,12 +445,18 @@ void YDLIDAR_X4_UART_Processing_Task(void *argument)
 	// Retrieve the handle (hlidar) passed as argument
 	volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle =
 			(volatile __YDLIDAR_X4_HandleTypeDef *) argument;
+	YDLIDAR_X4_Start_Scan(YDLIDAR_X4_Handle);
+
 	for (;;)
 	{
 
 		// Wait for the DMA completion notification
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY); // Blocks indefinitely until notified
-
+		uint32_t notifyValue = ulTaskNotifyTake(pdTRUE, 100); // Blocks indefinitely until notified
+		if(notifyValue == 0)
+		{
+			uint8_t buffer[] = "coucou je suis uart processing task et je timeout \r\n";
+			HAL_UART_Transmit(&huart2, buffer, sizeof(buffer),100);
+		}
 		// Process the received data
 		YDLIDAR_X4_State_Machine(YDLIDAR_X4_Handle);
 
@@ -499,15 +502,30 @@ void YDLIDAR_X4_LiDAR_Processing_Task(void *argument)
 	}
 }
 
-void YDLIDAR_X4_HAL_UART_ErrorCallback(UART_HandleTypeDef *huart,volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+void YDLIDAR_X4_HAL_UART_ErrorCallback(UART_HandleTypeDef *huart, volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
 {
-	if (huart->Instance == YDLIDAR_X4_Handle->huart->Instance)
-	{
-		uint32_t error = HAL_UART_GetError(huart);
-		volatile int a = 5;
-		// Log or handle the error
-	}
+    if (huart->Instance == YDLIDAR_X4_Handle->huart->Instance)
+    {
+        uint32_t error = HAL_UART_GetError(huart);
+
+        // Log or handle the error (for debugging)
+		uint8_t buffer[] = "UART Error: %lur\n";
+		HAL_UART_Transmit(&huart2, buffer, sizeof(buffer),100);
+        // Clear the UART error flags
+        __HAL_UART_CLEAR_PEFLAG(huart); // Clear parity error
+        __HAL_UART_CLEAR_FEFLAG(huart); // Clear framing error
+        __HAL_UART_CLEAR_NEFLAG(huart); // Clear noise error
+        __HAL_UART_CLEAR_OREFLAG(huart); // Clear overrun error
+
+        // Restart UART reception (e.g., DMA or interrupt mode)
+        if (HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart,  (uint8_t *)YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma, SCAN_CONTENT_DMA_BUFFER_SIZE) != HAL_OK)
+        {
+			uint8_t buffer[] = "cFailed to restart UART reception. \r\n";
+			HAL_UART_Transmit(&huart2, buffer, sizeof(buffer),100);
+        }
+    }
 }
+
 
 // to be called inside the callback function in the main.
 //
