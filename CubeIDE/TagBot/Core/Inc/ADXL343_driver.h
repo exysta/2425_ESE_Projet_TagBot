@@ -18,6 +18,7 @@
 #define ADXL343_REG_LATENT 0X22
 #define ADXL343_REG_THRESH_ACT 0x24
 #define ADXL343_REG_TAP_AXES 0x2A
+#define ADXL343_REG_BW_RATE 0x2C
 #define ADXL343_REG_POWER_CTL 0x2D
 #define ADXL343_REG_INT_ENABLE 0x2E
 #define ADXL343_REG_INT_SOURCE 0x30
@@ -36,7 +37,12 @@ void ADXL343_ReadRegister(uint8_t reg, uint8_t* rx_data, size_t length);
 
 void ADXL343_WriteRegister(uint8_t reg, uint8_t data);
 void ADXL343_DetectTap(void);
-void ADXL343_ReadXYZ(uint8_t reg, int16_t* x, int16_t* y, int16_t* z);
+
+void print_byte_in_binary(uint8_t byte);
+void print_buffer_in_binary(const uint8_t *buffer, size_t size);
+
+void ADXL343_ReadXYZ(uint16_t* x, uint16_t* y, uint16_t* z);
+void ADXL343_Read_CHAT(uint16_t* x);
 
 void printAccelerometerData(uint8_t reg);
 

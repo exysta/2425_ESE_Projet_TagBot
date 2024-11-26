@@ -2,7 +2,7 @@
  * ADXL343_driver.c
  *
  *  Created on: Sep 16, 2024
- *      Author: marie
+ *      Author: marie & charlotte
  *  Code pour l'accéleromètre ADXL343
  */
 
@@ -15,6 +15,7 @@
 
 // Constants for accelerometer configuration
 #define TAP_THRESHOLD 0x20 // Tapping threshold 2g
+//#define TAP_THRESHOLD 0xFF // Tapping threshold 16g
 #define TAP_DURATION 0x10 // Tapping duration 10ms
 #define TAP_LATENT 0xC8 // taping latency 250ms
 
@@ -36,9 +37,20 @@ int ADXL343_Init(void) {
 
 	// Configuration of registers
 	//ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x04); 			// init the power control (sleep)
-	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x08);  			// establish format for data :full resolution and ±2g
-	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x0B);  			// establish format for data :full resolution and ±16g
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
+	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x00);  			// establish format for data :full resolution and ±2g
+	//ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x0B);  			// establish format for data :full resolution and ±16g
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
+	ADXL343_WriteRegister(ADXL343_REG_BW_RATE, 0X0A);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
 	ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x08);  			// measurement mode of power control (active)
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
 
 	printf("Initialization done\r\n");
 	return 0;
@@ -48,10 +60,22 @@ int ADXL343_Init(void) {
 
 //Function to configure the accelerometer
 void ADXL343_Configure(void){
-	ADXL343_WriteRegister(ADXL343_REG_THRESH_TAP, TAP_THRESHOLD);  	// Set tap threshold : 2g
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
+	ADXL343_WriteRegister(ADXL343_REG_THRESH_TAP, TAP_THRESHOLD);  	// Set tap threshold : 2g ou 16g
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
 	ADXL343_WriteRegister(ADXL343_REG_DUR, TAP_DURATION);         	// Set tap duration : 10ms
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
 	ADXL343_WriteRegister(ADXL343_REG_LATENT, TAP_LATENT);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
 	ADXL343_WriteRegister(ADXL343_REG_TAP_AXES, 0x07);				// Enable axe X Y Z for tap
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
 	//ADXL343_WriteRegister(ADXL343_REG_INT_ENABLE, 0x40);			// Enable interruption for single tap
 	printf("Configuration done\r\n");
 
@@ -94,17 +118,54 @@ void ADXL343_DetectTap(void){
 	}
 }
 
-//Function to read the accelerometer data
-void ADXL343_ReadXYZ(uint8_t reg, int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t buffer[6];
-    ADXL343_ReadRegister(reg, buffer, 6);		// read 6 octets from DATAx0 address
 
-    *x = (int16_t)((buffer[1] << 8) | buffer[0]);
-    *y = (int16_t)((buffer[3] << 8) | buffer[2]);
-    *z = (int16_t)((buffer[5] << 8) | buffer[4]);
+//Function to read the accelerometer data
+void ADXL343_ReadXYZ(uint16_t* x, uint16_t* y, uint16_t* z) {
+    uint8_t buffer[2]; // Tableau de deux octets pour stocker les données
+
+    ADXL343_ReadRegister(ADXL343_REG_DATAX0, &buffer[0], 1); // Adresse de buffer[0]
+    ADXL343_ReadRegister(ADXL343_REG_DATAX1, &buffer[1], 1); // Adresse de buffer[1]
+
+    // Affichage des valeurs lues
+    *x = (uint16_t)((buffer[1] << 8) | buffer[0]); // MSB | LSB pour X
+
+    ADXL343_ReadRegister(ADXL343_REG_DATAY0, &buffer[0], 1); // Adresse de buffer[0]
+    ADXL343_ReadRegister(ADXL343_REG_DATAY1, &buffer[1], 1); // Adresse de buffer[1]
+
+    *y = (int16_t)((buffer[3] << 8) | buffer[2]); // MSB | LSB pour Y
+
+    ADXL343_ReadRegister(ADXL343_REG_DATAZ0, &buffer[0], 1); // Adresse de buffer[0]
+    ADXL343_ReadRegister(ADXL343_REG_DATAZ1, &buffer[1], 1); // Adresse de buffer[1]
+
+    *z = (int16_t)((buffer[5] << 8) | buffer[4]); // MSB | LSB pour Z
+
+    HAL_Delay(2000);
 }
 
 
+void ADXL343_Read_CHAT(uint16_t* x) {
+    uint8_t buffer[2];
+
+    // Lecture multiple des registres DATAX0 à DATAZ1
+    ADXL343_ReadRegister(ADXL343_REG_DATAX0, buffer, 2);
+
+    printf("buffer, %d \r\n:", buffer);
+
+    // Combinaison des octets MSB et LSB pour les axes X, Y et Z
+    *x = (uint16_t)((buffer[1] << 8) | buffer[0]); // MSB | LSB pour X
+    //*y = (int16_t)((buffer[3] << 8) | buffer[2]); // MSB | LSB pour Y
+    //*z = (int16_t)((buffer[5] << 8) | buffer[4]); // MSB | LSB pour Z
+}
+
+
+
+
+
+
+
+
+
+/*
 void printAccelerometerData(uint8_t reg) {
     int16_t X = 0, Y = 0, Z = 0;
     ADXL343_ReadXYZ(reg, &X, &Y, &Z);  // Lire les valeurs X, Y, Z de l'accéléromètre
@@ -123,4 +184,4 @@ void printAccelerometerData(uint8_t reg) {
 //    printf("Z : %d g\r\n", Zg);
 
     HAL_Delay(2000);  // Attendre 500 ms entre les lectures
-}
+}*/
