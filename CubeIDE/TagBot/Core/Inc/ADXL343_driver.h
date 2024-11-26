@@ -41,14 +41,10 @@ void ADXL343_ReadRegister(uint8_t reg, int8_t* rx_data, size_t length);
 void ADXL343_WriteRegister(uint8_t reg, uint8_t data);
 void ADXL343_DetectTap(void);
 
-void print_byte_in_binary(uint8_t byte);
-void print_buffer_in_binary(const uint8_t *buffer, size_t size);
+void ADXL343_Read_XYZ(int16_t* x, int16_t*y, int16_t*z);
 
-void ADXL343_Read_CHAT(int16_t* x, int16_t*y, int16_t*z);
-
-void ADXL343_convert_to_G(void);
 void calibrateOffsets(void);
-void printXYZ(void);
+
 
 
 

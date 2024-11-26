@@ -51,8 +51,6 @@ int ADXL343_Init(void) {
 
 	printf("Initialization done\r\n");
 	return 0;
-
-
 }
 
 //Function to configure the accelerometer
@@ -65,9 +63,9 @@ void ADXL343_Configure(void){
 	ADXL343_WriteRegister(ADXL343_REG_LATENT, TAP_LATENT);
 
 	ADXL343_WriteRegister(ADXL343_REG_TAP_AXES, 0x07);				// Enable axe X Y Z for tap
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
 
-	//ADXL343_WriteRegister(ADXL343_REG_INT_ENABLE, 0x40);			// Enable interruption for single tap
+	ADXL343_WriteRegister(ADXL343_REG_INT_ENABLE, 0x40);			// Enable interruption for single tap
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // désactiver NSS
 	printf("Configuration done\r\n");
 
 }
@@ -98,13 +96,25 @@ void ADXL343_WriteRegister(uint8_t reg, uint8_t data) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // disable NSS (PA4)
 }
 
+
+
 //Function to detect a tap
 void ADXL343_DetectTap(void){
 	int8_t tap_status;
-	ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1);
-	printf(" tap status : %u\r\n", tap_status);
+	ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); //Renvoie la valeur du registre int_source
+
+//	D7 -> data_ready
+//	D6 -> single_tap
+//	D5 -> double_tap
+//	D4 -> activity
+//	D3 -> inactivity
+//	D2 -> free_fall
+//	D1 -> watermark
+//	D0 -> overrun
+
+	printf(" tap status : %i\r\n", tap_status);
 	HAL_Delay(100);
-	if (tap_status & 0x40) {  			// Tap for single tap
+	if (tap_status & (1<<6)) {  			// Tap for single tap
 		printf("Tap detected!\r\n");
 	}
 }
@@ -112,7 +122,7 @@ void ADXL343_DetectTap(void){
 
 
 
-void ADXL343_Read_CHAT(int16_t* x, int16_t* y, int16_t* z) {
+void ADXL343_Read_XYZ(int16_t* x, int16_t* y, int16_t* z) {
 
     int8_t x_buff[2]={0,0};
     int8_t y_buff[2]={0,0};
@@ -136,7 +146,7 @@ void calibrateOffsets(void){
 	int16_t x, y, z;
 	int8_t offsetx, offsety, offsetz;
 
-	ADXL343_Read_CHAT(&x, &y, &z);
+	ADXL343_Read_XYZ(&x, &y, &z);
 
 	offsetx = -((x+5)/4*100);
 	offsety = -((y+5)/4*100);
@@ -150,38 +160,6 @@ void calibrateOffsets(void){
 }
 
 
-void ADXL343_convert_to_G(void){
-//	int16_t x_g, y_g, z_g;
-	int16_t x, y, z;
-
-	ADXL343_Read_CHAT(&x, &y, &z);
-	printf("data read x :%i , y: %i, z:%i\r\n", x, y, z);
-
-//	x_g = x*4;		// conversion en g , dans le cas de +-2g et full resolution -> 4mg/LSB
-//	y_g = y*4;
-//	z_g = z*4;
-//	printf("data read en mg xg :%i , yg: %i, zg:%i\r\n", x_g, y_g, z_g);
-}
 
 
-
-//void ADXL343_Filtered_Read(void) {
-//    int32_t x_accum = 0, y_accum = 0, z_accum = 0;
-//    int16_t x, y, z;
-//
-//    for (int i = 0; i < 10; i++) { // Moyenne sur 10 lectures
-//        ADXL343_Read_CHAT(&x, &y, &z);
-//        x_accum += x;
-//        y_accum += y;
-//        z_accum += z;
-//        HAL_Delay(10); // Petite pause entre les lectures
-//    }
-//
-//    x = x_accum / 10;
-//    y = y_accum / 10;
-//    z = z_accum / 10;
-//
-//    printf("Filtered Data: X=%d, Y=%d, Z=%d\r\n", x, y, z);
-//    ADXL343_convert_to_G(x, y, z);
-//}
 

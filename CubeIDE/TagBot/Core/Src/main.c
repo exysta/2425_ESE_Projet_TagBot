@@ -169,8 +169,10 @@ int main(void)
 	/* Code pour l 'accéléromètre*/
 		int16_t x, y, z;
 
-		ADXL343_Read_CHAT(&x, &y, &z);
+		ADXL343_Read_XYZ(&x, &y, &z);
 	    printf("data read x :%i , y: %i, z:%i\r\n", x, y, z);
+		HAL_Delay(100);
+		ADXL343_DetectTap();
 		HAL_Delay(1000);
 
 
