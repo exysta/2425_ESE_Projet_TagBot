@@ -78,8 +78,8 @@ typedef enum {
 
 //check if we are processing the first half or the second half of the buffer
 typedef enum {
-	START_SCAN_DATA_HALF_CPLT,
-	START_SCAN_DATA_FULL_CPLT
+	SCAN_DATA_HALF_CPLT,
+	SCAN_DATA_FULL_CPLT
 } DMA_State;
 
 typedef struct YDLIDAR_Scan_Response{

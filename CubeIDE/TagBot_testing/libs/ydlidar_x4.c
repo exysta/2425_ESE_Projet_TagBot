@@ -348,12 +348,12 @@ HAL_StatusTypeDef YDLIDAR_X4_Parse_Buffer(volatile __YDLIDAR_X4_HandleTypeDef *Y
 {
 
 	// Determine the DMA state and set the corresponding buffer range
-	if (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_HALF_CPLT)
+	if (YDLIDAR_X4_Handle->scan_response.dma_state == SCAN_DATA_HALF_CPLT)
 	{
 		YDLIDAR_X4_Handle->scan_response.start_idx = 0;
 		YDLIDAR_X4_Handle->scan_response.end_idx = (SCAN_CONTENT_DMA_BUFFER_SIZE / 2);
 	}
-	else if (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_FULL_CPLT)
+	else if (YDLIDAR_X4_Handle->scan_response.dma_state == SCAN_DATA_FULL_CPLT)
 	{
 		YDLIDAR_X4_Handle->scan_response.start_idx = SCAN_CONTENT_DMA_BUFFER_SIZE / 2;
 		YDLIDAR_X4_Handle->scan_response.end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE;
@@ -415,7 +415,7 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(volatile  __YDLIDAR_X4_HandleTypeDef 
 		if(YDLIDAR_X4_Handle->header_buffer[X4_REPLY_TYPE_CODE_INDEX] == SCAN_COMMAND_REPLY_TYPE_CODE ) // we check if the message is the start packet representing the beginning of a cycle of data
 		{
 			YDLIDAR_X4_Handle->state = START_SCANNING;
-			YDLIDAR_X4_Handle->scan_response.dma_state = START_SCAN_DATA_FULL_CPLT; // le prochain interrupt sera celui du half complete
+			YDLIDAR_X4_Handle->scan_response.dma_state = SCAN_DATA_FULL_CPLT; // le prochain interrupt sera celui du half complete
 
 			HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart,  (uint8_t *)YDLIDAR_X4_Handle->scan_response.scan_content_buffer_dma, SCAN_CONTENT_DMA_BUFFER_SIZE);
 			break;
@@ -423,9 +423,9 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(volatile  __YDLIDAR_X4_HandleTypeDef 
 		return HAL_ERROR;
 
 	case START_SCANNING:
-		YDLIDAR_X4_Handle->scan_response.dma_state = (YDLIDAR_X4_Handle->scan_response.dma_state == START_SCAN_DATA_HALF_CPLT)
-		? START_SCAN_DATA_FULL_CPLT
-				: START_SCAN_DATA_HALF_CPLT;
+		YDLIDAR_X4_Handle->scan_response.dma_state = (YDLIDAR_X4_Handle->scan_response.dma_state == SCAN_DATA_HALF_CPLT)
+		? SCAN_DATA_FULL_CPLT
+				: SCAN_DATA_HALF_CPLT;
 		YDLIDAR_X4_Parse_Buffer(YDLIDAR_X4_Handle);
 		break;
 
