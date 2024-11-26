@@ -14,8 +14,11 @@
 // register for ADXL343
 #define ADXL343_REG_DEVID 0x00
 #define ADXL343_REG_THRESH_TAP 0x1D
-#define ADXL343_REG_DUR 0X21
-#define ADXL343_REG_LATENT 0X22
+#define ADXL343_REG_OFFSX 0x1E
+#define ADXL343_REG_OFFSY 0x1F
+#define ADXL343_REG_OFFSZ 0x20
+#define ADXL343_REG_DUR 0x21
+#define ADXL343_REG_LATENT 0x22
 #define ADXL343_REG_THRESH_ACT 0x24
 #define ADXL343_REG_TAP_AXES 0x2A
 #define ADXL343_REG_BW_RATE 0x2C
@@ -33,7 +36,7 @@
 // functions for the accelerometer
 int ADXL343_Init(void);
 void ADXL343_Configure(void);
-void ADXL343_ReadRegister(uint8_t reg, uint8_t* rx_data, size_t length);
+void ADXL343_ReadRegister(uint8_t reg, int8_t* rx_data, size_t length);
 
 void ADXL343_WriteRegister(uint8_t reg, uint8_t data);
 void ADXL343_DetectTap(void);
@@ -41,10 +44,11 @@ void ADXL343_DetectTap(void);
 void print_byte_in_binary(uint8_t byte);
 void print_buffer_in_binary(const uint8_t *buffer, size_t size);
 
-void ADXL343_ReadXYZ(uint16_t* x, uint16_t* y, uint16_t* z);
-void ADXL343_Read_CHAT(uint16_t* x);
+void ADXL343_Read_CHAT(int16_t* x, int16_t*y, int16_t*z);
 
-void printAccelerometerData(uint8_t reg);
+void ADXL343_convert_to_G(void);
+void calibrateOffsets(void);
+void printXYZ(void);
 
 
 

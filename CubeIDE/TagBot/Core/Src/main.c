@@ -135,6 +135,7 @@ int main(void)
 	while(1 == ADXL343_Init())
 	{}
 	ADXL343_Configure();
+	//calibrateOffsets();
 
   /* USER CODE END 2 */
 
@@ -164,44 +165,14 @@ int main(void)
 //		}
 //
 
+
 	/* Code pour l 'accéléromètre*/
+		int16_t x, y, z;
 
-		//ADXL343_DetectTap();
+		ADXL343_Read_CHAT(&x, &y, &z);
+		HAL_Delay(1000);
+	    printf("data read x :%i , y: %i, z:%i\r\n", x, y, z);
 
-		/*
-		printf("values on X0 and X1: \r\n");
-		printAccelerometerData(ADXL343_REG_DATAX0);
-		printf("\r\n");
-		*/
-
-		//ADXL343_ReadXYZ(ADXL343_REG_DATAX0, ADXL343_REG_DATAX1);
-
-		uint16_t xa;
-
-		ADXL343_Read_CHAT(&xa);
-
-		printf("X = %d \r\n", xa);
-		//printf("Y = %d\r\n", y);
-		//printf("Z = %d\r\n", z);
-		HAL_Delay(2000);
-
-		uint16_t x, y, z;
-		ADXL343_ReadXYZ(&x, &y, &z);
-		printf("X = %d \r\n", x);
-		printf("Y = %d \r\n", y);
-		printf("Z = %d \r\n", z);
-
-		HAL_Delay(2000);
-
-		/*
-		printf("values on Y0 and Y1: \r\n");
-		printAccelerometerData(ADXL343_REG_DATAY0);
-		printf("\r\n");
-
-		printf("values on Z0 and Z1: \r\n");
-		printAccelerometerData(ADXL343_REG_DATAZ0);
-		printf("\r\n");
-*/
 
 
 	}
