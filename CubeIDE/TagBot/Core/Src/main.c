@@ -29,6 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_hal.h"
+#include "stm32g4xx_it.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -55,7 +56,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+int test = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -126,16 +127,22 @@ int main(void)
 	printf("|                             |\r\n");
 	printf("|_____________________________|\r\n");
 
-  /* Ce code initialise l'adc en dma*/
-  //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
-  //distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
+	/* Ce code initialise l'adc en dma*/
+	//distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
+	//distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
 
-  /* Code init l'accélérometre*/
+	/* Code init l'accélérometre*/
 
 	while(1 == ADXL343_Init())
 	{}
 	ADXL343_Configure();
+	ADXL343_WriteRegister(ADXL343_REG_INT_MAP, 0x00);			// Enable interruption on pin INT1
+	ADXL343_WriteRegister(ADXL343_REG_INT_MAP, 0x40);			// Enable interruption on pin INT1
+
+
 	calibrateOffsets();
+	//ADXL343_DetectTap();
+
 
   /* USER CODE END 2 */
 
@@ -147,35 +154,46 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-///* Ce code permet d allumer la led */
-//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
-//		HAL_Delay(100);
-
-///* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
-//		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
-//
-//		if (distance == 1){
-//			printf("error\r\n");
-//			HAL_Delay(100);
-//		}
-//		else{
-//			printf("adv_value : %lu\r\n", distance);
-//			HAL_Delay(100);
-//		}
-//
-
-
-	/* Code pour l 'accéléromètre*/
-		int16_t x, y, z;
-
-		ADXL343_Read_XYZ(&x, &y, &z);
-	    printf("data read x :%i , y: %i, z:%i\r\n", x, y, z);
+		// CODE FOR BTN
+		int8_t tap_status;
+		ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); //Renvoie la valeur du registre int_source
 		HAL_Delay(100);
-		ADXL343_DetectTap();
-		HAL_Delay(1000);
 
+		///* Ce code permet d allumer la led */
+		//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+		//		HAL_Delay(100);
 
+		///* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
+		//		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
+		//
+		//		if (distance == 1){
+		//			printf("error\r\n");
+		//			HAL_Delay(100);
+		//		}
+		//		else{
+		//			printf("adv_value : %lu\r\n", distance);
+		//			HAL_Delay(100);
+		//		}
+		//
+
+//		int8_t tap_status;
+//		ADXL343_ReadRegister(ADXL343_REG_DUR, &tap_status, 1); //Renvoie la valeur du registre int_source
+//		printf(" DUR reg : %i\r\n", tap_status);
+//		HAL_Delay(1000);
+		/* Code pour l 'accéléromètre*/
+//		int16_t x, y, z;
+//
+//		ADXL343_Read_XYZ(&x, &y, &z);
+//		printf("data read x :%i , y: %i, z:%i\r\n", x, y, z);
+//		HAL_Delay(100);
+//		//ADXL343_DetectTap();
+//		//HAL_Delay(1000);
+//
+//		//HAL_NVIC_SetPendingIRQ(EXTI2_IRQn); // Force l'interruption EXTI2
+//		HAL_Delay(1000);
+
+		/* test*/
+		//test +=1;
 
 
 	}
@@ -228,7 +246,21 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+//	ADXL343_DetectTap();
+	if(GPIO_Pin == BNT_CAT_MOUSE_Pin){
+		printf("Button pushed\r\n");
+	} else if(GPIO_Pin == Accelerometer_INT1_Pin){
+		printf("Acc Int1\r\n");
+		uint8_t tap_status;
+		ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); //Renvoie la valeur du registre int_source
+	} else if(GPIO_Pin == Accelerometer_INT2_Pin){
+		printf("Acc Int2\r\n");
+		uint8_t tap_status;
+		ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); //Renvoie la valeur du registre int_source
+	}
+}
 /* USER CODE END 4 */
 
 /**

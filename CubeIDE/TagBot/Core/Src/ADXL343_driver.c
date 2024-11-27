@@ -14,8 +14,7 @@
 #include <stddef.h>
 
 // Constants for accelerometer configuration
-#define TAP_THRESHOLD 0x80 // Tapping threshold 2g -> 0x20, 6g -> 0x60, 8g -> 0x80, 16g -> 0xFF
-//#define TAP_THRESHOLD 0xFF // Tapping threshold 16g
+#define TAP_THRESHOLD 0x60 // Tapping threshold 2g -> 0x20, 6g -> 0x60, 8g -> 0x80, 16g -> 0xFF
 #define TAP_DURATION 0x10 // Tapping duration 10ms
 #define TAP_LATENT 0xC8 // taping latency 250ms
 
@@ -38,15 +37,11 @@ int ADXL343_Init(void) {
 
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
 	ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x04); 			// init the power control (sleep)
-
-     // Activer NSS
-	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x08);  			// establish format for data :full resolution and ±2g
-	//ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x0B);  			// establish format for data :full resolution and ±16g
-
+	ADXL343_WriteRegister(ADXL343_REG_DATA_FORMAT, 0x08);  			// establish format for data :full resolution and ±2g ->0x08, 16g ->0x0B
 	ADXL343_WriteRegister(ADXL343_REG_BW_RATE, 0X0B);
-
 	ADXL343_WriteRegister(ADXL343_REG_POWER_CTL, 0x08);  			// measurement mode of power control (active)
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // Activer NSS
+
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); 			// Desactiver NSS
 
 
 	printf("Initialization done\r\n");
@@ -55,17 +50,12 @@ int ADXL343_Init(void) {
 
 //Function to configure the accelerometer
 void ADXL343_Configure(void){
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // Activer NSS
 	ADXL343_WriteRegister(ADXL343_REG_THRESH_TAP, TAP_THRESHOLD);  	// Set tap threshold : 2g ou 16g
-
 	ADXL343_WriteRegister(ADXL343_REG_DUR, TAP_DURATION);         	// Set tap duration : 10ms
-
 	ADXL343_WriteRegister(ADXL343_REG_LATENT, TAP_LATENT);
-
 	ADXL343_WriteRegister(ADXL343_REG_TAP_AXES, 0x07);				// Enable axe X Y Z for tap
-
 	ADXL343_WriteRegister(ADXL343_REG_INT_ENABLE, 0x40);			// Enable interruption for single tap
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); // désactiver NSS
+	ADXL343_WriteRegister(ADXL343_REG_INT_MAP, 0x40);			// Enable interruption on pin INT1
 	printf("Configuration done\r\n");
 
 }
@@ -103,6 +93,7 @@ void ADXL343_DetectTap(void){
 	int8_t tap_status;
 	ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); //Renvoie la valeur du registre int_source
 
+
 //	D7 -> data_ready
 //	D6 -> single_tap
 //	D5 -> double_tap
@@ -113,8 +104,7 @@ void ADXL343_DetectTap(void){
 //	D0 -> overrun
 
 	printf(" tap status : %i\r\n", tap_status);
-	HAL_Delay(100);
-	if (tap_status & (1<<6)) {  			// Tap for single tap
+	if (tap_status & (1<<7)) {  // Tap for single tap
 		printf("Tap detected!\r\n");
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 		HAL_Delay(100);
@@ -122,7 +112,7 @@ void ADXL343_DetectTap(void){
 }
 
 
-
+// Function to read acceleration on XYZ
 
 void ADXL343_Read_XYZ(int16_t* x, int16_t* y, int16_t* z) {
 
