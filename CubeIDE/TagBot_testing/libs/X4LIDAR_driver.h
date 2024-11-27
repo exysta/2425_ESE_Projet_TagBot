@@ -65,7 +65,9 @@
 
 #define LIDAR_TASK_PRIORITY 			3
 
+#define MIN_ANGLE 			0
 #define MAX_ANGLE 			360
+
 #define SCAN_DMA_BUFFER_SIZE 			500
 
 
@@ -83,8 +85,8 @@
 
 //check if we are processing the first half or the second half of the buffer
 typedef enum {
-	START_SCAN_DATA_HALF_CPLT,
-	START_SCAN_DATA_FULL_CPLT
+	SCAN_DATA_HALF_CPLT,
+	SCAN_DATA_FULL_CPLT
 } DMA_State;
 
 typedef struct X4LIDAR_response_header
@@ -99,7 +101,7 @@ typedef struct X4LIDAR_response_header
 /**
  * @brief Structure to store device information for the X4 LiDAR.
  */
-typedef struct {
+typedef struct X4LIDAR_device_info{
 	uint8_t model;                          /**< Model of the LiDAR. */
 	uint8_t firmware[X4_SERIAL_FIRMWARE_SIZE]; /**< Firmware version of the LiDAR. */
 	uint8_t hardware_version;               /**< Hardware version of the LiDAR. */
@@ -109,7 +111,7 @@ typedef struct {
 /**
  * @brief Structure to store parsed scan data from the X4 LiDAR.
  */
-typedef struct {
+typedef struct X4LIDAR_scan_header{
 	uint16_t packet_header;       /**< Header of the scan data packet. */
 	uint8_t packet_type;            /**< Type of the scan data packet. */
 	uint8_t sample_quantity;        /**< Number of samples in the scan data. */
@@ -121,7 +123,7 @@ typedef struct {
 /**
  * @brief Structure to store parsed scan data from the X4 LiDAR.
  */
-typedef struct {
+typedef struct X4LIDAR_scan_data{
 	uint8_t distances[MAX_ANGLE];
 	uint8_t dma_buffer[SCAN_DMA_BUFFER_SIZE];
 	X4LIDAR_scan_header scan_header;
@@ -134,8 +136,8 @@ typedef struct {
 } X4LIDAR_scan_data;
 
 
-typedef struct {
-	X4_DeviceInfo device_info;
+typedef struct X4LIDAR_handle_t{
+	X4LIDAR_device_info device_info;
 	uint8_t health_status;
 	uint8_t health_error_code[2];
 	X4LIDAR_response_header response_header;

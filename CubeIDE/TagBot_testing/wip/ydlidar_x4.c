@@ -423,9 +423,6 @@ HAL_StatusTypeDef YDLIDAR_X4_State_Machine(volatile  __YDLIDAR_X4_HandleTypeDef 
 		return HAL_ERROR;
 
 	case START_SCANNING:
-		YDLIDAR_X4_Handle->scan_response.dma_state = (YDLIDAR_X4_Handle->scan_response.dma_state == SCAN_DATA_HALF_CPLT)
-		? SCAN_DATA_FULL_CPLT
-				: SCAN_DATA_HALF_CPLT;
 		YDLIDAR_X4_Parse_Buffer(YDLIDAR_X4_Handle);
 		break;
 
@@ -451,12 +448,13 @@ void YDLIDAR_X4_UART_Processing_Task(void *argument)
 	{
 
 		// Wait for the DMA completion notification
-		uint32_t notifyValue = ulTaskNotifyTake(pdTRUE, 100); // Blocks indefinitely until notified
+		uint32_t notifyValue = ulTaskNotifyTake(pdTRUE, 100); // Blocks until notified
 		if(notifyValue == 0)
 		{
 			uint8_t buffer[] = "coucou je suis uart processing task et je timeout \r\n";
 			HAL_UART_Transmit(&huart2, buffer, sizeof(buffer),100);
 		}
+		printf("youhou je suis uart_processing et je run\r\n");
 		// Process the received data
 		YDLIDAR_X4_State_Machine(YDLIDAR_X4_Handle);
 
@@ -537,6 +535,8 @@ void YDLIDAR_X4_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart,volatile _
 		{
 			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
+			YDLIDAR_X4_Handle->scan_response.dma_state = SCAN_DATA_HALF_CPLT;
+
 			vTaskNotifyGiveFromISR(YDLIDAR_X4_Handle->UART_Processing_Task_Handle, &xHigherPriorityTaskWoken);
 
 			// Perform context switch if required
@@ -555,6 +555,8 @@ void YDLIDAR_X4_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart,volatile __YDL
 		if(YDLIDAR_X4_Handle->state == START_SCANNING || YDLIDAR_X4_Handle->state ==START_SYNC_CONTENT_HEADER)
 		{
 			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
+			YDLIDAR_X4_Handle->scan_response.dma_state = SCAN_DATA_FULL_CPLT;
 
 			vTaskNotifyGiveFromISR(YDLIDAR_X4_Handle->UART_Processing_Task_Handle, &xHigherPriorityTaskWoken);
 

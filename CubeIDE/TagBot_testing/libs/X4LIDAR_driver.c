@@ -5,10 +5,14 @@
  *      Author: exysta
  */
 
-static HAL_StatusTypeDef X4LIDAR_send_command(X4LIDAR_handle_t *X4LIDAR_handle,uint8_t command)
+#include <stdlib.h>
+#include "cmsis_os.h"
+#include "X4LIDAR_driver.h"
+
+HAL_StatusTypeDef X4LIDAR_send_command(X4LIDAR_handle_t *X4LIDAR_handle,uint8_t command)
 {
-	uint8_t cmdBuffer[2] = {CMD_PREFIX, command}; /**< Array holding the command data */
-	if(HAL_UART_Transmit(YDLIDAR_X4_Handle->huart, cmdBuffer, 2, 10) == HAL_OK){
+	uint8_t cmdBuffer[2] = {X4LIDAR_CMD_PREFIX, command}; /**< Array holding the command data */
+	if(HAL_UART_Transmit(X4LIDAR_handle->huart, cmdBuffer, 2, 10) == HAL_OK){
 		return HAL_OK;
 	}
 	else
@@ -19,10 +23,10 @@ static HAL_StatusTypeDef X4LIDAR_send_command(X4LIDAR_handle_t *X4LIDAR_handle,u
 
 HAL_StatusTypeDef X4LIDAR_get_device_info(X4LIDAR_handle_t *X4LIDAR_handle)
 {
-	uint8_t rx_buffer[HEADER_SIZE + DEVICE_INFO_PAYLOAD_SIZE];
+	uint8_t rx_buffer[RESPONSE_HEADER_SIZE + DEVICE_INFORMATION_PAYLOAD_SIZE];
 
 	X4LIDAR_send_command(X4LIDAR_handle,X4LIDAR_CMD_GET_DEVICE_INFO);
-	if(HAL_UART_Receive(YDLIDAR_X4_Handle->huart, rx_buffer, HEADER_SIZE + DEVICE_INFO_PAYLOAD_SIZE) != HAL_OK)
+	if(HAL_UART_Receive(X4LIDAR_handle->huart, rx_buffer, RESPONSE_HEADER_SIZE + DEVICE_INFORMATION_PAYLOAD_SIZE,300) != HAL_OK)
 	{
 		return HAL_ERROR;
 	}
@@ -40,13 +44,13 @@ HAL_StatusTypeDef X4LIDAR_get_device_info(X4LIDAR_handle_t *X4LIDAR_handle)
 			(X4LIDAR_handle->response_header.mode == 0x00) &&
 			(X4LIDAR_handle->response_header.type_code == 0x06))
 	{
-		X4LIDAR_handle->device_info.model = rx_buffer[HEADER_SIZE];
-		X4LIDAR_handle->device_info.firmware_minor = rx_buffer[HEADER_SIZE+1];
-		X4LIDAR_handle->device_info.firmware_major = rx_buffer[HEADER_SIZE+2];
-		X4LIDAR_handle->device_info.hardware = rx_buffer[HEADER_SIZE+3];
+		X4LIDAR_handle->device_info.model = rx_buffer[RESPONSE_HEADER_SIZE];
+		X4LIDAR_handle->device_info.firmware[0] = rx_buffer[RESPONSE_HEADER_SIZE+1];
+		X4LIDAR_handle->device_info.firmware[1] = rx_buffer[RESPONSE_HEADER_SIZE+2];
+		X4LIDAR_handle->device_info.hardware_version = rx_buffer[RESPONSE_HEADER_SIZE+3];
 		for(int idx=0; idx<16; idx++)
 		{
-			X4LIDAR_handle->device_info.serial_number[idx] = rx_buffer[HEADER_SIZE+4+idx];
+			X4LIDAR_handle->device_info.serial_number[idx] = rx_buffer[RESPONSE_HEADER_SIZE+4+idx];
 		}
 
 	}
@@ -63,10 +67,9 @@ HAL_StatusTypeDef X4LIDAR_start_scan(X4LIDAR_handle_t *X4LIDAR_handle)
 {
 	X4LIDAR_send_command(X4LIDAR_handle, X4LIDAR_CMD_START_SCAN);
 
-	HAL_UART_Abort(YDLIDAR_X4_Handle->huart);
-	HAL_UART_Receive(YDLIDAR_X4_Handle->huart, X4LIDAR_handle->response_header.buffer, HEADER_SIZE);
+	HAL_UART_Abort(X4LIDAR_handle->huart);
+	HAL_UART_Receive(X4LIDAR_handle->huart, X4LIDAR_handle->response_header.buffer, RESPONSE_HEADER_SIZE,200);
 
-	if()
 	return HAL_OK;
 }
 
@@ -88,6 +91,6 @@ HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle, UART_HandleType
 	HAL_Delay(200);
 
 	//	HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-	X4LIDAR_Task_Create(X4LIDAR_handle);
+	//X4LIDAR_Task_Create(X4LIDAR_handle);
 	return HAL_OK;
 }
