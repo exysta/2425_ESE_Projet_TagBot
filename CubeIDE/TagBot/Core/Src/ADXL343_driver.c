@@ -14,7 +14,7 @@
 #include <stddef.h>
 
 // Constants for accelerometer configuration
-#define TAP_THRESHOLD 0x20 // Tapping threshold 2g
+#define TAP_THRESHOLD 0x80 // Tapping threshold 2g -> 0x20, 6g -> 0x60, 8g -> 0x80, 16g -> 0xFF
 //#define TAP_THRESHOLD 0xFF // Tapping threshold 16g
 #define TAP_DURATION 0x10 // Tapping duration 10ms
 #define TAP_LATENT 0xC8 // taping latency 250ms
@@ -116,6 +116,8 @@ void ADXL343_DetectTap(void){
 	HAL_Delay(100);
 	if (tap_status & (1<<6)) {  			// Tap for single tap
 		printf("Tap detected!\r\n");
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+		HAL_Delay(100);
 	}
 }
 
