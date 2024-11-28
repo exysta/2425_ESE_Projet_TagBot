@@ -67,7 +67,7 @@ HAL_StatusTypeDef YDLIDAR_X4_Init(__YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle,
 	YDLIDAR_X4_Send_Cmd(YDLIDAR_X4_Handle, CMD_SOFT_RESTART);
 	HAL_Delay(20);
 
-	//YDLIDAR_X4_Get_Device_Informations(YDLIDAR_X4_Handle);
+	YDLIDAR_X4_Get_Device_Informations(YDLIDAR_X4_Handle);
 	//	YDLIDAR_X4_Print_Device_Informations(YDLIDAR_X4_Handle);
 
 	//YDLIDAR_X4_Get_Health_Status(YDLIDAR_X4_Handle);
@@ -97,7 +97,7 @@ HAL_StatusTypeDef YDLIDAR_X4_Get_Device_Informations(__YDLIDAR_X4_HandleTypeDef 
 
 	uint8_t rx_buffer[HEADER_SIZE + DEVICE_INFORMATION_PAYLOAD_SIZE];
 
-	if(HAL_UART_Receive_DMA(YDLIDAR_X4_Handle->huart, rx_buffer, HEADER_SIZE+DEVICE_INFORMATION_PAYLOAD_SIZE) != HAL_OK){
+	if(HAL_UART_Receive(YDLIDAR_X4_Handle->huart, rx_buffer, HEADER_SIZE+DEVICE_INFORMATION_PAYLOAD_SIZE,300) != HAL_OK){
 		//		txBufferSize = snprintf((char *)uart2TxBuffer, UART_TX_BUFFER_SIZE, "Device not responding...\r\n");
 		//HAL_UART_Transmit(&huart2, uart2TxBuffer, txBufferSize, 10);
 		return HAL_ERROR;
