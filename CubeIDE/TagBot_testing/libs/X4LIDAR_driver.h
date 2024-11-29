@@ -60,6 +60,7 @@
 #define SCAN_CONTENT_BUFFER_SIZE					200
 
 #define SCAN_CONTENT_DMA_BUFFER_SIZE					500
+#define SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE					10
 
 #define LIDAR_STACK_SIZE 						512
 
@@ -129,7 +130,10 @@ typedef struct X4LIDAR_scan_data{
 	X4LIDAR_scan_header scan_header;
 	uint16_t start_idx;
 	uint16_t end_idx;
-	uint16_t data_start_idx;
+	//indice du nombre de messages trouvés dans la moitié du buffer en train d'etre process
+	uint16_t message_quantity;
+	//buffer contenant les indices de tout les messages de data trouvés
+	uint16_t data_start_idx_buffer[SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE];
 	DMA_State dma_state;
 	int trame_id;
 
@@ -143,6 +147,10 @@ typedef struct X4LIDAR_handle_t{
 	X4LIDAR_response_header response_header;
 	UART_HandleTypeDef *huart;
 	X4LIDAR_scan_data scan_data;
+    TaskHandle_t task_handle;               // Handle for the FreeRTOS task
+    StaticTask_t task_tcb;                  // Static Task Control Block
+    StackType_t task_stack[LIDAR_STACK_SIZE]; // Static Stack for the task
+
 } X4LIDAR_handle_t;
 
 #endif /* X4LIDAR_DRIVER_H_ */
