@@ -137,7 +137,7 @@ HAL_StatusTypeDef X4LIDAR_create_task(X4LIDAR_handle_t *X4LIDAR_handle)
 	X4LIDAR_handle->task_handle = xTaskCreateStatic(pxTaskCode, // Task function
 			task_name,                           // Task name
 			LIDAR_STACK_SIZE,                    // Stack size
-			(void *)X4LIDAR_handle,                     // Parameters to task
+			(void*) X4LIDAR_handle,                     // Parameters to task
 			task_priority,                       // Task priority
 			X4LIDAR_handle->task_stack,          // Stack buffer
 			&X4LIDAR_handle->task_tcb            // TCB buffer
@@ -178,44 +178,91 @@ HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle,
 
 //this function analyze half of the buffer to detect the indexes start of data messages
 
-X4LIDAR_get_data_start_index(volatile X4LIDAR_handle_t *X4LIDAR_handle)
+HAL_StatusTypeDef X4LIDAR_get_data_start_index(
+		volatile X4LIDAR_handle_t *X4LIDAR_handle)
 {
 	X4LIDAR_handle->scan_data.message_quantity = 0;
-	for( uint16_t i = X4LIDAR_handle->scan_data.start_idx; i < X4LIDAR_handle->scan_data.start_idx; i++)
+	for (uint16_t i = X4LIDAR_handle->scan_data.start_idx;
+			i < X4LIDAR_handle->scan_data.start_idx; i++)
 	{
-		if(X4LIDAR_handle->scan_data.dma_buffer[i] == SCAN_CONTENT_HEADER_PH_1_VALUE &&
-				X4LIDAR_handle->scan_data.dma_buffer[i] == SCAN_CONTENT_HEADER_PH_2_VALUE)
+		if (X4LIDAR_handle->scan_data.dma_buffer[i]
+				== SCAN_CONTENT_HEADER_PH_1_VALUE
+				&& X4LIDAR_handle->scan_data.dma_buffer[i]
+						== SCAN_CONTENT_HEADER_PH_2_VALUE)
 		{
-			if(scan_data.message_quantity >= SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE)
+			//we check if we overrun the index buffer before accessing its values
+			if (scan_data.message_quantity
+					>= SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE)
 			{
-				//we check if we overrun the index buffer before accessing its values
+
 				return HAL_ERROR;
 			}
-			X4LIDAR_handle->scan_data.data_start_idx_buffer[message_quantity] = i;
-			X4LIDAR_handle->scan_data.message_quantity ++;
+			X4LIDAR_handle->scan_data.data_frame_start_idx_buffer[message_quantity] =
+					i;
+			X4LIDAR_handle->scan_data.message_quantity++;
 		}
 	}
 	return HAL_OK;
 }
 
-//we could do multiple function calls in the task instead of using a tree structure with functions calls inside other functions
-HAL_StatusTypeDef X4LIDAR_process_dma_buffer(volatile X4LIDAR_handle_t *X4LIDAR_handle)
+//fill the scan_header for the current message
+HAL_StatusTypeDef X4LIDAR_parse_data_frame_header(	volatile X4LIDAR_handle_t *X4LIDAR_handle)
 {
-
+	uint16_t header_index = X4LIDAR_handle->scan_data.current_data_frame_start_idx;
+	//we check that we stay in the bond of the current part of dma_buffer
+	if(header_index + SCAN_CONTENT_HEADER_SIZE > X4LIDAR_handle->scan_data.end_idx)
+	{
+		return HAL_ERROR;
+	}
+	X4LIDAR_handle->scan_data.scan_header.packet_header =
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_PH_1_INDEX] << 8 |
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_PH_2_INDEX];
+	X4LIDAR_handle->scan_data.scan_header.packet_type =
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_CT_INDEX];
+	X4LIDAR_handle->scan_data.scan_header.sample_quantity =
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_LSN_INDEX];
+	X4LIDAR_handle->scan_data.scan_header.start_angle =
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_FSA_1_INDEX] << 8 |
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_FSA_2_INDEX];
+	X4LIDAR_handle->scan_data.scan_header.end_angle =
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_LSA_1_INDEX] << 8 |
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_LSA_2_INDEX];
+	X4LIDAR_handle->scan_data.scan_header.check_code =
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_CS_1_INDEX] << 8 |
+							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_CS_2_INDEX];
+	return HAL_OK;
 }
 
-void X4LIDAR_task(void * argument)
+HAL_StatusTypeDef X4LIDAR_parse_buffer(
+		volatile X4LIDAR_handle_t *X4LIDAR_handle)
+{
+	for (int data_frame_idx = 0; data_frame_idx < X4LIDAR_handle->scan_data.message_quantity; data_frame_idx++)
+	{
+		X4LIDAR_handle->scan_data.current_data_frame_start_idx =
+				X4LIDAR_handle->scan_data.data_frame_start_idx_buffer[data_frame_idx];
+
+		X4LIDAR_parse_data_frame_header(X4LIDAR_handle);
+
+
+	}
+}
+
+void X4LIDAR_task(void *argument)
 {
 	// Retrieve the handle (hlidar) passed as argument
 	volatile X4LIDAR_handle_t *X4LIDAR_handle =
-			(volatile X4LIDAR_handle_t *) argument;
+			(volatile X4LIDAR_handle_t*) argument;
 
 	X4LIDAR_start_scan(X4LIDAR_handle);
-	for(;;)
+	for (;;)
 	{
 		ulTaskNotifyTake(pdTRUE, 100);
 
-		if(X4LIDAR_process_dma_buffer(X4LIDAR_handle) != HAL_OK)
+		if (X4LIDAR_get_data_start_index(X4LIDAR_handle) != HAL_OK)
+		{
+
+		}
+		if (X4LIDAR_parse_buffer(X4LIDAR_handle) != HAL_OK)
 		{
 
 		}
@@ -224,40 +271,42 @@ void X4LIDAR_task(void * argument)
 
 // to be called inside the callback function in the main.
 //
-void X4LIDAR_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart,volatile X4LIDAR_handle_t *X4LIDAR_handle)
+void X4LIDAR_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart,
+		volatile X4LIDAR_handle_t *X4LIDAR_handle)
 {
 	if (huart->Instance == X4LIDAR_handle->huart->Instance)
 	{
 
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-			X4LIDAR_handle->scan_data.start_idx = 0;
-			X4LIDAR_handle->scan_data.end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE/2;
+		X4LIDAR_handle->scan_data.start_idx = 0;
+		X4LIDAR_handle->scan_data.end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE / 2;
 
-			vTaskNotifyGiveFromISR(X4LIDAR_handle->task_handle, &xHigherPriorityTaskWoken);
+		vTaskNotifyGiveFromISR(X4LIDAR_handle->task_handle,
+				&xHigherPriorityTaskWoken);
 
-			// Perform context switch if required
-			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		// Perform context switch if required
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 
 	}
 }
 
-
-
-void X4LIDAR_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart,volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+void X4LIDAR_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart,
+		volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
 {
 	if (huart->Instance == X4LIDAR_handle->huart->Instance)
 	{
 
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-			X4LIDAR_handle->scan_data.start_idx = SCAN_CONTENT_DMA_BUFFER_SIZE/2;
-			X4LIDAR_handle->scan_data.end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE;
+		X4LIDAR_handle->scan_data.start_idx = SCAN_CONTENT_DMA_BUFFER_SIZE / 2;
+		X4LIDAR_handle->scan_data.end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE;
 
-			vTaskNotifyGiveFromISR(X4LIDAR_handle->task_handle, &xHigherPriorityTaskWoken);
+		vTaskNotifyGiveFromISR(X4LIDAR_handle->task_handle,
+				&xHigherPriorityTaskWoken);
 
-			// Perform context switch if required
-			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		// Perform context switch if required
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 
 	}
 }

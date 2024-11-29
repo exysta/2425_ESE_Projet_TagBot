@@ -47,7 +47,7 @@
 #define SCAN_CONTENT_HEADER_CS_1_INDEX        8  // index of check code 1
 #define SCAN_CONTENT_HEADER_CS_2_INDEX        9  // index of check code 2
 
-#define SCAN_CONTENT_HEADER_PH_1_VALUE       0xAA  // index of check code 1
+#define SCAN_CONTENT_HEADER_PH_VALUE       0xAA  // index of check code 1
 #define SCAN_CONTENT_HEADER_PH_2_VALUE       0x55  // index of check code 2
 
 #define SCAN_COMMAND_REPLY_TYPE_CODE		0x81  //the type code of the reply message to the start command
@@ -133,7 +133,9 @@ typedef struct X4LIDAR_scan_data{
 	//indice du nombre de messages trouvés dans la moitié du buffer en train d'etre process
 	uint16_t message_quantity;
 	//buffer contenant les indices de tout les messages de data trouvés
-	uint16_t data_start_idx_buffer[SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE];
+	uint16_t data_frame_start_idx_buffer[SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE];
+	//indicate the index of the message being processed in the dma buffer
+	uint16_t current_data_frame_start_idx;
 	DMA_State dma_state;
 	int trame_id;
 
