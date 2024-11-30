@@ -47,7 +47,7 @@
 #define SCAN_CONTENT_HEADER_CS_1_INDEX        8  // index of check code 1
 #define SCAN_CONTENT_HEADER_CS_2_INDEX        9  // index of check code 2
 
-#define SCAN_CONTENT_HEADER_PH_VALUE       0xAA  // index of check code 1
+#define SCAN_CONTENT_HEADER_PH_1_VALUE       0xAA  // index of check code 1
 #define SCAN_CONTENT_HEADER_PH_2_VALUE       0x55  // index of check code 2
 
 #define SCAN_COMMAND_REPLY_TYPE_CODE		0x81  //the type code of the reply message to the start command
@@ -57,14 +57,13 @@
 
 #define LIDAR_BAUDRATE 					128000
 
-#define SCAN_CONTENT_BUFFER_SIZE					200
 
 #define SCAN_CONTENT_DMA_BUFFER_SIZE					500
 #define SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE					10
 
-#define LIDAR_STACK_SIZE 						512
+#define LIDAR_STACK_SIZE 				256
 
-#define LIDAR_TASK_PRIORITY 			3
+#define LIDAR_TASK_PRIORITY 			4
 
 #define MIN_ANGLE 			0
 #define MAX_ANGLE 			360
@@ -84,11 +83,6 @@
  */
 #define X4_SERIAL_FIRMWARE_SIZE 2
 
-//check if we are processing the first half or the second half of the buffer
-typedef enum {
-	SCAN_DATA_HALF_CPLT,
-	SCAN_DATA_FULL_CPLT
-} DMA_State;
 
 typedef struct X4LIDAR_response_header
 {
@@ -125,18 +119,20 @@ typedef struct X4LIDAR_scan_header{
  * @brief Structure to store parsed scan data from the X4 LiDAR.
  */
 typedef struct X4LIDAR_scan_data{
-	uint8_t distances[MAX_ANGLE];
+	float distances[MAX_ANGLE];
 	uint8_t dma_buffer[SCAN_DMA_BUFFER_SIZE];
 	X4LIDAR_scan_header scan_header;
-	uint16_t start_idx;
-	uint16_t end_idx;
+	//we modify these variabales in the callback so we deifine them as volatile
+	volatile uint16_t start_idx;
+	volatile uint16_t end_idx;
 	//indice du nombre de messages trouvés dans la moitié du buffer en train d'etre process
 	uint16_t message_quantity;
 	//buffer contenant les indices de tout les messages de data trouvés
 	uint16_t data_frame_start_idx_buffer[SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE];
 	//indicate the index of the message being processed in the dma buffer
 	uint16_t current_data_frame_start_idx;
-	DMA_State dma_state;
+	uint16_t current_data_frame_end_idx;
+
 	int trame_id;
 
 } X4LIDAR_scan_data;
@@ -149,10 +145,15 @@ typedef struct X4LIDAR_handle_t{
 	X4LIDAR_response_header response_header;
 	UART_HandleTypeDef *huart;
 	X4LIDAR_scan_data scan_data;
-    TaskHandle_t task_handle;               // Handle for the FreeRTOS task
+	TaskHandle_t task_handle;               // Handle for the FreeRTOS task
     StaticTask_t task_tcb;                  // Static Task Control Block
     StackType_t task_stack[LIDAR_STACK_SIZE]; // Static Stack for the task
 
 } X4LIDAR_handle_t;
 
+HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle,UART_HandleTypeDef *huart);
+void X4LIDAR_task(void *argument);
+HAL_StatusTypeDef X4LIDAR_create_task(X4LIDAR_handle_t *X4LIDAR_handle);
+void X4LIDAR_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart, X4LIDAR_handle_t *X4LIDAR_handle);
+void X4LIDAR_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart, X4LIDAR_handle_t *X4LIDAR_handle);
 #endif /* X4LIDAR_DRIVER_H_ */

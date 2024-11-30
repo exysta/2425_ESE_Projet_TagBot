@@ -6,8 +6,15 @@
  */
 
 #include <stdlib.h>
-#include "cmsis_os.h"
+#include "FreeRTOS.h"
+#include "task.h"
 #include "X4LIDAR_driver.h"
+#include <math.h>   // For atan function
+
+//#define PRINT_DEBUG
+
+#define CONSTANT_1 21.8f  // Precompute the constant
+#define CONSTANT_2 155.3f // Precompute the divisor constant
 
 HAL_StatusTypeDef X4LIDAR_send_command(X4LIDAR_handle_t *X4LIDAR_handle,
 		uint8_t command)
@@ -29,7 +36,7 @@ HAL_StatusTypeDef X4LIDAR_parse_response_header(
 {
 	X4LIDAR_handle->response_header.start_sign =
 			X4LIDAR_handle->response_header.buffer[RESPONSE_HEADER_PH_1_INDEX]
-					>> 8
+					<< 8
 					| X4LIDAR_handle->response_header.buffer[RESPONSE_HEADER_PH_2_INDEX];
 
 	X4LIDAR_handle->response_header.content_size =
@@ -64,7 +71,7 @@ HAL_StatusTypeDef X4LIDAR_get_device_info(X4LIDAR_handle_t *X4LIDAR_handle)
 		return HAL_ERROR;
 	}
 	X4LIDAR_handle->response_header.start_sign =
-			rx_buffer[RESPONSE_HEADER_PH_1_INDEX] >> 8
+			rx_buffer[RESPONSE_HEADER_PH_1_INDEX] << 8
 					| rx_buffer[RESPONSE_HEADER_PH_2_INDEX];
 
 	X4LIDAR_handle->response_header.content_size =
@@ -105,7 +112,7 @@ HAL_StatusTypeDef X4LIDAR_get_device_info(X4LIDAR_handle_t *X4LIDAR_handle)
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef X4LIDAR_start_scan(volatile X4LIDAR_handle_t *X4LIDAR_handle)
+HAL_StatusTypeDef X4LIDAR_start_scan(X4LIDAR_handle_t *X4LIDAR_handle)
 {
 
 	X4LIDAR_send_command(X4LIDAR_handle, X4LIDAR_CMD_START_SCAN);
@@ -134,11 +141,11 @@ HAL_StatusTypeDef X4LIDAR_create_task(X4LIDAR_handle_t *X4LIDAR_handle)
 	}
 
 	// Create the task with a static stack
-	X4LIDAR_handle->task_handle = xTaskCreateStatic(pxTaskCode, // Task function
-			task_name,                           // Task name
+	X4LIDAR_handle->task_handle = xTaskCreateStatic(X4LIDAR_task, // Task function
+			"X4LIDAR_task",                           // Task name
 			LIDAR_STACK_SIZE,                    // Stack size
 			(void*) X4LIDAR_handle,                     // Parameters to task
-			task_priority,                       // Task priority
+			LIDAR_TASK_PRIORITY,                       // Task priority
 			X4LIDAR_handle->task_stack,          // Stack buffer
 			&X4LIDAR_handle->task_tcb            // TCB buffer
 			);
@@ -157,10 +164,8 @@ HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle,
 {
 	X4LIDAR_handle->huart = huart;
 
-	X4LIDAR_handle->scan_data.data_start_idx = 0;
 	X4LIDAR_handle->scan_data.start_idx = 0;
-	X4LIDAR_handle->scan_data.end_idx = SCAN_CONTENT_BUFFER_SIZE / 2;
-	X4LIDAR_handle->scan_data.dma_state = SCAN_DATA_FULL_CPLT;
+	X4LIDAR_handle->scan_data.end_idx = SCAN_CONTENT_DMA_BUFFER_SIZE / 2;
 
 	X4LIDAR_handle->scan_data.trame_id = 0;
 
@@ -178,26 +183,26 @@ HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle,
 
 //this function analyze half of the buffer to detect the indexes start of data messages
 
-HAL_StatusTypeDef X4LIDAR_get_data_start_index(
-		volatile X4LIDAR_handle_t *X4LIDAR_handle)
+HAL_StatusTypeDef X4LIDAR_get_data_start_indexes(
+		X4LIDAR_handle_t *X4LIDAR_handle)
 {
 	X4LIDAR_handle->scan_data.message_quantity = 0;
 	for (uint16_t i = X4LIDAR_handle->scan_data.start_idx;
-			i < X4LIDAR_handle->scan_data.start_idx; i++)
+			i < X4LIDAR_handle->scan_data.end_idx - 1; i++)
 	{
 		if (X4LIDAR_handle->scan_data.dma_buffer[i]
 				== SCAN_CONTENT_HEADER_PH_1_VALUE
-				&& X4LIDAR_handle->scan_data.dma_buffer[i]
+				&& X4LIDAR_handle->scan_data.dma_buffer[i + 1]
 						== SCAN_CONTENT_HEADER_PH_2_VALUE)
 		{
 			//we check if we overrun the index buffer before accessing its values
-			if (scan_data.message_quantity
+			if (X4LIDAR_handle->scan_data.message_quantity
 					>= SCAN_CONTENT_DATA_START_IDX_BUFFER_SIZE)
 			{
 
 				return HAL_ERROR;
 			}
-			X4LIDAR_handle->scan_data.data_frame_start_idx_buffer[message_quantity] =
+			X4LIDAR_handle->scan_data.data_frame_start_idx_buffer[X4LIDAR_handle->scan_data.message_quantity] =
 					i;
 			X4LIDAR_handle->scan_data.message_quantity++;
 		}
@@ -206,73 +211,198 @@ HAL_StatusTypeDef X4LIDAR_get_data_start_index(
 }
 
 //fill the scan_header for the current message
-HAL_StatusTypeDef X4LIDAR_parse_data_frame_header(	volatile X4LIDAR_handle_t *X4LIDAR_handle)
+HAL_StatusTypeDef X4LIDAR_parse_data_frame_header(
+		X4LIDAR_handle_t *X4LIDAR_handle)
 {
-	uint16_t header_index = X4LIDAR_handle->scan_data.current_data_frame_start_idx;
+	uint16_t header_index =
+			X4LIDAR_handle->scan_data.current_data_frame_start_idx;
 	//we check that we stay in the bond of the current part of dma_buffer
-	if(header_index + SCAN_CONTENT_HEADER_SIZE > X4LIDAR_handle->scan_data.end_idx)
+	if (header_index + SCAN_CONTENT_HEADER_SIZE
+			> X4LIDAR_handle->scan_data.end_idx)
 	{
 		return HAL_ERROR;
 	}
 	X4LIDAR_handle->scan_data.scan_header.packet_header =
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_PH_1_INDEX] << 8 |
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_PH_2_INDEX];
+			X4LIDAR_handle->scan_data.dma_buffer[header_index
+					+ SCAN_CONTENT_HEADER_PH_2_INDEX] << 8
+					| X4LIDAR_handle->scan_data.dma_buffer[header_index
+							+ SCAN_CONTENT_HEADER_PH_1_INDEX];
 	X4LIDAR_handle->scan_data.scan_header.packet_type =
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_CT_INDEX];
+			X4LIDAR_handle->scan_data.dma_buffer[header_index
+					+ SCAN_CONTENT_HEADER_CT_INDEX];
 	X4LIDAR_handle->scan_data.scan_header.sample_quantity =
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_LSN_INDEX];
+			X4LIDAR_handle->scan_data.dma_buffer[header_index
+					+ SCAN_CONTENT_HEADER_LSN_INDEX];
 	X4LIDAR_handle->scan_data.scan_header.start_angle =
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_FSA_1_INDEX] << 8 |
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_FSA_2_INDEX];
+			X4LIDAR_handle->scan_data.dma_buffer[header_index
+					+ SCAN_CONTENT_HEADER_FSA_2_INDEX] << 8
+					| X4LIDAR_handle->scan_data.dma_buffer[header_index
+							+ SCAN_CONTENT_HEADER_FSA_1_INDEX];
 	X4LIDAR_handle->scan_data.scan_header.end_angle =
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_LSA_1_INDEX] << 8 |
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_LSA_2_INDEX];
+			X4LIDAR_handle->scan_data.dma_buffer[header_index
+					+ SCAN_CONTENT_HEADER_LSA_2_INDEX] << 8
+					| X4LIDAR_handle->scan_data.dma_buffer[header_index
+							+ SCAN_CONTENT_HEADER_LSA_1_INDEX];
 	X4LIDAR_handle->scan_data.scan_header.check_code =
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_CS_1_INDEX] << 8 |
-							X4LIDAR_handle->scan_data.dma_buffer[header_index + SCAN_CONTENT_HEADER_CS_2_INDEX];
+			X4LIDAR_handle->scan_data.dma_buffer[header_index
+					+ SCAN_CONTENT_HEADER_CS_2_INDEX] << 8
+					| X4LIDAR_handle->scan_data.dma_buffer[header_index
+							+ SCAN_CONTENT_HEADER_CS_1_INDEX];
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef X4LIDAR_parse_buffer(
-		volatile X4LIDAR_handle_t *X4LIDAR_handle)
+HAL_StatusTypeDef X4LIDAR_calculate_max_index(X4LIDAR_handle_t *X4LIDAR_handle)
 {
-	for (int data_frame_idx = 0; data_frame_idx < X4LIDAR_handle->scan_data.message_quantity; data_frame_idx++)
+	uint16_t data_end_index =
+			X4LIDAR_handle->scan_data.current_data_frame_start_idx
+					+ SCAN_CONTENT_HEADER_SIZE
+					+ X4LIDAR_handle->scan_data.scan_header.sample_quantity * 2;
+	//we check that we don't have invalid memory access for the dma_buffer
+	if (data_end_index > X4LIDAR_handle->scan_data.end_idx)
+	{
+		X4LIDAR_handle->scan_data.current_data_frame_end_idx =
+				X4LIDAR_handle->scan_data.end_idx;
+
+	}
+	else
+	{
+		X4LIDAR_handle->scan_data.current_data_frame_end_idx = data_end_index;
+	}
+	//since data point come in 2 bytes, we make sure that the last byte we take is not the first half of a data point
+	if ((X4LIDAR_handle->scan_data.current_data_frame_end_idx % 2)
+			== (X4LIDAR_handle->scan_data.current_data_frame_start_idx
+					+ SCAN_CONTENT_HEADER_SIZE % 2))
+	{
+		X4LIDAR_handle->scan_data.current_data_frame_end_idx--;
+	}
+	return HAL_OK;
+}
+
+HAL_StatusTypeDef X4LIDAR_compute_payload(X4LIDAR_handle_t *X4LIDAR_handle)
+{
+	float start_angle =
+			((float) (X4LIDAR_handle->scan_data.scan_header.start_angle >> 1))
+					/ 64;
+	float end_angle = ((float) (X4LIDAR_handle->scan_data.scan_header.end_angle
+			>> 1)) / 64;
+	float diff_angle = end_angle - start_angle;
+	float angle, distance,angle_correct;
+	uint16_t distance_raw;
+	if (diff_angle < 0) // Check not negative (one turn)
+	{
+		diff_angle = (diff_angle + 360)
+				/ (X4LIDAR_handle->scan_data.scan_header.sample_quantity - 1);
+	}
+	else
+	{
+		diff_angle /= X4LIDAR_handle->scan_data.scan_header.sample_quantity;
+	}
+	uint8_t data_point_number = 0;
+	// Compute distance
+	for (int idx = X4LIDAR_handle->scan_data.current_data_frame_start_idx
+			+ SCAN_CONTENT_HEADER_SIZE;
+			idx < X4LIDAR_handle->scan_data.current_data_frame_end_idx; idx++)
+	{
+		distance_raw = X4LIDAR_handle->scan_data.dma_buffer[2 * idx];
+		distance_raw |= X4LIDAR_handle->scan_data.dma_buffer[2 * idx + 1] << 8;
+		distance = ((float) distance_raw) / 4;
+		angle = diff_angle * data_point_number + start_angle;
+		if(distance == 0)
+		{
+			angle_correct = 0;
+		}
+		else
+		{
+			angle_correct = atan(CONSTANT_1*((CONSTANT_2 - distance)/(CONSTANT_2 + distance)));
+		}
+		angle +=  angle_correct;
+		if ((uint32_t) angle > MAX_ANGLE)
+		{
+#ifdef PRINT_DEBUG
+
+			printf("wrong angle detected\r\n");
+#endif
+			continue;
+		}
+		X4LIDAR_handle->scan_data.distances[(uint32_t) angle] = distance;
+		data_point_number += 2;
+	}
+
+	return HAL_OK;
+}
+
+HAL_StatusTypeDef X4LIDAR_parse_buffer(X4LIDAR_handle_t *X4LIDAR_handle)
+{
+	for (int data_frame_idx = 0;
+			data_frame_idx < X4LIDAR_handle->scan_data.message_quantity;
+			data_frame_idx++)
 	{
 		X4LIDAR_handle->scan_data.current_data_frame_start_idx =
 				X4LIDAR_handle->scan_data.data_frame_start_idx_buffer[data_frame_idx];
 
-		X4LIDAR_parse_data_frame_header(X4LIDAR_handle);
-
-
+		if ((X4LIDAR_parse_data_frame_header(X4LIDAR_handle) != HAL_OK)
+				|| (X4LIDAR_calculate_max_index(X4LIDAR_handle) != HAL_OK))
+		{
+			return HAL_ERROR;
+		}
 	}
+	return HAL_OK;
 }
 
 void X4LIDAR_task(void *argument)
 {
 	// Retrieve the handle (hlidar) passed as argument
-	volatile X4LIDAR_handle_t *X4LIDAR_handle =
-			(volatile X4LIDAR_handle_t*) argument;
+	X4LIDAR_handle_t *X4LIDAR_handle = (X4LIDAR_handle_t*) argument;
 
 	X4LIDAR_start_scan(X4LIDAR_handle);
 	for (;;)
 	{
 		ulTaskNotifyTake(pdTRUE, 100);
 
-		if (X4LIDAR_get_data_start_index(X4LIDAR_handle) != HAL_OK)
+		if (X4LIDAR_get_data_start_indexes(X4LIDAR_handle) != HAL_OK)
 		{
+#ifdef print_debug
+
+			printf("Lidar error while getting scan data indexes\r\n");
+#endif
+
+			continue;  // Skip the rest of the loop and start next iteration
 
 		}
+#ifdef PRINT_DEBUG
+
+		UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL); // NULL for current task
+		printf("Remaining stack space: %u bytes\r\n", uxHighWaterMark);
+#endif
+
 		if (X4LIDAR_parse_buffer(X4LIDAR_handle) != HAL_OK)
 		{
+#ifdef PRINT_DEBUG
+			printf("Lidar error while parsing buffer\r\n");
+#endif
+
+			continue;  // Skip the rest of the loop and start next iteration
 
 		}
+		if (X4LIDAR_compute_payload(X4LIDAR_handle) != HAL_OK)
+		{
+#ifdef PRINT_DEBUG
+			printf("Lidar error while computing payload\r\n");
+#endif
+
+	        continue;  // Skip the rest of the loop and start next iteration
+
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(100));
+
 	}
 }
 
 // to be called inside the callback function in the main.
 //
 void X4LIDAR_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart,
-		volatile X4LIDAR_handle_t *X4LIDAR_handle)
+		X4LIDAR_handle_t *X4LIDAR_handle)
 {
 	if (huart->Instance == X4LIDAR_handle->huart->Instance)
 	{
@@ -292,7 +422,7 @@ void X4LIDAR_HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart,
 }
 
 void X4LIDAR_HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart,
-		volatile __YDLIDAR_X4_HandleTypeDef *YDLIDAR_X4_Handle)
+		X4LIDAR_handle_t *X4LIDAR_handle)
 {
 	if (huart->Instance == X4LIDAR_handle->huart->Instance)
 	{
