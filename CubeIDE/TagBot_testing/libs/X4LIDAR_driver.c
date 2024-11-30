@@ -285,6 +285,11 @@ HAL_StatusTypeDef X4LIDAR_compute_payload(X4LIDAR_handle_t *X4LIDAR_handle)
 					/ 64;
 	float end_angle = ((float) (X4LIDAR_handle->scan_data.scan_header.end_angle
 			>> 1)) / 64;
+	if(X4LIDAR_handle->scan_data.scan_header.sample_quantity < 2)
+	{
+		return HAL_ERROR;
+	}
+
 	float diff_angle = end_angle - start_angle;
 	float angle, distance,angle_correct;
 	uint16_t distance_raw;
@@ -341,7 +346,8 @@ HAL_StatusTypeDef X4LIDAR_parse_buffer(X4LIDAR_handle_t *X4LIDAR_handle)
 				X4LIDAR_handle->scan_data.data_frame_start_idx_buffer[data_frame_idx];
 
 		if ((X4LIDAR_parse_data_frame_header(X4LIDAR_handle) != HAL_OK)
-				|| (X4LIDAR_calculate_max_index(X4LIDAR_handle) != HAL_OK))
+				|| (X4LIDAR_calculate_max_index(X4LIDAR_handle) != HAL_OK)
+				||(X4LIDAR_compute_payload(X4LIDAR_handle) != HAL_OK))
 		{
 			return HAL_ERROR;
 		}
@@ -380,18 +386,7 @@ void X4LIDAR_task(void *argument)
 #ifdef PRINT_DEBUG
 			printf("Lidar error while parsing buffer\r\n");
 #endif
-
 			continue;  // Skip the rest of the loop and start next iteration
-
-		}
-		if (X4LIDAR_compute_payload(X4LIDAR_handle) != HAL_OK)
-		{
-#ifdef PRINT_DEBUG
-			printf("Lidar error while computing payload\r\n");
-#endif
-
-	        continue;  // Skip the rest of the loop and start next iteration
-
 		}
 
 		vTaskDelay(pdMS_TO_TICKS(100));
