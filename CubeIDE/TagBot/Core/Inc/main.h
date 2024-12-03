@@ -83,8 +83,6 @@ void Error_Handler(void);
 #define LIDAR_M_EN_GPIO_Port GPIOC
 #define LIDAR_DEV_EN_Pin GPIO_PIN_0
 #define LIDAR_DEV_EN_GPIO_Port GPIOB
-#define LIDAR_M_SCTR_Pin GPIO_PIN_1
-#define LIDAR_M_SCTR_GPIO_Port GPIOB
 #define CAPTEUR_DIST_S_Pin GPIO_PIN_2
 #define CAPTEUR_DIST_S_GPIO_Port GPIOB
 #define LIDAR_INPUT_Pin GPIO_PIN_10

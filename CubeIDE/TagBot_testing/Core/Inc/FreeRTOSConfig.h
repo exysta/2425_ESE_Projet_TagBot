@@ -152,6 +152,6 @@ standard names. */
 
 /* USER CODE BEGIN Defines */
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
-  /* USER CODE END Defines */
+/* USER CODE END Defines */
 
 #endif /* FREERTOS_CONFIG_H */
