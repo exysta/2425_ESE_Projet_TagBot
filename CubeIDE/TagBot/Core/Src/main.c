@@ -118,6 +118,8 @@ int main(void)
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   MX_TIM6_Init();
+  MX_TIM7_Init();
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
 
 	printf(" _____________________________\r\n");
@@ -128,8 +130,8 @@ int main(void)
 	printf("|_____________________________|\r\n");
 
 	/* Ce code initialise l'adc en dma*/
-	//distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
-	//distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
+	distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_12);
+//	distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
 
 	/* Code init l'accélérometre*/
 
@@ -163,24 +165,26 @@ int main(void)
 		//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 		//		HAL_Delay(100);
 
-		///* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
-		//		uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
-		//
-		//		if (distance == 1){
-		//			printf("error\r\n");
-		//			HAL_Delay(100);
-		//		}
-		//		else{
-		//			printf("adv_value : %lu\r\n", distance);
-		//			HAL_Delay(100);
-		//		}
-		//
+		/* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
+				uint32_t distance = distSensor_ReadADC_DMA(&hadc2);
+
+				if (distance == 1){
+					printf("error\r\n");
+					HAL_Delay(100);
+				}
+				else{
+					printf("adv_value : %lu\r\n", distance);
+					HAL_Delay(100);
+				}
+
+
+		/* Code pour l 'accéléromètre*/
 
 //		int8_t tap_status;
 //		ADXL343_ReadRegister(ADXL343_REG_DUR, &tap_status, 1); //Renvoie la valeur du registre int_source
 //		printf(" DUR reg : %i\r\n", tap_status);
 //		HAL_Delay(1000);
-		/* Code pour l 'accéléromètre*/
+
 //		int16_t x, y, z;
 //
 //		ADXL343_Read_XYZ(&x, &y, &z);

@@ -125,6 +125,9 @@ int main(void)
   MX_I2C1_Init();
   MX_ADC2_Init();
   MX_TIM6_Init();
+  MX_TIM1_Init();
+  MX_TIM7_Init();
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
 
 	//printf("hello\r\n");
@@ -229,6 +232,46 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+
+/**
+
+  * @brief  Period elapsed callback in non blocking mode
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+
+  /* USER CODE BEGIN Callback 1 */
+	/* USER CODE BEGIN Callback 1 */
+	if (htim->Instance == TIM7) // calcul de la rampe
+	{
+		if(pwm_handle.interrupt_counter < RAMP_TIME - 1) //on update la valeur de pulse chaque miliseconde
+		{
+			pwm_handle.intermediate_pulse1 = pwm_handle.previous_pulse1 + (pwm_handle.pulse1 - pwm_handle.previous_pulse1)  * (pwm_handle.interrupt_counter+1)/RAMP_TIME ;
+			pwm_handle.intermediate_pulse2 = pwm_handle.previous_pulse2 + (pwm_handle.pulse2 - pwm_handle.previous_pulse2)  * (pwm_handle.interrupt_counter+1)/RAMP_TIME ;
+			pwm_handle.intermediate_pulse3 = pwm_handle.previous_pulse3 + (pwm_handle.pulse3 - pwm_handle.previous_pulse3)  * (pwm_handle.interrupt_counter+1)/RAMP_TIME ;
+			pwm_handle.intermediate_pulse4 = pwm_handle.previous_pulse4 + (pwm_handle.pulse4 - pwm_handle.previous_pulse4)  * (pwm_handle.interrupt_counter+1)/RAMP_TIME ;
+
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,pwm_handle.intermediate_pulse1);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,pwm_handle.intermediate_pulse2);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,pwm_handle.intermediate_pulse3);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,pwm_handle.intermediate_pulse4);
+
+			pwm_handle.interrupt_counter++;
+		}
+	}
+
+    if (htim == &htim16) { //on lance le calcul de vitesse toutes les secondes
+        calculate_motor_speed();
+
+    }
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
