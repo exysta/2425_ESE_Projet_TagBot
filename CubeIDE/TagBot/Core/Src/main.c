@@ -132,7 +132,7 @@ int main(void)
 	/* Ce code initialise l'adc en dma*/
 	distSensor_initADC_DMA();
 	printf("Démarrage du test des capteurs de distance...\r\n");
-	uint32_t buffer[2];
+	uint32_t buffer[4];
 //	distSensor_initADC_DMA(&hadc2, ADC_CHANNEL_15);
 
 	/* Code init l'accélérometre*/
@@ -174,9 +174,11 @@ int main(void)
 	    // Lecture des valeurs des capteurs
 	    distSensor_ReadADC_DMA(buffer);
 
-	    printf("Capteur 1: %lu, Capteur 2: %lu\r\n", buffer[0], buffer[1]);
-
+	    printf("ADC1 : Capteur 1: %lu, Capteur 2: %lu\r\n", buffer[0], buffer[1]);
 	    HAL_Delay(100);
+	    //printf("ADC2 : Capteur 1: %lu, Capteur 2: %lu\r\n", buffer[2], buffer[3]);
+
+	    //HAL_Delay(100);
 //				if (value1 == 1 && value2 ==1){
 //					printf("error\r\n");
 //					HAL_Delay(100);
