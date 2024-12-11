@@ -104,8 +104,8 @@ static int sh_help(h_shell_t *h_shell, int argc, char **argv)
 	for (i = 0; i < h_shell->shell_func_list_size; i++)
 	{
 		int size;
-		memset(h_shell->print_buffer, 0, BUFFER_SIZE);
-		size = snprintf(h_shell->print_buffer, BUFFER_SIZE, "%s: %s\r\n",
+		memset(h_shell->print_buffer, 0, SHELL_BUFFER_SIZE);
+		size = snprintf(h_shell->print_buffer, SHELL_BUFFER_SIZE, "%s: %s\r\n",
 				h_shell->shell_func_list[i].name,
 				h_shell->shell_func_list[i].description);
 
@@ -178,14 +178,14 @@ static int shell_exec(h_shell_t *h_shell)
 		return -1; // Invalid parameters
 	}
 
-	char buf[BUFFER_SIZE];
+	char buf[SHELL_BUFFER_SIZE];
 	char *token;
 	char *argv[ARGC_MAX];
 	int argc = 0;
 
 	// Safely copy the command buffer
-	strncpy(buf, h_shell->cmd_buffer, BUFFER_SIZE - 1);
-	buf[BUFFER_SIZE - 1] = '\0'; // Null-terminate to avoid overflow
+	strncpy(buf, h_shell->cmd_buffer, SHELL_BUFFER_SIZE - 1);
+	buf[SHELL_BUFFER_SIZE - 1] = '\0'; // Null-terminate to avoid overflow
 
 	// Tokenize the command buffer into arguments
 	token = strtok(buf, " ");
@@ -199,7 +199,7 @@ static int shell_exec(h_shell_t *h_shell)
 			{
 				free(argv[j]);
 			}
-			snprintf(h_shell->print_buffer, BUFFER_SIZE, "Error: Memory allocation failed\r\n");
+			snprintf(h_shell->print_buffer, SHELL_BUFFER_SIZE, "Error: Memory allocation failed\r\n");
 			h_shell->drv_shell.drv_shell_transmit(h_shell->print_buffer, strlen(h_shell->print_buffer));
 			shell_drv_uart_waitTransmitComplete();  // Wait for transmission to complete
 			return -1;
@@ -211,7 +211,7 @@ static int shell_exec(h_shell_t *h_shell)
 	// Check if any command was entered
 	if (argc == 0)
 	{
-		snprintf(h_shell->print_buffer, BUFFER_SIZE, "Error: No command entered\r\n");
+		snprintf(h_shell->print_buffer, SHELL_BUFFER_SIZE, "Error: No command entered\r\n");
 		h_shell->drv_shell.drv_shell_transmit(h_shell->print_buffer, strlen(h_shell->print_buffer));
 		shell_drv_uart_waitTransmitComplete();  // Wait for transmission to complete
 		return -1;
@@ -234,7 +234,7 @@ static int shell_exec(h_shell_t *h_shell)
 			return result;
 		}
 	}
-	snprintf(h_shell->print_buffer, BUFFER_SIZE, "Error: No such command %s\r\n",user_func);
+	snprintf(h_shell->print_buffer, SHELL_BUFFER_SIZE, "Error: No such command %s\r\n",user_func);
 	h_shell->drv_shell.drv_shell_transmit(h_shell->print_buffer, strlen(h_shell->print_buffer));
 	shell_drv_uart_waitTransmitComplete();  // Wait for transmission to complete
 
@@ -292,13 +292,13 @@ int shell_run(h_shell_t *h_shell)
 			if (pos > 0)  // Only process if there's something in the buffer
 			{
 				// Transmit newline to indicate command entry completion
-				size = snprintf(h_shell->print_buffer, BUFFER_SIZE, "\r\n");
+				size = snprintf(h_shell->print_buffer, SHELL_BUFFER_SIZE, "\r\n");
 				h_shell->drv_shell.drv_shell_transmit(h_shell->print_buffer, size);
 				shell_drv_uart_waitTransmitComplete();
 
 				// Add NULL terminator to the command buffer and echo the command
 				h_shell->cmd_buffer[pos++] = 0;
-				size = snprintf(h_shell->print_buffer, BUFFER_SIZE, ":%s\r\n", h_shell->cmd_buffer);
+				size = snprintf(h_shell->print_buffer, SHELL_BUFFER_SIZE, ":%s\r\n", h_shell->cmd_buffer);
 				h_shell->drv_shell.drv_shell_transmit(h_shell->print_buffer, size);
 				shell_drv_uart_waitTransmitComplete();
 
@@ -306,7 +306,7 @@ int shell_run(h_shell_t *h_shell)
 			}
 			else  // If buffer is empty, print an error or ignore
 			{
-				size = snprintf(h_shell->print_buffer, BUFFER_SIZE, "\r\nError: No command entered\r\n");
+				size = snprintf(h_shell->print_buffer, SHELL_BUFFER_SIZE, "\r\nError: No command entered\r\n");
 				h_shell->drv_shell.drv_shell_transmit(h_shell->print_buffer, size);
 				shell_drv_uart_waitTransmitComplete();
 			}
@@ -326,7 +326,7 @@ int shell_run(h_shell_t *h_shell)
 			break;
 
 		default:  // Handle other characters
-			if (pos < BUFFER_SIZE)
+			if (pos < SHELL_BUFFER_SIZE)
 			{
 				h_shell->drv_shell.drv_shell_transmit(&c, 1);  // Echo the character back to terminal
 				shell_drv_uart_waitTransmitComplete();

@@ -31,7 +31,7 @@
 #define ARGC_MAX 8
 
 /** @brief Size of buffers used in the shell for command and print operations */
-#define BUFFER_SIZE 100
+#define SHELL_BUFFER_SIZE 100
 
 /** @brief Maximum number of shell functions that can be registered */
 #define SHELL_FUNC_LIST_MAX_SIZE 64
@@ -100,9 +100,9 @@ typedef struct shell_func_struct {
  */
 typedef struct h_shell_struct {
     int shell_func_list_size;                          /**< Number of registered shell functions */
-    char print_buffer[BUFFER_SIZE];                    /**< Buffer for printing output */
+    char print_buffer[SHELL_BUFFER_SIZE];                    /**< Buffer for printing output */
     shell_func_t shell_func_list[SHELL_FUNC_LIST_MAX_SIZE]; /**< List of shell functions */
-    char cmd_buffer[BUFFER_SIZE];                      /**< Buffer for storing commands */
+    char cmd_buffer[SHELL_BUFFER_SIZE];                      /**< Buffer for storing commands */
     drv_shell_t drv_shell;                             /**< Shell driver structure */
     TaskHandle_t h_task;                               /**< Task handle for the shell task */
 } h_shell_t;
