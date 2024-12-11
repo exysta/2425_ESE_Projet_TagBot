@@ -1,4 +1,4 @@
-../Core/Src/distSensor_driver.c:35:6:distSensor_initADC_DMA	1
-../Core/Src/distSensor_driver.c:48:10:distSensor_ReadADC	1
-../Core/Src/distSensor_driver.c:58:10:distSensor_ReadADC_DMA	3
-../Core/Src/distSensor_driver.c:99:6:HAL_ADC_ConvCpltCallback	3
+../Core/Src/distSensor_driver.c:52:6:distSensor_initADC_DMA	1
+../Core/Src/distSensor_driver.c:65:10:distSensor_ReadADC	1
+../Core/Src/distSensor_driver.c:75:10:distSensor_ReadADC_DMA	5
+../Core/Src/distSensor_driver.c:126:6:HAL_ADC_ConvCpltCallback	7

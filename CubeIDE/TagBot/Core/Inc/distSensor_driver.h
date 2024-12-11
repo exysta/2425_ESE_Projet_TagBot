@@ -14,10 +14,8 @@
 
 void distSensor_initADC_DMA(void);
 uint32_t distSensor_ReadADC(ADC_HandleTypeDef* hadc);
-uint32_t distSensor_ReadADC_DMA(uint32_t* buffer);
+uint32_t distSensor_ReadADC_DMA(void);
 
-//void distSensor_ReadADC_DMA(uint32_t* value1, uint32_t* value2);
-//void distSensor_ReadADC_DMA(ADC_HandleTypeDef* hadc, uint32_t *distance);
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 
