@@ -30,6 +30,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_hal.h"
+#include "X4LIDAR_driver.h"
+#include "shell.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,6 +53,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+X4LIDAR_handle_t hlidar;
 
 /* USER CODE END PV */
 
@@ -62,7 +66,22 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int __io_putchar(int ch)
+{
+	// Send the character using HAL_UART_Transmit
+	HAL_UART_Transmit(&huart4, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
 
+	return ch;  // Return the character back to the caller
+}
+
+void print_lidar_distances(h_shell_t *h_shell, int argc, char **argv)
+{
+	for (int i = MIN_ANGLE; i < MAX_ANGLE; i++)
+	{
+		printf("%s %d: %d \r\n",
+				"angle ", i,  hlidar.scan_data.distances[i]);
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -120,7 +139,12 @@ int main(void)
 
 	HAL_TIM_Base_Start(&htim6); // trigger pour lancer conversion sharp sensors
 	//**********************************************************
+	X4LIDAR_init(&hlidar, &huart3);
 
+	shell_init(&h_shell);
+	shell_add(&h_shell, "print_dist", print_lidar_distances,
+			"print lidar buffer containing scanned distances");
+	shell_createShellTask(&h_shell);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
