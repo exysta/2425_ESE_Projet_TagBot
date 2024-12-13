@@ -1,7 +1,9 @@
-../Core/Src/ADXL343_driver.c:24:5:ADXL343_Init	2
-../Core/Src/ADXL343_driver.c:52:6:ADXL343_Configure	1
-../Core/Src/ADXL343_driver.c:64:6:ADXL343_ReadRegister	1
-../Core/Src/ADXL343_driver.c:79:6:ADXL343_WriteRegister	1
-../Core/Src/ADXL343_driver.c:92:6:ADXL343_DetectTap	2
-../Core/Src/ADXL343_driver.c:117:6:ADXL343_Read_XYZ	1
-../Core/Src/ADXL343_driver.c:137:6:calibrateOffsets	4
+../Core/Src/ADXL343_driver.c:27:5:ADXL343_Init	2
+../Core/Src/ADXL343_driver.c:57:6:ADXL343_Configure	1
+../Core/Src/ADXL343_driver.c:69:6:ADXL343_ReadRegister	1
+../Core/Src/ADXL343_driver.c:84:6:ADXL343_WriteRegister	1
+../Core/Src/ADXL343_driver.c:97:6:ADXL343_DetectTap	2
+../Core/Src/ADXL343_driver.c:122:6:ADXL343_Read_XYZ	1
+../Core/Src/ADXL343_driver.c:143:6:calibrateOffsets	4
+../Core/Src/ADXL343_driver.c:160:6:ADXL343_Task	2
+../Core/Src/ADXL343_driver.c:180:6:ADXL343_TaskCreate	1

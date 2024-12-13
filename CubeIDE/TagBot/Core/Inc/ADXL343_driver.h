@@ -46,6 +46,8 @@ void ADXL343_Read_XYZ(int16_t* x, int16_t*y, int16_t*z);
 
 void calibrateOffsets(void);
 
+void ADXL343_Task(void * unused);
+void ADXL343_TaskCreate(void * unused);
 
 
 
