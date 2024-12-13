@@ -132,18 +132,14 @@ int main(void)
 	printf("|_____________________________|\r\n");
 
 	/* Ce code initialise l'adc en dma*/
-	//	distSensor_initADC_DMA();
-	//	printf("Démarrage du test des capteurs de distance...\r\n");
-	//
+	distSensor_initADC_DMA();
+	printf("Démarrage du test des capteurs de distance...\r\n");
+
 
 	/* Code init l'accélérometre*/
 
 	while(1 == ADXL343_Init()) {}
 	ADXL343_Configure();
-	//	ADXL343_WriteRegister(ADXL343_REG_INT_MAP, 0x00);			// Enable interruption on pin INT1
-	//	ADXL343_WriteRegister(ADXL343_REG_INT_MAP, 0x40);			// Enable interruption on pin INT1
-	//	calibrateOffsets();
-
 
 
 	/* USER CODE END 2 */
@@ -193,24 +189,6 @@ int main(void)
 
 
 
-
-		/* Code pour l 'accéléromètre*/
-
-		//		int8_t tap_status;
-		//		ADXL343_ReadRegister(ADXL343_REG_DUR, &tap_status, 1); //Renvoie la valeur du registre int_source
-		//		printf(" DUR reg : %i\r\n", tap_status);
-		//		HAL_Delay(1000);
-
-		//		int16_t x, y, z;
-		//
-		//		ADXL343_Read_XYZ(&x, &y, &z);
-		//		printf("data read x :%i , y: %i, z:%i\r\n", x, y, z);
-		//		HAL_Delay(100);
-		//		ADXL343_DetectTap();
-		//		HAL_Delay(1000);
-		//
-		//		//HAL_NVIC_SetPendingIRQ(EXTI2_IRQn); // Force l'interruption EXTI2
-		//		HAL_Delay(1000)
 
 
 	}

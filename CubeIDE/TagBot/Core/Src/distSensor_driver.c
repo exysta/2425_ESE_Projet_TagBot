@@ -27,6 +27,8 @@
 #include <adc.h>
 #include <distSensor_driver.h>
 #include "tim.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 
 
@@ -53,9 +55,10 @@ uint32_t value_sud; 				// Valeur de sud (ADC2 Channel 12)
 // function to init ADC1 and ADC2 (DMA)
 void distSensor_initADC_DMA(void)
 {
+	distSensor_TaskCreate(NULL);
 
 
-	HAL_ADC_Start_DMA(&hadc1, adc1_dma_buffer, ADC1_CHANNEL_COUNT);
+	//HAL_ADC_Start_DMA(&hadc1, adc1_dma_buffer, ADC1_CHANNEL_COUNT);
 	HAL_ADC_Start_DMA(&hadc2, adc2_dma_buffer, ADC2_CHANNEL_COUNT);
 	HAL_TIM_Base_Start(&htim6);
 
@@ -158,7 +161,7 @@ void distSensor_Task(void *unused){
 		}
 		else {
 
-			printf("Capteur detect vide, %lu\r\n",distance );
+			printf("Tache Capteur detect vide, %lu\r\n",distance );
 		}
 		vTaskDelay(100);
 
@@ -166,8 +169,8 @@ void distSensor_Task(void *unused){
 	}
 }
 
-void distSensor_TaskCreat(void*unused){
-	xTaskCreate(distSensor_Task, "distSensor_task", 128, NULL, 255, NULL);
+void distSensor_TaskCreate(void*unused){
+	xTaskCreate(distSensor_Task, "distSensor_task", 128, NULL, 23, NULL);
 }
 
 

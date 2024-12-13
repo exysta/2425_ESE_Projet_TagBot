@@ -6,4 +6,4 @@
 ../Core/Src/ADXL343_driver.c:122:6:ADXL343_Read_XYZ	1
 ../Core/Src/ADXL343_driver.c:143:6:calibrateOffsets	4
 ../Core/Src/ADXL343_driver.c:160:6:ADXL343_Task	2
-../Core/Src/ADXL343_driver.c:180:6:ADXL343_TaskCreate	1
+../Core/Src/ADXL343_driver.c:179:6:ADXL343_TaskCreate	1

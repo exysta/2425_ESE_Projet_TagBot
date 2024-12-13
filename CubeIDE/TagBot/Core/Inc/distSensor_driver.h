@@ -16,7 +16,8 @@ void distSensor_initADC_DMA(void);
 uint32_t distSensor_ReadADC(ADC_HandleTypeDef* hadc);
 uint32_t distSensor_ReadADC_DMA(void);
 
-
+void distSensor_TaskCreate(void*unused);
+void distSensor_Task(void *unused);
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 
 #endif /* INC_DISTSENSOR_DRIVER_H_ */
