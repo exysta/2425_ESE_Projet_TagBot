@@ -31,6 +31,8 @@
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_hal.h"
 #include "X4LIDAR_driver.h"
+#include "DCMotor_driver.h"
+
 #include "shell.h"
 
 /* USER CODE END Includes */
@@ -54,7 +56,7 @@
 
 /* USER CODE BEGIN PV */
 X4LIDAR_handle_t hlidar;
-
+DualDrive_handle_t DualDrive_handle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -129,17 +131,43 @@ int main(void)
 
 	//**********************************************************
 	//For distance sensors
-	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-	HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
-	uint32_t distance_sensor_adc1_buffer [DISTANCE_SENSOR_ADC_BUFFER_SIZE];
-	uint32_t distance_sensor_adc2_buffer [DISTANCE_SENSOR_ADC_BUFFER_SIZE];
-
-	HAL_ADC_Start_DMA(&hadc1, &distance_sensor_adc1_buffer, DISTANCE_SENSOR_ADC_BUFFER_SIZE);
-	HAL_ADC_Start_DMA(&hadc1, &distance_sensor_adc2_buffer, DISTANCE_SENSOR_ADC_BUFFER_SIZE);
-
-	HAL_TIM_Base_Start(&htim6); // trigger pour lancer conversion sharp sensors
+//	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+//	HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
+//	uint32_t distance_sensor_adc1_buffer [DISTANCE_SENSOR_ADC_BUFFER_SIZE];
+//	uint32_t distance_sensor_adc2_buffer [DISTANCE_SENSOR_ADC_BUFFER_SIZE];
+//
+//	HAL_ADC_Start_DMA(&hadc1, &distance_sensor_adc1_buffer, DISTANCE_SENSOR_ADC_BUFFER_SIZE);
+//	HAL_ADC_Start_DMA(&hadc1, &distance_sensor_adc2_buffer, DISTANCE_SENSOR_ADC_BUFFER_SIZE);
+//
+//	HAL_TIM_Base_Start(&htim6); // trigger pour lancer conversion sharp sensors
 	//**********************************************************
-	X4LIDAR_init(&hlidar, &huart3);
+	//for motors
+//	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+//	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
+//			2000);
+//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,
+//			0);
+//	HAL_Delay(500);
+//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
+//			3000);
+//	HAL_Delay(500);
+//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
+//			4000);
+//	HAL_Delay(500);
+//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
+//			5000);
+//	HAL_Delay(500);
+//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
+//			6000);
+//	DCMotor_Init(&DualDrive_handle);
+//	DCMotor_SetSpeed(&DualDrive_handle.motor_right, 60, POSITIVE_ROTATION);
+
+	DCMotor_CreateTask(&DualDrive_handle);
+
+	//**********************************************************
+
+	//X4LIDAR_init(&hlidar, &huart3);
 
 	shell_init(&h_shell);
 	shell_add(&h_shell, "print_dist", print_lidar_distances,
