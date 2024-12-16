@@ -1,0 +1,7 @@
+../libs/shell.c:48:6:task_shell	1
+../libs/shell.c:71:5:shell_createShellTask	2
+../libs/shell.c:101:12:sh_help	2
+../libs/shell.c:128:6:shell_init	1
+../libs/shell.c:150:5:shell_add	2
+../libs/shell.c:174:12:shell_exec	10
+../libs/shell.c:268:5:shell_run	8
