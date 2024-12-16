@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.1">
   <diagram name="Page-1" id="e7e014a7-5840-1c2e-5031-d8a46d1fe8dd">
-    <mxGraphModel dx="2603" dy="1616" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
+    <mxGraphModel dx="2521" dy="1616" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -103,7 +103,7 @@
         <mxCell id="20" value="" style="endArrow=open;strokeColor=#FF0000;endFill=1;rounded=0" parent="2" source="10" target="18" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="3" value="Tâche Lidar " style="swimlane;whiteSpace=wrap" parent="1" vertex="1">
+        <mxCell id="3" value="l" style="swimlane;whiteSpace=wrap;points=[[0,0,0,0,0],[0,0.25,0,0,0],[0,0.5,0,0,0],[0,0.75,0,0,0],[0,1,0,0,0],[0.25,0,0,0,0],[0.25,1,0,0,0],[0.5,0,0,0,0],[0.5,1,0,0,0],[0.75,0,0,0,0],[0.75,1,0,0,0],[1,0,0,0,0],[1,0.25,0,0,0],[1,0.5,0,0,0],[1,0.75,0,0,0],[1,1,0,0,0]];" parent="1" vertex="1">
           <mxGeometry x="-630" y="128" width="394.5" height="632" as="geometry" />
         </mxCell>
         <mxCell id="13" value="" style="ellipse;shape=startState;fillColor=#000000;strokeColor=#ff0000;" parent="3" vertex="1">
@@ -237,6 +237,22 @@
         </mxCell>
         <mxCell id="S2UzXBr5Zmkb8bIeER8B-47" value="Tâche Shell (Optionnel)" style="swimlane;whiteSpace=wrap" vertex="1" parent="1">
           <mxGeometry x="-280" y="790" width="680" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="S2UzXBr5Zmkb8bIeER8B-77" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="S2UzXBr5Zmkb8bIeER8B-66">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-350" y="600" as="sourcePoint" />
+            <mxPoint x="-584" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S2UzXBr5Zmkb8bIeER8B-78" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#FF0000;endFill=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="S2UzXBr5Zmkb8bIeER8B-66">
+          <mxGeometry x="-0.6025" y="25" relative="1" as="geometry">
+            <mxPoint x="-574" y="550" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-690" y="620" />
+            </Array>
+            <mxPoint x="-580" y="630" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
