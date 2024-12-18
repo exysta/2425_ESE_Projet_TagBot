@@ -1,8 +1,10 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:255:12:xQueueGenericReset	5
+../Middlewares/Third_Party/FreeRTOS/Source/queue.c:310:16:xQueueGenericCreateStatic	11
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:368:16:xQueueGenericCreate	3
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:422:13:prvInitialiseNewQueue	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:466:14:prvInitialiseMutex	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:496:16:xQueueCreateMutex	1
+../Middlewares/Third_Party/FreeRTOS/Source/queue.c:512:16:xQueueCreateMutexStatic	1
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:740:12:xQueueGenericSend	23
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:950:12:xQueueGenericSendFromISR	14
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1112:12:xQueueGiveFromISR	11
@@ -14,7 +16,7 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1930:13:uxQueueMessagesWaiting	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1946:13:uxQueueSpacesAvailable	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1963:13:uxQueueMessagesWaitingFromISR	2
-../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1975:6:vQueueDelete	2
+../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1975:6:vQueueDelete	3
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2049:21:prvGetDisinheritPriorityAfterTimeout	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2074:19:prvCopyDataToQueue	8
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2153:13:prvCopyDataFromQueue	3

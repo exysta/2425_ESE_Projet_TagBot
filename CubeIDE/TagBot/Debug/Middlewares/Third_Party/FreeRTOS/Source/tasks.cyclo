@@ -1,3 +1,4 @@
+../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:581:15:xTaskCreateStatic	6
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:733:13:xTaskCreate	4
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:824:13:prvInitialiseNewTask	7
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:1077:13:prvAddNewTaskToReadyList	7
@@ -10,7 +11,7 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:1805:20:prvTaskIsTaskSuspended	5
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:1851:7:vTaskResume	6
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:1905:13:xTaskResumeFromISR	5
-../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:1975:6:vTaskStartScheduler	4
+../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:1975:6:vTaskStartScheduler	5
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2099:6:vTaskEndScheduler	1
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2110:6:vTaskSuspendAll	1
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2194:12:xTaskResumeAll	11
@@ -33,7 +34,7 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3392:8:prvIdleTask	2
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3607:13:prvInitialiseTaskLists	2
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3639:13:prvCheckTasksWaitingTermination	2
-../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3887:14:prvDeleteTCB	1
+../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3887:14:prvDeleteTCB	4
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3943:13:prvResetNextTaskUnblockTime	2
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3969:15:xTaskGetCurrentTaskHandle	1
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3986:13:xTaskGetSchedulerState	3

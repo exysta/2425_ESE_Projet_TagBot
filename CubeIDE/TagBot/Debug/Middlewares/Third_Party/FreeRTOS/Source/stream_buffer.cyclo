@@ -1,4 +1,5 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c:219:23:xStreamBufferGenericCreate	7
+../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c:283:23:xStreamBufferGenericCreateStatic	10
 ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c:359:6:vStreamBufferDelete	3
 ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c:392:12:xStreamBufferReset	4
 ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c:441:12:xStreamBufferSetTriggerLevel	4
