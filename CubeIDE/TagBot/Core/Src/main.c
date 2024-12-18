@@ -32,7 +32,8 @@
 #include "stm32g4xx_hal.h"
 #include "X4LIDAR_driver.h"
 #include "DCMotor_driver.h"
-
+#include "SSD1306.h"
+#include "SSD1306_fonts.h"
 #include "shell.h"
 
 /* USER CODE END Includes */
@@ -165,6 +166,13 @@ int main(void)
 
 	DCMotor_CreateTask(&DualDrive_handle);
 
+	//**********************************************************
+	// Init SCREEN OLED
+	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
+	{
+		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
+		SCREEN_SSD1306_Update_Screen(&hscreen1);
+	}
 	//**********************************************************
 
 	//X4LIDAR_init(&hlidar, &huart3);
