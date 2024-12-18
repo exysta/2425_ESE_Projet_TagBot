@@ -58,7 +58,7 @@ void distSensor_initADC_DMA(void)
 	distSensor_TaskCreate(NULL);
 
 
-	//HAL_ADC_Start_DMA(&hadc1, adc1_dma_buffer, ADC1_CHANNEL_COUNT);
+	HAL_ADC_Start_DMA(&hadc1, adc1_dma_buffer, ADC1_CHANNEL_COUNT);
 	HAL_ADC_Start_DMA(&hadc2, adc2_dma_buffer, ADC2_CHANNEL_COUNT);
 	HAL_TIM_Base_Start(&htim6);
 

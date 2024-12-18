@@ -36,6 +36,9 @@
 #include <string.h>
 #include "distSensor_driver.h"
 #include "ADXL343_driver.h"
+#include "X4LIDAR_driver.h"
+#include "DCMotor_driver.h"
+#include "shell.h"
 
 /* USER CODE END Includes */
 
@@ -57,6 +60,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+X4LIDAR_handle_t hlidar;
+DualDrive_handle_t DualDrive_handle;
 
 /* USER CODE END PV */
 
@@ -75,6 +80,13 @@ int __io_putchar(int chr)
 	return chr;
 }
 
+void print_lidar_distances(h_shell_t *h_shell, int argc, char **argv)
+{
+	for (int i = MIN_ANGLE; i < MAX_ANGLE; i++)
+	{
+		printf("%s %d: %d \r\n", "angle ", i, hlidar.scan_data.distances[i]);
+	}
+}
 
 /* USER CODE END 0 */
 
@@ -140,6 +152,14 @@ int main(void)
 	while(1 == ADXL343_Init()) {}
 	ADXL343_Configure();
 
+	DCMotor_CreateTask(&DualDrive_handle);
+
+	//X4LIDAR_init(&hlidar, &huart3);
+
+	shell_init(&h_shell);
+	shell_add(&h_shell, "print_dist", print_lidar_distances,
+			"print lidar buffer containing scanned distances");
+	shell_createShellTask(&h_shell);
 
   /* USER CODE END 2 */
 

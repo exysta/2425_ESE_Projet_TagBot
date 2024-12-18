@@ -17,7 +17,7 @@
 
 
 // Constants for accelerometer configuration
-#define TAP_THRESHOLD 0xFF 											// Tapping threshold 2g -> 0x20, 6g -> 0x60, 8g -> 0x80, 16g -> 0xFF
+#define TAP_THRESHOLD 0x60 											// Tapping threshold 2g -> 0x20, 6g -> 0x60, 8g -> 0x80, 16g -> 0xFF
 #define TAP_DURATION 0x10 											// Tapping duration 10ms
 #define TAP_LATENT 0xC8 											// taping latency 250ms
 
