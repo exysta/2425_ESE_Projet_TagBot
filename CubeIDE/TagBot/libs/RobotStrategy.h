@@ -12,12 +12,18 @@
 #include "X4LIDAR_driver.h"
 
 #define MIN_OBJECT_DIST 120 //according to the datasheet the lidar has a min dist of 0.12 m = 120 mm
-#define MAX_OBJECT_DIST 10000 //max dist of 10 meters
+#define MAX_OBJECT_DIST 10000 //max dist of 10 meter for object detection with the Lidar
+#define OBJECT_DIST_THRESHOLD 100 //the distance difference  threshold which separates object into different segment
+
+// Proportional control constant for speed difference in differential motor driving
+// For now we have a max angle error of 180°, if we want our max differential speed to be 25% of max speed we have KP = 25/180 = 0.138
+// to be adjusted experimentally
+#define KP 0.138f
 
 typedef struct __TARGET_HandleTypeDef{
-	uint8_t start_angle;
-	uint8_t centroid_angle;
-	uint8_t end_angle;
+	uint16_t start_angle;
+	uint16_t centroid_angle;
+	uint16_t end_angle;
 	float min_distance;
 	float max_distance;
 	float avg_distance;
