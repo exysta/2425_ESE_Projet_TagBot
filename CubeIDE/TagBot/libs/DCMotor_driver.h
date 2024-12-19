@@ -15,11 +15,16 @@
 #define POSITIVE_ROTATION 0
 #define NEGATIVE_ROTATION 1
 
-#define MOTOR_PPR 224.4f
 
 #define TASK_MOTOR_STACK_DEPTH 64
 #define TASK_MOTOR_PRIORITY 3
 #define TASK_TIMER_PRIORITY 2 // the freertos timer priority
+
+#define ENCODER_TIMER_MAX_COUNT 65535
+
+#define MOTOR_PPR 224.4f
+
+#define ASSERV_TIMER_PERIOD 10 // period in ms for the callback asserv
 
 #include "tim.h"
 #include <string.h>
@@ -32,11 +37,10 @@ typedef struct Encoder_typedef
 {
 	uint32_t measured_rpm;
 	int measured_rotation_sign;
-    uint16_t previous_pulse1;
-    uint16_t previous_pulse2;
-    uint16_t intermediate_pulse1;
-    uint16_t intermediate_pulse2;
-    uint16_t interrupt_counter;
+    uint16_t previous_count;
+    uint16_t current_count;
+	TIM_HandleTypeDef encoder_timer;
+
 }Encoder_t;
 
 
@@ -44,7 +48,7 @@ typedef struct Motor_typedef
 {
 	uint32_t set_rpm;
 	int set_rotation_sign;
-	TIM_HandleTypeDef timer;
+	TIM_HandleTypeDef motor_timer;
 	uint32_t FWD_Channel;
 	uint32_t REV_Channel;
     uint16_t FWD_target_pulse;

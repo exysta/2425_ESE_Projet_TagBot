@@ -81,7 +81,7 @@ void print_lidar_distances(h_shell_t *h_shell, int argc, char **argv)
 {
 	for (int i = MIN_ANGLE; i < MAX_ANGLE; i++)
 	{
-		printf("%s %d: %d \r\n",
+		printf("%s %d: %f \r\n",
 				"angle ", i,  hlidar.scan_data.distances[i]);
 	}
 }
@@ -174,9 +174,11 @@ int main(void)
 		SCREEN_SSD1306_Update_Screen(&hscreen1);
 	}
 	//**********************************************************
+	printf("test \r\n");
+	X4LIDAR_create_task(&hlidar);
 
 	//X4LIDAR_init(&hlidar, &huart3);
-
+	printf("test \r\n");
 	shell_init(&h_shell);
 	shell_add(&h_shell, "print_dist", print_lidar_distances,
 			"print lidar buffer containing scanned distances");
@@ -249,6 +251,26 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
+
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	X4LIDAR_HAL_UART_RxHalfCpltCallback(huart,&hlidar);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	shell_drv_uart_HAL_UART_RxCpltCallback(huart);
+	X4LIDAR_HAL_UART_RxCpltCallback(huart,&hlidar);
+
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	shell_drv_uart_HAL_UART_TxCpltCallback(huart);
+}
 /* USER CODE END 4 */
 
 /**

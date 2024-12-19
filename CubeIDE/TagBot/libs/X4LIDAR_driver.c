@@ -170,14 +170,14 @@ HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle,
 	X4LIDAR_handle->scan_data.trame_id = 0;
 
 	X4LIDAR_send_command(X4LIDAR_handle, X4LIDAR_CMD_SOFT_RESTART);
-	HAL_Delay(20);
+	vTaskDelay(pdMS_TO_TICKS(20));
 
 	X4LIDAR_get_device_info(X4LIDAR_handle);
 
-	HAL_Delay(200);
+	vTaskDelay(pdMS_TO_TICKS(200));
+
 
 	//	HAL_GPIO_WritePin(OSC_TRIG_GPIO_Port, OSC_TRIG_Pin, RESET);
-	X4LIDAR_create_task(X4LIDAR_handle);
 	return HAL_OK;
 }
 
@@ -295,7 +295,7 @@ HAL_StatusTypeDef X4LIDAR_compute_payload(X4LIDAR_handle_t *X4LIDAR_handle)
 	uint16_t distance_raw;
 	if (diff_angle < 0) // Check not negative (one turn)
 	{
-		diff_angle = (diff_angle + 360)
+		diff_angle = (diff_angle + 360.0)
 				/ (X4LIDAR_handle->scan_data.scan_header.sample_quantity - 1);
 	}
 	else
@@ -318,11 +318,13 @@ HAL_StatusTypeDef X4LIDAR_compute_payload(X4LIDAR_handle_t *X4LIDAR_handle)
 		}
 		else
 		{
-			angle_correct = atan(CONSTANT_1*((CONSTANT_2 - distance)/(CONSTANT_2 + distance)));
+			angle_correct = atan(CONSTANT_1*((CONSTANT_2 - distance)/(CONSTANT_2 * distance)));
 		}
 		angle +=  angle_correct;
 		if ((uint32_t) angle > MAX_ANGLE)
 		{
+			X4LIDAR_handle->scan_data.distances[(uint32_t) angle - MAX_ANGLE ] = distance;
+
 #ifdef PRINT_DEBUG
 
 			printf("wrong angle detected\r\n");
@@ -359,7 +361,7 @@ void X4LIDAR_task(void *argument)
 {
 	// Retrieve the handle (hlidar) passed as argument
 	X4LIDAR_handle_t *X4LIDAR_handle = (X4LIDAR_handle_t*) argument;
-
+	X4LIDAR_init(X4LIDAR_handle,&huart3);
 	X4LIDAR_start_scan(X4LIDAR_handle);
 	for (;;)
 	{
@@ -377,8 +379,8 @@ void X4LIDAR_task(void *argument)
 		}
 #ifdef PRINT_DEBUG
 
-		UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL); // NULL for current task
-		printf("Remaining stack space: %u bytes\r\n", uxHighWaterMark);
+//		UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL); // NULL for current task
+//		printf("Remaining stack space: %u bytes\r\n", uxHighWaterMark);
 #endif
 
 		if (X4LIDAR_parse_buffer(X4LIDAR_handle) != HAL_OK)
