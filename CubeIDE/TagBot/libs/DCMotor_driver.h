@@ -12,6 +12,8 @@
 #define MOTOR_RIGHT 1
 #define MAX_PULSE 6799
 
+#define MAX_SPEED 60 //max speed in percentage for motors
+
 #define POSITIVE_ROTATION 0
 #define NEGATIVE_ROTATION 1
 

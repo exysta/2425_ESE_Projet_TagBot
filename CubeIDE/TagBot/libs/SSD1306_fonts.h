@@ -8,7 +8,7 @@
 #define SSD1306_INCLUDE_FONT_11x18
 #define SSD1306_INCLUDE_FONT_16x26
 #define SSD1306_INCLUDE_FONT_16x24
-#define SSD1306_INCLUDE_NYAN
+#define SSD1306_INCLUDE_IMG
 #include "SSD1306_fonts.h"
 
 
@@ -34,8 +34,9 @@ extern FontDef Font_16x26;
 #ifdef SSD1306_INCLUDE_FONT_16x24
 extern FontDef Font_16x24;
 #endif
-#ifdef SSD1306_INCLUDE_NYAN
+#ifdef SSD1306_INCLUDE_IMG
 extern const uint8_t Nyan_115x64px [];
-#ifdef SSD1306_INCLUDE_NYAN
+extern const uint8_t Jerry_50x64px [];
+#endif
 
 #endif // __SSD1306_FONTS_H__

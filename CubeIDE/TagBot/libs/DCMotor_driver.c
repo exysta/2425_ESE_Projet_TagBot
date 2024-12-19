@@ -96,15 +96,24 @@ HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 		uint8_t rotation_sign)
 {
 	if (((rotation_sign != POSITIVE_ROTATION)
-			&& (rotation_sign != NEGATIVE_ROTATION)) || (speed > 100))
+			&& (rotation_sign != NEGATIVE_ROTATION)) )
 	{
 		return HAL_ERROR;
+	}
+	uint16_t pulse;
+	if(speed <= MAX_SPEED)
+	{
+		pulse = MAX_PULSE * speed / 100;
+	}
+	else
+	{
+		pulse = MAX_PULSE * MAX_SPEED / 100;
+
 	}
 
 	motor->set_rpm = speed;
 	motor->set_rotation_sign = rotation_sign;
 
-	uint16_t pulse = MAX_PULSE * speed / 100;
 
 	if (motor->set_rotation_sign == POSITIVE_ROTATION)
 	{
@@ -136,9 +145,9 @@ HAL_StatusTypeDef DCMotor_Brake(Motor_t *motor)
 int DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed)
 {
 	//right is faster than left
-	DCMotor_SetSpeed(&DualDrive_handle->motor_right, 0.7 * speed, POSITIVE_ROTATION);
+	DCMotor_SetSpeed(&DualDrive_handle->motor_right,  speed, POSITIVE_ROTATION);
 
-	DCMotor_SetSpeed(&DualDrive_handle->motor_left, speed, POSITIVE_ROTATION);
+	DCMotor_SetSpeed(&DualDrive_handle->motor_left, 0.8 * speed, POSITIVE_ROTATION);
 
 }
 
@@ -188,7 +197,10 @@ void DCMotor_Task(void *argument)
 {
 	DualDrive_handle_t *DualDrive_handle = (DualDrive_handle_t*) argument;
 	DCMotor_Init(DualDrive_handle);
+
 	DCMotor_Forward(DualDrive_handle,0);
+
+	//DCMotor_Forward(DualDrive_handle,50);
 //	DCMotor_SetSpeed(&DualDrive_handle->motor_right, 65, POSITIVE_ROTATION);
 //	DCMotor_SetSpeed(&DualDrive_handle->motor_left, 100, POSITIVE_ROTATION);
 

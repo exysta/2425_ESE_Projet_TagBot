@@ -9,6 +9,20 @@
 #define ROBOTSTRATEGY_H_
 
 #include "main.h"
+#include "X4LIDAR_driver.h"
+
+#define MIN_OBJECT_DIST 120 //according to the datasheet the lidar has a min dist of 0.12 m = 120 mm
+#define MAX_OBJECT_DIST 10000 //max dist of 10 meters
+
+typedef struct __TARGET_HandleTypeDef{
+	uint8_t start_angle;
+	uint8_t centroid_angle;
+	uint8_t end_angle;
+	float min_distance;
+	float max_distance;
+	float avg_distance;
+}__TARGET_HandleTypeDef;
+
 
 typedef enum {
     NO_Strat = 0x00,
@@ -28,7 +42,6 @@ typedef struct __ACTION_HandleTypeDef
 typedef struct __STRATEGY_HandleTypeDef
 {
 	uint8_t id;
-	uint8_t name[2];
 	uint8_t action_id;
 	uint8_t action_nb;
 	__ACTION_HandleTypeDef action[10];
