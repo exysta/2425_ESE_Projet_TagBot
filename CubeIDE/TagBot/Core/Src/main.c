@@ -35,6 +35,7 @@
 #include "SSD1306.h"
 #include "SSD1306_fonts.h"
 #include "shell.h"
+#include "RobotStrategy.h"
 
 /* USER CODE END Includes */
 
@@ -56,8 +57,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-X4LIDAR_handle_t hlidar;
+X4LIDAR_handle_t X4LIDAR_handle;
 DualDrive_handle_t DualDrive_handle;
+__TARGET_HandleTypeDef Target_Handle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -82,8 +84,17 @@ void print_lidar_distances(h_shell_t *h_shell, int argc, char **argv)
 	for (int i = MIN_ANGLE; i < MAX_ANGLE; i++)
 	{
 		printf("%s %d: %f \r\n",
-				"angle ", i,  hlidar.scan_data.distances[i]);
+				"angle ", i,  X4LIDAR_handle.scan_data.distances[i]);
 	}
+}
+
+void print_motor_speed(h_shell_t *h_shell, int argc, char **argv)
+{
+	uint32_t speed_left = DualDrive_handle.motor_left.encoder.measured_rpm;
+	uint32_t speed_right = DualDrive_handle.motor_right.encoder.measured_rpm;
+
+	printf("speed left = %lu \r\n", speed_left);
+	printf("speed right = %lu \r\n", speed_right);
 }
 /* USER CODE END 0 */
 
@@ -175,15 +186,21 @@ int main(void)
 		SCREEN_SSD1306_Update_Screen(&hscreen1);
 	}
 	//**********************************************************
-	printf("test \r\n");
-	X4LIDAR_create_task(&hlidar);
+	//LIDAR
 
-	//X4LIDAR_init(&hlidar, &huart3);
+	X4LIDAR_create_task(&X4LIDAR_handle);
+
+	//**********************************************************
 	printf("test \r\n");
 	shell_init(&h_shell);
 	shell_add(&h_shell, "print_dist", print_lidar_distances,
 			"print lidar buffer containing scanned distances");
+	shell_add(&h_shell, "print_motor_speed", print_motor_speed,
+			"print_motor_speed");
 	shell_createShellTask(&h_shell);
+	//**********************************************************
+
+	//RobotStrategy_CreateTask();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
@@ -256,7 +273,7 @@ void SystemClock_Config(void)
 void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 {
 
-	X4LIDAR_HAL_UART_RxHalfCpltCallback(huart,&hlidar);
+	X4LIDAR_HAL_UART_RxHalfCpltCallback(huart,&X4LIDAR_handle);
 
 }
 
@@ -264,7 +281,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 
 	shell_drv_uart_HAL_UART_RxCpltCallback(huart);
-	X4LIDAR_HAL_UART_RxCpltCallback(huart,&hlidar);
+	X4LIDAR_HAL_UART_RxCpltCallback(huart,&X4LIDAR_handle);
 
 }
 

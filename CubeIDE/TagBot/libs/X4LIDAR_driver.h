@@ -151,6 +151,8 @@ typedef struct X4LIDAR_handle_t{
 
 } X4LIDAR_handle_t;
 
+extern X4LIDAR_handle_t X4LIDAR_handle;
+
 HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle,UART_HandleTypeDef *huart);
 void X4LIDAR_task(void *argument);
 HAL_StatusTypeDef X4LIDAR_create_task(X4LIDAR_handle_t *X4LIDAR_handle);

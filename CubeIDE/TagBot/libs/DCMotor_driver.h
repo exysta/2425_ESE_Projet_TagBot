@@ -12,7 +12,7 @@
 #define MOTOR_RIGHT 1
 #define MAX_PULSE 6799
 
-#define MAX_SPEED 60 //max speed in percentage for motors
+#define MAX_SPEED 100 //max speed in percentage for motors
 
 #define POSITIVE_ROTATION 0
 #define NEGATIVE_ROTATION 1
@@ -74,6 +74,8 @@ typedef struct DualDrive_handle_typed
 
 }DualDrive_handle_t;
 
+extern DualDrive_handle_t DualDrive_handle;
+
 void DCMotor_MotorInit(Motor_t *motor, TIM_HandleTypeDef motor_tim,
 		uint32_t FWD_Channel, uint32_t REV_Channel);
 void DCMotor_StartPWM(Motor_t *motor);
@@ -81,7 +83,7 @@ void DCMotor_StartPWM(Motor_t *motor);
 HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 		uint8_t rotation_sign);
 
-HAL_StatusTypeDef DCMotor_Brake(Motor_t *motor);
+void DCMotor_Brake(Motor_t *motor);
 void DCMotor_InitPWMRampTimer();
 void DCMotor_Init(DualDrive_handle_t *DualDrive_handle);
 void vRampTimerCallback(TimerHandle_t xTimer);

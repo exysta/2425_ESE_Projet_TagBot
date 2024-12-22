@@ -7,37 +7,48 @@
 
 
 #include "RobotStrategy.h"
+#include "DCMotor_driver.h"
+#include "X4LIDAR_driver.h"
+
 #include "main.h"
 #include "usart.h"
 #include "math.h"
 
 __STRATEGY_HandleTypeDef strategies[3];
 
-HAL_StatusTypeDef RobotStrategy_CreateTask(__STRATEGY_HandleTypeDef strategy)
+TaskHandle_t RobotStategy_task_handle;               // Handle for the FreeRTOS task
+StaticTask_t RobotStategy_task_tcb;                  // Static Task Control Block
+StackType_t RobotStategy_task_stack[STATEGY_STACK_SIZE]; // Static Stack for the task
+
+extern X4LIDAR_handle_t X4LIDAR_handle;
+extern DualDrive_handle_t DualDrive_handle;
+extern __TARGET_HandleTypeDef Target_Handle;
+
+
+HAL_StatusTypeDef RobotStrategy_CreateTask()
 {
-	//	// Check for null handle
-	//	if (X4LIDAR_handle == NULL)
-	//	{
-	//		return HAL_ERROR;
-	//	}
-	//
-	//	// Create the task with a static stack
-	//	X4LIDAR_handle->task_handle = xTaskCreateStatic(X4LIDAR_task, // Task function
-	//			"X4LIDAR_task",                           // Task name
-	//			LIDAR_STACK_SIZE,                    // Stack size
-	//			(void*) X4LIDAR_handle,                     // Parameters to task
-	//			LIDAR_TASK_PRIORITY,                       // Task priority
-	//			X4LIDAR_handle->task_stack,          // Stack buffer
-	//			&X4LIDAR_handle->task_tcb            // TCB buffer
-	//	);
-	//
-	//	// Check if task creation was successful
-	//	if (X4LIDAR_handle->task_handle == NULL)
-	//	{
-	//		return HAL_ERROR; // Task creation failed
-	//	}
-	//
-	//	return HAL_OK; // Task created successfully
+		// Create the task with a static stack
+	RobotStategy_task_handle = xTaskCreateStatic(RobotStrategy_Task, // Task function
+				"RobotStrategy_Task",                           // Task name
+				STATEGY_STACK_SIZE,                    // Stack size
+				NULL,                     // Parameters to task
+				STRATEGY_TASK_PRIORITY,                       // Task priority
+				RobotStategy_task_stack,          // Stack buffer
+				&RobotStategy_task_tcb            // TCB buffer
+		);
+
+		// Check if task creation was successful
+		if (RobotStategy_task_handle == NULL)
+		{
+			return HAL_ERROR; // Task creation failed
+		}
+
+		return HAL_OK; // Task created successfully
+}
+
+HAL_StatusTypeDef RobotStrategy__Init()
+{
+	return HAL_OK;
 }
 
 void RobotStrategy_InitTarget(__TARGET_HandleTypeDef * target)
@@ -81,20 +92,20 @@ HAL_StatusTypeDef RobotStrategy_IdentifyClosestObject(__TARGET_HandleTypeDef * t
 	//we copy the buffer to avoid any modifications to the distance buffer
 	float distance_buffer_copy[MAX_ANGLE];
 	float min_distance = MAX_OBJECT_DIST;
-	memcpy(distance_buffer_copy,X4LIDAR_handle->scan_data->distances
+	memcpy(distance_buffer_copy,X4LIDAR_handle->scan_data.distances
 			, MAX_ANGLE * sizeof(float));
 	uint16_t angle_with_min_distance;
     for (uint16_t angle = 0; angle < MAX_ANGLE; angle++)
     {
         if (distance_buffer_copy[angle] > MIN_OBJECT_DIST && distance_buffer_copy[angle] < min_distance)
         {
-            min_distance = distances[angle];
+            min_distance = distance_buffer_copy[angle];
             angle_with_min_distance = angle;
         }
     }
     // we determine the end angle
     uint16_t compare_angle = angle_with_min_distance == MAX_ANGLE - 1 ? 0 : angle_with_min_distance  + 1 ;
-    while(abs((int)distances[angle_with_min_distance] - (int)distances[compare_angle]) < OBJECT_DIST_THRESHOLD )
+    while(abs((int)distance_buffer_copy[angle_with_min_distance] - (int)distance_buffer_copy[compare_angle]) < OBJECT_DIST_THRESHOLD )
     {
     	compare_angle = angle_with_min_distance == MAX_ANGLE - 1 ? 0 : angle_with_min_distance;
     	compare_angle++;
@@ -102,9 +113,9 @@ HAL_StatusTypeDef RobotStrategy_IdentifyClosestObject(__TARGET_HandleTypeDef * t
     target->end_angle = compare_angle;
     // we determine the start angle
     compare_angle = angle_with_min_distance == 0 ? MAX_ANGLE : angle_with_min_distance  - 1 ;
-    while(abs((int)distances[angle_with_min_distance] - (int)distances[compare_angle]) < OBJECT_DIST_THRESHOLD )
+    while(abs((int)distance_buffer_copy[angle_with_min_distance] - (int)distance_buffer_copy[compare_angle]) < OBJECT_DIST_THRESHOLD )
     {
-    	compare_angle = angle_with_min_distance == 0 ? MAX_ANGLE : angle_with_min_distance1;
+    	compare_angle = angle_with_min_distance == 0 ? MAX_ANGLE : angle_with_min_distance;
     	compare_angle--;
     }
     target->start_angle = compare_angle;
@@ -115,7 +126,7 @@ HAL_StatusTypeDef RobotStrategy_IdentifyClosestObject(__TARGET_HandleTypeDef * t
 
 //function to asserv the robot to the point toward the target
 //should be called after RobotStrategy_IdentifyClosestObject determined the target to track
-static uint16_t RobotStrategy_CalculateAngleError(__TARGET_HandleTypeDef * target,X4LIDAR_handle_t *X4LIDAR_handle)
+static uint16_t RobotStrategy_CalculateAngleError(__TARGET_HandleTypeDef * target)
 {
 	uint16_t angle_error;
 	// target is to the left of the robot if condition is met
@@ -128,24 +139,40 @@ static uint16_t RobotStrategy_CalculateAngleError(__TARGET_HandleTypeDef * targe
 	{
 		angle_error = target->centroid_angle;
 	}
+	target->angle_error = angle_error;
     return HAL_OK;
 }
 
 //calculate motors speed in differential driving to track target
-HAL_StatusTypeDef RobotStrategy_CalculateMotorSpeed(__TARGET_HandleTypeDef * target,X4LIDAR_handle_t *X4LIDAR_handle)
+HAL_StatusTypeDef RobotStrategy_CalculateMotorSpeed(__TARGET_HandleTypeDef * target,DualDrive_handle_t * DualDrive_handle)
 {
-	uint16_t angle_error = RobotStrategy_CalculateAngleError(target,X4LIDAR_handle);
-
+	RobotStrategy_CalculateAngleError(target);
+	uint16_t angle_error = target->angle_error;
+	//base speed in %
+	uint8_t base_speed = 60;
 	// Proportional control for speed difference
-	float speed_difference = KP * angle_error;
+	// with KP = 0.138, max(speed_difference = 24.84 = 25 with quantization round up of 0.5
+	uint8_t speed_difference = (KP * angle_error) + 0.5;
 
 	// Compute motor speeds
-	*left_motor_speed = base_speed - speed_difference;
-	*right_motor_speed = base_speed + speed_difference;
+	uint8_t left_speed = base_speed - speed_difference;
+	uint8_t right_speed = base_speed + speed_difference;
 
-	// Clamp speeds to 0-100%
-	if (*left_motor_speed < 0) *left_motor_speed = 0;
-	if (*left_motor_speed > MAX_SPEED) *left_motor_speed = MAX_SPEED;
-	if (*right_motor_speed < 0) *right_motor_speed = 0;
-	if (*right_motor_speed > MAX_SPEED) *right_motor_speed = MAX_SPEED;
+	DCMotor_SetSpeed(&DualDrive_handle ->motor_left, left_speed, POSITIVE_ROTATION);
+	DCMotor_SetSpeed(&DualDrive_handle ->motor_right, right_speed * 0.85, POSITIVE_ROTATION);
+	return HAL_OK;
+}
+
+
+void RobotStrategy_Task(void *argument)
+{
+	RobotStrategy_InitTarget(&Target_Handle);
+	for (;;)
+	{
+
+		RobotStrategy_IdentifyClosestObject(&Target_Handle, &X4LIDAR_handle);
+		RobotStrategy_CalculateMotorSpeed(&Target_Handle,&DualDrive_handle);
+		vTaskDelay(pdMS_TO_TICKS(100));
+
+	}
 }

@@ -18,7 +18,6 @@ static StackType_t DCMotor_task_stack[TASK_MOTOR_STACK_DEPTH];
 /** @brief TCB (Task Control Block) for the shell task. */
 static StaticTask_t DCMotor_task_tcb;
 
-extern DualDrive_handle_t DualDrive_handle;
 
 //single motor init
 void DCMotor_MotorInit(Motor_t *motor, TIM_HandleTypeDef motor_tim,
@@ -134,7 +133,7 @@ HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 }
 
 //brake the motor
-HAL_StatusTypeDef DCMotor_Brake(Motor_t *motor)
+void DCMotor_Brake(Motor_t *motor)
 {
 	motor->FWD_target_pulse = MAX_PULSE;
 	motor->REV_target_pulse = MAX_PULSE;
@@ -145,9 +144,9 @@ HAL_StatusTypeDef DCMotor_Brake(Motor_t *motor)
 int DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed)
 {
 	//right is faster than left
-	DCMotor_SetSpeed(&DualDrive_handle->motor_right,  speed, POSITIVE_ROTATION);
+	DCMotor_SetSpeed(&DualDrive_handle->motor_right, speed * 0.85, POSITIVE_ROTATION);
 
-	DCMotor_SetSpeed(&DualDrive_handle->motor_left, 0.8 * speed, POSITIVE_ROTATION);
+	DCMotor_SetSpeed(&DualDrive_handle->motor_left,  speed, POSITIVE_ROTATION);
 
 }
 
@@ -180,7 +179,7 @@ void DCMotor_MeasureMotorSpeed(Motor_t *motor)
 	uint16_t motor_pulses_per_second = delta_count * (1000 / ASSERV_TIMER_PERIOD);
 
 	// Calculate speed (RPM)
-	motor->encoder.measured_rpm = (motor_pulses_per_second / MOTOR_PPR) * 60 /3;
+	motor->encoder.measured_rpm = (motor_pulses_per_second / MOTOR_PPR) * 60 / 4;
 
 	// ------------------ Update Previous Counts ------------------
 	motor->encoder.previous_count = current_count;
@@ -197,15 +196,19 @@ void DCMotor_Task(void *argument)
 {
 	DualDrive_handle_t *DualDrive_handle = (DualDrive_handle_t*) argument;
 	DCMotor_Init(DualDrive_handle);
+	//DCMotor_SetSpeed(&DualDrive_handle->motor_right, 65, POSITIVE_ROTATION);
+
+	DCMotor_Forward(DualDrive_handle,70);
+	vTaskDelay(15000);
 
 	DCMotor_Forward(DualDrive_handle,0);
 
 	//DCMotor_Forward(DualDrive_handle,50);
-//	DCMotor_SetSpeed(&DualDrive_handle->motor_right, 65, POSITIVE_ROTATION);
 //	DCMotor_SetSpeed(&DualDrive_handle->motor_left, 100, POSITIVE_ROTATION);
 
 	for (;;)
 	{
+		DCMotor_MeasureBothSpeed(DualDrive_handle);
 		vTaskDelay(10);
 	}
 }

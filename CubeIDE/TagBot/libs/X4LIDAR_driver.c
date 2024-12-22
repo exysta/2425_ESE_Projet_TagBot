@@ -11,7 +11,7 @@
 #include "X4LIDAR_driver.h"
 #include <math.h>   // For atan function
 
-#define PRINT_DEBUG
+//#define PRINT_DEBUG
 
 #define CONSTANT_1 21.8f  // Precompute the constant
 #define CONSTANT_2 155.3f // Precompute the divisor constant

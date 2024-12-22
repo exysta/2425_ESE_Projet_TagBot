@@ -20,10 +20,17 @@
 // to be adjusted experimentally
 #define KP 0.138f
 
+
+#define STATEGY_STACK_SIZE 256
+#define STRATEGY_TASK_PRIORITY 2
+
 typedef struct __TARGET_HandleTypeDef{
 	uint16_t start_angle;
 	uint16_t centroid_angle;
 	uint16_t end_angle;
+	// difference in ° between robot forward direction and the object centroid angle
+	//ideally it should be 0
+	uint16_t angle_error;
 	float min_distance;
 	float max_distance;
 	float avg_distance;
@@ -55,7 +62,10 @@ typedef struct __STRATEGY_HandleTypeDef
 
 extern __STRATEGY_HandleTypeDef actual_strategy;
 
-void STRATEGY_Init(void);
-void STRATEGY_Update(void);
-void STRATEGY_Refresh(uint32_t time, uint8_t object_detected, uint8_t is_started);
+//void STRATEGY_Init(void);
+//void STRATEGY_Update(void);
+//void STRATEGY_Refresh(uint32_t time, uint8_t object_detected, uint8_t is_started);
+HAL_StatusTypeDef RobotStrategy_CreateTask();
+void RobotStrategy_Task(void *argument);
+
 #endif /* ROBOTSTRATEGY_H_ */
