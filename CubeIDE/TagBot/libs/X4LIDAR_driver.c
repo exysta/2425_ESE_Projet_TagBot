@@ -398,7 +398,7 @@ void X4LIDAR_task(void *argument)
 		}
 
 
-		vTaskDelay(pdMS_TO_TICKS(100));
+		vTaskDelay(pdMS_TO_TICKS(20));
 
 	}
 }

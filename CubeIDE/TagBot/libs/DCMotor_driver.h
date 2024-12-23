@@ -18,9 +18,9 @@
 #define NEGATIVE_ROTATION 1
 
 
-#define TASK_MOTOR_STACK_DEPTH 64
-#define TASK_MOTOR_PRIORITY 3
-#define TASK_TIMER_PRIORITY 2 // the freertos timer priority
+#define TASK_MOTOR_STACK_DEPTH 256
+#define TASK_MOTOR_PRIORITY 11
+#define TASK_TIMER_PRIORITY 2 // the freertos timer priority, to be changed in ioc or .h
 
 #define ENCODER_TIMER_MAX_COUNT 65535
 
@@ -28,12 +28,13 @@
 
 #define ASSERV_TIMER_PERIOD 10 // period in ms for the callback asserv
 
+#define MAGIC_MOTOR_RATIO 0.8f // the right motor speed = 0.8 * left motor speed
+
 #include "tim.h"
 #include <string.h>
 #include <stdio.h>
 #include "FreeRTOS.h"
 #include "task.h"
-#include "timers.h"
 
 typedef struct Encoder_typedef
 {
@@ -58,7 +59,6 @@ typedef struct Motor_typedef
     uint16_t FWD_current_pulse;
     uint16_t REV_current_pulse;
     Encoder_t encoder;
-    TimerHandle_t xTimer;
 }Motor_t;
 
 //contains both motors
@@ -69,7 +69,6 @@ typedef struct DualDrive_handle_typed
 	//a pointer set for the ramp timer
 	Motor_t * current_motor;
 	//to ramp up and down the motors pwm
-	TimerHandle_t dual_drive_timer;
     TaskHandle_t h_task;
 
 }DualDrive_handle_t;
@@ -82,11 +81,10 @@ void DCMotor_StartPWM(Motor_t *motor);
 
 HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 		uint8_t rotation_sign);
-
+int DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed);
 void DCMotor_Brake(Motor_t *motor);
-void DCMotor_InitPWMRampTimer();
 void DCMotor_Init(DualDrive_handle_t *DualDrive_handle);
-void vRampTimerCallback(TimerHandle_t xTimer);
 int DCMotor_CreateTask(DualDrive_handle_t *DualDrive_handle);
+void DCMotor_PulseRamp(Motor_t * motor);
 
 #endif /* DCMOTOR_DRIVER_H_ */

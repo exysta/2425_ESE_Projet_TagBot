@@ -30,6 +30,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_hal.h"
+#include "semphr.h"
 #include "X4LIDAR_driver.h"
 #include "DCMotor_driver.h"
 #include "SSD1306.h"
@@ -60,6 +61,8 @@
 X4LIDAR_handle_t X4LIDAR_handle;
 DualDrive_handle_t DualDrive_handle;
 __TARGET_HandleTypeDef Target_Handle;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,6 +98,13 @@ void print_motor_speed(h_shell_t *h_shell, int argc, char **argv)
 
 	printf("speed left = %lu \r\n", speed_left);
 	printf("speed right = %lu \r\n", speed_right);
+}
+
+
+
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
+{
+	Error_Handler();
 }
 /* USER CODE END 0 */
 
@@ -175,6 +185,7 @@ int main(void)
 //	DCMotor_Init(&DualDrive_handle);
 //	DCMotor_SetSpeed(&DualDrive_handle.motor_right, 60, POSITIVE_ROTATION);
 
+	//**********************************************************
 	DCMotor_CreateTask(&DualDrive_handle);
 
 	//**********************************************************
@@ -199,8 +210,9 @@ int main(void)
 			"print_motor_speed");
 	shell_createShellTask(&h_shell);
 	//**********************************************************
+	RobotStrategy_CreateTask();
+	//HAL_Delay(20000);
 
-	//RobotStrategy_CreateTask();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */

@@ -20,9 +20,17 @@
 // to be adjusted experimentally
 #define KP 0.138f
 
+#define MEDIAN_FILTER_WINDOW_SIZE 3
 
-#define STATEGY_STACK_SIZE 256
-#define STRATEGY_TASK_PRIORITY 2
+#define STATEGY_STACK_SIZE 1024
+#define STRATEGY_TASK_PRIORITY 10
+
+typedef enum {
+    LEFT = 0x00,
+	RIGHT = 0x01,
+	FORWARD = 0x03,
+	BACKWARD = 0x04,
+} DIRECTION_Enum;
 
 typedef struct __TARGET_HandleTypeDef{
 	uint16_t start_angle;
@@ -31,9 +39,14 @@ typedef struct __TARGET_HandleTypeDef{
 	// difference in ° between robot forward direction and the object centroid angle
 	//ideally it should be 0
 	uint16_t angle_error;
-	float min_distance;
-	float max_distance;
-	float avg_distance;
+	uint16_t min_distance;
+	uint16_t max_distance;
+	uint16_t avg_distance;
+
+	DIRECTION_Enum direction;
+
+	uint16_t old_centroid_angle;
+
 }__TARGET_HandleTypeDef;
 
 
@@ -67,5 +80,7 @@ extern __STRATEGY_HandleTypeDef actual_strategy;
 //void STRATEGY_Refresh(uint32_t time, uint8_t object_detected, uint8_t is_started);
 HAL_StatusTypeDef RobotStrategy_CreateTask();
 void RobotStrategy_Task(void *argument);
+void RobotStrategy_MedianFilter(float unfiltered_buffer[MAX_ANGLE], int filtered_buffer[MAX_ANGLE]);
+int RobotStrategy_CalculateMedian(int *values, int size);
 
 #endif /* ROBOTSTRATEGY_H_ */
