@@ -192,15 +192,16 @@ HAL_StatusTypeDef RobotStrategy_CalculateMotorSpeed(__TARGET_HandleTypeDef * tar
 	}
 	// Compute motor speeds
 
+	        //xTaskNotifyGive(DualDrive_handle->h_task);
 
-	if(	target->old_centroid_angle != target->centroid_angle)
-	{
-
-		DCMotor_SetSpeed(&DualDrive_handle ->motor_left, left_speed, POSITIVE_ROTATION);
-		DCMotor_SetSpeed(&DualDrive_handle ->motor_right, right_speed * MAGIC_MOTOR_RATIO, POSITIVE_ROTATION);
-        xTaskNotifyGive(DualDrive_handle->h_task);
-
-	}
+//	if(	target->old_centroid_angle != target->centroid_angle)
+//	{
+//
+//		DCMotor_SetSpeed(&DualDrive_handle ->motor_left, left_speed, POSITIVE_ROTATION);
+//		DCMotor_SetSpeed(&DualDrive_handle ->motor_right, right_speed * MAGIC_MOTOR_RATIO, POSITIVE_ROTATION);
+//        xTaskNotifyGive(DualDrive_handle->h_task);
+//
+//	}
 
 
 #ifdef PRINT_DEBUG

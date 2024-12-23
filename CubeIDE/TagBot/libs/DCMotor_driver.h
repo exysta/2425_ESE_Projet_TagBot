@@ -26,9 +26,14 @@
 
 #define MOTOR_PPR 224.4f
 
-#define ASSERV_TIMER_PERIOD 10 // period in ms for the callback asserv
+#define ENCODER_CALLBACK_FREQUENCY 2 //freq in HZ for the callback of encoder
 
 #define MAGIC_MOTOR_RATIO 0.8f // the right motor speed = 0.8 * left motor speed
+
+#define PID_Kp 0.904f
+#define PID_Ki 326.0f
+#define PID_Kd 0.000585f
+
 
 #include "tim.h"
 #include <string.h>
@@ -46,6 +51,14 @@ typedef struct Encoder_typedef
 
 }Encoder_t;
 
+// PID Controller Structure
+typedef struct {
+    float Kp;
+    float Ki;
+    float Kd;
+    float previous_error;
+    float integral;
+} PID_HandleTypeDef;
 
 typedef struct Motor_typedef
 {
@@ -59,6 +72,8 @@ typedef struct Motor_typedef
     uint16_t FWD_current_pulse;
     uint16_t REV_current_pulse;
     Encoder_t encoder;
+    PID_HandleTypeDef PID_handle;
+
 }Motor_t;
 
 //contains both motors
@@ -70,6 +85,8 @@ typedef struct DualDrive_handle_typed
 	Motor_t * current_motor;
 	//to ramp up and down the motors pwm
     TaskHandle_t h_task;
+    //callback timer  2 Hz to measure motor speed
+    TIM_HandleTypeDef * tim_enocder_synch;
 
 }DualDrive_handle_t;
 
@@ -83,8 +100,8 @@ HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 		uint8_t rotation_sign);
 int DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed);
 void DCMotor_Brake(Motor_t *motor);
-void DCMotor_Init(DualDrive_handle_t *DualDrive_handle);
+void DCMotor_Init(DualDrive_handle_t *DualDrive_handle,TIM_HandleTypeDef *tim_enocder_synch);
 int DCMotor_CreateTask(DualDrive_handle_t *DualDrive_handle);
 void DCMotor_PulseRamp(Motor_t * motor);
-
+void DCMotor_EncoderCallback(TIM_HandleTypeDef * tim, DualDrive_handle_t *DualDrive_handle);
 #endif /* DCMOTOR_DRIVER_H_ */

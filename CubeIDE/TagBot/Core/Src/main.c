@@ -149,6 +149,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   MX_TIM6_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
 
 	//**********************************************************
@@ -320,6 +321,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+	  DCMotor_EncoderCallback(htim ,&DualDrive_handle);
+
 
   /* USER CODE END Callback 1 */
 }
