@@ -191,13 +191,13 @@ int main(void)
 
 	//**********************************************************
 	// Init SCREEN OLED
-	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
-	{
-		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
-		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
-		SCREEN_SSD1306_Update_Screen(&hscreen1);
-	}
-	//**********************************************************
+//	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
+//	{
+//		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
+//		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
+//		SCREEN_SSD1306_Update_Screen(&hscreen1);
+//	}
+//	//**********************************************************
 	//LIDAR
 
 	X4LIDAR_create_task(&X4LIDAR_handle);

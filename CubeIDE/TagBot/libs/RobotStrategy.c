@@ -171,7 +171,7 @@ HAL_StatusTypeDef RobotStrategy_CalculateMotorSpeed(__TARGET_HandleTypeDef * tar
 	RobotStrategy_CalculateAngleError(target);
 	uint16_t angle_error = target->angle_error;
 	//base speed in %
-	uint8_t base_speed = 50;
+	uint8_t base_speed = 70;
 	// Proportional control for speed difference
 	// with KP = 0.138, max(speed_difference = 24.84 = 25 with quantization round up of 0.5
 	//uint8_t speed_difference = (KP * angle_error) + 0.5;
@@ -192,24 +192,23 @@ HAL_StatusTypeDef RobotStrategy_CalculateMotorSpeed(__TARGET_HandleTypeDef * tar
 	}
 	// Compute motor speeds
 
-	        //xTaskNotifyGive(DualDrive_handle->h_task);
+	if(	target->old_centroid_angle != target->centroid_angle)
+	{
 
-//	if(	target->old_centroid_angle != target->centroid_angle)
-//	{
-//
-//		DCMotor_SetSpeed(&DualDrive_handle ->motor_left, left_speed, POSITIVE_ROTATION);
-//		DCMotor_SetSpeed(&DualDrive_handle ->motor_right, right_speed * MAGIC_MOTOR_RATIO, POSITIVE_ROTATION);
-//        xTaskNotifyGive(DualDrive_handle->h_task);
-//
-//	}
+
+		DCMotor_SetSpeed(&DualDrive_handle ->motor_left, left_speed, POSITIVE_ROTATION);
+		DCMotor_SetSpeed(&DualDrive_handle ->motor_right, right_speed, POSITIVE_ROTATION);
+        xTaskNotifyGive(DualDrive_handle->h_task);
+
+	}
 
 
 #ifdef PRINT_DEBUG
 	printf("start angle = %d , dist = %d\r\n\ ",target->start_angle,target->min_distance);
 	printf("centroid angle = %d , dist = %d\r\n ",target->centroid_angle,target->avg_distance);
 	printf("end angle = %d , dist = %d\r\n ",target->end_angle,target->max_distance);
-	printf("left speed = %d\r\n",DualDrive_handle ->motor_left.encoder.measured_rpm);
-	printf("right speed = %d\r\n",DualDrive_handle ->motor_right.encoder.measured_rpm);
+	printf("left measured speed = %lu,left set speed = %lu \r\n",DualDrive_handle ->motor_left.encoder.measured_rpm,DualDrive_handle->motor_left.set_rpm);
+	printf("right measured speed = %lu right set speed = %lu\r\n",DualDrive_handle ->motor_right.encoder.measured_rpm,DualDrive_handle->motor_right.set_rpm);
 	printf("-----------------------\r\n");
 
 #endif

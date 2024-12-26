@@ -34,6 +34,9 @@
 #define PID_Ki 326.0f
 #define PID_Kd 0.000585f
 
+#define MAX_SPEED_LEFT 355 // measured max rpm
+#define MAX_SPEED_RIGHT 447
+
 
 #include "tim.h"
 #include <string.h>
@@ -51,14 +54,7 @@ typedef struct Encoder_typedef
 
 }Encoder_t;
 
-// PID Controller Structure
-typedef struct {
-    float Kp;
-    float Ki;
-    float Kd;
-    float previous_error;
-    float integral;
-} PID_HandleTypeDef;
+
 
 typedef struct Motor_typedef
 {
@@ -72,8 +68,7 @@ typedef struct Motor_typedef
     uint16_t FWD_current_pulse;
     uint16_t REV_current_pulse;
     Encoder_t encoder;
-    PID_HandleTypeDef PID_handle;
-
+    uint16_t max_speed;
 }Motor_t;
 
 //contains both motors
@@ -93,7 +88,7 @@ typedef struct DualDrive_handle_typed
 extern DualDrive_handle_t DualDrive_handle;
 
 void DCMotor_MotorInit(Motor_t *motor, TIM_HandleTypeDef motor_tim,
-		uint32_t FWD_Channel, uint32_t REV_Channel);
+		uint32_t FWD_Channel, uint32_t REV_Channel,uint16_t max_speed);
 void DCMotor_StartPWM(Motor_t *motor);
 
 HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,

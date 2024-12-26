@@ -21,7 +21,7 @@ static StaticTask_t DCMotor_task_tcb;
 
 //single motor init
 void DCMotor_MotorInit(Motor_t *motor, TIM_HandleTypeDef motor_tim,
-		uint32_t FWD_Channel, uint32_t REV_Channel)
+		uint32_t FWD_Channel, uint32_t REV_Channel,uint16_t max_speed)
 {
 	motor->motor_timer = motor_tim;
 	motor->FWD_Channel = FWD_Channel;
@@ -30,6 +30,8 @@ void DCMotor_MotorInit(Motor_t *motor, TIM_HandleTypeDef motor_tim,
 	motor->FWD_target_pulse = 0;
 	motor->REV_current_pulse = 0;
 	motor->REV_target_pulse = 0;
+	motor->max_speed = max_speed;
+
 }
 
 void DCMotor_EncoderInit(Motor_t *motor, TIM_HandleTypeDef motor_tim)
@@ -44,15 +46,7 @@ void DCMotor_EncoderInit(Motor_t *motor, TIM_HandleTypeDef motor_tim)
 
 }
 
-void DCMotor_PIDInit(Motor_t *motor )
-{
-	motor->PID_handle.Kp = PID_Kp;
-	motor->PID_handle.Ki = PID_Ki;
-	motor->PID_handle.Kd = PID_Kd;
-	motor->PID_handle.integral = 0;
-	motor->PID_handle.previous_error = 0;
 
-}
 void DCMotor_StartPWM(Motor_t *motor)
 {
 	// Set the PWM values using the motor_timer
@@ -68,9 +62,9 @@ void DCMotor_StartPWM(Motor_t *motor)
 void DCMotor_Init(DualDrive_handle_t *DualDrive_handle, TIM_HandleTypeDef *tim_enocder_synch)
 {
 	DCMotor_MotorInit(&DualDrive_handle->motor_right, htim1, TIM_CHANNEL_2,
-	TIM_CHANNEL_1);
+	TIM_CHANNEL_1,MAX_SPEED_RIGHT);
 	DCMotor_MotorInit(&DualDrive_handle->motor_left, htim1, TIM_CHANNEL_4,
-	TIM_CHANNEL_3);
+	TIM_CHANNEL_3,MAX_SPEED_LEFT);
 	DCMotor_EncoderInit(&DualDrive_handle->motor_right, htim3);
 	DCMotor_EncoderInit(&DualDrive_handle->motor_left, htim4);
 
@@ -78,57 +72,9 @@ void DCMotor_Init(DualDrive_handle_t *DualDrive_handle, TIM_HandleTypeDef *tim_e
 	DCMotor_StartPWM(&DualDrive_handle->motor_right);
 	DCMotor_StartPWM(&DualDrive_handle->motor_left);
 
-	DCMotor_PIDInit(&DualDrive_handle->motor_right);
-	DCMotor_PIDInit(&DualDrive_handle->motor_left);
-
 	DualDrive_handle->tim_enocder_synch = tim_enocder_synch;
 	HAL_TIM_Base_Start_IT(tim_enocder_synch);
 
-}
-
-// Function to calculate PID output
-float DCMotor_PIDCompute(PID_HandleTypeDef *pid, float setpoint, float measured, float dt) {
-    float error = setpoint - measured;
-
-    // Proportional term
-    float proportional = pid->Kp * error;
-
-    // Integral term
-    pid->integral += error * dt;
-    float integral = pid->Ki * pid->integral;
-
-    // Derivative term
-    float derivative = pid->Kd * (error - pid->previous_error) / dt;
-
-    // Save error for next computation
-    pid->previous_error = error;
-
-    // Return the PID output
-    return proportional + integral + derivative;
-}
-
-void DCMotor_PulsePID(Motor_t *motor, PID_HandleTypeDef *pid, float setpoint_speed, float measured_speed, float dt)
-{
-    // Calculate the PID output for the forward pulse
-    float pid_output = DCMotor_PIDCompute(pid, setpoint_speed, measured_speed, dt);
-
-    // Convert the PID output to a suitable PWM pulse width
-    // Assuming the PID output is scaled to the range of [0, MAX_PWM] where MAX_PWM is the max allowable pulse width
-    int16_t pwm_pulse = (int16_t)pid_output;
-
-    // Clamp the PWM pulse to the allowable range
-    if (pwm_pulse > MAX_PWM) {
-        pwm_pulse = MAX_PWM;
-    } else if (pwm_pulse < 0) {
-        pwm_pulse = 0; // Avoid reverse PWM pulse here, assuming forward-only control
-    }
-
-    // Update the PWM duty cycle
-    motor->FWD_current_pulse = pwm_pulse;
-    __HAL_TIM_SET_COMPARE(&motor->motor_timer, motor->FWD_Channel, motor->FWD_current_pulse);
-
-    // If reverse is needed, similar logic can be applied for REV_channel
-    // For now, we assume unidirectional control
 }
 
 //speed should be bewteen 0-100 for percentage of max speed
@@ -142,9 +88,12 @@ HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 		return HAL_ERROR;
 	}
 	uint16_t pulse;
-	if (speed <= MAX_SPEED)
+	uint16_t normalized_speed = speed;
+	//uint16_t normalized_speed = speed * MAX_SPEED_LEFT/motor->max_speed;
+
+	if (normalized_speed <= MAX_SPEED)
 	{
-		pulse = MAX_PULSE * speed / 100;
+		pulse = MAX_PULSE * normalized_speed / 100;
 	}
 	else
 	{
@@ -152,7 +101,6 @@ HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 
 	}
 
-	motor->set_rpm = speed;
 	motor->set_rotation_sign = rotation_sign;
 
 	if (motor->set_rotation_sign == POSITIVE_ROTATION)
@@ -165,11 +113,8 @@ HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 		motor->FWD_target_pulse = 0;
 		motor->REV_target_pulse = pulse;
 	}
-	motor->FWD_current_pulse = 0;
-	motor->REV_current_pulse = 0;
 
-	DualDrive_handle.current_motor = motor;
-
+	motor->set_rpm = normalized_speed * motor->max_speed /100;
 	return HAL_OK;
 }
 
@@ -254,28 +199,24 @@ void DCMotor_Task(void *argument)
 	DCMotor_SetSpeed(&DualDrive_handle ->motor_right, 100, POSITIVE_ROTATION);
 	for (;;)
 	{
-		//ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
-        // Update motor PWM using PID
-        DCMotor_PulsePID(&DualDrive_handle->motor_left, &DualDrive_handle->motor_left.pid, setpoint_left, measured_left, 0.02);
-        DCMotor_PulsePID(&DualDrive_handle->motor_right, &DualDrive_handle->motor_right.pid, setpoint_right, measured_right, 0.02);
-        vTaskDelay(pdMS_TO_TICKS(20)); // 10ms delay
 
-//		while ((DualDrive_handle->motor_left.FWD_current_pulse
-//				!= DualDrive_handle->motor_left.FWD_target_pulse)
-//				&& (DualDrive_handle->motor_right.FWD_current_pulse
-//						!= DualDrive_handle->motor_right.FWD_target_pulse))
-//		{
-//		DCMotor_PulseRamp(&DualDrive_handle->motor_left);
-//		DCMotor_PulseRamp(&DualDrive_handle->motor_right);
-//#ifdef PRINT_DEBUG
-////		printf("left speed : %d\r\n",
-////				DualDrive_handle->motor_left.encoder.measured_rpm);
-////		printf("right speed : %d\r\n",
-////				DualDrive_handle->motor_right.encoder.measured_rpm);
-//#endif
-//		vTaskDelay(10);
-//		}
+		while ((DualDrive_handle->motor_left.FWD_current_pulse
+				!= DualDrive_handle->motor_left.FWD_target_pulse)
+				|| (DualDrive_handle->motor_right.FWD_current_pulse
+						!= DualDrive_handle->motor_right.FWD_target_pulse))
+		{
+		DCMotor_PulseRamp(&DualDrive_handle->motor_left);
+		DCMotor_PulseRamp(&DualDrive_handle->motor_right);
+#ifdef PRINT_DEBUG
+//		printf("left speed : %d\r\n",
+//				DualDrive_handle->motor_left.encoder.measured_rpm);
+//		printf("right speed : %d\r\n",
+//				DualDrive_handle->motor_right.encoder.measured_rpm);
+#endif
+		vTaskDelay(20);
+		}
 
 	}
 
@@ -319,7 +260,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	// Ramp the forward pulse
 	if (motor->FWD_current_pulse < motor->FWD_target_pulse)
 	{
-		motor->FWD_current_pulse += 500; // Increment by 250 (adjust the step size as needed)
+		motor->FWD_current_pulse += 250; // Increment by 250 (adjust the step size as needed)
 		if (motor->FWD_current_pulse > motor->FWD_target_pulse)
 		{
 			motor->FWD_current_pulse = motor->FWD_target_pulse; // Clamp to target
@@ -327,7 +268,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	}
 	else if (motor->FWD_current_pulse > motor->FWD_target_pulse)
 	{
-		motor->FWD_current_pulse -= 500;  // Decrement by 250
+		motor->FWD_current_pulse -= 250;  // Decrement by 250
 		if (motor->FWD_current_pulse < motor->FWD_target_pulse)
 		{
 			motor->FWD_current_pulse = motor->FWD_target_pulse; // Clamp to target
@@ -337,7 +278,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	// Ramp the reverse pulse
 	if (motor->REV_current_pulse < motor->REV_target_pulse)
 	{
-		motor->REV_current_pulse += 500;
+		motor->REV_current_pulse += 250;
 		if (motor->REV_current_pulse > motor->REV_target_pulse)
 		{
 			motor->REV_current_pulse = motor->REV_target_pulse;
@@ -345,7 +286,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	}
 	else if (motor->REV_current_pulse > motor->REV_target_pulse)
 	{
-		motor->REV_current_pulse -= 500;
+		motor->REV_current_pulse -= 250;
 		if (motor->REV_current_pulse < motor->REV_target_pulse)
 		{
 			motor->REV_current_pulse = motor->REV_target_pulse;
