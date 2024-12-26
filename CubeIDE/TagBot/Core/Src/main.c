@@ -36,8 +36,6 @@
 #include <string.h>
 #include "distSensor_driver.h"
 #include "ADXL343_driver.h"
-#include "X4LIDAR_driver.h"
-#include "DCMotor_driver.h"
 #include "shell.h"
 
 /* USER CODE END Includes */
@@ -60,8 +58,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-X4LIDAR_handle_t hlidar;
-DualDrive_handle_t DualDrive_handle;
 
 /* USER CODE END PV */
 
@@ -80,13 +76,7 @@ int __io_putchar(int chr)
 	return chr;
 }
 
-void print_lidar_distances(h_shell_t *h_shell, int argc, char **argv)
-{
-	for (int i = MIN_ANGLE; i < MAX_ANGLE; i++)
-	{
-		printf("%s %d: %d \r\n", "angle ", i, hlidar.scan_data.distances[i]);
-	}
-}
+
 
 /* USER CODE END 0 */
 
@@ -143,7 +133,7 @@ int main(void)
 	printf("|_____________________________|\r\n");
 
 	/* Ce code initialise l'adc en dma*/
-	distSensor_initADC_DMA();
+	distSensor_TaskCreate(NULL);
 	printf("Démarrage du test des capteurs de distance...\r\n");
 
 
@@ -152,14 +142,6 @@ int main(void)
 	while(1 == ADXL343_Init()) {}
 	ADXL343_Configure();
 
-	DCMotor_CreateTask(&DualDrive_handle);
-
-	//X4LIDAR_init(&hlidar, &huart3);
-
-	shell_init(&h_shell);
-	shell_add(&h_shell, "print_dist", print_lidar_distances,
-			"print lidar buffer containing scanned distances");
-	shell_createShellTask(&h_shell);
 
   /* USER CODE END 2 */
 
@@ -265,14 +247,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	//	ADXL343_DetectTap();
 	if(GPIO_Pin == BNT_CAT_MOUSE_Pin){
 		printf("Button pushed\r\n");
-	} else if(GPIO_Pin == Accelerometer_INT1_Pin){
-		printf("Acc Int1\r\n");
-		uint8_t tap_status;
-		ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); 		//Renvoie la valeur du registre int_source
-	} else if(GPIO_Pin == Accelerometer_INT2_Pin){
-		printf("Acc Int2\r\n");
-		uint8_t tap_status;
-		ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); 		//Renvoie la valeur du registre int_source
 	}
 }
 /* USER CODE END 4 */

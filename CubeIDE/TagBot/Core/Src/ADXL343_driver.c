@@ -17,7 +17,7 @@
 
 
 // Constants for accelerometer configuration
-#define TAP_THRESHOLD 0x60 											// Tapping threshold 2g -> 0x20, 6g -> 0x60, 8g -> 0x80, 16g -> 0xFF
+#define TAP_THRESHOLD 0x20											// Tapping threshold 2g -> 0x20, 6g -> 0x60, 8g -> 0x80, 16g -> 0xFF
 #define TAP_DURATION 0x10 											// Tapping duration 10ms
 #define TAP_LATENT 0xC8 											// taping latency 250ms
 
@@ -28,6 +28,7 @@ int ADXL343_Init(void) {
 	uint8_t id = 0;
 
 	// read the id of peripherique and check if is equal 0xE5
+	// doesn't work if we switch uint to int
 	ADXL343_ReadRegister(ADXL343_REG_DEVID, &id, 1);
 
 	if (id != 0xE5) {
@@ -162,14 +163,17 @@ void ADXL343_Task(void*unused )
 	for(;;)
 	{
 
-		int8_t tap_status;
+		uint8_t tap_status;
 		ADXL343_ReadRegister(ADXL343_REG_INT_SOURCE, &tap_status, 1); //Renvoie la valeur du registre int_source
 
 		if (tap_status & (1<<6)) {  // Tap for single tap
 			printf("Tap detected by Task!\r\n");
+			vTaskDelay(500);
+
 			/******* Ajouter la tache pour changer d'état********/
-			vTaskDelay(1);
 		}
+//		vTaskDelay(50	);
+
 
 	}
 

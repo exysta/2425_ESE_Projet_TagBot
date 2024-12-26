@@ -41,6 +41,11 @@ volatile uint8_t adc_ready_adc1_nord = 0;
 volatile uint8_t adc_ready_adc2_sud = 0;
 volatile uint8_t adc_ready_adc2_est = 0;
 
+DistSensor_handle_t Sens_N;
+DistSensor_handle_t Sens_S;
+DistSensor_handle_t Sens_W;
+DistSensor_handle_t Sens_E;
+
 uint32_t adc_value;
 
 uint32_t adc1_dma_buffer[ADC1_CHANNEL_COUNT]; // Buffer DMA pour ADC1
@@ -55,8 +60,6 @@ uint32_t value_sud; 				// Valeur de sud (ADC2 Channel 12)
 // function to init ADC1 and ADC2 (DMA)
 void distSensor_initADC_DMA(void)
 {
-	distSensor_TaskCreate(NULL);
-
 
 	HAL_ADC_Start_DMA(&hadc1, adc1_dma_buffer, ADC1_CHANNEL_COUNT);
 	HAL_ADC_Start_DMA(&hadc2, adc2_dma_buffer, ADC2_CHANNEL_COUNT);
@@ -64,6 +67,15 @@ void distSensor_initADC_DMA(void)
 
 
 }
+
+void distSensor_Init_Sensor(DistSensor_handle_t * sensor,DistSensor_Position_t sensor_position)
+{
+	sensor->adc_ready = DistSensor_ADC_STATUS_NO_DATA;
+	sensor->sensor_position = sensor_position;
+	sensor->sensor_detection_status = DistSensor_DETECT_FLOOR;
+	sensor->sensor_value = 0;
+}
+
 
 // Function to dread ADC (polling)
 uint32_t distSensor_ReadADC(ADC_HandleTypeDef* hadc)
@@ -76,44 +88,67 @@ uint32_t distSensor_ReadADC(ADC_HandleTypeDef* hadc)
 }
 
 // Function to read value on ADC1 and ADC2 (DMA)
-uint32_t distSensor_ReadADC_DMA(void)
+HAL_StatusTypeDef distSensor_ReadADC_DMA(void)
 {
-	value_west = adc1_dma_buffer[0];    		// Valeur de west (ADC1 Channel 5)
-	value_nord = adc1_dma_buffer[1];   			// Valeur de nord (ADC1 Channel 11)
-	value_est = adc2_dma_buffer[0];   			// Valeur de est (ADC2 Channel 15)
-	value_sud = adc2_dma_buffer[1];   			// Valeur de sud (ADC2 Channel 12)
 
-	if (adc_ready_adc1_west == 1)
+	if (Sens_W.adc_ready == DistSensor_ADC_STATUS_READY)
 	{
-		adc_ready_adc1_west = 0;
-		return value_est;
+		Sens_W.sensor_value = adc1_dma_buffer[0];    		// Valeur de west (ADC1 Channel 5)
+		if(Sens_W.sensor_value > VOID_TRESHOLD)
+		{
+			Sens_W.sensor_detection_status = DistSensor_DETECT_FLOOR;
+		}
+		else
+		{
+			Sens_W.sensor_detection_status = DistSensor_DETECT_VOID;
+		}
+		Sens_W.adc_ready = DistSensor_ADC_STATUS_NO_DATA;
 	}
 
-	else if (adc_ready_adc1_nord == 1)
+	if (Sens_N.adc_ready == DistSensor_ADC_STATUS_READY)
 	{
-		adc_ready_adc1_nord = 0;
-		return value_nord;
+		Sens_N.sensor_value = adc1_dma_buffer[1];   			// Valeur de nord (ADC1 Channel 11)
+		if(Sens_N.sensor_value > VOID_TRESHOLD)
+		{
+			Sens_N.sensor_detection_status = DistSensor_DETECT_FLOOR;
+		}
+		else
+		{
+			Sens_N.sensor_detection_status = DistSensor_DETECT_VOID;
+		}
+		Sens_N.adc_ready = DistSensor_ADC_STATUS_NO_DATA;
 	}
 
-	if (adc_ready_adc2_est == 1)
+
+
+	if (Sens_S.adc_ready == DistSensor_ADC_STATUS_READY)
 	{
-		adc_ready_adc2_est = 0;
-		return value_est;
+		Sens_S.sensor_value = adc2_dma_buffer[0];   			// Valeur de sud (ADC2 Channel 12)
+		if(Sens_S.sensor_value > VOID_TRESHOLD)
+		{
+			Sens_S.sensor_detection_status = DistSensor_DETECT_FLOOR;
+		}
+		else
+		{
+			Sens_S.sensor_detection_status = DistSensor_DETECT_VOID;
+		}
+		Sens_S.adc_ready = DistSensor_ADC_STATUS_NO_DATA;
 	}
 
-	if (adc_ready_adc2_sud == 1)
+	if (Sens_E.adc_ready == DistSensor_ADC_STATUS_READY)
 	{
-		adc_ready_adc2_sud = 0;
-		return value_sud;
+		Sens_E.sensor_value = adc2_dma_buffer[1];   			// Valeur de est (ADC2 Channel 15)
+		if(Sens_E.sensor_value > VOID_TRESHOLD)
+		{
+			Sens_E.sensor_detection_status = DistSensor_DETECT_FLOOR;
+		}
+		else
+		{
+			Sens_E.sensor_detection_status = DistSensor_DETECT_VOID;
+		}
+		Sens_E.adc_ready = DistSensor_ADC_STATUS_NO_DATA;
 	}
-
-	else{
-		return 1;
-	}
-
-
-
-
+	return HAL_OK;
 }
 
 
@@ -123,53 +158,57 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	if (hadc->Instance == ADC1)
 	{
-
-		if (value_west < 1000 )
-		{
-			adc_ready_adc1_west = 1;
-		}
-		else if (value_nord <1000)
-		{
-			adc_ready_adc1_nord = 1;
-		}
-
+		Sens_W.adc_ready = DistSensor_ADC_STATUS_READY;
+		Sens_N.adc_ready = DistSensor_ADC_STATUS_READY;
 	}
 
 	if (hadc->Instance == ADC2)
 	{
-		if (value_sud < 1000 )
-		{
-			adc_ready_adc2_sud = 1;
-		}
-		else if (value_est <1000)
-		{
-			adc_ready_adc2_est = 1;
-		}
-
+		Sens_S.adc_ready = DistSensor_ADC_STATUS_READY;
+		Sens_E.adc_ready = DistSensor_ADC_STATUS_READY;
 	}
 }
 
 
 
 //
-void distSensor_Task(void *unused){
-	for (;;){
-		uint32_t distance = distSensor_ReadADC_DMA();
+void distSensor_Task(void *unused)
+{
+	distSensor_Init_Sensor(&Sens_N, DistSensor_POSITION_NORD);
+	distSensor_Init_Sensor(&Sens_W, DistSensor_POSITION_WEST);
+	distSensor_Init_Sensor(&Sens_S, DistSensor_POSITION_SUD);
+	distSensor_Init_Sensor(&Sens_E, DistSensor_POSITION_EAST);
+	distSensor_initADC_DMA();
 
-		if (distance == 1){
-			printf("error\r\n");
-		}
-		else {
+	for (;;)
+	{
+		distSensor_ReadADC_DMA();
 
-			printf("Tache Capteur detect vide, %lu\r\n",distance );
+		if(Sens_N.sensor_detection_status == DistSensor_DETECT_VOID)
+		{
+			printf("North detect void\r\n");
 		}
+		if(Sens_W.sensor_detection_status == DistSensor_DETECT_VOID)
+		{
+			printf("West detect void\r\n");
+		}
+		if(Sens_S.sensor_detection_status == DistSensor_DETECT_VOID)
+		{
+			printf("Sud detect void\r\n");
+		}
+		if(Sens_E.sensor_detection_status == DistSensor_DETECT_VOID)
+		{
+			printf("East detect void\r\n");
+		}
+
 		vTaskDelay(100);
 
 
 	}
 }
 
-void distSensor_TaskCreate(void*unused){
+void distSensor_TaskCreate(void*unused)
+{
 	xTaskCreate(distSensor_Task, "distSensor_task", 128, NULL, 23, NULL);
 }
 
