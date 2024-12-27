@@ -12,6 +12,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define distSensor_Task_Priority 10
+
 typedef enum {
 	DistSensor_DETECT_FLOOR = 0,
 

@@ -63,7 +63,7 @@
 
 #define LIDAR_STACK_SIZE 				256
 
-#define LIDAR_TASK_PRIORITY 			8
+#define LIDAR_TASK_PRIORITY 			7
 
 #define MIN_ANGLE 			0
 #define MAX_ANGLE 			360

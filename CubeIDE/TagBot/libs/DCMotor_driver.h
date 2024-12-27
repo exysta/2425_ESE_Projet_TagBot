@@ -24,6 +24,8 @@
 
 #define ENCODER_TIMER_MAX_COUNT 65535
 
+#define PWM_TAMP_STEP 500
+
 #define MOTOR_PPR 224.4f
 
 #define ENCODER_CALLBACK_FREQUENCY 2 //freq in HZ for the callback of encoder
@@ -93,7 +95,7 @@ void DCMotor_StartPWM(Motor_t *motor);
 
 HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 		uint8_t rotation_sign);
-int DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed);
+void DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed);
 void DCMotor_Brake(Motor_t *motor);
 void DCMotor_Init(DualDrive_handle_t *DualDrive_handle,TIM_HandleTypeDef *tim_enocder_synch);
 int DCMotor_CreateTask(DualDrive_handle_t *DualDrive_handle);

@@ -125,7 +125,7 @@ void DCMotor_Brake(Motor_t *motor)
 	motor->REV_target_pulse = MAX_PULSE;
 }
 
-int DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed)
+void DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed)
 {
 	//right is faster than left
 	DCMotor_SetSpeed(&DualDrive_handle->motor_right, speed, POSITIVE_ROTATION);
@@ -200,12 +200,13 @@ void DCMotor_Task(void *argument)
 	for (;;)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-
-
-		while ((DualDrive_handle->motor_left.FWD_current_pulse
-				!= DualDrive_handle->motor_left.FWD_target_pulse)
-				|| (DualDrive_handle->motor_right.FWD_current_pulse
-						!= DualDrive_handle->motor_right.FWD_target_pulse))
+		//immonde mais ca fonctionne
+		while (
+		    (DualDrive_handle->motor_left.FWD_current_pulse != DualDrive_handle->motor_left.FWD_target_pulse ||
+		     DualDrive_handle->motor_right.FWD_current_pulse != DualDrive_handle->motor_right.FWD_target_pulse) ||
+		    (DualDrive_handle->motor_left.REV_current_pulse != DualDrive_handle->motor_left.REV_target_pulse ||
+		     DualDrive_handle->motor_right.REV_current_pulse != DualDrive_handle->motor_right.REV_target_pulse)
+		)
 		{
 		DCMotor_PulseRamp(&DualDrive_handle->motor_left);
 		DCMotor_PulseRamp(&DualDrive_handle->motor_right);
@@ -260,7 +261,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	// Ramp the forward pulse
 	if (motor->FWD_current_pulse < motor->FWD_target_pulse)
 	{
-		motor->FWD_current_pulse += 250; // Increment by 250 (adjust the step size as needed)
+		motor->FWD_current_pulse += PWM_TAMP_STEP; // Increment by PWM_TAMP_STEP (adjust the step size as needed)
 		if (motor->FWD_current_pulse > motor->FWD_target_pulse)
 		{
 			motor->FWD_current_pulse = motor->FWD_target_pulse; // Clamp to target
@@ -268,7 +269,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	}
 	else if (motor->FWD_current_pulse > motor->FWD_target_pulse)
 	{
-		motor->FWD_current_pulse -= 250;  // Decrement by 250
+		motor->FWD_current_pulse -= PWM_TAMP_STEP;  // Decrement by PWM_TAMP_STEP
 		if (motor->FWD_current_pulse < motor->FWD_target_pulse)
 		{
 			motor->FWD_current_pulse = motor->FWD_target_pulse; // Clamp to target
@@ -278,7 +279,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	// Ramp the reverse pulse
 	if (motor->REV_current_pulse < motor->REV_target_pulse)
 	{
-		motor->REV_current_pulse += 250;
+		motor->REV_current_pulse += PWM_TAMP_STEP;
 		if (motor->REV_current_pulse > motor->REV_target_pulse)
 		{
 			motor->REV_current_pulse = motor->REV_target_pulse;
@@ -286,7 +287,7 @@ void DCMotor_PulseRamp(Motor_t *motor)
 	}
 	else if (motor->REV_current_pulse > motor->REV_target_pulse)
 	{
-		motor->REV_current_pulse -= 250;
+		motor->REV_current_pulse -= PWM_TAMP_STEP;
 		if (motor->REV_current_pulse < motor->REV_target_pulse)
 		{
 			motor->REV_current_pulse = motor->REV_target_pulse;

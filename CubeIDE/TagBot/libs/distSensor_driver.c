@@ -174,6 +174,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 //
 void distSensor_Task(void *unused)
 {
+	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+	HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
 	distSensor_Init_Sensor(&Sens_N, DistSensor_POSITION_NORD);
 	distSensor_Init_Sensor(&Sens_W, DistSensor_POSITION_WEST);
 	distSensor_Init_Sensor(&Sens_S, DistSensor_POSITION_SUD);
@@ -209,7 +211,7 @@ void distSensor_Task(void *unused)
 
 void distSensor_TaskCreate(void*unused)
 {
-	xTaskCreate(distSensor_Task, "distSensor_task", 128, NULL, 23, NULL);
+	xTaskCreate(distSensor_Task, "distSensor_task", 128, NULL,  distSensor_Task_Priority, NULL);
 }
 
 

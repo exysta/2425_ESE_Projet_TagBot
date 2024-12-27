@@ -37,7 +37,8 @@
 #include "SSD1306_fonts.h"
 #include "shell.h"
 #include "RobotStrategy.h"
-
+#include "distSensor_driver.h"
+#include "ADXL343_driver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -153,59 +154,43 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
+	printf(" _____________________________\r\n");
+	printf("|                             |\r\n");
+	printf("|                             |\r\n");
+	printf("|  WELCOME ON TAGBOT PROJECT  |\r\n");
+	printf("|                             |\r\n");
+	printf("|_____________________________|\r\n");
+	//**********************************************************
+
+	/* Ce code initialise l'adc en dma*/
+	//distSensor_TaskCreate(NULL);
+	printf("Démarrage du test des capteurs de distance...\r\n");
 
 	//**********************************************************
-	//For distance sensors
-//	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-//	HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
-//	uint32_t distance_sensor_adc1_buffer [DISTANCE_SENSOR_ADC_BUFFER_SIZE];
-//	uint32_t distance_sensor_adc2_buffer [DISTANCE_SENSOR_ADC_BUFFER_SIZE];
-//
-//	HAL_ADC_Start_DMA(&hadc1, &distance_sensor_adc1_buffer, DISTANCE_SENSOR_ADC_BUFFER_SIZE);
-//	HAL_ADC_Start_DMA(&hadc1, &distance_sensor_adc2_buffer, DISTANCE_SENSOR_ADC_BUFFER_SIZE);
-//
-//	HAL_TIM_Base_Start(&htim6); // trigger pour lancer conversion sharp sensors
-	//**********************************************************
-	//for motors
-//	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-//	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
-//			2000);
-//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,
-//			0);
-//	HAL_Delay(500);
-//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
-//			3000);
-//	HAL_Delay(500);
-//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
-//			4000);
-//	HAL_Delay(500);
-//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
-//			5000);
-//	HAL_Delay(500);
-//	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,
-//			6000);
-//	DCMotor_Init(&DualDrive_handle);
-//	DCMotor_SetSpeed(&DualDrive_handle.motor_right, 60, POSITIVE_ROTATION);
+
+	/* Code init l'accélérometre*/
+//Ce code a été bougé au début de la task donc pas besoin ici
+//	while(1 == ADXL343_Init()) {}
+//	ADXL343_Configure();
+	ADXL343_TaskCreate(NULL);
 
 	//**********************************************************
 	DCMotor_CreateTask(&DualDrive_handle);
 
 	//**********************************************************
 	// Init SCREEN OLED
-//	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
-//	{
-//		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
-//		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
-//		SCREEN_SSD1306_Update_Screen(&hscreen1);
-//	}
-//	//**********************************************************
+	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
+	{
+		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
+		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
+		SCREEN_SSD1306_Update_Screen(&hscreen1);
+	}
+	//**********************************************************
 	//LIDAR
 
 	X4LIDAR_create_task(&X4LIDAR_handle);
 
 	//**********************************************************
-	printf("test \r\n");
 	shell_init(&h_shell);
 	shell_add(&h_shell, "print_dist", print_lidar_distances,
 			"print lidar buffer containing scanned distances");
@@ -214,7 +199,13 @@ int main(void)
 	shell_createShellTask(&h_shell);
 	//**********************************************************
 	RobotStrategy_CreateTask();
+	//**********************************************************
+
 	//HAL_Delay(20000);
+	//**********************************************************
+
+	printf("Tasks creation finished... \r\n");
+	//**********************************************************
 
   /* USER CODE END 2 */
 
@@ -237,7 +228,14 @@ int main(void)
   /* USER CODE END 3 */
 }
 
-	/* Code init l'accélérometre*/
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
   */

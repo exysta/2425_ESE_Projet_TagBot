@@ -15,7 +15,7 @@
 #include "usart.h"
 #include <stdlib.h>
 
-#define PRINT_DEBUG
+//#define PRINT_DEBUG
 
 __STRATEGY_HandleTypeDef strategies[3];
 
