@@ -1,0 +1,38 @@
+name: Doxygen Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Doxygen
+      run: |
+        if [[ "$RUNNER_OS" == "Linux" ]]; then
+          sudo apt-get install doxygen graphviz
+        elif [[ "$RUNNER_OS" == "Windows" ]]; then
+          choco install doxygen.install graphviz
+        elif [[ "$RUNNER_OS" == "macOS" ]]; then
+          brew install doxygen graphviz
+        fi
+
+    - name: Generate Documentation
+      run: doxygen Doxyfile
+
+    - name: Deploy Documentation
+      run: |
+        # Add commands to deploy or publish documentation
+

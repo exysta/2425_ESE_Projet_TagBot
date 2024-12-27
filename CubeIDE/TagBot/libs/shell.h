@@ -25,7 +25,7 @@
 #define TASK_SHELL_STACK_DEPTH (TASK_SHELL_STACK_SIZE / sizeof(StackType_t))
 
 /** @brief Priority level for the shell task */
-#define TASK_SHELL_PRIORITY 5
+#define TASK_SHELL_PRIORITY 7
 
 /** @brief Maximum number of arguments for shell commands */
 #define ARGC_MAX 8
