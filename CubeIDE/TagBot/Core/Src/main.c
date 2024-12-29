@@ -169,36 +169,39 @@ int main(void)
 	//**********************************************************
 
 	/* Code init l'accélérometre*/
-//Ce code a été bougé au début de la task donc pas besoin ici
-//	while(1 == ADXL343_Init()) {}
-//	ADXL343_Configure();
-//	ADXL343_TaskCreate(NULL);
-//
-//	//**********************************************************
-//	DCMotor_CreateTask(&DualDrive_handle);
-//
-//	//**********************************************************
-//	// Init SCREEN OLED
-//	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
-//	{
-//		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
-//		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
-//		SCREEN_SSD1306_Update_Screen(&hscreen1);
-//	}
-//	//**********************************************************
-//	//LIDAR
-//
-//	X4LIDAR_create_task(&X4LIDAR_handle);
-//
-//	//**********************************************************
+
+/*Ce code a été bougé au début de la task donc pas besoin ici
+
+	while(1 == ADXL343_Init()) {}
+	ADXL343_Configure();*/
+
+	ADXL343_TaskCreate(NULL);
+
+	//**********************************************************
+	DCMotor_CreateTask(&DualDrive_handle);
+
+	//**********************************************************
+	// Init SCREEN OLED
+	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
+	{
+		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
+		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
+		SCREEN_SSD1306_Update_Screen(&hscreen1);
+	}
+	//**********************************************************
+	//LIDAR
+
+	X4LIDAR_create_task(&X4LIDAR_handle);
+
+	//**********************************************************
 	shell_init(&h_shell);
 	shell_add(&h_shell, "print_dist", print_lidar_distances,
 			"print lidar buffer containing scanned distances");
 	shell_add(&h_shell, "print_motor_speed", print_motor_speed,
 			"print_motor_speed");
 	shell_createShellTask(&h_shell);
-//	//**********************************************************
-//	RobotStrategy_CreateTask();
+	//**********************************************************
+	RobotStrategy_CreateTask();
 	//**********************************************************
 
 	//HAL_Delay(20000);
