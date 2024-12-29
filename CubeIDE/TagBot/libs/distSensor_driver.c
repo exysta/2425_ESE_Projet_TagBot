@@ -29,7 +29,9 @@
 #include "tim.h"
 #include "FreeRTOS.h"
 #include "task.h"
-
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 #define ADC1_CHANNEL_COUNT  2  // Nombre de canaux pour ADC1
@@ -98,7 +100,8 @@ HAL_StatusTypeDef distSensor_ReadADC_DMA(void)
 		{
 			Sens_W.sensor_detection_status = DistSensor_DETECT_FLOOR;
 		}
-		else
+		else if(Sens_W.sensor_value != 0)
+
 		{
 			Sens_W.sensor_detection_status = DistSensor_DETECT_VOID;
 		}
@@ -112,7 +115,7 @@ HAL_StatusTypeDef distSensor_ReadADC_DMA(void)
 		{
 			Sens_N.sensor_detection_status = DistSensor_DETECT_FLOOR;
 		}
-		else
+		else if(Sens_N.sensor_value != 0)
 		{
 			Sens_N.sensor_detection_status = DistSensor_DETECT_VOID;
 		}
@@ -128,7 +131,8 @@ HAL_StatusTypeDef distSensor_ReadADC_DMA(void)
 		{
 			Sens_S.sensor_detection_status = DistSensor_DETECT_FLOOR;
 		}
-		else
+		else if(Sens_S.sensor_value != 0)
+
 		{
 			Sens_S.sensor_detection_status = DistSensor_DETECT_VOID;
 		}
@@ -142,7 +146,8 @@ HAL_StatusTypeDef distSensor_ReadADC_DMA(void)
 		{
 			Sens_E.sensor_detection_status = DistSensor_DETECT_FLOOR;
 		}
-		else
+		else if(Sens_E.sensor_value != 0)
+
 		{
 			Sens_E.sensor_detection_status = DistSensor_DETECT_VOID;
 		}
@@ -174,8 +179,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 //
 void distSensor_Task(void *unused)
 {
-	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-	HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
+//	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+//	HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
 	distSensor_Init_Sensor(&Sens_N, DistSensor_POSITION_NORD);
 	distSensor_Init_Sensor(&Sens_W, DistSensor_POSITION_WEST);
 	distSensor_Init_Sensor(&Sens_S, DistSensor_POSITION_SUD);
@@ -184,6 +189,13 @@ void distSensor_Task(void *unused)
 
 	for (;;)
 	{
+//		while (Sens_W.adc_ready != DistSensor_ADC_STATUS_READY &&
+//		    Sens_N.adc_ready != DistSensor_ADC_STATUS_READY &&
+//		    Sens_S.adc_ready != DistSensor_ADC_STATUS_READY &&
+//		    Sens_E.adc_ready != DistSensor_ADC_STATUS_READY) {
+//		    vTaskDelay(20);  // Small delay to prevent hogging the CPU
+//		}
+
 		distSensor_ReadADC_DMA();
 
 		if(Sens_N.sensor_detection_status == DistSensor_DETECT_VOID)

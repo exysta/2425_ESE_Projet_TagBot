@@ -62,6 +62,7 @@ void USART3_IRQHandler(void);
 void TIM8_UP_IRQHandler(void);
 void UART4_IRQHandler(void);
 void TIM7_IRQHandler(void);
+void DMAMUX_OVR_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

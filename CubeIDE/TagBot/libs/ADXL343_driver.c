@@ -48,7 +48,7 @@ int ADXL343_Init(void) {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); 			// Desactiver NSS
 
 
-	printf("Initialization done\r\n");
+	printf("ADXL343 Initialization done\r\n");
 	return 0;
 }
 
@@ -60,7 +60,7 @@ void ADXL343_Configure(void){
 	ADXL343_WriteRegister(ADXL343_REG_TAP_AXES, 0x07);				// Enable axe X Y Z for tap
 	ADXL343_WriteRegister(ADXL343_REG_INT_ENABLE, 0x40);			// Enable interruption for single tap
 	ADXL343_WriteRegister(ADXL343_REG_INT_MAP, 0x40);				// Enable interruption on pin INT1
-	printf("Configuration done\r\n");
+	printf("ADXL343 Configuration done\r\n");
 
 }
 
