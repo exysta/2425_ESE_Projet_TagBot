@@ -7,8 +7,8 @@
 ../libs/X4LIDAR_driver.c:186:19:X4LIDAR_get_data_start_indexes	5
 ../libs/X4LIDAR_driver.c:214:19:X4LIDAR_parse_data_frame_header	2
 ../libs/X4LIDAR_driver.c:254:19:X4LIDAR_calculate_max_index	3
-../libs/X4LIDAR_driver.c:281:19:X4LIDAR_compute_payload	6
-../libs/X4LIDAR_driver.c:339:19:X4LIDAR_parse_buffer	5
-../libs/X4LIDAR_driver.c:358:6:X4LIDAR_task	3
-../libs/X4LIDAR_driver.c:399:6:X4LIDAR_HAL_UART_RxHalfCpltCallback	3
-../libs/X4LIDAR_driver.c:419:6:X4LIDAR_HAL_UART_RxCpltCallback	3
+../libs/X4LIDAR_driver.c:281:19:X4LIDAR_compute_payload	7
+../libs/X4LIDAR_driver.c:347:19:X4LIDAR_parse_buffer	5
+../libs/X4LIDAR_driver.c:366:6:X4LIDAR_task	3
+../libs/X4LIDAR_driver.c:408:6:X4LIDAR_HAL_UART_RxHalfCpltCallback	3
+../libs/X4LIDAR_driver.c:428:6:X4LIDAR_HAL_UART_RxCpltCallback	3

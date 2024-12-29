@@ -63,7 +63,7 @@
 
 #define LIDAR_STACK_SIZE 				256
 
-#define LIDAR_TASK_PRIORITY 			4
+#define LIDAR_TASK_PRIORITY 			7
 
 #define MIN_ANGLE 			0
 #define MAX_ANGLE 			360
@@ -150,6 +150,8 @@ typedef struct X4LIDAR_handle_t{
     StackType_t task_stack[LIDAR_STACK_SIZE]; // Static Stack for the task
 
 } X4LIDAR_handle_t;
+
+extern X4LIDAR_handle_t X4LIDAR_handle;
 
 HAL_StatusTypeDef X4LIDAR_init(X4LIDAR_handle_t *X4LIDAR_handle,UART_HandleTypeDef *huart);
 void X4LIDAR_task(void *argument);

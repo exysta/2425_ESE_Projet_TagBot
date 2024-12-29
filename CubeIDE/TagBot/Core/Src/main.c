@@ -30,14 +30,15 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_it.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
+#include "semphr.h"
+#include "X4LIDAR_driver.h"
+#include "DCMotor_driver.h"
+#include "SSD1306.h"
+#include "SSD1306_fonts.h"
+#include "shell.h"
+#include "RobotStrategy.h"
 #include "distSensor_driver.h"
 #include "ADXL343_driver.h"
-#include "shell.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +48,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define DISTANCE_SENSOR_ADC_BUFFER_SIZE 10
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -58,6 +59,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+X4LIDAR_handle_t X4LIDAR_handle;
+DualDrive_handle_t DualDrive_handle;
+__TARGET_HandleTypeDef Target_Handle;
+
 
 /* USER CODE END PV */
 
@@ -70,14 +75,38 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int __io_putchar(int chr)
+int __io_putchar(int ch)
 {
-	HAL_UART_Transmit(&huart4, (uint8_t*)&chr, 1, HAL_MAX_DELAY);
-	return chr;
+	// Send the character using HAL_UART_Transmit
+	HAL_UART_Transmit(&huart4, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
+
+	return ch;  // Return the character back to the caller
+}
+
+void print_lidar_distances(h_shell_t *h_shell, int argc, char **argv)
+{
+	for (int i = MIN_ANGLE; i < MAX_ANGLE; i++)
+	{
+		printf("%s %d: %f \r\n",
+				"angle ", i,  X4LIDAR_handle.scan_data.distances[i]);
+	}
+}
+
+void print_motor_speed(h_shell_t *h_shell, int argc, char **argv)
+{
+	uint32_t speed_left = DualDrive_handle.motor_left.encoder.measured_rpm;
+	uint32_t speed_right = DualDrive_handle.motor_right.encoder.measured_rpm;
+
+	printf("speed left = %lu \r\n", speed_left);
+	printf("speed right = %lu \r\n", speed_right);
 }
 
 
 
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
+{
+	Error_Handler();
+}
 /* USER CODE END 0 */
 
 /**
@@ -88,6 +117,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	//to disable timer in debug mode
 
 	//to disable timer in debug mode
 
@@ -122,26 +152,63 @@ int main(void)
   MX_USART3_UART_Init();
   MX_I2C1_Init();
   MX_TIM6_Init();
-  MX_TIM16_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
-
 	printf(" _____________________________\r\n");
 	printf("|                             |\r\n");
 	printf("|                             |\r\n");
 	printf("|  WELCOME ON TAGBOT PROJECT  |\r\n");
 	printf("|                             |\r\n");
 	printf("|_____________________________|\r\n");
+	//**********************************************************
 
 	/* Ce code initialise l'adc en dma*/
 	distSensor_TaskCreate(NULL);
 	printf("Démarrage du test des capteurs de distance...\r\n");
 
+	//**********************************************************
 
 	/* Code init l'accélérometre*/
 
-	while(1 == ADXL343_Init()) {}
-	ADXL343_Configure();
+/*Ce code a été bougé au début de la task donc pas besoin ici
 
+	while(1 == ADXL343_Init()) {}
+	ADXL343_Configure();*/
+
+	ADXL343_TaskCreate(NULL);
+
+	//**********************************************************
+	DCMotor_CreateTask(&DualDrive_handle);
+
+	//**********************************************************
+	// Init SCREEN OLED
+	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
+	{
+		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
+		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
+		SCREEN_SSD1306_Update_Screen(&hscreen1);
+	}
+	//**********************************************************
+	//LIDAR
+
+	X4LIDAR_create_task(&X4LIDAR_handle);
+
+	//**********************************************************
+	shell_init(&h_shell);
+	shell_add(&h_shell, "print_dist", print_lidar_distances,
+			"print lidar buffer containing scanned distances");
+	shell_add(&h_shell, "print_motor_speed", print_motor_speed,
+			"print_motor_speed");
+	shell_createShellTask(&h_shell);
+	//**********************************************************
+	RobotStrategy_CreateTask();
+	//**********************************************************
+
+	//HAL_Delay(20000);
+	//**********************************************************
+
+	printf("Tasks creation finished... \r\n");
+	//**********************************************************
 
   /* USER CODE END 2 */
 
@@ -157,41 +224,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-
-		///* Ce code permet d allumer la led */
-
-		//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
-		//		HAL_Delay(100);
-
-
-
-
-		/* Ce code n'affiche que les valeurs inférieures à 1000 (la distance est trop élevée) */
-
-
-
-		//	    uint32_t distance = distSensor_ReadADC_DMA();
-		//
-		//	    if (distance == 1){
-		//	    	printf("error\r\n");
-		//	    }
-		//	    else {
-		//
-		//	    	printf("Capteur detect vide, %lu\r\n",distance );
-		//	    }
-		//	    HAL_Delay(200);
-		//printf("ADC2 : Capteur 1: %lu, Capteur 2: %lu\r\n", buffer[2], buffer[3]);
-
-
-
-
-
-
 	}
   /* USER CODE END 3 */
 }
@@ -242,12 +277,26 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+
+
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 {
-	//	ADXL343_DetectTap();
-	if(GPIO_Pin == BNT_CAT_MOUSE_Pin){
-		printf("Button pushed\r\n");
-	}
+
+	X4LIDAR_HAL_UART_RxHalfCpltCallback(huart,&X4LIDAR_handle);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	shell_drv_uart_HAL_UART_RxCpltCallback(huart);
+	X4LIDAR_HAL_UART_RxCpltCallback(huart,&X4LIDAR_handle);
+
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	shell_drv_uart_HAL_UART_TxCpltCallback(huart);
 }
 /* USER CODE END 4 */
 
@@ -268,6 +317,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+	  DCMotor_EncoderCallback(htim ,&DualDrive_handle);
+
 
   /* USER CODE END Callback 1 */
 }
