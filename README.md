@@ -486,3 +486,9 @@ L'ajout de points de test accessibles facilite la vérification des tensions d'a
   </details>
 
 ## 
+## Capteurs de distances
+Attention, il faut penser à mettre le continuous conversion mode de l'adc en disable sinon le programme bloque.
+
+Autre point important, les adc sont sur 12 bits, il est donc préférable de configurer le dma pour le transfert de half-word i.e 16 bits. Cependant, il faut alors penser à définir le buffer du DMA comme uint16_t adc1_dma_buffer[ADC1_CHANNEL_COUNT];.
+En effet, si l'on défini le buffer avec des uint32_t, les valeurs de 2 channels sur 16 bits se retrouveront concaténées sur une valeur de 32 bits. Pour des raisons obsucre il y avait encore des bugs de cette facon.
+En mettant les transferts du dma en format word avec  uint32_t adc1_dma_buffer[ADC1_CHANNEL_COUNT] cela semble régler le problème.
