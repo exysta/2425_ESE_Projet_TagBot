@@ -32,6 +32,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "DCMotor_driver.h"
 
 
 #define ADC1_CHANNEL_COUNT  2  // Nombre de canaux pour ADC1
@@ -47,6 +48,10 @@ DistSensor_handle_t Sens_N;
 DistSensor_handle_t Sens_S;
 DistSensor_handle_t Sens_W;
 DistSensor_handle_t Sens_E;
+
+//bad way to code it but no time to do better
+// we check if robot is already braking to avoid switching between braking and speed set at 0
+volatile uint8_t is_robot_braking;
 
 uint32_t adc_value;
 
@@ -198,6 +203,21 @@ void distSensor_Task(void *unused)
 
 		distSensor_ReadADC_DMA();
 
+		if(Sens_N.sensor_detection_status == DistSensor_DETECT_VOID ||
+				Sens_E.sensor_detection_status == DistSensor_DETECT_VOID ||
+				Sens_W.sensor_detection_status == DistSensor_DETECT_VOID ||
+				Sens_S.sensor_detection_status == DistSensor_DETECT_VOID)
+		{
+			if(!is_robot_braking)
+			{
+				DCMotor_Brake(&DualDrive_handle.motor_left);
+				DCMotor_Brake(&DualDrive_handle.motor_right);
+				printf("Braking !!Reseting speed to 0 after 5 sec\r\n");
+				is_robot_braking = 1;
+			}
+
+		}
+
 		if(Sens_N.sensor_detection_status == DistSensor_DETECT_VOID)
 		{
 			printf("North detect void\r\n");
@@ -215,7 +235,7 @@ void distSensor_Task(void *unused)
 			printf("East detect void\r\n");
 		}
 
-		vTaskDelay(100);
+		vTaskDelay(50);
 
 
 	}

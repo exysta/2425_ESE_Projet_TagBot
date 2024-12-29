@@ -119,10 +119,13 @@ HAL_StatusTypeDef DCMotor_SetSpeed(Motor_t *motor, uint8_t speed,
 }
 
 //brake the motor
+//emergency brake so no ramp
 void DCMotor_Brake(Motor_t *motor)
 {
-	motor->FWD_target_pulse = MAX_PULSE;
-	motor->REV_target_pulse = MAX_PULSE;
+	__HAL_TIM_SET_COMPARE(&motor->motor_timer, motor->FWD_Channel,
+			MAX_PULSE);
+	__HAL_TIM_SET_COMPARE(&motor->motor_timer, motor->REV_Channel,
+			MAX_PULSE);
 }
 
 void DCMotor_Forward(DualDrive_handle_t *DualDrive_handle, uint8_t speed)

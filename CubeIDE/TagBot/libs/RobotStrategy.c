@@ -10,6 +10,7 @@
 #include "DCMotor_driver.h"
 #include "X4LIDAR_driver.h"
 #include "semphr.h"
+#include <distSensor_driver.h>
 
 #include "main.h"
 #include "usart.h"
@@ -27,26 +28,34 @@ extern X4LIDAR_handle_t X4LIDAR_handle;
 extern DualDrive_handle_t DualDrive_handle;
 extern __TARGET_HandleTypeDef Target_Handle;
 
+extern DistSensor_handle_t Sens_N;
+extern DistSensor_handle_t Sens_S;
+extern DistSensor_handle_t Sens_W;
+extern DistSensor_handle_t Sens_E;
+
+//bad way to code it but no time to do better
+// we check if robot is already braking to avoid switching between braking and speed set at 0
+extern volatile uint8_t is_robot_braking;
 
 HAL_StatusTypeDef RobotStrategy_CreateTask()
 {
-		// Create the task with a static stack
+	// Create the task with a static stack
 	RobotStategy_task_handle = xTaskCreateStatic(RobotStrategy_Task, // Task function
-				"RobotStrategy_Task",                           // Task name
-				STATEGY_STACK_SIZE,                    // Stack size
-				NULL,                     // Parameters to task
-				STRATEGY_TASK_PRIORITY,                       // Task priority
-				RobotStategy_task_stack,          // Stack buffer
-				&RobotStategy_task_tcb            // TCB buffer
-		);
+			"RobotStrategy_Task",                           // Task name
+			STATEGY_STACK_SIZE,                    // Stack size
+			NULL,                     // Parameters to task
+			STRATEGY_TASK_PRIORITY,                       // Task priority
+			RobotStategy_task_stack,          // Stack buffer
+			&RobotStategy_task_tcb            // TCB buffer
+	);
 
-		// Check if task creation was successful
-		if (RobotStategy_task_handle == NULL)
-		{
-			return HAL_ERROR; // Task creation failed
-		}
+	// Check if task creation was successful
+	if (RobotStategy_task_handle == NULL)
+	{
+		return HAL_ERROR; // Task creation failed
+	}
 
-		return HAL_OK; // Task created successfully
+	return HAL_OK; // Task created successfully
 }
 
 HAL_StatusTypeDef RobotStrategy__Init()
@@ -70,23 +79,23 @@ void RobotStrategy_InitTarget(__TARGET_HandleTypeDef * target)
 //reserved to be called inside RobotStrategy_IdentifyClosestObject
 static uint16_t RobotStrategy_CalculateCentroidAngle(uint16_t start_angle, uint16_t end_angle)
 {
-    //we determine the centroid angle
-    //we have to handle the case where the target is around the 0 angle since the 0 angle is facing forward it will be our goal for asserv tracking toward target
-    // Handle wraparound
-    if (end_angle < start_angle)
-    {
-        end_angle += 360;
-    }
+	//we determine the centroid angle
+	//we have to handle the case where the target is around the 0 angle since the 0 angle is facing forward it will be our goal for asserv tracking toward target
+	// Handle wraparound
+	if (end_angle < start_angle)
+	{
+		end_angle += 360;
+	}
 
-    // Calculate midpoint
-    uint16_t centroid_angle = (start_angle + end_angle) / 2;
+	// Calculate midpoint
+	uint16_t centroid_angle = (start_angle + end_angle) / 2;
 
-    // Wrap back to [0, 360) if necessary
-    if (centroid_angle >= 360) {
-        centroid_angle -= 360;
-    }
+	// Wrap back to [0, 360) if necessary
+	if (centroid_angle >= 360) {
+		centroid_angle -= 360;
+	}
 
-    return centroid_angle;
+	return centroid_angle;
 }
 
 //function to detect closest object
@@ -94,52 +103,52 @@ static uint16_t RobotStrategy_CalculateCentroidAngle(uint16_t start_angle, uint1
 //the lidar motor has a revolution speed of 7Hz, calling this function once every 0.1 sec should be enough for asserv ?
 HAL_StatusTypeDef RobotStrategy_IdentifyClosestObject(__TARGET_HandleTypeDef * target, X4LIDAR_handle_t *X4LIDAR_handle)
 {
-    // Copy the distance buffer to avoid modifying the original buffer
-    int distance_buffer_copy[MAX_ANGLE];
-    float min_distance = MAX_OBJECT_DIST;
+	// Copy the distance buffer to avoid modifying the original buffer
+	int distance_buffer_copy[MAX_ANGLE];
+	float min_distance = MAX_OBJECT_DIST;
 
-    RobotStrategy_MedianFilter(X4LIDAR_handle->scan_data.distances, distance_buffer_copy);
-    uint16_t angle_with_min_distance = 0; // Initialize to avoid potential undefined behavior
+	RobotStrategy_MedianFilter(X4LIDAR_handle->scan_data.distances, distance_buffer_copy);
+	uint16_t angle_with_min_distance = 0; // Initialize to avoid potential undefined behavior
 
-    // Find the angle with the minimum distance
-    for (uint16_t angle = 0; angle < MAX_ANGLE; angle++)
-    {
-        if (distance_buffer_copy[angle] > MIN_OBJECT_DIST && distance_buffer_copy[angle] < min_distance)
-        {
-            min_distance = distance_buffer_copy[angle];
-            angle_with_min_distance = angle;
-        }
-    }
-    target->min_distance = min_distance;
-    // Determine the end angle
-    uint16_t compare_angle = (angle_with_min_distance) % MAX_ANGLE; // Wraparound using modulo
-    while (abs((int)distance_buffer_copy[angle_with_min_distance] - (int)distance_buffer_copy[compare_angle]) < OBJECT_DIST_THRESHOLD)
-    {
-        compare_angle = (compare_angle + 1) % MAX_ANGLE ; // Increment and wraparound
-        if (compare_angle == angle_with_min_distance) // Prevent infinite loop
-        {
-            break;
-        }
-    }
-    target->end_angle = compare_angle;
+	// Find the angle with the minimum distance
+	for (uint16_t angle = 0; angle < MAX_ANGLE; angle++)
+	{
+		if (distance_buffer_copy[angle] > MIN_OBJECT_DIST && distance_buffer_copy[angle] < min_distance)
+		{
+			min_distance = distance_buffer_copy[angle];
+			angle_with_min_distance = angle;
+		}
+	}
+	target->min_distance = min_distance;
+	// Determine the end angle
+	uint16_t compare_angle = (angle_with_min_distance) % MAX_ANGLE; // Wraparound using modulo
+	while (abs((int)distance_buffer_copy[angle_with_min_distance] - (int)distance_buffer_copy[compare_angle]) < OBJECT_DIST_THRESHOLD)
+	{
+		compare_angle = (compare_angle + 1) % MAX_ANGLE ; // Increment and wraparound
+		if (compare_angle == angle_with_min_distance) // Prevent infinite loop
+		{
+			break;
+		}
+	}
+	target->end_angle = compare_angle;
 
-    // Determine the start angle
-    compare_angle = (angle_with_min_distance == 0) ? (MAX_ANGLE - 1) : (angle_with_min_distance - 1); // Wraparound backward
-    while (abs((int)distance_buffer_copy[angle_with_min_distance] - (int)distance_buffer_copy[compare_angle]) < OBJECT_DIST_THRESHOLD)
-    {
-        compare_angle = (compare_angle == 0) ? (MAX_ANGLE - 1) : (compare_angle - 1); // Decrement and wraparound
-        if (compare_angle == angle_with_min_distance) // Prevent infinite loop
-        {
-            break;
-        }
-    }
-    target->start_angle = compare_angle;
-    target->min_distance = compare_angle;
+	// Determine the start angle
+	compare_angle = (angle_with_min_distance == 0) ? (MAX_ANGLE - 1) : (angle_with_min_distance - 1); // Wraparound backward
+	while (abs((int)distance_buffer_copy[angle_with_min_distance] - (int)distance_buffer_copy[compare_angle]) < OBJECT_DIST_THRESHOLD)
+	{
+		compare_angle = (compare_angle == 0) ? (MAX_ANGLE - 1) : (compare_angle - 1); // Decrement and wraparound
+		if (compare_angle == angle_with_min_distance) // Prevent infinite loop
+		{
+			break;
+		}
+	}
+	target->start_angle = compare_angle;
+	target->min_distance = compare_angle;
 
-    // Calculate the centroid angle
-    target->centroid_angle = RobotStrategy_CalculateCentroidAngle(target->start_angle, target->end_angle);
+	// Calculate the centroid angle
+	target->centroid_angle = RobotStrategy_CalculateCentroidAngle(target->start_angle, target->end_angle);
 
-    return HAL_OK;
+	return HAL_OK;
 }
 
 
@@ -162,7 +171,7 @@ static uint16_t RobotStrategy_CalculateAngleError(__TARGET_HandleTypeDef * targe
 
 	}
 	target->angle_error = angle_error;
-    return HAL_OK;
+	return HAL_OK;
 }
 
 //calculate motors speed in differential driving to track target
@@ -198,7 +207,7 @@ HAL_StatusTypeDef RobotStrategy_CalculateMotorSpeed(__TARGET_HandleTypeDef * tar
 
 		DCMotor_SetSpeed(&DualDrive_handle ->motor_left, left_speed, POSITIVE_ROTATION);
 		DCMotor_SetSpeed(&DualDrive_handle ->motor_right, right_speed, POSITIVE_ROTATION);
-        xTaskNotifyGive(DualDrive_handle->h_task);
+		xTaskNotifyGive(DualDrive_handle->h_task);
 
 	}
 
@@ -228,9 +237,23 @@ void RobotStrategy_Task(void *argument)
 	{
 
 		RobotStrategy_IdentifyClosestObject(&Target_Handle, &X4LIDAR_handle);
-		RobotStrategy_CalculateMotorSpeed(&Target_Handle,&DualDrive_handle);
 
-		vTaskDelay(pdMS_TO_TICKS(500));
+
+		if(!is_robot_braking)
+		{
+			RobotStrategy_CalculateMotorSpeed(&Target_Handle,&DualDrive_handle);
+		}
+		else
+		{
+			vTaskDelay(pdMS_TO_TICKS(3000));
+
+			is_robot_braking = 0;
+			DCMotor_SetSpeed(&DualDrive_handle.motor_left, 0, POSITIVE_ROTATION);
+			DCMotor_SetSpeed(&DualDrive_handle.motor_right, 0, POSITIVE_ROTATION);
+
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(100));
 
 	}
 }
@@ -239,68 +262,68 @@ void RobotStrategy_Task(void *argument)
 // Fonction pour calculer la médiane d'un tableau d'entiers
 int RobotStrategy_CalculateMedian(int *values, int size)
 {
-    // Copier les valeurs dans un tableau temporaire
-    int temp[size];
-    memcpy(temp, values, size * sizeof(int));
+	// Copier les valeurs dans un tableau temporaire
+	int temp[size];
+	memcpy(temp, values, size * sizeof(int));
 
-    // Trier les valeurs
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = i + 1; j < size; j++) {
-            if (temp[i] > temp[j]) {
-                int tmp = temp[i];
-                temp[i] = temp[j];
-                temp[j] = tmp;
-            }
-        }
-    }
+	// Trier les valeurs
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = i + 1; j < size; j++) {
+			if (temp[i] > temp[j]) {
+				int tmp = temp[i];
+				temp[i] = temp[j];
+				temp[j] = tmp;
+			}
+		}
+	}
 
-    // Retourner la médiane
-    if (size % 2 == 0) {
-        return (temp[size / 2 - 1] + temp[size / 2]) / 2;
-    } else {
-        return temp[size / 2];
-    }
+	// Retourner la médiane
+	if (size % 2 == 0) {
+		return (temp[size / 2 - 1] + temp[size / 2]) / 2;
+	} else {
+		return temp[size / 2];
+	}
 }
 
 // Fonction pour appliquer le filtre médian
 void RobotStrategy_MedianFilter(float unfiltered_buffer[MAX_ANGLE], int filtered_buffer[MAX_ANGLE])
 {
-    int size = MAX_ANGLE;
+	int size = MAX_ANGLE;
 
-    int int_unfiltered_buffer[MAX_ANGLE];
+	int int_unfiltered_buffer[MAX_ANGLE];
 
-    // Cast float buffer to int buffer
-    for (int i = 0; i < MAX_ANGLE; i++) {
-    	int_unfiltered_buffer[i] = (int)unfiltered_buffer[i]; // Truncate fractional parts
-    }
+	// Cast float buffer to int buffer
+	for (int i = 0; i < MAX_ANGLE; i++) {
+		int_unfiltered_buffer[i] = (int)unfiltered_buffer[i]; // Truncate fractional parts
+	}
 
-    for (int i = 0; i < size; i++) {
-        int window[MEDIAN_FILTER_WINDOW_SIZE];
-        int window_count = 0;
+	for (int i = 0; i < size; i++) {
+		int window[MEDIAN_FILTER_WINDOW_SIZE];
+		int window_count = 0;
 
-        // Fill the sliding window
-        for (int j = -MEDIAN_FILTER_WINDOW_SIZE / 2; j <= MEDIAN_FILTER_WINDOW_SIZE / 2; j++) {
-            int index = i + j;
+		// Fill the sliding window
+		for (int j = -MEDIAN_FILTER_WINDOW_SIZE / 2; j <= MEDIAN_FILTER_WINDOW_SIZE / 2; j++) {
+			int index = i + j;
 
-            // Handle out-of-bounds indices with wraparound
-            if (index < 0) index += size;
-            if (index >= size) index -= size;
+			// Handle out-of-bounds indices with wraparound
+			if (index < 0) index += size;
+			if (index >= size) index -= size;
 
-            if (int_unfiltered_buffer[index] != 0) { // Ignore zeros
-                window[window_count++] = int_unfiltered_buffer[index];
-            }
-        }
+			if (int_unfiltered_buffer[index] != 0) { // Ignore zeros
+				window[window_count++] = int_unfiltered_buffer[index];
+			}
+		}
 
-        // Calculate the median if the window is not empty
-        if (window_count > 0) {
-            int median = RobotStrategy_CalculateMedian(window, window_count);
-            if (int_unfiltered_buffer[i] == 0) {
-                filtered_buffer[i] = median; // Replace zero with median
-            } else {
-                filtered_buffer[i] = int_unfiltered_buffer[i]; // Retain original value
-            }
-        } else {
-            filtered_buffer[i] = int_unfiltered_buffer[i]; // Retain original value
-        }
-    }
+		// Calculate the median if the window is not empty
+		if (window_count > 0) {
+			int median = RobotStrategy_CalculateMedian(window, window_count);
+			if (int_unfiltered_buffer[i] == 0) {
+				filtered_buffer[i] = median; // Replace zero with median
+			} else {
+				filtered_buffer[i] = int_unfiltered_buffer[i]; // Retain original value
+			}
+		} else {
+			filtered_buffer[i] = int_unfiltered_buffer[i]; // Retain original value
+		}
+	}
 }
