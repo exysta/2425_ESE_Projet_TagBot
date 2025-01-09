@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['usagefault_5fhandler_0',['UsageFault_Handler',['../stm32g4xx__it_8c.html#a1d98923de2ed6b7309b66f9ba2971647',1,'stm32g4xx_it.c']]],
-  ['usart_2ec_1',['usart.c',['../usart_8c.html',1,'']]]
+  ['value_5fest_0',['value_est',['../distSensor__driver_8c.html#ab9e2262bcb6f8840a324a163784c1846',1,'distSensor_driver.c']]],
+  ['value_5fnord_1',['value_nord',['../distSensor__driver_8c.html#a5e9ba0f8df625525c0a7cb93568ca058',1,'distSensor_driver.c']]],
+  ['value_5fsud_2',['value_sud',['../distSensor__driver_8c.html#a85705a7f7c3921f5a3e19b9cac9e499a',1,'distSensor_driver.c']]],
+  ['value_5fwest_3',['value_west',['../distSensor__driver_8c.html#a513a4921a42af17611e32689d2abd692',1,'distSensor_driver.c']]],
+  ['void_5ftreshold_4',['VOID_TRESHOLD',['../distSensor__driver_8h.html#a7417fd45acc5191f8777fcf998bf0c68',1,'distSensor_driver.h']]]
 ];

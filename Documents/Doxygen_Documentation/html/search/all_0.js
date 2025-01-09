@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['1_0',['1',['../system__stm32g4xx_8c.html#autotoc_md4',1,'AHB Prescaler                          | 1'],['../system__stm32g4xx_8c.html#autotoc_md5',1,'APB1 Prescaler                         | 1'],['../system__stm32g4xx_8c.html#autotoc_md6',1,'APB2 Prescaler                         | 1'],['../system__stm32g4xx_8c.html#autotoc_md7',1,'PLL_M                                  | 1']]],
-  ['16_1',['PLL_N                                  | 16',['../system__stm32g4xx_8c.html#autotoc_md8',1,'']]],
-  ['16000000_2',['16000000',['../system__stm32g4xx_8c.html#autotoc_md3',1,'HCLK(Hz)                               | 16000000'],['../system__stm32g4xx_8c.html#autotoc_md2',1,'SYSCLK(Hz)                             | 16000000']]]
+  ['_5f_5faction_5fhandletypedef_0',['__action_handletypedef',['../struct____ACTION__HandleTypeDef.html',1,'__ACTION_HandleTypeDef'],['../RobotStrategy_8h.html#accf577159535c0c5fc564b007cc63353',1,'__ACTION_HandleTypeDef:&#160;RobotStrategy.h']]],
+  ['_5f_5fscreen_5fssd1306_5fhandletypedef_1',['__screen_ssd1306_handletypedef',['../struct____SCREEN__SSD1306__HandleTypeDef.html',1,'__SCREEN_SSD1306_HandleTypeDef'],['../SSD1306_8h.html#a53cc42d93f85b89161c442c81dc35eae',1,'__SCREEN_SSD1306_HandleTypeDef:&#160;SSD1306.h']]],
+  ['_5f_5fstrategy_5fhandletypedef_2',['__strategy_handletypedef',['../struct____STRATEGY__HandleTypeDef.html',1,'__STRATEGY_HandleTypeDef'],['../RobotStrategy_8h.html#a170f0acd25858c9702488d76c6773d4b',1,'__STRATEGY_HandleTypeDef:&#160;RobotStrategy.h']]],
+  ['_5f_5ftarget_5fhandletypedef_3',['__target_handletypedef',['../struct____TARGET__HandleTypeDef.html',1,'__TARGET_HandleTypeDef'],['../RobotStrategy_8h.html#ac048c1235313f38c3833efe7d7d5e198',1,'__TARGET_HandleTypeDef:&#160;RobotStrategy.h']]]
 ];

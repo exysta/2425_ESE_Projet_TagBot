@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>2425_ESE_Projet_TagBot: CubeIDE/TagBot/Core/Src/distSensor_driver.c File Reference</title>
+<title>2425_ESE_Projet_TagBot: CubeIDE/TagBot/libs/distSensor_driver.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -91,146 +91,192 @@ $(document).ready(function(){initNavTree('distSensor__driver_8c.html',''); initR
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">distSensor_driver.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;distSensor_driver.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;adc.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="distSensor__driver_8h_source.html">distSensor_driver.h</a>&gt;</code><br />
+<code>#include &quot;tim.h&quot;</code><br />
+<code>#include &quot;FreeRTOS.h&quot;</code><br />
+<code>#include &quot;task.h&quot;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="DCMotor__driver_8h_source.html">DCMotor_driver.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for distSensor_driver.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="distSensor__driver_8c__incl.png" border="0" usemap="#aCubeIDE_2TagBot_2Core_2Src_2distSensor__driver_8c" alt=""/></div>
-<map name="aCubeIDE_2TagBot_2Core_2Src_2distSensor__driver_8c" id="aCubeIDE_2TagBot_2Core_2Src_2distSensor__driver_8c">
-<area shape="rect" title=" " alt="" coords="5,5,179,45"/>
-<area shape="rect" title=" " alt="" coords="19,93,165,119"/>
-<area shape="poly" title=" " alt="" coords="95,46,95,79,89,79,89,46"/>
+<div class="center"><img src="distSensor__driver_8c__incl.png" border="0" usemap="#aCubeIDE_2TagBot_2libs_2distSensor__driver_8c" alt=""/></div>
+<map name="aCubeIDE_2TagBot_2libs_2distSensor__driver_8c" id="aCubeIDE_2TagBot_2libs_2distSensor__driver_8c">
+<area shape="rect" title=" " alt="" coords="297,5,449,45"/>
+<area shape="rect" title=" " alt="" coords="5,93,63,119"/>
+<area shape="poly" title=" " alt="" coords="297,45,77,96,76,91,296,40"/>
+<area shape="rect" href="distSensor__driver_8h.html" title=" " alt="" coords="87,93,234,119"/>
+<area shape="poly" title=" " alt="" coords="323,48,206,91,204,86,321,43"/>
+<area shape="rect" title=" " alt="" coords="155,167,225,192"/>
+<area shape="poly" title=" " alt="" coords="352,48,216,160,213,156,348,43"/>
+<area shape="rect" title=" " alt="" coords="250,167,306,192"/>
+<area shape="poly" title=" " alt="" coords="363,47,295,156,290,154,358,44"/>
+<area shape="rect" title=" " alt="" coords="330,167,426,192"/>
+<area shape="poly" title=" " alt="" coords="376,46,380,153,374,153,371,46"/>
+<area shape="rect" title=" " alt="" coords="545,167,608,192"/>
+<area shape="poly" title=" " alt="" coords="450,34,508,54,536,70,560,92,569,106,575,122,580,152,575,153,570,123,565,108,556,95,533,75,506,59,448,39"/>
+<area shape="rect" title=" " alt="" coords="633,167,699,192"/>
+<area shape="poly" title=" " alt="" coords="450,39,517,60,583,91,622,122,651,154,647,157,618,125,581,96,515,65,448,44"/>
+<area shape="rect" title=" " alt="" coords="672,93,743,119"/>
+<area shape="poly" title=" " alt="" coords="450,42,659,91,658,96,448,47"/>
+<area shape="rect" href="DCMotor__driver_8h.html" title=" " alt="" coords="411,93,545,119"/>
+<area shape="poly" title=" " alt="" coords="400,43,453,83,450,87,397,48"/>
+<area shape="rect" title=" " alt="" coords="55,167,130,192"/>
+<area shape="poly" title=" " alt="" coords="151,121,115,158,111,155,148,117"/>
+<area shape="poly" title=" " alt="" coords="168,118,182,153,178,155,163,120"/>
+<area shape="poly" title=" " alt="" coords="447,121,320,166,318,161,445,116"/>
+<area shape="poly" title=" " alt="" coords="463,121,407,161,404,156,460,117"/>
+<area shape="poly" title=" " alt="" coords="495,117,551,156,548,161,492,121"/>
+<area shape="poly" title=" " alt="" coords="509,116,623,159,622,164,507,121"/>
+<area shape="rect" title=" " alt="" coords="451,167,521,192"/>
+<area shape="poly" title=" " alt="" coords="482,119,486,153,481,153,477,119"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a52f60ccf193f9f4563400d60c1cd9053" id="r_a52f60ccf193f9f4563400d60c1cd9053"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a52f60ccf193f9f4563400d60c1cd9053">ADC1_CHANNEL_COUNT</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:a52f60ccf193f9f4563400d60c1cd9053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of channels for ADC1.  <br /></td></tr>
+<tr class="separator:a52f60ccf193f9f4563400d60c1cd9053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57bb39d01589ee5f352a991506e48154" id="r_a57bb39d01589ee5f352a991506e48154"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a57bb39d01589ee5f352a991506e48154">ADC2_CHANNEL_COUNT</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:a57bb39d01589ee5f352a991506e48154"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of channels for ADC2.  <br /></td></tr>
+<tr class="separator:a57bb39d01589ee5f352a991506e48154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0ffff7d4577b90f5083bb5d907348dc0" id="r_a0ffff7d4577b90f5083bb5d907348dc0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a0ffff7d4577b90f5083bb5d907348dc0">distSensor_ReadADCChannel</a> (ADC_HandleTypeDef *hadc, uint32_t channel)</td></tr>
-<tr class="memdesc:a0ffff7d4577b90f5083bb5d907348dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the ADC value from a specified channel.  <br /></td></tr>
-<tr class="separator:a0ffff7d4577b90f5083bb5d907348dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b88ff064af0c1c032244272a7955166" id="r_a7b88ff064af0c1c032244272a7955166"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a7b88ff064af0c1c032244272a7955166">distSensor_ConvertVoltToDistance</a> (uint32_t sensVal)</td></tr>
-<tr class="memdesc:a7b88ff064af0c1c032244272a7955166"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the sensor value (voltage) to distance.  <br /></td></tr>
-<tr class="separator:a7b88ff064af0c1c032244272a7955166"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a315b7e13f710b6f319bd133c6ef435cc" id="r_a315b7e13f710b6f319bd133c6ef435cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a315b7e13f710b6f319bd133c6ef435cc">constrain</a> (uint16_t *sensVal)</td></tr>
-<tr class="memdesc:a315b7e13f710b6f319bd133c6ef435cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrains the sensor value within the specified limits.  <br /></td></tr>
-<tr class="separator:a315b7e13f710b6f319bd133c6ef435cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb2713992f268cfe1602bfcc88dfc3b8" id="r_abb2713992f268cfe1602bfcc88dfc3b8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#abb2713992f268cfe1602bfcc88dfc3b8">moving_average</a> (float new_reading)</td></tr>
-<tr class="memdesc:abb2713992f268cfe1602bfcc88dfc3b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the moving average of sensor readings.  <br /></td></tr>
-<tr class="separator:abb2713992f268cfe1602bfcc88dfc3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae11fd67401cad016e98fe8c9bc48587f" id="r_ae11fd67401cad016e98fe8c9bc48587f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#ae11fd67401cad016e98fe8c9bc48587f">distSensor_initADC_DMA</a> (void)</td></tr>
+<tr class="memdesc:ae11fd67401cad016e98fe8c9bc48587f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes ADC1 and ADC2 in DMA mode.  <br /></td></tr>
+<tr class="separator:ae11fd67401cad016e98fe8c9bc48587f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6aa5534455e5ee17d9a6a207c97309a" id="r_ae6aa5534455e5ee17d9a6a207c97309a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#ae6aa5534455e5ee17d9a6a207c97309a">distSensor_Init_Sensor</a> (<a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a> *sensor, <a class="el" href="distSensor__driver_8h.html#aad63493b7aa9ad637d376e72e6664a97">DistSensor_Position_t</a> sensor_position)</td></tr>
+<tr class="memdesc:ae6aa5534455e5ee17d9a6a207c97309a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a distance sensor handle.  <br /></td></tr>
+<tr class="separator:ae6aa5534455e5ee17d9a6a207c97309a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e89adf3e601fd7e7cd873194c8d9f92" id="r_a6e89adf3e601fd7e7cd873194c8d9f92"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a6e89adf3e601fd7e7cd873194c8d9f92">distSensor_ReadADC</a> (ADC_HandleTypeDef *hadc)</td></tr>
+<tr class="memdesc:a6e89adf3e601fd7e7cd873194c8d9f92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the ADC value of the distance sensor using polling.  <br /></td></tr>
+<tr class="separator:a6e89adf3e601fd7e7cd873194c8d9f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea7252a717466aa4b103f4705807623d" id="r_aea7252a717466aa4b103f4705807623d"><td class="memItemLeft" align="right" valign="top">HAL_StatusTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#aea7252a717466aa4b103f4705807623d">distSensor_ReadADC_DMA</a> (void)</td></tr>
+<tr class="memdesc:aea7252a717466aa4b103f4705807623d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads values from ADC1 and ADC2 using DMA and updates sensor status.  <br /></td></tr>
+<tr class="separator:aea7252a717466aa4b103f4705807623d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af20a88180db1113be1e89266917d148b" id="r_af20a88180db1113be1e89266917d148b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#af20a88180db1113be1e89266917d148b">HAL_ADC_ConvCpltCallback</a> (ADC_HandleTypeDef *hadc)</td></tr>
+<tr class="memdesc:af20a88180db1113be1e89266917d148b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function for ADC1 and ADC2 conversion completion.  <br /></td></tr>
+<tr class="separator:af20a88180db1113be1e89266917d148b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38419717d04f5f1dbdbb320569a1ad6f" id="r_a38419717d04f5f1dbdbb320569a1ad6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a38419717d04f5f1dbdbb320569a1ad6f">distSensor_Task</a> (void *unused)</td></tr>
+<tr class="memdesc:a38419717d04f5f1dbdbb320569a1ad6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main task for handling distance sensor data and robot braking logic.  <br /></td></tr>
+<tr class="separator:a38419717d04f5f1dbdbb320569a1ad6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4889eb88318248c64bbb98ac6f4741d6" id="r_a4889eb88318248c64bbb98ac6f4741d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a4889eb88318248c64bbb98ac6f4741d6">distSensor_TaskCreate</a> (void *unused)</td></tr>
+<tr class="memdesc:a4889eb88318248c64bbb98ac6f4741d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and starts the distance sensor task.  <br /></td></tr>
+<tr class="separator:a4889eb88318248c64bbb98ac6f4741d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a22b804736f5648d52f639b2647d4ed13" id="r_a22b804736f5648d52f639b2647d4ed13"><td class="memItemLeft" align="right" valign="top">ADC_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a22b804736f5648d52f639b2647d4ed13">hadc1</a></td></tr>
-<tr class="memdesc:a22b804736f5648d52f639b2647d4ed13"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC handle for the first ADC instance.  <br /></td></tr>
-<tr class="separator:a22b804736f5648d52f639b2647d4ed13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd9221f1aa19aebfe0b744947f2daf49" id="r_acd9221f1aa19aebfe0b744947f2daf49"><td class="memItemLeft" align="right" valign="top">ADC_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#acd9221f1aa19aebfe0b744947f2daf49">hadc2</a></td></tr>
-<tr class="memdesc:acd9221f1aa19aebfe0b744947f2daf49"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC handle for the second ADC instance.  <br /></td></tr>
-<tr class="separator:acd9221f1aa19aebfe0b744947f2daf49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f101c9097888824340c2044dd01bdac" id="r_a6f101c9097888824340c2044dd01bdac"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a6f101c9097888824340c2044dd01bdac">adc_ready_adc1_west</a> = 0</td></tr>
+<tr class="memdesc:a6f101c9097888824340c2044dd01bdac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag for ADC1 West sensor.  <br /></td></tr>
+<tr class="separator:a6f101c9097888824340c2044dd01bdac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af616d40735a778ca012064d71b316878" id="r_af616d40735a778ca012064d71b316878"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#af616d40735a778ca012064d71b316878">adc_ready_adc1_nord</a> = 0</td></tr>
+<tr class="memdesc:af616d40735a778ca012064d71b316878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag for ADC1 North sensor.  <br /></td></tr>
+<tr class="separator:af616d40735a778ca012064d71b316878"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab43377de4af10c658404685e764704e2" id="r_ab43377de4af10c658404685e764704e2"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#ab43377de4af10c658404685e764704e2">adc_ready_adc2_sud</a> = 0</td></tr>
+<tr class="memdesc:ab43377de4af10c658404685e764704e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag for ADC2 South sensor.  <br /></td></tr>
+<tr class="separator:ab43377de4af10c658404685e764704e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6767cd0d70d2f5ebe5621f227bfb0cc1" id="r_a6767cd0d70d2f5ebe5621f227bfb0cc1"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a6767cd0d70d2f5ebe5621f227bfb0cc1">adc_ready_adc2_est</a> = 0</td></tr>
+<tr class="memdesc:a6767cd0d70d2f5ebe5621f227bfb0cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag for ADC2 East sensor.  <br /></td></tr>
+<tr class="separator:a6767cd0d70d2f5ebe5621f227bfb0cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d1c5506db2fa98c64873a8a867a871f" id="r_a3d1c5506db2fa98c64873a8a867a871f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a3d1c5506db2fa98c64873a8a867a871f">Sens_N</a></td></tr>
+<tr class="memdesc:a3d1c5506db2fa98c64873a8a867a871f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for North sensor.  <br /></td></tr>
+<tr class="separator:a3d1c5506db2fa98c64873a8a867a871f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada163e0524f002d8efdbebb7a8443409" id="r_ada163e0524f002d8efdbebb7a8443409"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#ada163e0524f002d8efdbebb7a8443409">Sens_S</a></td></tr>
+<tr class="memdesc:ada163e0524f002d8efdbebb7a8443409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for South sensor.  <br /></td></tr>
+<tr class="separator:ada163e0524f002d8efdbebb7a8443409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a9d1632e60a7e5183fb0730e52ec5e" id="r_a40a9d1632e60a7e5183fb0730e52ec5e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a40a9d1632e60a7e5183fb0730e52ec5e">Sens_W</a></td></tr>
+<tr class="memdesc:a40a9d1632e60a7e5183fb0730e52ec5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for West sensor.  <br /></td></tr>
+<tr class="separator:a40a9d1632e60a7e5183fb0730e52ec5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33b0b2bc4608541bbcf332e3739d4859" id="r_a33b0b2bc4608541bbcf332e3739d4859"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a33b0b2bc4608541bbcf332e3739d4859">Sens_E</a></td></tr>
+<tr class="memdesc:a33b0b2bc4608541bbcf332e3739d4859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for East sensor.  <br /></td></tr>
+<tr class="separator:a33b0b2bc4608541bbcf332e3739d4859"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ede96da6fab186ad4718dcecadc0a0" id="r_ac0ede96da6fab186ad4718dcecadc0a0"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#ac0ede96da6fab186ad4718dcecadc0a0">is_robot_braking</a></td></tr>
+<tr class="memdesc:ac0ede96da6fab186ad4718dcecadc0a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to indicate if the robot is braking.  <br /></td></tr>
+<tr class="separator:ac0ede96da6fab186ad4718dcecadc0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f4661221d78df45d6974e3a1327b0ea" id="r_a6f4661221d78df45d6974e3a1327b0ea"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a6f4661221d78df45d6974e3a1327b0ea">adc_value</a></td></tr>
+<tr class="memdesc:a6f4661221d78df45d6974e3a1327b0ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current ADC value.  <br /></td></tr>
+<tr class="separator:a6f4661221d78df45d6974e3a1327b0ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b4a7df2413adca3e50723a3686d5f85" id="r_a2b4a7df2413adca3e50723a3686d5f85"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a2b4a7df2413adca3e50723a3686d5f85">adc1_dma_buffer</a> [<a class="el" href="distSensor__driver_8c.html#a52f60ccf193f9f4563400d60c1cd9053">ADC1_CHANNEL_COUNT</a>]</td></tr>
+<tr class="memdesc:a2b4a7df2413adca3e50723a3686d5f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA buffer for ADC1.  <br /></td></tr>
+<tr class="separator:a2b4a7df2413adca3e50723a3686d5f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f06b77e687a996a423a115807413812" id="r_a6f06b77e687a996a423a115807413812"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a6f06b77e687a996a423a115807413812">adc2_dma_buffer</a> [<a class="el" href="distSensor__driver_8c.html#a57bb39d01589ee5f352a991506e48154">ADC2_CHANNEL_COUNT</a>]</td></tr>
+<tr class="memdesc:a6f06b77e687a996a423a115807413812"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA buffer for ADC2.  <br /></td></tr>
+<tr class="separator:a6f06b77e687a996a423a115807413812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513a4921a42af17611e32689d2abd692" id="r_a513a4921a42af17611e32689d2abd692"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a513a4921a42af17611e32689d2abd692">value_west</a></td></tr>
+<tr class="memdesc:a513a4921a42af17611e32689d2abd692"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC value for West sensor (ADC1 Channel 5)  <br /></td></tr>
+<tr class="separator:a513a4921a42af17611e32689d2abd692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e9ba0f8df625525c0a7cb93568ca058" id="r_a5e9ba0f8df625525c0a7cb93568ca058"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a5e9ba0f8df625525c0a7cb93568ca058">value_nord</a></td></tr>
+<tr class="memdesc:a5e9ba0f8df625525c0a7cb93568ca058"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC value for North sensor (ADC1 Channel 11)  <br /></td></tr>
+<tr class="separator:a5e9ba0f8df625525c0a7cb93568ca058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9e2262bcb6f8840a324a163784c1846" id="r_ab9e2262bcb6f8840a324a163784c1846"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#ab9e2262bcb6f8840a324a163784c1846">value_est</a></td></tr>
+<tr class="memdesc:ab9e2262bcb6f8840a324a163784c1846"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC value for East sensor (ADC2 Channel 15)  <br /></td></tr>
+<tr class="separator:ab9e2262bcb6f8840a324a163784c1846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85705a7f7c3921f5a3e19b9cac9e499a" id="r_a85705a7f7c3921f5a3e19b9cac9e499a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distSensor__driver_8c.html#a85705a7f7c3921f5a3e19b9cac9e499a">value_sud</a></td></tr>
+<tr class="memdesc:a85705a7f7c3921f5a3e19b9cac9e499a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC value for South sensor (ADC2 Channel 12)  <br /></td></tr>
+<tr class="separator:a85705a7f7c3921f5a3e19b9cac9e499a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a52f60ccf193f9f4563400d60c1cd9053" name="a52f60ccf193f9f4563400d60c1cd9053"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52f60ccf193f9f4563400d60c1cd9053">&#9670;&#160;</a></span>ADC1_CHANNEL_COUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ADC1_CHANNEL_COUNT&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number of channels for ADC1. </p>
+
+</div>
+</div>
+<a id="a57bb39d01589ee5f352a991506e48154" name="a57bb39d01589ee5f352a991506e48154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57bb39d01589ee5f352a991506e48154">&#9670;&#160;</a></span>ADC2_CHANNEL_COUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ADC2_CHANNEL_COUNT&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number of channels for ADC2. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a315b7e13f710b6f319bd133c6ef435cc" name="a315b7e13f710b6f319bd133c6ef435cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a315b7e13f710b6f319bd133c6ef435cc">&#9670;&#160;</a></span>constrain()</h2>
+<a id="ae6aa5534455e5ee17d9a6a207c97309a" name="ae6aa5534455e5ee17d9a6a207c97309a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6aa5534455e5ee17d9a6a207c97309a">&#9670;&#160;</a></span>distSensor_Init_Sensor()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void constrain </td>
+          <td class="memname">void distSensor_Init_Sensor </td>
           <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>sensVal</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constrains the sensor value within the specified limits. </p>
-<p>This function ensures that the sensor value does not exceed the maximum or minimum threshold values.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sensVal</td><td>Pointer to the sensor value to be constrained. </td></tr>
-  </table>
-  </dd>
-</dl>
-<p>&lt; Set to maximum if exceeded</p>
-<p>&lt; Set to minimum if below threshold</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="distSensor__driver_8c_a315b7e13f710b6f319bd133c6ef435cc_icgraph.png" border="0" usemap="#adistSensor__driver_8c_a315b7e13f710b6f319bd133c6ef435cc_icgraph" alt=""/></div>
-<map name="adistSensor__driver_8c_a315b7e13f710b6f319bd133c6ef435cc_icgraph" id="adistSensor__driver_8c_a315b7e13f710b6f319bd133c6ef435cc_icgraph">
-<area shape="rect" title="Constrains the sensor value within the specified limits." alt="" coords="240,13,323,38"/>
-<area shape="rect" href="distSensor__driver_8c.html#a7b88ff064af0c1c032244272a7955166" title="Converts the sensor value (voltage) to distance." alt="" coords="5,5,192,45"/>
-<area shape="poly" title=" " alt="" coords="226,28,192,28,192,23,226,23"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a7b88ff064af0c1c032244272a7955166" name="a7b88ff064af0c1c032244272a7955166"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b88ff064af0c1c032244272a7955166">&#9670;&#160;</a></span>distSensor_ConvertVoltToDistance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t distSensor_ConvertVoltToDistance </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sensVal</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Converts the sensor value (voltage) to distance. </p>
-<p>This function takes a sensor value and applies a polynomial fit to convert it into a distance value. It also applies a moving average filter to smooth out the result.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sensVal</td><td>The raw sensor value (voltage). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The calculated distance after conversion and filtering. </dd></dl>
-<p>&lt; Variable to store calculated distance</p>
-<p>&lt; Return the filtered distance</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="distSensor__driver_8c_a7b88ff064af0c1c032244272a7955166_cgraph.png" border="0" usemap="#adistSensor__driver_8c_a7b88ff064af0c1c032244272a7955166_cgraph" alt=""/></div>
-<map name="adistSensor__driver_8c_a7b88ff064af0c1c032244272a7955166_cgraph" id="adistSensor__driver_8c_a7b88ff064af0c1c032244272a7955166_cgraph">
-<area shape="rect" title="Converts the sensor value (voltage) to distance." alt="" coords="5,23,192,63"/>
-<area shape="rect" href="distSensor__driver_8c.html#a315b7e13f710b6f319bd133c6ef435cc" title="Constrains the sensor value within the specified limits." alt="" coords="264,5,347,31"/>
-<area shape="poly" title=" " alt="" coords="192,29,250,22,251,27,193,34"/>
-<area shape="rect" href="distSensor__driver_8c.html#abb2713992f268cfe1602bfcc88dfc3b8" title="Calculates the moving average of sensor readings." alt="" coords="240,55,371,80"/>
-<area shape="poly" title=" " alt="" coords="193,52,227,56,226,61,192,57"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a0ffff7d4577b90f5083bb5d907348dc0" name="a0ffff7d4577b90f5083bb5d907348dc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ffff7d4577b90f5083bb5d907348dc0">&#9670;&#160;</a></span>distSensor_ReadADCChannel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t distSensor_ReadADCChannel </td>
-          <td>(</td>
-          <td class="paramtype">ADC_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>hadc</em>, </td>
+          <td class="paramtype"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>sensor</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="distSensor__driver_8h.html#aad63493b7aa9ad637d376e72e6664a97">DistSensor_Position_t</a>&#160;</td>
+          <td class="paramname"><em>sensor_position</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -240,106 +286,512 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the ADC value from a specified channel. </p>
-<p>This function configures the specified ADC channel, starts the conversion, waits for it to complete, retrieves the converted value, and then stops the ADC.</p>
+<p>Initializes a distance sensor handle. </p>
+<p>This function initializes the state of a distance sensor by setting its detection status to "floor", its ADC value to zero, and its status to "no data".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hadc</td><td>Pointer to the ADC handle structure. </td></tr>
-    <tr><td class="paramname">channel</td><td>The ADC channel to read from. </td></tr>
+    <tr><td class="paramname">sensor</td><td>Pointer to the <a class="el" href="structDistSensor__handle__t.html" title="Structure representing the distance sensor&#39;s state.">DistSensor_handle_t</a> structure for the sensor. </td></tr>
+    <tr><td class="paramname">sensor_position</td><td>The position of the sensor (North, South, West, East). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The ADC converted value. </dd></dl>
-<p>&lt; Structure for ADC channel configuration</p>
-<p>&lt; Select the desired channel</p>
-<p>&lt; Set as the first rank in regular conversion</p>
-<p>&lt; Adjust sampling time as needed</p>
-<p>&lt; Return the ADC value</p>
+<p>&lt; Set ADC status to no data</p>
+<p>&lt; Set the sensor's position</p>
+<p>&lt; Set default detection status</p>
+<p>&lt; Set the sensor value to 0</p>
 <div class="dynheader">
-Here is the call graph for this function:</div>
+Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="distSensor__driver_8c_a0ffff7d4577b90f5083bb5d907348dc0_cgraph.png" border="0" usemap="#adistSensor__driver_8c_a0ffff7d4577b90f5083bb5d907348dc0_cgraph" alt=""/></div>
-<map name="adistSensor__driver_8c_a0ffff7d4577b90f5083bb5d907348dc0_cgraph" id="adistSensor__driver_8c_a0ffff7d4577b90f5083bb5d907348dc0_cgraph">
-<area shape="rect" title="Reads the ADC value from a specified channel." alt="" coords="5,5,216,31"/>
-<area shape="rect" href="main_8c.html#a1730ffe1e560465665eb47d9264826f9" title="This function is executed in case of error occurrence." alt="" coords="264,5,375,31"/>
-<area shape="poly" title=" " alt="" coords="216,15,250,15,250,21,216,21"/>
+<div class="center"><img src="distSensor__driver_8c_ae6aa5534455e5ee17d9a6a207c97309a_icgraph.png" border="0" usemap="#adistSensor__driver_8c_ae6aa5534455e5ee17d9a6a207c97309a_icgraph" alt=""/></div>
+<map name="adistSensor__driver_8c_ae6aa5534455e5ee17d9a6a207c97309a_icgraph" id="adistSensor__driver_8c_ae6aa5534455e5ee17d9a6a207c97309a_icgraph">
+<area shape="rect" title="Initializes a distance sensor handle." alt="" coords="397,5,567,31"/>
+<area shape="rect" href="distSensor__driver_8c.html#a38419717d04f5f1dbdbb320569a1ad6f" title="Main task for handling distance sensor data and robot braking logic." alt="" coords="223,5,349,31"/>
+<area shape="poly" title=" " alt="" coords="383,21,350,21,350,15,383,15"/>
+<area shape="rect" href="distSensor__driver_8c.html#a4889eb88318248c64bbb98ac6f4741d6" title="Creates and starts the distance sensor task." alt="" coords="5,5,175,31"/>
+<area shape="poly" title=" " alt="" coords="209,21,175,21,175,15,209,15"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="abb2713992f268cfe1602bfcc88dfc3b8" name="abb2713992f268cfe1602bfcc88dfc3b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb2713992f268cfe1602bfcc88dfc3b8">&#9670;&#160;</a></span>moving_average()</h2>
+<a id="ae11fd67401cad016e98fe8c9bc48587f" name="ae11fd67401cad016e98fe8c9bc48587f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae11fd67401cad016e98fe8c9bc48587f">&#9670;&#160;</a></span>distSensor_initADC_DMA()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float moving_average </td>
+          <td class="memname">void distSensor_initADC_DMA </td>
           <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>new_reading</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculates the moving average of sensor readings. </p>
-<p>This function updates a circular buffer with the new reading, calculates the sum of the readings, and returns the average.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">new_reading</td><td>The new sensor reading to add to the average. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The calculated moving average of the readings. </dd></dl>
-<p>&lt; Move to the next index in a circular manner</p>
-<p>&lt; Increase count until it reaches the window size</p>
-<p>&lt; Accumulate the readings</p>
-<p>&lt; Return the average</p>
+<p>Initializes ADC1 and ADC2 in DMA mode. </p>
+<p>Initializes the ADC for the distance sensor using DMA.</p>
+<p>This function initializes the ADCs for the four distance sensors (West, North, East, South) using DMA to continuously sample the sensor data. It also starts a timer to trigger periodic updates. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="distSensor__driver_8c_abb2713992f268cfe1602bfcc88dfc3b8_icgraph.png" border="0" usemap="#adistSensor__driver_8c_abb2713992f268cfe1602bfcc88dfc3b8_icgraph" alt=""/></div>
-<map name="adistSensor__driver_8c_abb2713992f268cfe1602bfcc88dfc3b8_icgraph" id="adistSensor__driver_8c_abb2713992f268cfe1602bfcc88dfc3b8_icgraph">
-<area shape="rect" title="Calculates the moving average of sensor readings." alt="" coords="240,13,371,38"/>
-<area shape="rect" href="distSensor__driver_8c.html#a7b88ff064af0c1c032244272a7955166" title="Converts the sensor value (voltage) to distance." alt="" coords="5,5,192,45"/>
-<area shape="poly" title=" " alt="" coords="226,28,192,28,192,23,226,23"/>
+<div class="center"><img src="distSensor__driver_8c_ae11fd67401cad016e98fe8c9bc48587f_icgraph.png" border="0" usemap="#adistSensor__driver_8c_ae11fd67401cad016e98fe8c9bc48587f_icgraph" alt=""/></div>
+<map name="adistSensor__driver_8c_ae11fd67401cad016e98fe8c9bc48587f_icgraph" id="adistSensor__driver_8c_ae11fd67401cad016e98fe8c9bc48587f_icgraph">
+<area shape="rect" title="Initializes ADC1 and ADC2 in DMA mode." alt="" coords="397,5,581,31"/>
+<area shape="rect" href="distSensor__driver_8c.html#a38419717d04f5f1dbdbb320569a1ad6f" title="Main task for handling distance sensor data and robot braking logic." alt="" coords="223,5,349,31"/>
+<area shape="poly" title=" " alt="" coords="384,21,350,21,350,15,384,15"/>
+<area shape="rect" href="distSensor__driver_8c.html#a4889eb88318248c64bbb98ac6f4741d6" title="Creates and starts the distance sensor task." alt="" coords="5,5,175,31"/>
+<area shape="poly" title=" " alt="" coords="209,21,175,21,175,15,209,15"/>
 </map>
 </div>
 
 </div>
 </div>
+<a id="a6e89adf3e601fd7e7cd873194c8d9f92" name="a6e89adf3e601fd7e7cd873194c8d9f92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e89adf3e601fd7e7cd873194c8d9f92">&#9670;&#160;</a></span>distSensor_ReadADC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t distSensor_ReadADC </td>
+          <td>(</td>
+          <td class="paramtype">ADC_HandleTypeDef *&#160;</td>
+          <td class="paramname"><em>hadc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads the ADC value of the distance sensor using polling. </p>
+<p>Reads the ADC value of the distance sensor.</p>
+<p>This function triggers the ADC conversion and waits for the conversion to complete, then returns the converted ADC value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hadc</td><td>Pointer to the ADC handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The ADC value after conversion. </dd></dl>
+<p>&lt; Start ADC conversion</p>
+<p>&lt; Wait for conversion to complete</p>
+<p>&lt; Retrieve the ADC conversion result</p>
+<p>&lt; Return the ADC value</p>
+
+</div>
+</div>
+<a id="aea7252a717466aa4b103f4705807623d" name="aea7252a717466aa4b103f4705807623d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea7252a717466aa4b103f4705807623d">&#9670;&#160;</a></span>distSensor_ReadADC_DMA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HAL_StatusTypeDef distSensor_ReadADC_DMA </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads values from ADC1 and ADC2 using DMA and updates sensor status. </p>
+<p>Reads the ADC value of the distance sensor using DMA.</p>
+<p>This function checks the <code>adc_ready</code> status for each sensor and reads the corresponding ADC values from the DMA buffers. It then determines whether the sensor is detecting the floor or void based on the threshold value. After processing the ADC values, the sensor's <code>adc_ready</code> status is reset.</p>
+<dl class="section return"><dt>Returns</dt><dd>HAL_OK if the function executes successfully. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="distSensor__driver_8c_aea7252a717466aa4b103f4705807623d_icgraph.png" border="0" usemap="#adistSensor__driver_8c_aea7252a717466aa4b103f4705807623d_icgraph" alt=""/></div>
+<map name="adistSensor__driver_8c_aea7252a717466aa4b103f4705807623d_icgraph" id="adistSensor__driver_8c_aea7252a717466aa4b103f4705807623d_icgraph">
+<area shape="rect" title="Reads values from ADC1 and ADC2 using DMA and updates sensor status." alt="" coords="397,5,593,31"/>
+<area shape="rect" href="distSensor__driver_8c.html#a38419717d04f5f1dbdbb320569a1ad6f" title="Main task for handling distance sensor data and robot braking logic." alt="" coords="223,5,349,31"/>
+<area shape="poly" title=" " alt="" coords="384,21,350,21,350,15,384,15"/>
+<area shape="rect" href="distSensor__driver_8c.html#a4889eb88318248c64bbb98ac6f4741d6" title="Creates and starts the distance sensor task." alt="" coords="5,5,175,31"/>
+<area shape="poly" title=" " alt="" coords="209,21,175,21,175,15,209,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a38419717d04f5f1dbdbb320569a1ad6f" name="a38419717d04f5f1dbdbb320569a1ad6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38419717d04f5f1dbdbb320569a1ad6f">&#9670;&#160;</a></span>distSensor_Task()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void distSensor_Task </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>unused</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Main task for handling distance sensor data and robot braking logic. </p>
+<p>FreeRTOS task function for the distance sensor.</p>
+<p>The <code>distSensor_Task</code> function continuously reads the ADC values from the distance sensors using DMA. It checks the sensor status for each of the four directions (North, South, East, West). If any sensor detects void (no surface detected), the robot's motors are braked. The task also prints messages to the console indicating which direction has detected void.</p>
+<p>The task runs in an infinite loop and contains a small delay to prevent excessive CPU usage. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="distSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_cgraph.png" border="0" usemap="#adistSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_cgraph" alt=""/></div>
+<map name="adistSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_cgraph" id="adistSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_cgraph">
+<area shape="rect" title="Main task for handling distance sensor data and robot braking logic." alt="" coords="5,80,132,105"/>
+<area shape="rect" href="DCMotor__driver_8c.html#aed128fdeefdc8bdb27bcd8655d83744b" title="Apply an emergency brake to a motor by setting maximum PWM pulses." alt="" coords="217,5,339,31"/>
+<area shape="poly" title=" " alt="" coords="93,77,179,40,204,32,206,37,181,44,95,82"/>
+<area shape="rect" href="distSensor__driver_8c.html#ae6aa5534455e5ee17d9a6a207c97309a" title="Initializes a distance sensor handle." alt="" coords="193,55,363,80"/>
+<area shape="poly" title=" " alt="" coords="132,82,179,77,180,82,132,88"/>
+<area shape="rect" href="distSensor__driver_8c.html#ae11fd67401cad016e98fe8c9bc48587f" title="Initializes ADC1 and ADC2 in DMA mode." alt="" coords="186,104,370,129"/>
+<area shape="poly" title=" " alt="" coords="132,97,172,102,172,107,132,103"/>
+<area shape="rect" href="distSensor__driver_8c.html#aea7252a717466aa4b103f4705807623d" title="Reads values from ADC1 and ADC2 using DMA and updates sensor status." alt="" coords="180,153,376,179"/>
+<area shape="poly" title=" " alt="" coords="97,103,181,138,210,147,208,152,179,143,95,108"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="distSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_icgraph.png" border="0" usemap="#adistSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_icgraph" alt=""/></div>
+<map name="adistSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_icgraph" id="adistSensor__driver_8c_a38419717d04f5f1dbdbb320569a1ad6f_icgraph">
+<area shape="rect" title="Main task for handling distance sensor data and robot braking logic." alt="" coords="223,5,349,31"/>
+<area shape="rect" href="distSensor__driver_8c.html#a4889eb88318248c64bbb98ac6f4741d6" title="Creates and starts the distance sensor task." alt="" coords="5,5,175,31"/>
+<area shape="poly" title=" " alt="" coords="209,21,175,21,175,15,209,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4889eb88318248c64bbb98ac6f4741d6" name="a4889eb88318248c64bbb98ac6f4741d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4889eb88318248c64bbb98ac6f4741d6">&#9670;&#160;</a></span>distSensor_TaskCreate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void distSensor_TaskCreate </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>unused</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates and starts the distance sensor task. </p>
+<p>Creates the FreeRTOS task for the distance sensor.</p>
+<p>This function creates the <code>distSensor_Task</code> with a priority defined by <code>distSensor_Task_Priority</code> and a stack size of 128 bytes. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="distSensor__driver_8c_a4889eb88318248c64bbb98ac6f4741d6_cgraph.png" border="0" usemap="#adistSensor__driver_8c_a4889eb88318248c64bbb98ac6f4741d6_cgraph" alt=""/></div>
+<map name="adistSensor__driver_8c_a4889eb88318248c64bbb98ac6f4741d6_cgraph" id="adistSensor__driver_8c_a4889eb88318248c64bbb98ac6f4741d6_cgraph">
+<area shape="rect" title="Creates and starts the distance sensor task." alt="" coords="5,80,175,105"/>
+<area shape="rect" href="distSensor__driver_8c.html#a38419717d04f5f1dbdbb320569a1ad6f" title="Main task for handling distance sensor data and robot braking logic." alt="" coords="223,80,349,105"/>
+<area shape="poly" title=" " alt="" coords="175,90,209,90,209,95,175,95"/>
+<area shape="rect" href="DCMotor__driver_8c.html#aed128fdeefdc8bdb27bcd8655d83744b" title="Apply an emergency brake to a motor by setting maximum PWM pulses." alt="" coords="434,5,557,31"/>
+<area shape="poly" title=" " alt="" coords="311,77,396,40,421,32,423,37,398,44,313,82"/>
+<area shape="rect" href="distSensor__driver_8c.html#ae6aa5534455e5ee17d9a6a207c97309a" title="Initializes a distance sensor handle." alt="" coords="411,55,580,80"/>
+<area shape="poly" title=" " alt="" coords="349,82,397,77,397,82,350,88"/>
+<area shape="rect" href="distSensor__driver_8c.html#ae11fd67401cad016e98fe8c9bc48587f" title="Initializes ADC1 and ADC2 in DMA mode." alt="" coords="403,104,587,129"/>
+<area shape="poly" title=" " alt="" coords="350,97,390,102,389,107,349,103"/>
+<area shape="rect" href="distSensor__driver_8c.html#aea7252a717466aa4b103f4705807623d" title="Reads values from ADC1 and ADC2 using DMA and updates sensor status." alt="" coords="397,153,593,179"/>
+<area shape="poly" title=" " alt="" coords="315,103,398,138,427,147,425,152,396,143,313,108"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af20a88180db1113be1e89266917d148b" name="af20a88180db1113be1e89266917d148b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af20a88180db1113be1e89266917d148b">&#9670;&#160;</a></span>HAL_ADC_ConvCpltCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HAL_ADC_ConvCpltCallback </td>
+          <td>(</td>
+          <td class="paramtype">ADC_HandleTypeDef *&#160;</td>
+          <td class="paramname"><em>hadc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Callback function for ADC1 and ADC2 conversion completion. </p>
+<p>Callback function triggered when ADC conversion is complete.</p>
+<p>This callback function is triggered when an ADC conversion is completed. It sets the <code>adc_ready</code> status for each sensor to indicate that new sensor data is available for processing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hadc</td><td>Pointer to the ADC handle that triggered the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a22b804736f5648d52f639b2647d4ed13" name="a22b804736f5648d52f639b2647d4ed13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22b804736f5648d52f639b2647d4ed13">&#9670;&#160;</a></span>hadc1</h2>
+<a id="a2b4a7df2413adca3e50723a3686d5f85" name="a2b4a7df2413adca3e50723a3686d5f85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b4a7df2413adca3e50723a3686d5f85">&#9670;&#160;</a></span>adc1_dma_buffer</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ADC_HandleTypeDef hadc1</td>
+          <td class="memname">uint32_t adc1_dma_buffer[<a class="el" href="distSensor__driver_8c.html#a52f60ccf193f9f4563400d60c1cd9053">ADC1_CHANNEL_COUNT</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>ADC handle for the first ADC instance. </p>
+<p>DMA buffer for ADC1. </p>
 
 </div>
 </div>
-<a id="acd9221f1aa19aebfe0b744947f2daf49" name="acd9221f1aa19aebfe0b744947f2daf49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd9221f1aa19aebfe0b744947f2daf49">&#9670;&#160;</a></span>hadc2</h2>
+<a id="a6f06b77e687a996a423a115807413812" name="a6f06b77e687a996a423a115807413812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f06b77e687a996a423a115807413812">&#9670;&#160;</a></span>adc2_dma_buffer</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ADC_HandleTypeDef hadc2</td>
+          <td class="memname">uint32_t adc2_dma_buffer[<a class="el" href="distSensor__driver_8c.html#a57bb39d01589ee5f352a991506e48154">ADC2_CHANNEL_COUNT</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>ADC handle for the second ADC instance. </p>
+<p>DMA buffer for ADC2. </p>
+
+</div>
+</div>
+<a id="af616d40735a778ca012064d71b316878" name="af616d40735a778ca012064d71b316878"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af616d40735a778ca012064d71b316878">&#9670;&#160;</a></span>adc_ready_adc1_nord</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t adc_ready_adc1_nord = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag for ADC1 North sensor. </p>
+
+</div>
+</div>
+<a id="a6f101c9097888824340c2044dd01bdac" name="a6f101c9097888824340c2044dd01bdac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f101c9097888824340c2044dd01bdac">&#9670;&#160;</a></span>adc_ready_adc1_west</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t adc_ready_adc1_west = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag for ADC1 West sensor. </p>
+
+</div>
+</div>
+<a id="a6767cd0d70d2f5ebe5621f227bfb0cc1" name="a6767cd0d70d2f5ebe5621f227bfb0cc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6767cd0d70d2f5ebe5621f227bfb0cc1">&#9670;&#160;</a></span>adc_ready_adc2_est</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t adc_ready_adc2_est = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag for ADC2 East sensor. </p>
+
+</div>
+</div>
+<a id="ab43377de4af10c658404685e764704e2" name="ab43377de4af10c658404685e764704e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab43377de4af10c658404685e764704e2">&#9670;&#160;</a></span>adc_ready_adc2_sud</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t adc_ready_adc2_sud = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag for ADC2 South sensor. </p>
+
+</div>
+</div>
+<a id="a6f4661221d78df45d6974e3a1327b0ea" name="a6f4661221d78df45d6974e3a1327b0ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f4661221d78df45d6974e3a1327b0ea">&#9670;&#160;</a></span>adc_value</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t adc_value</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Current ADC value. </p>
+
+</div>
+</div>
+<a id="ac0ede96da6fab186ad4718dcecadc0a0" name="ac0ede96da6fab186ad4718dcecadc0a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0ede96da6fab186ad4718dcecadc0a0">&#9670;&#160;</a></span>is_robot_braking</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t is_robot_braking</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag to indicate if the robot is braking. </p>
+<p>Flag indicating whether the robot is currently braking. </p>
+
+</div>
+</div>
+<a id="a33b0b2bc4608541bbcf332e3739d4859" name="a33b0b2bc4608541bbcf332e3739d4859"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33b0b2bc4608541bbcf332e3739d4859">&#9670;&#160;</a></span>Sens_E</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a> Sens_E</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle for East sensor. </p>
+<p>East sensor handle. </p>
+
+</div>
+</div>
+<a id="a3d1c5506db2fa98c64873a8a867a871f" name="a3d1c5506db2fa98c64873a8a867a871f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d1c5506db2fa98c64873a8a867a871f">&#9670;&#160;</a></span>Sens_N</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a> Sens_N</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle for North sensor. </p>
+<p>External handles for directional distance sensors. </p>
+
+</div>
+</div>
+<a id="ada163e0524f002d8efdbebb7a8443409" name="ada163e0524f002d8efdbebb7a8443409"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada163e0524f002d8efdbebb7a8443409">&#9670;&#160;</a></span>Sens_S</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a> Sens_S</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle for South sensor. </p>
+<p>South sensor handle. </p>
+
+</div>
+</div>
+<a id="a40a9d1632e60a7e5183fb0730e52ec5e" name="a40a9d1632e60a7e5183fb0730e52ec5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40a9d1632e60a7e5183fb0730e52ec5e">&#9670;&#160;</a></span>Sens_W</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structDistSensor__handle__t.html">DistSensor_handle_t</a> Sens_W</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle for West sensor. </p>
+<p>West sensor handle. </p>
+
+</div>
+</div>
+<a id="ab9e2262bcb6f8840a324a163784c1846" name="ab9e2262bcb6f8840a324a163784c1846"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9e2262bcb6f8840a324a163784c1846">&#9670;&#160;</a></span>value_est</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t value_est</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ADC value for East sensor (ADC2 Channel 15) </p>
+
+</div>
+</div>
+<a id="a5e9ba0f8df625525c0a7cb93568ca058" name="a5e9ba0f8df625525c0a7cb93568ca058"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e9ba0f8df625525c0a7cb93568ca058">&#9670;&#160;</a></span>value_nord</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t value_nord</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ADC value for North sensor (ADC1 Channel 11) </p>
+
+</div>
+</div>
+<a id="a85705a7f7c3921f5a3e19b9cac9e499a" name="a85705a7f7c3921f5a3e19b9cac9e499a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85705a7f7c3921f5a3e19b9cac9e499a">&#9670;&#160;</a></span>value_sud</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t value_sud</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ADC value for South sensor (ADC2 Channel 12) </p>
+
+</div>
+</div>
+<a id="a513a4921a42af17611e32689d2abd692" name="a513a4921a42af17611e32689d2abd692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a513a4921a42af17611e32689d2abd692">&#9670;&#160;</a></span>value_west</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t value_west</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ADC value for West sensor (ADC1 Channel 5) </p>
 
 </div>
 </div>
@@ -348,7 +800,7 @@ Here is the caller graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_2f117550a63961c477d5fa39a535f353.html">CubeIDE</a></li><li class="navelem"><a class="el" href="dir_d6e749d207866ab47aefbfae481050c9.html">TagBot</a></li><li class="navelem"><a class="el" href="dir_0d9d1bfaabbd7551ec8e17290eba5916.html">Core</a></li><li class="navelem"><a class="el" href="dir_633ac7ea77318a5ee6f720b970db8aad.html">Src</a></li><li class="navelem"><a class="el" href="distSensor__driver_8c.html">distSensor_driver.c</a></li>
+    <li class="navelem"><a class="el" href="dir_2f117550a63961c477d5fa39a535f353.html">CubeIDE</a></li><li class="navelem"><a class="el" href="dir_d6e749d207866ab47aefbfae481050c9.html">TagBot</a></li><li class="navelem"><a class="el" href="dir_336dd91b9395692d31d00cd84cabc7c6.html">libs</a></li><li class="navelem"><a class="el" href="distSensor__driver_8c.html">distSensor_driver.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

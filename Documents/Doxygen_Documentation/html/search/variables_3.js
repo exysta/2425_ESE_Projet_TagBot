@@ -1,12 +1,15 @@
 var searchData=
 [
-  ['hadc1_0',['hadc1',['../adc_8c.html#a22b804736f5648d52f639b2647d4ed13',1,'hadc1:&#160;adc.c'],['../distSensor__driver_8c.html#a22b804736f5648d52f639b2647d4ed13',1,'hadc1:&#160;distSensor_driver.c']]],
-  ['hadc2_1',['hadc2',['../adc_8c.html#acd9221f1aa19aebfe0b744947f2daf49',1,'hadc2:&#160;adc.c'],['../distSensor__driver_8c.html#acd9221f1aa19aebfe0b744947f2daf49',1,'hadc2:&#160;distSensor_driver.c']]],
-  ['hi2c1_2',['hi2c1',['../i2c_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7',1,'i2c.c']]],
-  ['hspi1_3',['hspi1',['../spi_8c.html#a9c6222bae4d0328dd843ae099623b40b',1,'spi.c']]],
-  ['htim1_4',['htim1',['../tim_8c.html#a25fc663547539bc49fecc0011bd76ab5',1,'tim.c']]],
-  ['htim3_5',['htim3',['../tim_8c.html#aac3d2c59ee0e3bbae1b99529a154eb62',1,'tim.c']]],
-  ['htim4_6',['htim4',['../tim_8c.html#a85788cec5a97ee377e4ee2e74f026484',1,'tim.c']]],
-  ['huart3_7',['huart3',['../usart_8c.html#ab7c63c1b0f65db92b6a4ea19edf957e1',1,'usart.c']]],
-  ['huart4_8',['huart4',['../usart_8c.html#ae273feb3e0dc44e38892650faa58fced',1,'huart4:&#160;usart.c'],['../X4__driver_8c.html#ae273feb3e0dc44e38892650faa58fced',1,'huart4:&#160;usart.c']]]
+  ['data_0',['data',['../structFontDef.html#a864722845b4def15a6c53bdc4e94a24a',1,'FontDef']]],
+  ['data_5fframe_5fstart_5fidx_5fbuffer_1',['data_frame_start_idx_buffer',['../structX4LIDAR__scan__data.html#a6bff0f695fadeae17ea89cf262125793',1,'X4LIDAR_scan_data']]],
+  ['description_2',['description',['../structshell__func__struct.html#aeb20f3d3fa902130552352824b8b1808',1,'shell_func_struct']]],
+  ['device_5finfo_3',['device_info',['../structX4LIDAR__handle__t.html#acb89087cef27537c583ee2d43f0a129b',1,'X4LIDAR_handle_t']]],
+  ['direction_4',['direction',['../struct____TARGET__HandleTypeDef.html#a1a6ac20f52a48bd0cb31d659d922bc36',1,'__TARGET_HandleTypeDef']]],
+  ['displayon_5',['DisplayOn',['../struct____SCREEN__SSD1306__HandleTypeDef.html#af0a4838f1cc4d5876b339358b9c2ae19',1,'__SCREEN_SSD1306_HandleTypeDef']]],
+  ['distances_6',['distances',['../structX4LIDAR__scan__data.html#a88b45e5507773753e4a7834a996165c0',1,'X4LIDAR_scan_data']]],
+  ['dma_5fbuffer_7',['dma_buffer',['../structX4LIDAR__scan__data.html#adbc980ed52fedf4f80867a0e6d2887dd',1,'X4LIDAR_scan_data']]],
+  ['drv_5fshell_8',['drv_shell',['../structh__shell__struct.html#abcd5da9a8ccd05e399e09ba224fb5fcb',1,'h_shell_struct']]],
+  ['drv_5fshell_5freceive_9',['drv_shell_receive',['../structdrv__shell__struct.html#a7ef2398ba35679016ac1a5b002683f83',1,'drv_shell_struct']]],
+  ['drv_5fshell_5ftransmit_10',['drv_shell_transmit',['../structdrv__shell__struct.html#a672d8f74725dc8af13d43df6cd91febb',1,'drv_shell_struct']]],
+  ['dualdrive_5fhandle_11',['dualdrive_handle',['../DCMotor__driver_8h.html#a4bec4b1e1d3a367a4b56968ac0d60d07',1,'DualDrive_handle:&#160;DCMotor_driver.h'],['../RobotStrategy_8c.html#a4bec4b1e1d3a367a4b56968ac0d60d07',1,'DualDrive_handle:&#160;RobotStrategy.c']]]
 ];

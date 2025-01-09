@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['display_5fgeometry_0',['display_geometry',['../ssd1306_8c.html#a767616a57fd53d0f7f6aff36b5d0bb68',1,'ssd1306.c']]]
+  ['buffer_0',['buffer',['../struct____SCREEN__SSD1306__HandleTypeDef.html#a91f9e46f5ac8905998b05d2ed237dd8d',1,'__SCREEN_SSD1306_HandleTypeDef::buffer'],['../structX4LIDAR__response__header.html#aa2c4fe2db6434eb657ec88c935e12b3d',1,'X4LIDAR_response_header::buffer']]]
 ];

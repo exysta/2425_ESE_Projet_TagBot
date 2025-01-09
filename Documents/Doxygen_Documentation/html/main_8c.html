@@ -91,7 +91,9 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">main.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -99,56 +101,195 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 <p>: Main program body  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;main.h&quot;</code><br />
+<code>#include &quot;cmsis_os.h&quot;</code><br />
 <code>#include &quot;adc.h&quot;</code><br />
+<code>#include &quot;dma.h&quot;</code><br />
 <code>#include &quot;i2c.h&quot;</code><br />
 <code>#include &quot;spi.h&quot;</code><br />
 <code>#include &quot;tim.h&quot;</code><br />
 <code>#include &quot;usart.h&quot;</code><br />
 <code>#include &quot;gpio.h&quot;</code><br />
 <code>#include &quot;stm32g4xx_hal.h&quot;</code><br />
+<code>#include &quot;semphr.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="X4LIDAR__driver_8h_source.html">X4LIDAR_driver.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="DCMotor__driver_8h_source.html">DCMotor_driver.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="SSD1306_8h_source.html">SSD1306.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="SSD1306__fonts_8h_source.html">SSD1306_fonts.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="shell_8h_source.html">shell.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="RobotStrategy_8h_source.html">RobotStrategy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="distSensor__driver_8h_source.html">distSensor_driver.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ADXL343__driver_8h_source.html">ADXL343_driver.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for main.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8c__incl.png" border="0" usemap="#aCubeIDE_2TagBot_2Core_2Src_2main_8c" alt=""/></div>
 <map name="aCubeIDE_2TagBot_2Core_2Src_2main_8c" id="aCubeIDE_2TagBot_2Core_2Src_2main_8c">
-<area shape="rect" title=": Main program body" alt="" coords="242,5,401,45"/>
-<area shape="rect" title=" " alt="" coords="5,93,72,119"/>
-<area shape="poly" title=" " alt="" coords="254,48,86,94,85,89,253,43"/>
-<area shape="rect" title=" " alt="" coords="97,93,154,119"/>
-<area shape="poly" title=" " alt="" coords="275,48,168,91,166,86,273,43"/>
-<area shape="rect" title=" " alt="" coords="179,93,232,119"/>
-<area shape="poly" title=" " alt="" coords="295,48,235,88,232,83,292,43"/>
-<area shape="rect" title=" " alt="" coords="256,93,309,119"/>
-<area shape="poly" title=" " alt="" coords="314,47,297,82,292,80,310,44"/>
-<area shape="rect" title=" " alt="" coords="333,93,389,119"/>
-<area shape="poly" title=" " alt="" coords="333,44,352,80,347,82,329,47"/>
-<area shape="rect" title=" " alt="" coords="413,93,480,119"/>
-<area shape="poly" title=" " alt="" coords="353,43,418,84,415,88,350,48"/>
-<area shape="rect" title=" " alt="" coords="505,93,567,119"/>
-<area shape="poly" title=" " alt="" coords="374,43,493,86,491,91,372,48"/>
-<area shape="rect" title=" " alt="" coords="591,93,726,119"/>
-<area shape="poly" title=" " alt="" coords="401,42,597,88,596,93,400,48"/>
+<area shape="rect" title=": Main program body" alt="" coords="844,5,1003,45"/>
+<area shape="rect" title=" " alt="" coords="114,240,181,265"/>
+<area shape="poly" title=" " alt="" coords="844,30,672,34,458,44,253,64,169,78,107,96,65,113,29,134,16,146,10,159,9,174,16,191,33,209,54,224,102,241,100,246,52,228,30,213,12,193,4,175,4,158,12,143,25,130,63,109,105,91,168,73,252,59,458,39,672,29,844,25"/>
+<area shape="rect" title=" " alt="" coords="958,167,1052,192"/>
+<area shape="poly" title=" " alt="" coords="929,45,937,80,953,117,967,138,983,156,979,159,963,141,948,120,932,81,924,46"/>
+<area shape="rect" title=" " alt="" coords="1384,93,1442,119"/>
+<area shape="poly" title=" " alt="" coords="1003,33,1169,55,1371,91,1370,96,1168,60,1003,38"/>
+<area shape="rect" title=" " alt="" coords="1466,93,1528,119"/>
+<area shape="poly" title=" " alt="" coords="1003,31,1204,52,1326,69,1452,91,1451,96,1326,74,1203,57,1003,36"/>
+<area shape="rect" title=" " alt="" coords="26,167,80,192"/>
+<area shape="poly" title=" " alt="" coords="844,30,680,34,478,44,286,64,208,78,150,96,127,108,106,124,73,157,69,153,103,120,124,104,148,91,206,73,285,58,478,39,680,28,844,25"/>
+<area shape="rect" title=" " alt="" coords="1553,93,1606,119"/>
+<area shape="poly" title=" " alt="" coords="1003,28,1240,47,1388,66,1540,91,1539,96,1388,71,1240,53,1003,33"/>
+<area shape="rect" title=" " alt="" coords="716,240,772,265"/>
+<area shape="poly" title=" " alt="" coords="895,48,830,97,797,131,768,168,756,197,749,226,744,225,751,196,764,165,793,127,827,93,892,43"/>
+<area shape="rect" title=" " alt="" coords="232,240,298,265"/>
+<area shape="poly" title=" " alt="" coords="844,31,677,36,478,48,305,67,245,80,226,87,215,95,205,110,202,127,203,144,208,162,227,198,248,228,243,231,222,201,203,164,198,145,197,126,200,108,211,91,224,83,244,75,304,62,477,43,676,31,844,26"/>
+<area shape="rect" title=" " alt="" coords="1631,93,1694,119"/>
+<area shape="poly" title=" " alt="" coords="1003,28,1272,47,1443,65,1618,91,1617,96,1442,71,1272,52,1003,33"/>
+<area shape="rect" title=" " alt="" coords="1718,93,1852,119"/>
+<area shape="poly" title=" " alt="" coords="1003,29,1307,52,1704,91,1704,96,1306,58,1003,35"/>
+<area shape="rect" title=" " alt="" coords="1877,93,1960,119"/>
+<area shape="poly" title=" " alt="" coords="1003,26,1160,32,1371,43,1614,62,1863,91,1863,96,1613,67,1371,48,1159,37,1003,31"/>
+<area shape="rect" href="X4LIDAR__driver_8h.html" title="Driver header for the X4 LiDAR sensor." alt="" coords="358,167,492,192"/>
+<area shape="poly" title=" " alt="" coords="845,48,668,96,468,164,467,159,667,91,844,43"/>
+<area shape="rect" href="DCMotor__driver_8h.html" title=" " alt="" coords="516,167,651,192"/>
+<area shape="poly" title=" " alt="" coords="854,48,789,69,722,96,662,128,612,161,609,156,659,124,720,91,787,64,852,43"/>
+<area shape="rect" href="SSD1306_8h.html" title=" " alt="" coords="375,93,467,119"/>
+<area shape="poly" title=" " alt="" coords="844,42,481,98,480,93,843,36"/>
+<area shape="rect" href="SSD1306__fonts_8h.html" title="Font definitions and image declarations for the SSD1306 OLED display driver." alt="" coords="778,167,910,192"/>
+<area shape="poly" title=" " alt="" coords="916,47,858,155,854,153,911,45"/>
+<area shape="rect" href="shell_8h.html" title="Header file for shell driver interface and structure definitions." alt="" coords="962,93,1027,119"/>
+<area shape="poly" title=" " alt="" coords="943,44,977,81,973,85,939,47"/>
+<area shape="rect" href="RobotStrategy_8h.html" title="Header file for the robot&#39;s strategy module." alt="" coords="225,93,350,119"/>
+<area shape="poly" title=" " alt="" coords="844,38,364,96,364,91,844,33"/>
+<area shape="rect" href="distSensor__driver_8h.html" title=" " alt="" coords="1213,93,1360,119"/>
+<area shape="poly" title=" " alt="" coords="1004,41,1220,88,1219,93,1003,46"/>
+<area shape="rect" href="ADXL343__driver_8h.html" title="Driver for ADXL343 accelerometer." alt="" coords="1051,93,1188,119"/>
+<area shape="poly" title=" " alt="" coords="971,43,1079,86,1077,91,969,48"/>
+<area shape="poly" title=" " alt="" coords="381,195,195,242,194,237,380,189"/>
+<area shape="poly" title=" " alt="" coords="400,194,304,237,302,232,398,190"/>
+<area shape="rect" title=" " alt="" coords="323,240,394,265"/>
+<area shape="poly" title=" " alt="" coords="416,194,380,232,376,228,412,191"/>
+<area shape="rect" title=" " alt="" coords="625,240,692,265"/>
+<area shape="poly" title=" " alt="" coords="463,189,612,235,611,240,462,195"/>
+<area shape="rect" title=" " alt="" coords="505,240,601,265"/>
+<area shape="poly" title=" " alt="" coords="447,190,521,231,518,235,444,194"/>
+<area shape="rect" title=" " alt="" coords="418,240,480,265"/>
+<area shape="poly" title=" " alt="" coords="431,191,443,226,438,228,426,193"/>
+<area shape="poly" title=" " alt="" coords="610,190,706,232,704,237,608,194"/>
+<area shape="poly" title=" " alt="" coords="548,195,407,239,406,234,547,189"/>
+<area shape="poly" title=" " alt="" coords="597,190,638,229,634,232,594,194"/>
+<area shape="poly" title=" " alt="" coords="581,193,566,229,561,227,576,191"/>
+<area shape="poly" title=" " alt="" coords="563,194,484,236,482,231,561,190"/>
+<area shape="poly" title=" " alt="" coords="400,121,309,169,182,236,180,231,306,164,398,116"/>
+<area shape="poly" title=" " alt="" coords="375,119,363,121,94,173,93,168,362,116,374,114"/>
+<area shape="poly" title=" " alt="" coords="403,121,371,142,337,169,308,200,283,230,279,227,304,196,334,165,368,138,400,116"/>
+<area shape="poly" title=" " alt="" coords="399,121,371,140,358,153,349,168,344,182,344,197,350,227,345,228,339,198,339,181,344,166,354,150,367,136,396,117"/>
+<area shape="poly" title=" " alt="" coords="467,109,581,128,633,144,652,154,666,165,673,180,675,196,670,227,665,226,670,196,668,181,661,168,649,158,631,149,579,133,467,115"/>
+<area shape="poly" title=" " alt="" coords="467,112,764,162,763,167,466,118"/>
+<area shape="poly" title=" " alt="" coords="886,164,919,165,931,170,936,179,933,187,924,192,900,195,899,190,923,187,929,183,931,179,928,174,918,170,886,169"/>
+<area shape="rect" title=" " alt="" coords="1227,240,1298,265"/>
+<area shape="poly" title=" " alt="" coords="910,189,1214,240,1213,246,909,194"/>
+<area shape="poly" title=" " alt="" coords="999,119,1004,153,998,154,993,119"/>
+<area shape="poly" title=" " alt="" coords="1017,116,1040,131,1061,150,1073,171,1073,183,1067,194,1040,213,1002,225,955,232,903,236,796,238,706,243,705,238,796,233,903,230,954,227,1000,220,1038,208,1063,190,1068,181,1068,173,1057,154,1037,136,1014,121"/>
+<area shape="poly" title=" " alt="" coords="1028,113,1139,142,1213,164,1239,194,1256,226,1251,228,1235,197,1210,169,1138,147,1027,118"/>
+<area shape="rect" title=" " alt="" coords="1128,167,1199,192"/>
+<area shape="poly" title=" " alt="" coords="1022,116,1124,159,1122,164,1020,121"/>
+<area shape="poly" title=" " alt="" coords="267,121,234,141,201,169,178,199,161,229,156,226,174,196,198,165,231,137,264,116"/>
+<area shape="poly" title=" " alt="" coords="311,116,392,158,389,163,308,121"/>
+<area shape="poly" title=" " alt="" coords="1334,116,1369,128,1400,145,1411,155,1418,167,1420,180,1414,193,1393,215,1367,231,1339,242,1312,249,1310,243,1337,237,1365,227,1390,211,1409,191,1414,179,1413,168,1407,158,1397,149,1367,133,1332,121"/>
+<area shape="rect" title=" " alt="" coords="1325,167,1400,192"/>
+<area shape="poly" title=" " alt="" coords="1300,117,1342,155,1338,159,1297,121"/>
+<area shape="poly" title=" " alt="" coords="1180,116,1222,134,1242,148,1258,165,1265,180,1269,196,1269,226,1264,226,1264,196,1260,182,1253,168,1238,152,1220,139,1178,121"/>
+<area shape="poly" title=" " alt="" coords="1159,116,1312,161,1311,166,1158,121"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a864a5e24f251d7593d25b4c0ccd69530" id="r_a864a5e24f251d7593d25b4c0ccd69530"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a864a5e24f251d7593d25b4c0ccd69530">DISTANCE_SENSOR_ADC_BUFFER_SIZE</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a864a5e24f251d7593d25b4c0ccd69530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a70af21c671abfcc773614a9a4f63d920" id="r_a70af21c671abfcc773614a9a4f63d920"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920">SystemClock_Config</a> (void)</td></tr>
 <tr class="memdesc:a70af21c671abfcc773614a9a4f63d920"><td class="mdescLeft">&#160;</td><td class="mdescRight">System Clock Configuration.  <br /></td></tr>
 <tr class="separator:a70af21c671abfcc773614a9a4f63d920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abade755e13d07c10889ae83143656158" id="r_abade755e13d07c10889ae83143656158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#abade755e13d07c10889ae83143656158">MX_FREERTOS_Init</a> (void)</td></tr>
+<tr class="memdesc:abade755e13d07c10889ae83143656158"><td class="mdescLeft">&#160;</td><td class="mdescRight">FreeRTOS initialization.  <br /></td></tr>
+<tr class="separator:abade755e13d07c10889ae83143656158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc513dd972081ae765b6949a62872eb7" id="r_abc513dd972081ae765b6949a62872eb7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#abc513dd972081ae765b6949a62872eb7">__io_putchar</a> (int ch)</td></tr>
+<tr class="separator:abc513dd972081ae765b6949a62872eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a564bc3896b5da24642584f97c8e9d778" id="r_a564bc3896b5da24642584f97c8e9d778"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a564bc3896b5da24642584f97c8e9d778">print_lidar_distances</a> (<a class="el" href="shell_8h.html#a882be42a49ddc3335e643d6e7ff324bb">h_shell_t</a> *<a class="el" href="shell_8c.html#aa1350ee7885730b0ce2c2acc81e4c281">h_shell</a>, int argc, char **argv)</td></tr>
+<tr class="separator:a564bc3896b5da24642584f97c8e9d778"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d61f5fe97a2824157cc909809abafcd" id="r_a5d61f5fe97a2824157cc909809abafcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a5d61f5fe97a2824157cc909809abafcd">print_motor_speed</a> (<a class="el" href="shell_8h.html#a882be42a49ddc3335e643d6e7ff324bb">h_shell_t</a> *<a class="el" href="shell_8c.html#aa1350ee7885730b0ce2c2acc81e4c281">h_shell</a>, int argc, char **argv)</td></tr>
+<tr class="separator:a5d61f5fe97a2824157cc909809abafcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54b14b665d04a631991869b21065bf90" id="r_a54b14b665d04a631991869b21065bf90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a54b14b665d04a631991869b21065bf90">vApplicationStackOverflowHook</a> (TaskHandle_t xTask, char *pcTaskName)</td></tr>
+<tr class="separator:a54b14b665d04a631991869b21065bf90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe" id="r_a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
 <tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The application entry point.  <br /></td></tr>
 <tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1884970cc493d8efba5aec28c0d526e7" id="r_a1884970cc493d8efba5aec28c0d526e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a1884970cc493d8efba5aec28c0d526e7">HAL_UART_RxHalfCpltCallback</a> (UART_HandleTypeDef *huart)</td></tr>
+<tr class="separator:a1884970cc493d8efba5aec28c0d526e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae494a9643f29b87d6d81e5264e60e57b" id="r_ae494a9643f29b87d6d81e5264e60e57b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae494a9643f29b87d6d81e5264e60e57b">HAL_UART_RxCpltCallback</a> (UART_HandleTypeDef *huart)</td></tr>
+<tr class="separator:ae494a9643f29b87d6d81e5264e60e57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcdf9b59049eccbc87d54042f9235b1a" id="r_abcdf9b59049eccbc87d54042f9235b1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#abcdf9b59049eccbc87d54042f9235b1a">HAL_UART_TxCpltCallback</a> (UART_HandleTypeDef *huart)</td></tr>
+<tr class="separator:abcdf9b59049eccbc87d54042f9235b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a3b0ad512a6e6c6157440b68d395eac" id="r_a8a3b0ad512a6e6c6157440b68d395eac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a8a3b0ad512a6e6c6157440b68d395eac">HAL_TIM_PeriodElapsedCallback</a> (TIM_HandleTypeDef *htim)</td></tr>
+<tr class="memdesc:a8a3b0ad512a6e6c6157440b68d395eac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Period elapsed callback in non blocking mode.  <br /></td></tr>
+<tr class="separator:a8a3b0ad512a6e6c6157440b68d395eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1730ffe1e560465665eb47d9264826f9" id="r_a1730ffe1e560465665eb47d9264826f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a1730ffe1e560465665eb47d9264826f9">Error_Handler</a> (void)</td></tr>
 <tr class="memdesc:a1730ffe1e560465665eb47d9264826f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is executed in case of error occurrence.  <br /></td></tr>
 <tr class="separator:a1730ffe1e560465665eb47d9264826f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ab23c270e6fe079f27b9a05d1b4014651" id="r_ab23c270e6fe079f27b9a05d1b4014651"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structX4LIDAR__handle__t.html">X4LIDAR_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ab23c270e6fe079f27b9a05d1b4014651">X4LIDAR_handle</a></td></tr>
+<tr class="memdesc:ab23c270e6fe079f27b9a05d1b4014651"><td class="mdescLeft">&#160;</td><td class="mdescRight">External handle for the LiDAR sensor.  <br /></td></tr>
+<tr class="separator:ab23c270e6fe079f27b9a05d1b4014651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bec4b1e1d3a367a4b56968ac0d60d07" id="r_a4bec4b1e1d3a367a4b56968ac0d60d07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="DCMotor__driver_8h.html#ae8c12bd4f4e65a8a8600b9789f187ce4">DualDrive_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a4bec4b1e1d3a367a4b56968ac0d60d07">DualDrive_handle</a></td></tr>
+<tr class="memdesc:a4bec4b1e1d3a367a4b56968ac0d60d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">External handle for the dual motor drive system.  <br /></td></tr>
+<tr class="separator:a4bec4b1e1d3a367a4b56968ac0d60d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82645da53e400fe058939cc263660d4c" id="r_a82645da53e400fe058939cc263660d4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct____TARGET__HandleTypeDef.html">__TARGET_HandleTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a82645da53e400fe058939cc263660d4c">Target_Handle</a></td></tr>
+<tr class="memdesc:a82645da53e400fe058939cc263660d4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">External handle for the current detected target.  <br /></td></tr>
+<tr class="separator:a82645da53e400fe058939cc263660d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>: Main program body </p>
 <dl class="section attention"><dt>Attention</dt><dd></dd></dl>
 <p>Copyright (c) 2024 STMicroelectronics. All rights reserved.</p>
 <p>This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-IS. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a864a5e24f251d7593d25b4c0ccd69530" name="a864a5e24f251d7593d25b4c0ccd69530"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a864a5e24f251d7593d25b4c0ccd69530">&#9670;&#160;</a></span>DISTANCE_SENSOR_ADC_BUFFER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DISTANCE_SENSOR_ADC_BUFFER_SIZE&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="abc513dd972081ae765b6949a62872eb7" name="abc513dd972081ae765b6949a62872eb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc513dd972081ae765b6949a62872eb7">&#9670;&#160;</a></span>__io_putchar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int __io_putchar </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a1730ffe1e560465665eb47d9264826f9" name="a1730ffe1e560465665eb47d9264826f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1730ffe1e560465665eb47d9264826f9">&#9670;&#160;</a></span>Error_Handler()</h2>
 
@@ -177,46 +318,185 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8c_a1730ffe1e560465665eb47d9264826f9_icgraph.png" border="0" usemap="#amain_8c_a1730ffe1e560465665eb47d9264826f9_icgraph" alt=""/></div>
 <map name="amain_8c_a1730ffe1e560465665eb47d9264826f9_icgraph" id="amain_8c_a1730ffe1e560465665eb47d9264826f9_icgraph">
-<area shape="rect" title="This function is executed in case of error occurrence." alt="" coords="367,327,477,352"/>
-<area shape="rect" href="distSensor__driver_8c.html#a0ffff7d4577b90f5083bb5d907348dc0" title="Reads the ADC value from a specified channel." alt="" coords="108,5,319,31"/>
-<area shape="poly" title=" " alt="" coords="417,313,411,256,396,183,383,145,366,108,344,74,317,44,301,33,304,29,320,40,348,71,370,106,388,143,401,182,416,256,422,312"/>
-<area shape="rect" href="adc_8c.html#ac3139540667c403c5dfd37a99c610b1c" title=" " alt="" coords="144,55,283,80"/>
-<area shape="poly" title=" " alt="" coords="415,313,406,265,389,205,360,145,340,117,317,93,301,83,282,76,284,71,303,78,320,89,344,114,364,142,394,203,411,264,420,312"/>
-<area shape="rect" href="i2c_8c.html#a08b1eb7b7be5b94395127e2a33b1b67e" title=" " alt="" coords="148,104,279,129"/>
-<area shape="poly" title=" " alt="" coords="412,314,401,275,381,228,354,182,337,161,317,143,299,132,278,125,280,120,301,127,320,139,341,157,358,179,386,226,406,273,417,312"/>
-<area shape="rect" href="usart_8c.html#a62a25476866998c7aadfb5c0864fa349" title=" " alt="" coords="141,153,286,179"/>
-<area shape="poly" title=" " alt="" coords="408,315,374,253,348,220,317,192,285,178,288,173,320,188,352,216,378,250,413,313"/>
-<area shape="rect" href="adc_8c.html#acccd58aa70215a6b184ad242312ffd0c" title=" " alt="" coords="156,203,271,228"/>
-<area shape="poly" title=" " alt="" coords="401,318,365,278,342,258,317,242,294,232,270,225,271,220,296,227,320,237,346,254,369,274,405,314"/>
-<area shape="rect" href="adc_8c.html#a101e2e3433dfe72bbbd0ae3a84489263" title=" " alt="" coords="156,252,271,277"/>
-<area shape="poly" title=" " alt="" coords="386,322,318,291,270,278,272,273,320,286,388,318"/>
-<area shape="rect" href="i2c_8c.html#ada6e763cfa4108a8d24cd27b75f2f489" title=" " alt="" coords="160,301,267,327"/>
-<area shape="poly" title=" " alt="" coords="353,334,267,323,267,318,353,328"/>
-<area shape="rect" href="spi_8c.html#af81398f9775695df0b172367651ca3e6" title=" " alt="" coords="160,351,267,376"/>
-<area shape="poly" title=" " alt="" coords="353,350,267,360,267,355,353,345"/>
-<area shape="rect" href="tim_8c.html#ad1f9d42690163f73f73e5b820c81ca14" title=" " alt="" coords="158,400,269,425"/>
-<area shape="poly" title=" " alt="" coords="386,361,320,390,269,404,268,399,318,385,383,356"/>
-<area shape="rect" href="tim_8c.html#a7912f2916786a2c33cb6fb8259ade58c" title=" " alt="" coords="158,449,269,475"/>
-<area shape="poly" title=" " alt="" coords="404,365,368,403,345,423,320,439,295,450,270,457,268,452,293,445,317,434,342,418,364,399,400,361"/>
-<area shape="rect" href="tim_8c.html#aef1e0b132b1af1c923cc420a57180c67" title=" " alt="" coords="158,499,269,524"/>
-<area shape="poly" title=" " alt="" coords="412,366,378,428,352,461,320,488,296,501,270,508,268,503,294,496,317,484,348,457,373,425,408,364"/>
-<area shape="rect" href="usart_8c.html#a41df2bc0e6f13b33f862ea4eddfc6a23" title=" " alt="" coords="153,548,274,573"/>
-<area shape="poly" title=" " alt="" coords="417,366,405,405,386,451,358,498,320,537,299,550,275,558,273,553,296,545,317,533,354,495,381,449,400,403,412,365"/>
-<area shape="rect" href="usart_8c.html#a3d04b903a77089f6ce08dd0bf1c81a81" title=" " alt="" coords="127,597,299,623"/>
-<area shape="poly" title=" " alt="" coords="420,367,411,414,393,474,364,535,344,562,320,587,300,599,297,595,317,583,340,559,359,532,388,472,406,413,415,366"/>
-<area shape="rect" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920" title="System Clock Configuration." alt="" coords="136,647,291,672"/>
-<area shape="poly" title=" " alt="" coords="422,366,416,422,400,495,387,533,370,571,348,606,320,636,292,653,289,648,317,632,344,602,365,568,382,531,395,494,411,421,417,365"/>
+<area shape="rect" title="This function is executed in case of error occurrence." alt="" coords="387,376,497,401"/>
+<area shape="rect" href="adc_8c.html#ac3139540667c403c5dfd37a99c610b1c" title=" " alt="" coords="154,5,293,31"/>
+<area shape="poly" title=" " alt="" coords="439,363,436,298,423,211,410,165,392,121,368,80,337,44,316,31,292,23,294,18,319,26,340,40,372,77,397,118,415,164,428,210,441,297,444,362"/>
+<area shape="rect" href="i2c_8c.html#a08b1eb7b7be5b94395127e2a33b1b67e" title=" " alt="" coords="158,55,289,80"/>
+<area shape="poly" title=" " alt="" coords="437,362,431,305,416,232,403,194,386,157,364,123,337,93,314,80,288,72,290,67,317,75,340,89,368,120,391,154,408,192,421,231,437,305,443,362"/>
+<area shape="rect" href="usart_8c.html#a62a25476866998c7aadfb5c0864fa349" title=" " alt="" coords="151,104,296,129"/>
+<area shape="poly" title=" " alt="" coords="435,363,427,315,409,255,380,194,361,166,337,143,318,131,296,123,297,118,320,126,340,139,365,163,385,191,414,253,432,313,440,362"/>
+<area shape="rect" href="adc_8c.html#acccd58aa70215a6b184ad242312ffd0c" title=" " alt="" coords="166,153,281,179"/>
+<area shape="poly" title=" " alt="" coords="432,363,421,324,402,277,374,231,357,210,337,192,310,178,280,171,282,165,312,173,340,188,361,206,379,228,407,275,426,322,437,361"/>
+<area shape="rect" href="adc_8c.html#a101e2e3433dfe72bbbd0ae3a84489263" title=" " alt="" coords="166,203,281,228"/>
+<area shape="poly" title=" " alt="" coords="428,365,394,302,368,269,337,242,310,228,280,221,281,216,312,223,340,237,372,265,399,299,433,362"/>
+<area shape="rect" href="i2c_8c.html#ada6e763cfa4108a8d24cd27b75f2f489" title=" " alt="" coords="170,252,277,277"/>
+<area shape="poly" title=" " alt="" coords="421,367,385,327,362,307,337,291,307,279,276,272,277,267,309,274,340,286,366,303,389,323,425,363"/>
+<area shape="rect" href="spi_8c.html#af81398f9775695df0b172367651ca3e6" title=" " alt="" coords="170,301,277,327"/>
+<area shape="poly" title=" " alt="" coords="406,372,338,341,276,325,278,320,340,335,408,367"/>
+<area shape="rect" href="tim_8c.html#ad1f9d42690163f73f73e5b820c81ca14" title=" " alt="" coords="168,351,279,376"/>
+<area shape="poly" title=" " alt="" coords="372,383,278,372,279,367,373,378"/>
+<area shape="rect" href="tim_8c.html#a7912f2916786a2c33cb6fb8259ade58c" title=" " alt="" coords="168,400,279,425"/>
+<area shape="poly" title=" " alt="" coords="373,399,279,409,278,404,372,394"/>
+<area shape="rect" href="tim_8c.html#aef1e0b132b1af1c923cc420a57180c67" title=" " alt="" coords="168,449,279,475"/>
+<area shape="poly" title=" " alt="" coords="407,410,340,439,279,455,278,450,338,434,404,405"/>
+<area shape="rect" href="tim_8c.html#abbf5454212cb039fb90d523b2473af91" title=" " alt="" coords="168,499,279,524"/>
+<area shape="poly" title=" " alt="" coords="425,414,388,452,365,472,340,488,310,501,280,508,278,503,309,495,337,484,362,468,385,449,421,410"/>
+<area shape="rect" href="tim_8c.html#a265aef7a46164094e791259bf59d9cb4" title=" " alt="" coords="168,548,279,573"/>
+<area shape="poly" title=" " alt="" coords="432,416,398,477,372,510,340,538,311,552,280,559,278,554,309,547,337,533,368,507,393,475,428,413"/>
+<area shape="rect" href="usart_8c.html#a41df2bc0e6f13b33f862ea4eddfc6a23" title=" " alt="" coords="163,597,284,623"/>
+<area shape="poly" title=" " alt="" coords="437,416,425,454,406,501,378,547,361,568,340,587,314,601,285,609,284,604,312,596,337,582,357,565,374,544,401,498,420,452,432,414"/>
+<area shape="rect" href="usart_8c.html#a3d04b903a77089f6ce08dd0bf1c81a81" title=" " alt="" coords="137,647,309,672"/>
+<area shape="poly" title=" " alt="" coords="440,416,431,464,413,523,384,584,364,612,340,636,311,653,308,648,337,632,360,609,380,582,408,521,426,462,435,415"/>
+<area shape="rect" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920" title="System Clock Configuration." alt="" coords="146,696,301,721"/>
+<area shape="poly" title=" " alt="" coords="442,415,436,472,421,545,408,583,390,621,368,655,340,685,322,698,302,705,300,700,320,693,337,681,364,652,386,618,403,581,415,543,431,471,437,415"/>
+<area shape="rect" href="main_8c.html#a54b14b665d04a631991869b21065bf90" title=" " alt="" coords="108,745,339,771"/>
+<area shape="poly" title=" " alt="" coords="444,415,441,480,427,566,414,612,396,657,372,698,340,735,322,747,319,743,337,731,368,695,391,654,409,610,422,565,436,479,439,415"/>
 <area shape="rect" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="The application entry point." alt="" coords="5,425,60,451"/>
-<area shape="poly" title=" " alt="" coords="143,224,125,231,110,241,91,262,75,286,53,339,42,389,37,425,32,425,37,388,48,337,70,283,86,259,106,237,123,226,141,219"/>
-<area shape="poly" title=" " alt="" coords="144,274,126,281,110,291,81,323,60,361,46,398,39,426,34,425,41,396,55,358,76,320,106,287,123,276,142,269"/>
-<area shape="poly" title=" " alt="" coords="148,324,109,340,86,360,67,383,42,427,37,424,63,380,83,356,107,336,146,319"/>
-<area shape="poly" title=" " alt="" coords="148,377,109,390,77,408,50,427,47,423,74,403,107,385,146,372"/>
-<area shape="poly" title=" " alt="" coords="145,425,61,437,60,432,144,420"/>
-<area shape="poly" title=" " alt="" coords="144,455,60,444,61,439,144,450"/>
-<area shape="poly" title=" " alt="" coords="144,501,107,488,75,471,49,453,52,449,78,467,109,484,146,496"/>
-<area shape="poly" title=" " alt="" coords="138,552,107,538,83,518,64,495,38,452,42,450,68,491,87,514,109,533,141,547"/>
-<area shape="poly" title=" " alt="" coords="115,593,106,587,77,554,56,516,42,480,34,452,39,450,47,478,60,514,81,551,110,583,118,589"/>
-<area shape="poly" title=" " alt="" coords="122,647,106,636,87,615,71,590,49,538,37,488,32,451,37,450,42,487,54,536,75,588,91,612,110,632,125,642"/>
+<area shape="poly" title=" " alt="" coords="153,171,130,179,110,192,87,219,69,249,56,283,47,317,38,380,36,425,31,425,32,380,42,316,51,281,64,247,82,215,106,188,127,174,151,166"/>
+<area shape="poly" title=" " alt="" coords="153,221,130,229,110,241,90,262,75,286,53,338,42,388,37,425,32,425,37,387,48,337,70,283,86,259,106,237,128,224,151,216"/>
+<area shape="poly" title=" " alt="" coords="157,271,132,278,110,291,80,322,60,360,46,397,39,426,34,425,41,396,55,358,76,319,106,287,130,273,155,266"/>
+<area shape="poly" title=" " alt="" coords="157,322,132,329,109,340,86,360,67,383,42,427,37,424,63,380,82,356,107,336,130,324,156,317"/>
+<area shape="poly" title=" " alt="" coords="155,376,109,390,77,408,50,427,47,423,74,403,107,385,154,370"/>
+<area shape="poly" title=" " alt="" coords="154,424,60,437,60,432,154,419"/>
+<area shape="poly" title=" " alt="" coords="154,456,60,444,60,439,154,451"/>
+<area shape="poly" title=" " alt="" coords="153,503,107,488,75,471,49,453,52,449,78,467,109,484,155,498"/>
+<area shape="poly" title=" " alt="" coords="154,556,129,549,107,538,83,518,63,494,38,452,42,449,68,491,87,514,109,533,131,544,155,551"/>
+<area shape="poly" title=" " alt="" coords="149,606,127,599,106,587,77,555,55,517,42,480,34,452,39,450,47,478,60,514,81,551,110,583,129,594,151,601"/>
+<area shape="poly" title=" " alt="" coords="123,647,106,636,86,615,70,591,49,538,37,488,32,451,37,451,42,487,54,536,75,588,91,612,110,632,126,643"/>
+<area shape="poly" title=" " alt="" coords="132,701,106,685,83,658,65,627,51,593,42,559,33,496,31,451,36,451,38,495,47,558,56,591,69,624,87,655,110,681,135,697"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8a3b0ad512a6e6c6157440b68d395eac" name="a8a3b0ad512a6e6c6157440b68d395eac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a3b0ad512a6e6c6157440b68d395eac">&#9670;&#160;</a></span>HAL_TIM_PeriodElapsedCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HAL_TIM_PeriodElapsedCallback </td>
+          <td>(</td>
+          <td class="paramtype">TIM_HandleTypeDef *&#160;</td>
+          <td class="paramname"><em>htim</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Period elapsed callback in non blocking mode. </p>
+<dl class="section note"><dt>Note</dt><dd>This function is called when TIM7 interrupt took place, inside HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment a global variable "uwTick" used as application time base. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">htim</td><td>: TIM handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_a8a3b0ad512a6e6c6157440b68d395eac_cgraph.png" border="0" usemap="#amain_8c_a8a3b0ad512a6e6c6157440b68d395eac_cgraph" alt=""/></div>
+<map name="amain_8c_a8a3b0ad512a6e6c6157440b68d395eac_cgraph" id="amain_8c_a8a3b0ad512a6e6c6157440b68d395eac_cgraph">
+<area shape="rect" title="Period elapsed callback in non blocking mode." alt="" coords="5,5,240,31"/>
+<area shape="rect" href="DCMotor__driver_8c.html#af964c38d2ed457543c79ed58a2e5fa02" title="Callback function to measure both motor speeds during a timer interrupt." alt="" coords="288,5,483,31"/>
+<area shape="poly" title=" " alt="" coords="240,15,274,15,274,21,240,21"/>
+<area shape="rect" href="DCMotor__driver_8c.html#ad1e0514727a5bfc2eb3a414b14e773fd" title="Measure the speed of both motors in the dual drive system." alt="" coords="531,5,743,31"/>
+<area shape="poly" title=" " alt="" coords="483,15,517,15,517,21,483,21"/>
+<area shape="rect" href="DCMotor__driver_8c.html#ad7beb1379a31c216d22258e81f4470f2" title="Measure the speed of a motor using its encoder." alt="" coords="791,5,1011,31"/>
+<area shape="poly" title=" " alt="" coords="743,15,777,15,777,21,743,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae494a9643f29b87d6d81e5264e60e57b" name="ae494a9643f29b87d6d81e5264e60e57b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae494a9643f29b87d6d81e5264e60e57b">&#9670;&#160;</a></span>HAL_UART_RxCpltCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HAL_UART_RxCpltCallback </td>
+          <td>(</td>
+          <td class="paramtype">UART_HandleTypeDef *&#160;</td>
+          <td class="paramname"><em>huart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_ae494a9643f29b87d6d81e5264e60e57b_cgraph.png" border="0" usemap="#amain_8c_ae494a9643f29b87d6d81e5264e60e57b_cgraph" alt=""/></div>
+<map name="amain_8c_ae494a9643f29b87d6d81e5264e60e57b_cgraph" id="amain_8c_ae494a9643f29b87d6d81e5264e60e57b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,42,201,67"/>
+<area shape="rect" href="shell__drv__uart_8c.html#abb4fa19ca2aabfc69695b4a4a77cdfd9" title=" " alt="" coords="293,5,464,45"/>
+<area shape="poly" title=" " alt="" coords="201,42,279,33,280,39,202,47"/>
+<area shape="rect" href="X4LIDAR__driver_8c.html#a9efc30d2ce07630f884e90d048713b9e" title="UART DMA Transfer Complete Callback." alt="" coords="249,70,508,95"/>
+<area shape="poly" title=" " alt="" coords="202,62,240,66,240,71,201,67"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a1884970cc493d8efba5aec28c0d526e7" name="a1884970cc493d8efba5aec28c0d526e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1884970cc493d8efba5aec28c0d526e7">&#9670;&#160;</a></span>HAL_UART_RxHalfCpltCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HAL_UART_RxHalfCpltCallback </td>
+          <td>(</td>
+          <td class="paramtype">UART_HandleTypeDef *&#160;</td>
+          <td class="paramname"><em>huart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_a1884970cc493d8efba5aec28c0d526e7_cgraph.png" border="0" usemap="#amain_8c_a1884970cc493d8efba5aec28c0d526e7_cgraph" alt=""/></div>
+<map name="amain_8c_a1884970cc493d8efba5aec28c0d526e7_cgraph" id="amain_8c_a1884970cc493d8efba5aec28c0d526e7_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,228,38"/>
+<area shape="rect" href="X4LIDAR__driver_8c.html#a5223bc1b5ed732ce1cf1f28d3b8cea58" title="UART DMA Half Transfer Complete Callback." alt="" coords="276,5,507,45"/>
+<area shape="poly" title=" " alt="" coords="228,23,262,23,262,28,228,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abcdf9b59049eccbc87d54042f9235b1a" name="abcdf9b59049eccbc87d54042f9235b1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcdf9b59049eccbc87d54042f9235b1a">&#9670;&#160;</a></span>HAL_UART_TxCpltCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HAL_UART_TxCpltCallback </td>
+          <td>(</td>
+          <td class="paramtype">UART_HandleTypeDef *&#160;</td>
+          <td class="paramname"><em>huart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_abcdf9b59049eccbc87d54042f9235b1a_cgraph.png" border="0" usemap="#amain_8c_abcdf9b59049eccbc87d54042f9235b1a_cgraph" alt=""/></div>
+<map name="amain_8c_abcdf9b59049eccbc87d54042f9235b1a_cgraph" id="amain_8c_abcdf9b59049eccbc87d54042f9235b1a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,200,38"/>
+<area shape="rect" href="shell__drv__uart_8c.html#a99383119d95c084cf44a1facabb39c36" title=" " alt="" coords="248,5,417,45"/>
+<area shape="poly" title=" " alt="" coords="200,23,234,23,234,28,200,28"/>
 </map>
 </div>
 
@@ -250,42 +530,263 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph.png" border="0" usemap="#amain_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph" alt=""/></div>
 <map name="amain_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph" id="amain_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph">
-<area shape="rect" title="The application entry point." alt="" coords="5,252,60,277"/>
-<area shape="rect" href="adc_8c.html#acccd58aa70215a6b184ad242312ffd0c" title=" " alt="" coords="137,5,251,31"/>
-<area shape="poly" title=" " alt="" coords="32,252,35,211,46,154,68,93,85,65,106,40,123,29,126,33,110,44,89,68,73,96,51,156,40,212,37,252"/>
-<area shape="rect" href="adc_8c.html#a101e2e3433dfe72bbbd0ae3a84489263" title=" " alt="" coords="137,55,251,80"/>
-<area shape="poly" title=" " alt="" coords="33,251,39,218,52,175,74,129,89,108,106,89,122,79,125,83,110,93,93,111,79,132,57,177,45,220,38,252"/>
-<area shape="rect" href="gpio_8c.html#ac724e431d2af879252de35615be2bdea" title="Configure pins as Analog Input Output EVENT_OUT EXTI." alt="" coords="139,104,249,129"/>
-<area shape="poly" title=" " alt="" coords="36,251,59,197,80,165,106,139,124,128,127,133,110,143,84,169,64,199,40,253"/>
-<area shape="rect" href="i2c_8c.html#ada6e763cfa4108a8d24cd27b75f2f489" title=" " alt="" coords="141,153,247,179"/>
-<area shape="poly" title=" " alt="" coords="41,250,68,219,107,188,126,178,128,183,109,192,72,222,46,253"/>
-<area shape="rect" href="spi_8c.html#af81398f9775695df0b172367651ca3e6" title=" " alt="" coords="141,203,247,228"/>
-<area shape="poly" title=" " alt="" coords="59,253,107,237,132,229,134,234,109,242,61,258"/>
-<area shape="rect" href="tim_8c.html#ad1f9d42690163f73f73e5b820c81ca14" title=" " alt="" coords="139,499,249,524"/>
-<area shape="poly" title=" " alt="" coords="37,278,41,318,52,373,73,433,90,460,110,484,127,496,124,500,106,488,85,463,69,435,46,375,35,318,32,278"/>
-<area shape="rect" href="tim_8c.html#a7912f2916786a2c33cb6fb8259ade58c" title=" " alt="" coords="139,252,249,277"/>
-<area shape="poly" title=" " alt="" coords="60,262,124,262,124,267,60,267"/>
-<area shape="rect" href="tim_8c.html#aef1e0b132b1af1c923cc420a57180c67" title=" " alt="" coords="139,301,249,327"/>
-<area shape="poly" title=" " alt="" coords="61,271,109,286,137,295,136,300,107,291,60,276"/>
-<area shape="rect" href="usart_8c.html#a41df2bc0e6f13b33f862ea4eddfc6a23" title=" " alt="" coords="133,351,255,376"/>
-<area shape="poly" title=" " alt="" coords="46,276,72,306,109,336,125,343,122,348,107,340,69,310,42,279"/>
-<area shape="rect" href="usart_8c.html#a3d04b903a77089f6ce08dd0bf1c81a81" title=" " alt="" coords="108,400,280,425"/>
-<area shape="poly" title=" " alt="" coords="41,276,64,329,84,360,110,385,120,392,117,396,106,389,80,363,60,332,36,279"/>
-<area shape="rect" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920" title="System Clock Configuration." alt="" coords="117,449,271,475"/>
-<area shape="poly" title=" " alt="" coords="38,277,45,309,58,352,79,396,93,417,110,435,118,441,115,445,106,439,89,420,74,399,53,354,40,310,33,278"/>
-<area shape="rect" href="main_8c.html#a1730ffe1e560465665eb47d9264826f9" title="This function is executed in case of error occurrence." alt="" coords="354,277,465,303"/>
-<area shape="poly" title=" " alt="" coords="253,25,282,40,308,65,330,93,366,155,390,215,404,263,399,265,385,217,361,157,326,96,304,68,278,44,250,29"/>
-<area shape="poly" title=" " alt="" coords="253,75,282,89,324,130,358,178,384,225,401,263,396,265,379,227,354,180,320,133,278,94,251,80"/>
-<area shape="poly" title=" " alt="" coords="249,175,281,188,341,226,387,266,384,270,337,230,279,192,247,180"/>
-<area shape="poly" title=" " alt="" coords="244,226,281,237,367,270,365,275,279,242,243,231"/>
-<area shape="poly" title=" " alt="" coords="248,499,278,484,320,444,353,398,379,352,396,314,401,316,384,354,358,401,324,448,282,488,251,504"/>
-<area shape="rect" href="tim_8c.html#a708f19bbc41b292fccf38f2d9796c46a" title=" " alt="" coords="328,499,491,524"/>
-<area shape="poly" title=" " alt="" coords="250,509,314,509,314,514,250,514"/>
-<area shape="poly" title=" " alt="" coords="250,268,341,279,340,285,249,274"/>
-<area shape="poly" title=" " alt="" coords="249,305,340,295,341,300,250,311"/>
-<area shape="poly" title=" " alt="" coords="239,348,279,335,362,305,364,310,281,341,241,353"/>
-<area shape="poly" title=" " alt="" coords="247,398,279,385,336,348,383,310,386,314,340,352,281,390,249,402"/>
-<area shape="poly" title=" " alt="" coords="253,447,279,434,314,407,345,374,391,313,395,316,350,377,318,410,281,439,255,452"/>
+<area shape="rect" title="The application entry point." alt="" coords="5,760,60,785"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="141,80,301,105"/>
+<area shape="poly" title=" " alt="" coords="31,760,30,641,37,452,45,352,59,259,79,182,91,152,106,128,129,109,132,113,110,132,96,154,84,184,64,260,50,353,42,453,36,642,36,760"/>
+<area shape="rect" href="DCMotor__driver_8c.html#ad8db8fd14b006f053be1d8490a88b787" title="Create the motor control task." alt="" coords="142,143,301,168"/>
+<area shape="poly" title=" " alt="" coords="31,760,30,648,37,473,46,381,59,296,79,226,91,198,106,177,127,162,130,166,110,181,96,201,84,227,64,297,51,382,42,474,36,649,36,760"/>
+<area shape="rect" href="distSensor__driver_8c.html#a4889eb88318248c64bbb98ac6f4741d6" title="Creates and starts the distance sensor task." alt="" coords="137,192,306,217"/>
+<area shape="poly" title=" " alt="" coords="31,760,32,657,40,496,49,412,62,335,81,271,93,246,106,227,122,214,125,218,110,231,97,248,86,273,67,336,54,413,45,497,37,657,37,760"/>
+<area shape="rect" href="adc_8c.html#acccd58aa70215a6b184ad242312ffd0c" title=" " alt="" coords="164,636,279,661"/>
+<area shape="poly" title=" " alt="" coords="37,759,63,715,82,691,107,670,127,660,150,653,151,658,129,665,109,675,86,694,67,718,42,761"/>
+<area shape="rect" href="adc_8c.html#a101e2e3433dfe72bbbd0ae3a84489263" title=" " alt="" coords="164,685,279,711"/>
+<area shape="poly" title=" " alt="" coords="47,758,74,738,107,720,150,706,152,711,109,724,77,742,50,762"/>
+<area shape="rect" href="dma_8c.html#a323249dac769f9855c10b4ec9446b707" title="Enable DMA controller clock." alt="" coords="167,340,276,365"/>
+<area shape="poly" title=" " alt="" coords="32,760,37,682,49,566,59,506,71,451,87,406,106,375,128,360,152,352,154,357,130,365,110,379,92,408,76,453,64,507,54,567,42,682,37,760"/>
+<area shape="rect" href="app__freertos_8c.html#abade755e13d07c10889ae83143656158" title="FreeRTOS initialization." alt="" coords="149,241,294,267"/>
+<area shape="poly" title=" " alt="" coords="31,760,34,665,43,519,52,443,65,373,83,316,94,293,106,276,134,258,137,263,110,280,98,296,88,318,70,375,57,444,48,520,39,665,37,760"/>
+<area shape="rect" href="gpio_8c.html#ac724e431d2af879252de35615be2bdea" title="Configure pins as Analog Input Output EVENT_OUT EXTI." alt="" coords="166,439,277,464"/>
+<area shape="poly" title=" " alt="" coords="33,759,41,699,55,613,77,529,91,496,106,473,127,459,151,451,153,456,130,464,110,477,95,498,82,531,61,614,46,700,38,760"/>
+<area shape="rect" href="i2c_8c.html#ada6e763cfa4108a8d24cd27b75f2f489" title=" " alt="" coords="168,784,275,809"/>
+<area shape="poly" title=" " alt="" coords="61,773,155,786,154,791,60,779"/>
+<area shape="rect" href="spi_8c.html#af81398f9775695df0b172367651ca3e6" title=" " alt="" coords="168,833,275,859"/>
+<area shape="poly" title=" " alt="" coords="52,783,78,802,109,818,155,833,153,838,107,823,75,806,49,788"/>
+<area shape="rect" href="tim_8c.html#ad1f9d42690163f73f73e5b820c81ca14" title=" " alt="" coords="166,1031,277,1056"/>
+<area shape="poly" title=" " alt="" coords="36,786,38,830,47,892,56,926,70,959,87,990,110,1016,130,1029,153,1037,151,1042,127,1034,106,1020,83,993,65,961,51,928,42,893,33,830,31,786"/>
+<area shape="rect" href="tim_8c.html#a7912f2916786a2c33cb6fb8259ade58c" title=" " alt="" coords="166,883,277,908"/>
+<area shape="poly" title=" " alt="" coords="42,784,68,826,87,849,109,868,130,878,153,885,152,890,128,883,107,872,83,853,63,829,38,787"/>
+<area shape="rect" href="tim_8c.html#aef1e0b132b1af1c923cc420a57180c67" title=" " alt="" coords="166,291,277,316"/>
+<area shape="poly" title=" " alt="" coords="32,760,35,673,46,543,55,475,68,412,85,361,106,326,127,310,152,302,153,307,130,315,110,329,90,363,73,413,61,475,51,543,40,673,37,760"/>
+<area shape="rect" href="tim_8c.html#abbf5454212cb039fb90d523b2473af91" title=" " alt="" coords="166,389,277,415"/>
+<area shape="poly" title=" " alt="" coords="32,759,39,690,52,589,74,490,89,451,106,424,127,410,151,401,153,407,130,414,110,428,93,453,79,491,57,590,44,691,38,760"/>
+<area shape="rect" href="tim_8c.html#a265aef7a46164094e791259bf59d9cb4" title=" " alt="" coords="166,488,277,513"/>
+<area shape="poly" title=" " alt="" coords="31,759,33,714,42,650,51,616,64,582,82,550,106,523,127,509,151,501,153,506,130,514,110,527,87,553,69,584,56,617,47,651,38,715,36,760"/>
+<area shape="rect" href="usart_8c.html#a41df2bc0e6f13b33f862ea4eddfc6a23" title=" " alt="" coords="161,537,282,563"/>
+<area shape="poly" title=" " alt="" coords="32,759,37,722,48,671,70,618,86,593,106,572,125,560,146,552,148,557,128,565,110,576,90,597,75,620,53,673,42,723,37,760"/>
+<area shape="rect" href="usart_8c.html#a3d04b903a77089f6ce08dd0bf1c81a81" title=" " alt="" coords="135,587,307,612"/>
+<area shape="poly" title=" " alt="" coords="34,759,41,730,55,693,76,654,106,621,121,612,124,616,110,625,80,657,60,695,46,732,39,761"/>
+<area shape="rect" href="main_8c.html#a564bc3896b5da24642584f97c8e9d778" title=" " alt="" coords="143,932,300,957"/>
+<area shape="poly" title=" " alt="" coords="39,785,47,813,60,849,81,886,110,917,131,930,129,934,106,921,77,889,55,851,42,815,34,786"/>
+<area shape="rect" href="main_8c.html#a5d61f5fe97a2824157cc909809abafcd" title=" " alt="" coords="149,981,293,1007"/>
+<area shape="poly" title=" " alt="" coords="37,785,42,821,54,871,75,923,91,946,110,967,138,983,135,987,106,971,86,950,71,925,49,872,37,822,32,786"/>
+<area shape="rect" href="RobotStrategy_8c.html#a46d90657f8faf41f32e5c1e3ac76c01b" title="Creates the robot strategy task using a static stack." alt="" coords="124,1080,319,1105"/>
+<area shape="poly" title=" " alt="" coords="38,785,46,845,61,930,82,1012,96,1044,110,1066,116,1071,112,1075,106,1069,91,1047,77,1014,56,931,41,846,33,786"/>
+<area shape="rect" href="SSD1306_8c.html#a9f1341a0cb0c361c81c0e0102bf96843" title=" " alt="" coords="108,1129,335,1155"/>
+<area shape="poly" title=" " alt="" coords="38,785,44,854,58,954,80,1052,94,1090,110,1115,116,1120,112,1124,106,1118,89,1092,74,1053,53,955,39,855,32,786"/>
+<area shape="rect" href="SSD1306_8c.html#a5e27f7f5b91fa3838eee29f6778e80f3" title=" " alt="" coords="138,1179,305,1204"/>
+<area shape="poly" title=" " alt="" coords="37,786,42,863,55,977,64,1037,77,1091,92,1135,110,1164,127,1177,123,1181,106,1168,87,1137,71,1092,59,1038,49,978,37,863,32,786"/>
+<area shape="rect" href="SSD1306_8c.html#a60bd9d5a1dfdaa37942b0139f20575a8" title=" " alt="" coords="393,1293,586,1333"/>
+<area shape="poly" title=" " alt="" coords="37,785,41,871,52,1001,61,1068,74,1130,90,1180,110,1214,135,1236,160,1249,185,1255,210,1257,267,1256,299,1258,335,1265,410,1286,408,1291,334,1270,299,1263,267,1261,210,1262,184,1261,158,1254,132,1240,106,1217,85,1182,69,1131,56,1069,46,1001,35,872,32,786"/>
+<area shape="rect" href="shell_8c.html#a240186a34a067e186d369eee00528d34" title="Adds a command to the shell&#39;s function list." alt="" coords="447,1357,531,1383"/>
+<area shape="poly" title=" " alt="" coords="36,785,37,889,44,1050,53,1134,66,1211,85,1274,97,1297,110,1315,132,1329,165,1341,252,1357,349,1365,433,1367,433,1373,349,1370,252,1362,164,1346,130,1334,106,1319,92,1300,80,1276,61,1212,47,1134,39,1050,31,889,31,785"/>
+<area shape="rect" href="shell_8h.html#a76fe09344122b3031f0ee6f34349c951" title="Creates a shell task in the operating system." alt="" coords="140,1280,303,1305"/>
+<area shape="poly" title=" " alt="" coords="37,785,40,878,50,1021,59,1096,72,1164,89,1221,110,1259,129,1274,126,1278,106,1262,84,1223,67,1166,54,1097,44,1022,34,879,31,785"/>
+<area shape="rect" href="shell_8c.html#a58247fa577c03054db6df12ff023fd30" title="Initializes the shell." alt="" coords="181,1400,262,1425"/>
+<area shape="poly" title=" " alt="" coords="36,786,37,897,44,1074,53,1167,67,1253,85,1324,97,1351,110,1372,136,1393,168,1404,166,1409,134,1397,106,1376,92,1354,80,1326,61,1254,48,1167,39,1074,32,897,31,786"/>
+<area shape="rect" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920" title="System Clock Configuration." alt="" coords="144,735,299,760"/>
+<area shape="poly" title=" " alt="" coords="60,766,130,757,131,762,61,772"/>
+<area shape="rect" href="X4LIDAR__driver_8c.html#a1d38e4d6ad75f5015700c7664ee2dfbb" title="Creates a FreeRTOS task for handling X4 LiDAR operations." alt="" coords="141,1473,302,1499"/>
+<area shape="poly" title=" " alt="" coords="36,786,36,907,43,1102,52,1205,65,1300,84,1380,96,1411,110,1435,128,1453,151,1466,148,1470,125,1457,106,1438,92,1414,79,1382,60,1301,46,1205,38,1102,31,907,31,786"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="431,68,548,93"/>
+<area shape="poly" title=" " alt="" coords="301,86,417,81,417,87,302,92"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="677,5,827,31"/>
+<area shape="poly" title=" " alt="" coords="539,65,643,39,679,31,680,36,645,45,540,71"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="697,55,807,80"/>
+<area shape="poly" title=" " alt="" coords="548,75,683,68,684,73,549,80"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="908,80,1083,105"/>
+<area shape="poly" title=" " alt="" coords="548,83,644,89,894,91,894,97,644,94,548,88"/>
+<area shape="poly" title=" " alt="" coords="807,70,894,79,894,85,806,76"/>
+<area shape="rect" href="DCMotor__driver_8c.html#a21155beb1e503ebe189de26ea93a12a2" title="Task to control the DC motors, including initialization and speed ramping." alt="" coords="432,143,547,168"/>
+<area shape="poly" title=" " alt="" coords="301,153,418,153,418,158,301,158"/>
+<area shape="rect" href="DCMotor__driver_8c.html#aad161af7c2ebedef3ee4dd2ac1ef8ed8" title="Initialize the dual motor system including encoders and timers." alt="" coords="699,156,805,181"/>
+<area shape="poly" title=" " alt="" coords="547,156,685,163,685,168,547,161"/>
+<area shape="rect" href="distSensor__driver_8c.html#a38419717d04f5f1dbdbb320569a1ad6f" title="Main task for handling distance sensor data and robot braking logic." alt="" coords="426,192,553,217"/>
+<area shape="poly" title=" " alt="" coords="306,202,413,202,413,207,306,207"/>
+<area shape="rect" href="main_8c.html#a1730ffe1e560465665eb47d9264826f9" title="This function is executed in case of error occurrence." alt="" coords="434,661,545,687"/>
+<area shape="poly" title=" " alt="" coords="279,651,420,665,420,670,279,657"/>
+<area shape="poly" title=" " alt="" coords="279,690,420,678,420,683,279,696"/>
+<area shape="rect" href="app__freertos_8c.html#a016544463b4842ced7191baf8f449cea" title="Function implementing the defaultTask thread." alt="" coords="424,241,555,267"/>
+<area shape="poly" title=" " alt="" coords="294,251,410,251,410,257,294,257"/>
+<area shape="poly" title=" " alt="" coords="274,786,334,769,403,732,460,693,463,697,406,736,336,774,276,791"/>
+<area shape="poly" title=" " alt="" coords="274,838,304,830,333,818,375,791,412,758,468,696,472,700,416,762,378,795,336,823,306,835,276,843"/>
+<area shape="poly" title=" " alt="" coords="276,1040,307,1032,333,1016,349,997,359,979,366,941,367,899,372,876,380,850,425,764,469,696,473,699,430,767,385,852,377,877,373,900,371,942,364,980,354,1000,336,1020,309,1037,278,1045"/>
+<area shape="rect" href="tim_8c.html#a708f19bbc41b292fccf38f2d9796c46a" title=" " alt="" coords="408,864,571,889"/>
+<area shape="poly" title=" " alt="" coords="276,1039,306,1031,333,1016,345,1003,352,989,356,959,361,928,368,913,381,899,394,890,397,894,384,903,372,916,366,930,361,960,357,990,350,1005,336,1020,308,1036,278,1044"/>
+<area shape="poly" title=" " alt="" coords="276,888,306,881,333,868,381,829,420,783,452,736,473,698,478,700,456,739,425,786,384,833,336,872,307,886,278,893"/>
+<area shape="poly" title=" " alt="" coords="277,302,308,310,336,325,373,361,403,403,428,448,448,494,474,582,487,647,482,648,469,583,443,496,423,450,398,406,369,365,333,329,306,315,276,307"/>
+<area shape="poly" title=" " alt="" coords="278,402,308,410,336,424,365,448,391,476,433,538,463,599,482,647,477,649,458,601,428,540,387,479,361,452,333,428,306,415,276,407"/>
+<area shape="poly" title=" " alt="" coords="278,503,307,511,336,522,379,551,417,585,473,648,469,652,413,588,375,555,333,527,306,516,277,509"/>
+<area shape="poly" title=" " alt="" coords="283,556,336,572,407,610,464,651,460,655,404,615,334,576,281,561"/>
+<area shape="poly" title=" " alt="" coords="289,610,335,621,441,654,440,659,334,626,287,615"/>
+<area shape="rect" href="RobotStrategy_8c.html#a8d33e1f956693c88b5e84cdd8b5efd6b" title="FreeRTOS task function that manages the robot&#39;s strategy." alt="" coords="414,913,565,939"/>
+<area shape="poly" title=" " alt="" coords="313,1078,333,1065,345,1052,352,1038,356,1009,361,979,368,964,381,949,399,938,402,942,384,953,372,967,366,980,361,1010,357,1040,349,1055,336,1069,316,1082"/>
+<area shape="rect" href="SSD1306_8c.html#ad39771e15c6518252562343d6210ebbb" title=" " alt="" coords="399,963,579,1003"/>
+<area shape="poly" title=" " alt="" coords="312,1127,333,1115,344,1103,351,1091,356,1066,362,1040,369,1026,381,1013,387,1008,391,1013,384,1017,374,1029,367,1041,362,1067,356,1093,348,1106,336,1119,315,1132"/>
+<area shape="rect" href="SSD1306_8c.html#a779bea66faf62182a39f309c861ce6e3" title=" " alt="" coords="383,1028,596,1053"/>
+<area shape="poly" title=" " alt="" coords="304,1180,333,1164,344,1152,351,1140,356,1115,362,1088,369,1075,381,1063,388,1058,391,1062,384,1067,373,1078,367,1090,361,1116,356,1142,348,1156,336,1168,306,1184"/>
+<area shape="rect" href="SSD1306_8c.html#af27587bc1e4ea62d5a9230a4ac9a0c7b" title=" " alt="" coords="645,1179,859,1204"/>
+<area shape="poly" title=" " alt="" coords="287,1176,382,1163,489,1158,596,1163,675,1174,674,1179,596,1169,489,1163,383,1169,288,1181"/>
+<area shape="rect" href="SSD1306_8c.html#a474d115b06c8e002fe0d212439079d3d" title=" " alt="" coords="383,1179,595,1204"/>
+<area shape="poly" title=" " alt="" coords="305,1189,370,1189,370,1194,305,1194"/>
+<area shape="rect" href="SSD1306_8c.html#ac42536d72e4aac27af33ace79a7c03d5" title=" " alt="" coords="407,1077,572,1103"/>
+<area shape="poly" title=" " alt="" coords="302,1176,333,1164,348,1154,357,1143,366,1131,381,1120,415,1105,417,1110,384,1124,370,1135,361,1146,351,1157,336,1168,304,1181"/>
+<area shape="rect" href="SSD1306_8c.html#a352ba4da643876957a2bec3fa3965f1f" title=" " alt="" coords="406,1229,573,1269"/>
+<area shape="poly" title=" " alt="" coords="282,1201,393,1225,392,1231,281,1207"/>
+<area shape="poly" title=" " alt="" coords="293,1202,336,1221,352,1236,361,1251,369,1265,384,1279,394,1284,391,1289,381,1283,365,1268,356,1253,348,1239,333,1226,291,1207"/>
+<area shape="poly" title=" " alt="" coords="567,1051,597,1062,637,1086,675,1114,732,1167,728,1171,671,1118,634,1090,595,1067,565,1056"/>
+<area shape="poly" title=" " alt="" coords="596,1189,631,1189,631,1194,596,1194"/>
+<area shape="poly" title=" " alt="" coords="572,1228,679,1204,681,1210,574,1233"/>
+<area shape="poly" title=" " alt="" coords="564,1290,595,1278,662,1244,719,1209,722,1214,665,1248,597,1283,565,1295"/>
+<area shape="rect" href="SSD1306_8c.html#aa6c02e80f14e596b5bb911662d79e33c" title=" " alt="" coords="644,1300,860,1325"/>
+<area shape="poly" title=" " alt="" coords="586,1310,630,1310,630,1315,586,1315"/>
+<area shape="poly" title=" " alt="" coords="262,1404,433,1376,434,1381,263,1409"/>
+<area shape="rect" href="shell__drv__uart_8c.html#a72d8507a0a8832a2bca983077e0638a9" title="Non&#45;blocking UART Receive function using interrupt mode." alt="" coords="405,1407,574,1432"/>
+<area shape="poly" title=" " alt="" coords="262,1411,391,1414,391,1420,262,1416"/>
+<area shape="rect" href="shell__drv__uart_8c.html#a2884fd9e339d4ed5fc3e23584c211114" title="Non&#45;blocking UART Transmit function using interrupt mode." alt="" coords="401,1456,577,1481"/>
+<area shape="poly" title=" " alt="" coords="263,1418,415,1451,414,1456,262,1424"/>
+<area shape="poly" title=" " alt="" coords="283,732,334,719,437,688,438,694,335,725,284,737"/>
+<area shape="rect" href="X4LIDAR__driver_8c.html#a03721450153458e915aa8dea5ecc3120" title="Task to handle LiDAR operations." alt="" coords="433,1505,546,1531"/>
+<area shape="poly" title=" " alt="" coords="303,1493,419,1507,419,1512,302,1498"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abade755e13d07c10889ae83143656158" name="abade755e13d07c10889ae83143656158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abade755e13d07c10889ae83143656158">&#9670;&#160;</a></span>MX_FREERTOS_Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MX_FREERTOS_Init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>FreeRTOS initialization. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_abade755e13d07c10889ae83143656158_cgraph.png" border="0" usemap="#amain_8c_abade755e13d07c10889ae83143656158_cgraph" alt=""/></div>
+<map name="amain_8c_abade755e13d07c10889ae83143656158_cgraph" id="amain_8c_abade755e13d07c10889ae83143656158_cgraph">
+<area shape="rect" title="FreeRTOS initialization." alt="" coords="5,5,151,31"/>
+<area shape="rect" href="app__freertos_8c.html#a016544463b4842ced7191baf8f449cea" title="Function implementing the defaultTask thread." alt="" coords="199,5,329,31"/>
+<area shape="poly" title=" " alt="" coords="151,15,185,15,185,21,151,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_abade755e13d07c10889ae83143656158_icgraph.png" border="0" usemap="#amain_8c_abade755e13d07c10889ae83143656158_icgraph" alt=""/></div>
+<map name="amain_8c_abade755e13d07c10889ae83143656158_icgraph" id="amain_8c_abade755e13d07c10889ae83143656158_icgraph">
+<area shape="rect" title="FreeRTOS initialization." alt="" coords="108,5,253,31"/>
+<area shape="rect" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="The application entry point." alt="" coords="5,5,60,31"/>
+<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a564bc3896b5da24642584f97c8e9d778" name="a564bc3896b5da24642584f97c8e9d778"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a564bc3896b5da24642584f97c8e9d778">&#9670;&#160;</a></span>print_lidar_distances()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_lidar_distances </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="shell_8h.html#a882be42a49ddc3335e643d6e7ff324bb">h_shell_t</a> *&#160;</td>
+          <td class="paramname"><em>h_shell</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_a564bc3896b5da24642584f97c8e9d778_icgraph.png" border="0" usemap="#amain_8c_a564bc3896b5da24642584f97c8e9d778_icgraph" alt=""/></div>
+<map name="amain_8c_a564bc3896b5da24642584f97c8e9d778_icgraph" id="amain_8c_a564bc3896b5da24642584f97c8e9d778_icgraph">
+<area shape="rect" title=" " alt="" coords="108,5,265,31"/>
+<area shape="rect" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="The application entry point." alt="" coords="5,5,60,31"/>
+<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5d61f5fe97a2824157cc909809abafcd" name="a5d61f5fe97a2824157cc909809abafcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d61f5fe97a2824157cc909809abafcd">&#9670;&#160;</a></span>print_motor_speed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_motor_speed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="shell_8h.html#a882be42a49ddc3335e643d6e7ff324bb">h_shell_t</a> *&#160;</td>
+          <td class="paramname"><em>h_shell</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_a5d61f5fe97a2824157cc909809abafcd_icgraph.png" border="0" usemap="#amain_8c_a5d61f5fe97a2824157cc909809abafcd_icgraph" alt=""/></div>
+<map name="amain_8c_a5d61f5fe97a2824157cc909809abafcd_icgraph" id="amain_8c_a5d61f5fe97a2824157cc909809abafcd_icgraph">
+<area shape="rect" title=" " alt="" coords="108,5,252,31"/>
+<area shape="rect" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="The application entry point." alt="" coords="5,5,60,31"/>
+<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
 
@@ -337,6 +838,94 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="a54b14b665d04a631991869b21065bf90" name="a54b14b665d04a631991869b21065bf90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54b14b665d04a631991869b21065bf90">&#9670;&#160;</a></span>vApplicationStackOverflowHook()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vApplicationStackOverflowHook </td>
+          <td>(</td>
+          <td class="paramtype">TaskHandle_t&#160;</td>
+          <td class="paramname"><em>xTask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pcTaskName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c_a54b14b665d04a631991869b21065bf90_cgraph.png" border="0" usemap="#amain_8c_a54b14b665d04a631991869b21065bf90_cgraph" alt=""/></div>
+<map name="amain_8c_a54b14b665d04a631991869b21065bf90_cgraph" id="amain_8c_a54b14b665d04a631991869b21065bf90_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,236,31"/>
+<area shape="rect" href="main_8c.html#a1730ffe1e560465665eb47d9264826f9" title="This function is executed in case of error occurrence." alt="" coords="284,5,395,31"/>
+<area shape="poly" title=" " alt="" coords="236,15,270,15,270,21,236,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a4bec4b1e1d3a367a4b56968ac0d60d07" name="a4bec4b1e1d3a367a4b56968ac0d60d07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bec4b1e1d3a367a4b56968ac0d60d07">&#9670;&#160;</a></span>DualDrive_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="DCMotor__driver_8h.html#ae8c12bd4f4e65a8a8600b9789f187ce4">DualDrive_handle_t</a> DualDrive_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>External handle for the dual motor drive system. </p>
+
+</div>
+</div>
+<a id="a82645da53e400fe058939cc263660d4c" name="a82645da53e400fe058939cc263660d4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82645da53e400fe058939cc263660d4c">&#9670;&#160;</a></span>Target_Handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct____TARGET__HandleTypeDef.html">__TARGET_HandleTypeDef</a> Target_Handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>External handle for the current detected target. </p>
+
+</div>
+</div>
+<a id="ab23c270e6fe079f27b9a05d1b4014651" name="ab23c270e6fe079f27b9a05d1b4014651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab23c270e6fe079f27b9a05d1b4014651">&#9670;&#160;</a></span>X4LIDAR_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structX4LIDAR__handle__t.html">X4LIDAR_handle_t</a> X4LIDAR_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>External handle for the LiDAR sensor. </p>
+<p>External handle for the X4 LiDAR sensor. </p>
 
 </div>
 </div>

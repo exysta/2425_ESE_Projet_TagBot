@@ -1,22 +1,11 @@
 var searchData=
 [
-  ['_5f_5fattribute_5f_5f_0',['__attribute__',['../syscalls_8c.html#af9aace1b44b73111e15aa39f06f43456',1,'syscalls.c']]],
-  ['_5f_5fio_5fgetchar_1',['__io_getchar',['../syscalls_8c.html#ad0122671640a3af49792ddaa59e8294e',1,'syscalls.c']]],
-  ['_5f_5fio_5fputchar_2',['__io_putchar',['../syscalls_8c.html#aa53ed4b191897a1bfc205aa1da005d24',1,'syscalls.c']]],
-  ['_5fclose_3',['_close',['../syscalls_8c.html#a5aab5e2acfd600e3667dc915a2bbc7cb',1,'syscalls.c']]],
-  ['_5fexecve_4',['_execve',['../syscalls_8c.html#ad2a07db8fdf26151eb98ba5711fad8c5',1,'syscalls.c']]],
-  ['_5fexit_5',['_exit',['../syscalls_8c.html#abc96bd69b58b2deaddb484478d911c1b',1,'syscalls.c']]],
-  ['_5ffork_6',['_fork',['../syscalls_8c.html#a6cb6331c9d166180903d5fb78b9c9dd7',1,'syscalls.c']]],
-  ['_5ffstat_7',['_fstat',['../syscalls_8c.html#a41eef54307912a82d20e71c3d47315aa',1,'syscalls.c']]],
-  ['_5fgetpid_8',['_getpid',['../syscalls_8c.html#a945e539df8e0f66d3c73c533fe1968ee',1,'syscalls.c']]],
-  ['_5fisatty_9',['_isatty',['../syscalls_8c.html#ad3134a3dc296622b8d1c5456e481505b',1,'syscalls.c']]],
-  ['_5fkill_10',['_kill',['../syscalls_8c.html#a062a5101199c3128edd5170f2575bb10',1,'syscalls.c']]],
-  ['_5flink_11',['_link',['../syscalls_8c.html#a31da4cd5328defa76a9e2246992aba12',1,'syscalls.c']]],
-  ['_5flseek_12',['_lseek',['../syscalls_8c.html#a7a61311bdf1cb025fc07dc2bdae22ce4',1,'syscalls.c']]],
-  ['_5fopen_13',['_open',['../syscalls_8c.html#a270c9113047edd8d64186710ad76062b',1,'syscalls.c']]],
-  ['_5fsbrk_14',['_sbrk',['../sysmem_8c.html#a68125648bcce70b6bb3aa0be50e99700',1,'sysmem.c']]],
-  ['_5fstat_15',['_stat',['../syscalls_8c.html#a4711e961db985ed2c850a8be6597af50',1,'syscalls.c']]],
-  ['_5ftimes_16',['_times',['../syscalls_8c.html#aaf727ebf57cd64d6c58b23e6ee4a4a69',1,'syscalls.c']]],
-  ['_5funlink_17',['_unlink',['../syscalls_8c.html#a70b2f211d665cded5637065aa2bb89dc',1,'syscalls.c']]],
-  ['_5fwait_18',['_wait',['../syscalls_8c.html#aeef0c3372d04caa1bcc99fed2ab6ec72',1,'syscalls.c']]]
+  ['adxl343_5fconfigure_0',['adxl343_configure',['../ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7',1,'ADXL343_Configure(void):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#a6dd70495fb48d10b8521388e446934b7',1,'ADXL343_Configure(void):&#160;ADXL343_driver.c']]],
+  ['adxl343_5fdetecttap_1',['adxl343_detecttap',['../ADXL343__driver_8c.html#a774d1526d13f96af72cf2f686b74ecba',1,'ADXL343_DetectTap(void):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#a774d1526d13f96af72cf2f686b74ecba',1,'ADXL343_DetectTap(void):&#160;ADXL343_driver.c']]],
+  ['adxl343_5finit_2',['adxl343_init',['../ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25',1,'ADXL343_Init(void):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#ab69552f9f90668a8ed107c5d060b5c25',1,'ADXL343_Init(void):&#160;ADXL343_driver.c']]],
+  ['adxl343_5fread_5fxyz_3',['adxl343_read_xyz',['../ADXL343__driver_8c.html#a4612e98571ab1bd43fd829d4550d9fd5',1,'ADXL343_Read_XYZ(int16_t *x, int16_t *y, int16_t *z):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#a4612e98571ab1bd43fd829d4550d9fd5',1,'ADXL343_Read_XYZ(int16_t *x, int16_t *y, int16_t *z):&#160;ADXL343_driver.c']]],
+  ['adxl343_5freadregister_4',['adxl343_readregister',['../ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48',1,'ADXL343_ReadRegister(uint8_t reg, int8_t *rx_data, size_t length):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#a7ef718df71a7da3c3254869733e66f48',1,'ADXL343_ReadRegister(uint8_t reg, int8_t *rx_data, size_t length):&#160;ADXL343_driver.c']]],
+  ['adxl343_5ftask_5',['adxl343_task',['../ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0',1,'ADXL343_Task(void *unused):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#a3220383b2adf858a28230d8462c554e0',1,'ADXL343_Task(void *unused):&#160;ADXL343_driver.c']]],
+  ['adxl343_5ftaskcreate_6',['adxl343_taskcreate',['../ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb',1,'ADXL343_TaskCreate(void *unused):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#a527b0df26db327a1dde3e095cbc5ffbb',1,'ADXL343_TaskCreate(void *unused):&#160;ADXL343_driver.c']]],
+  ['adxl343_5fwriteregister_7',['adxl343_writeregister',['../ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099',1,'ADXL343_WriteRegister(uint8_t reg, uint8_t data):&#160;ADXL343_driver.c'],['../ADXL343__driver_8h.html#a606021acd0c025e7adec64ff8908e099',1,'ADXL343_WriteRegister(uint8_t reg, uint8_t data):&#160;ADXL343_driver.c']]]
 ];
