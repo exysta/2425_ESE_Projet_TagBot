@@ -1,3 +1,9 @@
+ /**
+ *@file SSD1306_fonts.C
+ * @brief Font definitions and image declarations for the SSD1306 OLED display driver.
+ *
+ *
+ */
 #include "SSD1306_fonts.h"
 
 #ifdef SSD1306_INCLUDE_FONT_7x10
