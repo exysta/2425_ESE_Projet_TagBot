@@ -213,7 +213,15 @@ void distSensor_Task(void *unused)
 				DCMotor_Brake(&DualDrive_handle.motor_left);
 				DCMotor_Brake(&DualDrive_handle.motor_right);
 				printf("Braking !!Reseting speed to 0 after 5 sec\r\n");
+				vTaskDelay(pdMS_TO_TICKS(2000));
+				DCMotor_SetSpeed(&DualDrive_handle.motor_left, 0, POSITIVE_ROTATION);
+				DCMotor_SetSpeed(&DualDrive_handle.motor_right, 0, POSITIVE_ROTATION);
+
 				is_robot_braking = 1;
+
+
+
+
 			}
 
 		}

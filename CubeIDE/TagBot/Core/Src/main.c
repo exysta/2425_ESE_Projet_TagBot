@@ -176,9 +176,11 @@ int main(void)
 	ADXL343_Configure();*/
 
 	ADXL343_TaskCreate(NULL);
+	printf("adxl task creat \r\n");
 
 	//**********************************************************
 	DCMotor_CreateTask(&DualDrive_handle);
+	printf("dcmotor task creat \r\n");
 
 	//**********************************************************
 	// Init SCREEN OLED
@@ -192,16 +194,18 @@ int main(void)
 	//LIDAR
 
 	X4LIDAR_create_task(&X4LIDAR_handle);
+	printf("lidar task creat \r\n");
+	//**********************************************************
+//	shell_init(&h_shell);
+//	shell_add(&h_shell, "print_dist", print_lidar_distances,
+//			"print lidar buffer containing scanned distances");
+//	shell_add(&h_shell, "print_motor_speed", print_motor_speed,
+//			"print_motor_speed");
+//	shell_createShellTask(&h_shell);
 
 	//**********************************************************
-	shell_init(&h_shell);
-	shell_add(&h_shell, "print_dist", print_lidar_distances,
-			"print lidar buffer containing scanned distances");
-	shell_add(&h_shell, "print_motor_speed", print_motor_speed,
-			"print_motor_speed");
-	shell_createShellTask(&h_shell);
-	//**********************************************************
 	RobotStrategy_CreateTask();
+
 	//**********************************************************
 
 	//HAL_Delay(20000);
