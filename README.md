@@ -334,7 +334,78 @@ L'ajout de points de test accessibles facilite la vérification des tensions d'a
 
   Dans le cadre du projet, nous devons utiliser plusieurs moyens de communications tels que le SPI pour l'accéléromètre, l'I2C pour l'écran OLED
   
-  ## Pilote Lidar X4
+  ## Pilote X4 LIDAR
+
+  ### Aperçu
+  Cette implémentation est un pilote pour le capteur X4 LIDAR, conçu pour fonctionner sur des systèmes embarqués utilisant FreeRTOS. Le pilote gère la communication avec le capteur LIDAR via UART et fournit des fonctionnalités pour la configuration du dispositif, le balayage et le traitement des données.
+  
+  ### Fonctionnalités
+  - Communication UART avec le capteur X4 LIDAR
+  - Récupération des informations du dispositif (modèle, firmware, version matérielle, numéro de série)
+  - Opérations de balayage avec support DMA
+  - Gestion des tâches FreeRTOS
+  - Analyse et validation des en-têtes de réponse
+  - Détection et traitement efficace des trames de données
+  
+  ### Dépendances
+  - FreeRTOS
+  - STM32 HAL (Hardware Abstraction Layer)
+  - Bibliothèques C standard (stdlib.h, math.h)
+  
+  ### Fonctions Principales
+  - `X4LIDAR_init`: Initialise le pilote LIDAR et effectue la configuration initiale
+  - `X4LIDAR_start_scan`: Démarre le processus de balayage LIDAR
+  - `X4LIDAR_get_device_info`: Récupère les informations du dispositif
+  - `X4LIDAR_create_task`: Crée une tâche FreeRTOS pour les opérations LIDAR
+  - `X4LIDAR_send_command`: Gère la transmission des commandes au capteur
+  
+  ### Exemple d'Utilisation
+  main.c:
+  ```c
+  // Initialisation de la structure LIDAR
+  X4LIDAR_handle_t lidar_handle;
+  UART_HandleTypeDef huart3;  // Votre handle UART
+  
+  // Création de la tâche LIDAR
+  X4LIDAR_create_task(&lidar_handle);
+  /* Start scheduler */
+  osKernelStart();
+
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	X4LIDAR_HAL_UART_RxHalfCpltCallback(huart,&X4LIDAR_handle);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	X4LIDAR_HAL_UART_RxCpltCallback(huart,&X4LIDAR_handle);
+}
+
+````
+X4LIDAR_driver.c:
+  ```c
+//ensure the correct uart is used for the init
+void X4LIDAR_task(void *argument)
+{
+    // Retrieve the LiDAR handle passed as argument
+    X4LIDAR_handle_t *X4LIDAR_handle = (X4LIDAR_handle_t*) argument;
+
+    // Initialize the LiDAR hardware
+    X4LIDAR_init(X4LIDAR_handle, &huart3);
+    X4LIDAR_start_scan(X4LIDAR_handle);
+...
+}
+````
+For the uart config : 
+
+![image](https://github.com/user-attachments/assets/d79d6af8-9061-4248-a122-c5ccf1e52a77)
+
+For the DMA config :
+
+![image](https://github.com/user-attachments/assets/fb1ce63d-a179-4899-a914-27c800d36bd9)
+
 
   ## L'accéléromètre ADXL343
   
@@ -436,5 +507,7 @@ L'ajout de points de test accessibles facilite la vérification des tensions d'a
   Attention, il faut penser à mettre le continuous conversion mode de l'adc en disable sinon le programme bloque.
   
   Autre point important, les adc sont sur 12 bits, il est donc préférable de configurer le dma pour le transfert de half-word i.e 16 bits. Cependant, il faut alors penser à définir le buffer du DMA comme uint16_t adc1_dma_buffer[ADC1_CHANNEL_COUNT];.
+  
   En effet, si l'on défini le buffer avec des uint32_t, les valeurs de 2 channels sur 16 bits se retrouveront concaténées sur une valeur de 32 bits. Pour des raisons obsucre il y avait encore des bugs de cette facon.
+  
   En mettant les transferts du dma en format word avec  uint32_t adc1_dma_buffer[ADC1_CHANNEL_COUNT] cela semble régler le problème.
