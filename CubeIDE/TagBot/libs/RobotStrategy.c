@@ -349,9 +349,16 @@ void RobotStrategy_Task(void *argument)
             DCMotor_SetSpeed(&DualDrive_handle.motor_right, 0, POSITIVE_ROTATION);
         }
 
-        // Delay 100ms before the next task iteration
-        vTaskDelay(pdMS_TO_TICKS(100));
-    }
+			is_robot_braking = 0;
+			DCMotor_SetSpeed(&DualDrive_handle.motor_left, 0, POSITIVE_ROTATION);
+			DCMotor_SetSpeed(&DualDrive_handle.motor_right, 0, POSITIVE_ROTATION);
+
+
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(100));
+
+	}
 }
 
 /**

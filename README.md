@@ -328,7 +328,7 @@ L'ajout de points de test accessibles facilite la vérification des tensions d'a
 
   ## Documentation Code
 
-[voir la documentation](./Documents/Doxygen_Documentation/html/index.html)
+[voir la documentation Doxygen](https://exysta.github.io/2425_ESE_Projet_TagBot/Documents/Doxygen_Documentation/html/index.html)
   
   ## Introduction
 
@@ -336,10 +336,105 @@ L'ajout de points de test accessibles facilite la vérification des tensions d'a
   
   ## Pilote Lidar X4
 
-## 
-## Capteurs de distances
-Attention, il faut penser à mettre le continuous conversion mode de l'adc en disable sinon le programme bloque.
-
-Autre point important, les adc sont sur 12 bits, il est donc préférable de configurer le dma pour le transfert de half-word i.e 16 bits. Cependant, il faut alors penser à définir le buffer du DMA comme uint16_t adc1_dma_buffer[ADC1_CHANNEL_COUNT];.
-En effet, si l'on défini le buffer avec des uint32_t, les valeurs de 2 channels sur 16 bits se retrouveront concaténées sur une valeur de 32 bits. Pour des raisons obsucre il y avait encore des bugs de cette facon.
-En mettant les transferts du dma en format word avec  uint32_t adc1_dma_buffer[ADC1_CHANNEL_COUNT] cela semble régler le problème.
+  ## L'accéléromètre ADXL343
+  
+  Nous allons à présent établir le code pour l'accéléromètre ADXL343, il va permettre de déteter un TAP et donc un changement d'état du robot, lorsque ce dernier entre en collision avec un autre robot. Pour pouvoir communiquer avec l'ADXL343 nous allons utiliser la communication SPI, ainsi on va définir deux fonctions principale pour lire et ecrire dans les registres. 
+  
+  ### Paramètres
+  
+  Dans le header en plus de définir les différents registres qui seront utilisés dans le code, et les différents structures, on peut également définir des paramètres clés pour la détection du TAP tel que :
+  
+  ````ruby
+  #define TAP_THRESHOLD 			0x20											
+  #define TAP_DURATION 			0x10 										
+  #define TAP_LATENT 				0xC8
+  ````
+  
+  On définit alors le seuil de détection du tap ici 2g, la durée entre deux tap différents ici 10ms et la durée total d'un single TAP.
+  
+  ### Lire et Ecrire dans les registres
+  
+  Pour pouvoir lire dans les registres on doit d'abord activer le NSS, ensuite on envoie l'adresse à laquelle on veut lire la donnée, puis on lit la donnée associée à l'adresse du registre et enfin on désactive le NSS. 
+  
+  ````ruby
+  void ADXL343_ReadRegister(uint8_t reg, int8_t* rx_data, size_t length)
+  ````
+  
+  De la même manière pour écrire dans un registre on active le NSS ensuite on transmet les données que que l'on veut transmettre dans le registre qui nous intéresse et puis on désactive le NSS.
+  
+  ````ruby
+  void ADXL343_WriteRegister(uint8_t reg, uint8_t data)
+  ````
+  
+  ### Initialisation de l'accéléromètre
+  
+  Pour l'initialisation de l 'accéléromètre, on commence tout d'abord en vérifiant que la connexion est corréctement établit, pour cela on vérifie que la valeur du registre ADXL343_REG_DEVID est bien 0xE5. Ensuite on configure les différents registres pour mettre l'accéléromètre en mode veille, définir le format des données, et activer le mode mesure.
+  
+  ````ruby
+  int ADXL343_Init(ADXL343_Handle_t* handle)
+  ````
+  
+  Ensuite on va spécifiquement configurer les seuils, la durée, et les axes pour détecter les tapotements. On va également activer les interruptions pour les événements de tapotement simple sur n'importe quel axe.
+  
+  ````ruby
+  void ADXL343_Configure(ADXL343_Handle_t* handle)
+  ````
+  
+  ### Détection du TAP
+  
+  Le but de l'accéléromètre est de détecter lorsque le robot entre en collision pour ensuite pouvoir changer d'état. Pour cela on va lire la valeur du registre ADXL343_REG_INT_SOURCE et lorsque le 6 eme bit est à 1 cela signifie que l'on a détecter un single TAP.
+  
+  ````ruby
+  void ADXL343_DetectTap(ADXL343_Handle_t* handle)
+  ````
+  
+  ### Détection du TAP dans une tâche
+  
+  Avec l'activation de freeRTOS le fonctionnement est géré dans une tâche périodique permettant une exécution asynchrone et une intégration facile dans un système temps réel.
+  
+  ````ruby
+  void ADXL343_TaskCreate(void * unused)
+  ````
+  
+  
+  
+  
+  ## Capteurs de distance
+  
+  Dans cette partie on va expliquer le code pour les capteurs de distance. Les capteurs de distance vont permettre de détecter le vide et ainsi d'arréter les moteurs pour éviter que le robot tombe de la table. On va donc utiliser 4 capteurs Nord, West, Sud, Est on utilisera deux canaux ADC1 et ADC2 sur la STM32. ADC1 lit les capteurs de distance situés à l'ouest (west) et au nord et ADC2 lit les capteurs de distance situés au sud et à l'est. Chaque capteur est représenté par une structure(DistSensor_handle_t) qui contient des informations telles que l'état du capteur et les valeurs mesurées. Les données des ADC sont transférées en mémoire via DMA pour améliorer les performances et réduire la charge du CPU.
+  
+  ### Initialisation
+  
+  Pour l'initialisation on va démarrer les conversions ADC en mode DMA pour ADC1 et ADC2 et activer le timer associé htim6 pour synchroniser les conversions. On initialise les capteurs avec les valeurs par défaut.
+  
+  ````ruby
+  void distSensor_initADC_DMA(void)
+  ````
+  
+  ### Lire les valeurs de l'ADC
+  
+  On va lire les valeurs de l'adc pour pouvoir déterminer si la distance qu'on évalue de l'objet le plus proche est le vide ou pas. On établit deux fonctions l'une en mode polling tel qu'on effectue la lecture manuelle d'une valeur ADC en mode blocant. Mais on établie aussi la focntion de lecture des données en mode DMA. La lecture des données des buffers DMA  s'éffectue pour chaque capteur avec la mise à jour des états  en fonction d'un seuil (VOID_TRESHOLD). On vérifie si le capteur détecte un sol ou du vide .
+  
+  ````ruby
+  uint32_t distSensor_ReadADC(ADC_HandleTypeDef* hadc)
+  ````
+  
+  ````ruby
+  HAL_StatusTypeDef distSensor_ReadADC_DMA(void)
+  ````
+  
+  On appelle la fonction CallBack lorsque la conversion ADC est terminée. 
+  ````ruby
+  void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+  ````
+  
+  ### Fonctionnement des capteurs de distance en tâche
+  
+  On commence par créer une fonction exécutée en tâche FreeRTOS pour gérer les capteurs en continu, cette fonction va lit les données des capteurs via la fonction évoquée précédemment et on vavérifier si un ou plusieurs capteurs détectent du vide. Si oui, on déclenche une procédure d'arrêt d'urgence en activant le freinage des moteurs, et on réinitialise leur vitesse à 0 après un délai.
+  
+  ### Note Bonus
+  Attention, il faut penser à mettre le continuous conversion mode de l'adc en disable sinon le programme bloque.
+  
+  Autre point important, les adc sont sur 12 bits, il est donc préférable de configurer le dma pour le transfert de half-word i.e 16 bits. Cependant, il faut alors penser à définir le buffer du DMA comme uint16_t adc1_dma_buffer[ADC1_CHANNEL_COUNT];.
+  En effet, si l'on défini le buffer avec des uint32_t, les valeurs de 2 channels sur 16 bits se retrouveront concaténées sur une valeur de 32 bits. Pour des raisons obsucre il y avait encore des bugs de cette facon.
+  En mettant les transferts du dma en format word avec  uint32_t adc1_dma_buffer[ADC1_CHANNEL_COUNT] cela semble régler le problème.

@@ -263,23 +263,26 @@ void distSensor_Task(void *unused)
             }
         }
 
-        // Print messages to indicate which sensor detects void
-        if (Sens_N.sensor_detection_status == DistSensor_DETECT_VOID)
-        {
-            printf("North detects void\r\n");
-        }
-        if (Sens_W.sensor_detection_status == DistSensor_DETECT_VOID)
-        {
-            printf("West detects void\r\n");
-        }
-        if (Sens_S.sensor_detection_status == DistSensor_DETECT_VOID)
-        {
-            printf("South detects void\r\n");
-        }
-        if (Sens_E.sensor_detection_status == DistSensor_DETECT_VOID)
-        {
-            printf("East detects void\r\n");
-        }
+		if(Sens_N.sensor_detection_status == DistSensor_DETECT_VOID ||
+				Sens_E.sensor_detection_status == DistSensor_DETECT_VOID ||
+				Sens_W.sensor_detection_status == DistSensor_DETECT_VOID ||
+				Sens_S.sensor_detection_status == DistSensor_DETECT_VOID)
+		{
+			if(!is_robot_braking)
+			{
+				DCMotor_Brake(&DualDrive_handle.motor_left);
+				DCMotor_Brake(&DualDrive_handle.motor_right);
+				printf("Braking !!Reseting speed to 0 after 5 sec\r\n");
+				vTaskDelay(pdMS_TO_TICKS(2000));
+				DCMotor_SetSpeed(&DualDrive_handle.motor_left, 0, POSITIVE_ROTATION);
+				DCMotor_SetSpeed(&DualDrive_handle.motor_right, 0, POSITIVE_ROTATION);
+
+				is_robot_braking = 1;
+
+
+
+
+			}
 
         // Add a small delay to prevent excessive CPU usage
         vTaskDelay(50);
