@@ -572,6 +572,11 @@ des fonctions peuvent y etre ajouté en appellant shell_add(). exemple d'utilisa
   /* Start scheduler */
   osKernelStart();
 ````
+## L'écran OLED SSD1306
+L'écran est uniquement utilisé pour le fun afin d'avoir un moyen de visualiser si le robot est en mode chat ou sours. La librairie utilisé à été légérement adapté pour prendre en charge l'affichage d'images.
+
+![cat](https://github.com/user-attachments/assets/c3513fa3-4ee4-4a78-8b18-8f9ab8b6f54b)
+
 ## L'accéléromètre ADXL343
   
   Nous allons à présent établir le code pour l'accéléromètre ADXL343, il va permettre de déteter un TAP et donc un changement d'état du robot, lorsque ce dernier entre en collision avec un autre robot. Pour pouvoir communiquer avec l'ADXL343 nous allons utiliser la communication SPI, ainsi on va définir deux fonctions principale pour lire et ecrire dans les registres. 
