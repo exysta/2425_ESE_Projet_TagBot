@@ -19,16 +19,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install Doxygen
+    - name: Install Doxygen (Linux)
+      if: runner.os == 'Linux'
       run: |
-        if [[ "$RUNNER_OS" == "Linux" ]]; then
-          sudo apt-get update
-          sudo apt-get install -y doxygen graphviz
-        elif [[ "$RUNNER_OS" == "Windows" ]]; then
-          choco install doxygen.install graphviz
-        elif [[ "$RUNNER_OS" == "macOS" ]]; then
-          brew install doxygen graphviz
-        fi
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz
+
+    - name: Install Doxygen (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install doxygen.install graphviz
+
+    - name: Install Doxygen (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install doxygen graphviz
 
     - name: Generate Documentation
       run: doxygen Doxyfile
@@ -37,4 +42,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./Documents/Doxygen_Documentation/html  # Ensure the correct path
+        publish_dir: ./Documents/Doxygen_Documentation/html
