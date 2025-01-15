@@ -327,13 +327,151 @@ L'ajout de points de test accessibles facilite la vérification des tensions d'a
 # Code
 
   ## Documentation Code
+Le détail des fonctions structures et autres peuvent être visualiser en utilisant la documentation Doxygen :
 
 [voir la documentation Doxygen](https://exysta.github.io/2425_ESE_Projet_TagBot/Documents/Doxygen_Documentation/html/index.html)
+
+La documentation qui suit est un résumé du fonctionement et ne rentre pas trop dans les détails déjà couvert par la documentation DOxygen.
   
   ## Introduction
 
-  Dans le cadre du projet, nous devons utiliser plusieurs moyens de communications tels que le SPI pour l'accéléromètre, l'I2C pour l'écran OLED
+  Dans le cadre du projet, nous devons utiliser plusieurs moyens de communications tels que le SPI pour l'accéléromètre, l'I2C pour l'écran OLED, l'UART pour le lidar et une lecture de tension avec un ADC pour les capteurs de distance.
+
+  ## FreeRTOS config 
   
+  ![image](https://github.com/user-attachments/assets/a79ae845-7e1e-4802-bca1-e244e7265806)
+
+  ## Task Priority
+  - Motor task = 11
+  - Distance sensor task = 10
+  - Robot strategy task = 9
+  - Accelerometer task = 8
+  - Lidar task = 7
+  - Shell task = 6
+
+  Cette ordre de priorité nous permet de nous assurer un controle des moteurs prioritaire est assure une bonne détection d'un potententiel vide par notre tâche Distance sensor
+## exemple d'utilisation dans un main.c
+  ```c
+/* USER CODE BEGIN Includes */
+#include "stm32g4xx_hal.h"
+#include "semphr.h"
+#include "X4LIDAR_driver.h"
+#include "DCMotor_driver.h"
+#include "SSD1306.h"
+#include "SSD1306_fonts.h"
+#include "shell.h"
+#include "RobotStrategy.h"
+#include "distSensor_driver.h"
+#include "ADXL343_driver.h"
+
+/* USER CODE BEGIN PV */
+X4LIDAR_handle_t X4LIDAR_handle;
+DualDrive_handle_t DualDrive_handle;
+__TARGET_HandleTypeDef Target_Handle;
+
+int main(void)
+{
+...
+
+	printf(" _____________________________\r\n");
+	printf("|                             |\r\n");
+	printf("|                             |\r\n");
+	printf("|  WELCOME ON TAGBOT PROJECT  |\r\n");
+	printf("|                             |\r\n");
+	printf("|_____________________________|\r\n");
+	//**********************************************************
+
+	/* Ce code initialise l'adc en dma*/
+	distSensor_TaskCreate(NULL);
+	printf("Démarrage du test des capteurs de distance...\r\n");
+
+	//**********************************************************
+
+	/* Code init l'accélérometre*/
+
+	ADXL343_TaskCreate(NULL);
+	printf("adxl task creat \r\n");
+
+	//**********************************************************
+	DCMotor_CreateTask(&DualDrive_handle);
+	printf("dcmotor task creat \r\n");
+
+	//**********************************************************
+	// Init SCREEN OLED
+	if(HAL_OK == SCREEN_SSD1306_Init(&hscreen1, &hi2c1))
+	{
+		SCREEN_SSD1306_DrawBitmap(&hscreen1, Nyan_115x64px, 115, 64, White);
+		//SCREEN_SSD1306_DrawBitmap(&hscreen1, Jerry_50x64px, 120, 64, White);
+		SCREEN_SSD1306_Update_Screen(&hscreen1);
+	}
+	//**********************************************************
+	//LIDAR
+
+	X4LIDAR_create_task(&X4LIDAR_handle);
+	printf("lidar task creat \r\n");
+	//**********************************************************
+
+	RobotStrategy_CreateTask();
+
+	//**********************************************************
+
+	printf("Tasks creation finished... \r\n");
+	//**********************************************************
+
+  /* USER CODE END 2 */
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+...
+}
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	X4LIDAR_HAL_UART_RxHalfCpltCallback(huart,&X4LIDAR_handle);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	shell_drv_uart_HAL_UART_RxCpltCallback(huart);
+	X4LIDAR_HAL_UART_RxCpltCallback(huart,&X4LIDAR_handle);
+
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	shell_drv_uart_HAL_UART_TxCpltCallback(huart);
+}
+/* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM7 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM7) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+	  DCMotor_EncoderCallback(htim ,&DualDrive_handle);
+
+
+  /* USER CODE END Callback 1 */
+}
+````
+
   ## Pilote X4 LIDAR
 
   ### Aperçu
@@ -406,8 +544,35 @@ For the DMA config :
 
 ![image](https://github.com/user-attachments/assets/fb1ce63d-a179-4899-a914-27c800d36bd9)
 
+## Robot Strategy
 
-  ## L'accéléromètre ADXL343
+Ce fichier a pour but de centraliser et synchroniser les différentes fonctionalitées du robot. C'est dans ce fichier que le traitement des donnés du Lidar est fait pour déterminer la cible la plus proche.On y gère également les états chat/souris.
+
+
+Idéalement il aurait fallu tout centraliser sur cette tache mais par manque de temps et pour s'assurer que les actions critiques telles que le freinage des moteurs se faisaient à temps, une partie à des actions s'effectuent dans les autres taches.
+
+## DC Motor Driver
+Ce fichier contient des fonctions pour controler les pwm envoyer aux deux moteurs. Il contient également les fonctions pour les encodeurs des moteurs.
+
+Une petie rampe pour les pwm a été utilisé et l'acquisition de la vitesse des moteurs se fait toutes les secondes via le callback d'un timer.
+
+## Shell
+
+La shell est uniquement utilisé pour le debug étant donné que la connexion STLink n'est pas possible si le robot doit se déplacer. 
+des fonctions peuvent y etre ajouté en appellant shell_add(). exemple d'utilisation :
+
+  ```c
+	shell_init(&h_shell);
+	shell_add(&h_shell, "print_dist", print_lidar_distances,
+			"print lidar buffer containing scanned distances");
+	shell_add(&h_shell, "print_motor_speed", print_motor_speed,
+		"print_motor_speed");
+	shell_createShellTask(&h_shell);
+	...
+  /* Start scheduler */
+  osKernelStart();
+````
+## L'accéléromètre ADXL343
   
   Nous allons à présent établir le code pour l'accéléromètre ADXL343, il va permettre de déteter un TAP et donc un changement d'état du robot, lorsque ce dernier entre en collision avec un autre robot. Pour pouvoir communiquer avec l'ADXL343 nous allons utiliser la communication SPI, ainsi on va définir deux fonctions principale pour lire et ecrire dans les registres. 
   
@@ -501,7 +666,7 @@ For the DMA config :
   
   ### Fonctionnement des capteurs de distance en tâche
   
-  On commence par créer une fonction exécutée en tâche FreeRTOS pour gérer les capteurs en continu, cette fonction va lit les données des capteurs via la fonction évoquée précédemment et on vavérifier si un ou plusieurs capteurs détectent du vide. Si oui, on déclenche une procédure d'arrêt d'urgence en activant le freinage des moteurs, et on réinitialise leur vitesse à 0 après un délai.
+  On commence par créer une fonction exécutée en tâche FreeRTOS pour gérer les capteurs en continu, cette fonction va lit les données des capteurs via la fonction évoquée précédemment et on vavérifier si un ou plusieurs capteurs détectent du vide. Si oui, on déclenche une procédure d'arrêt d'urgence en activant le freinage des moteurs, et on réinitialise leur vitesse à 0 après un délai. L'arret d'ugence s'effectue directement ici pour éviter d'éventuels délais/préemption qui pourrait ralentir l'arret.
   
   ### Note Bonus
   Attention, il faut penser à mettre le continuous conversion mode de l'adc en disable sinon le programme bloque.
