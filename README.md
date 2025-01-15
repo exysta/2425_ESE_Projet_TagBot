@@ -1,6 +1,6 @@
 # 2425_ESE_Project_TagBot
 Welcome to the TagBot project created by the amazing team consisted of Lucas Chapart, Charlotte Fricot and Marie Caronello.
-The following description is in french but you can find the english description there :
+The following description is in french but you can find the english description there but it is not up to date for now :
 
 - [English](README_english.md)
 
