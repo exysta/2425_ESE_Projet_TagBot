@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fontdef_0',['FontDef',['../structFontDef.html',1,'']]]
+  ['encoder_5ftypedef_0',['Encoder_typedef',['../structEncoder__typedef.html',1,'']]]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['ssd1306_5fcolor_0',['SSD1306_COLOR',['../SSD1306_8h.html#a6f68a90e6eefe5396bcbec2cd699d500',1,'SSD1306.h']]],
-  ['ssd1306_5ferror_5ft_1',['SSD1306_Error_t',['../SSD1306_8h.html#a3cd087bf4d4acf17315ed0ee9905af26',1,'SSD1306.h']]],
-  ['strategy_5fenum_2',['STRATEGY_Enum',['../RobotStrategy_8h.html#ac3cfeb8c4571377cc4b0e33ceb1515f2',1,'RobotStrategy.h']]]
+  ['direction_5fenum_0',['DIRECTION_Enum',['../RobotStrategy_8h.html#a4a2ca28dc704156cf20841262c96f79e',1,'RobotStrategy.h']]],
+  ['distsensor_5fadc_5fstatus_5ft_1',['DistSensor_ADC_Status_t',['../distSensor__driver_8h.html#a89646b3976d496dcf60536d74df25ec6',1,'distSensor_driver.h']]],
+  ['distsensor_5fdetection_5fstatus_5ft_2',['DistSensor_Detection_Status_t',['../distSensor__driver_8h.html#aaf498b5115cdeb7ef003a2d777a9e8b9',1,'distSensor_driver.h']]],
+  ['distsensor_5fposition_5ft_3',['DistSensor_Position_t',['../distSensor__driver_8h.html#aad63493b7aa9ad637d376e72e6664a97',1,'distSensor_driver.h']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['white_0',['White',['../SSD1306_8h.html#a6f68a90e6eefe5396bcbec2cd699d500ab548046646b36c12aa6ba841de500094',1,'SSD1306.h']]]
+  ['ssd1306_5ferr_0',['SSD1306_ERR',['../SSD1306_8h.html#a3cd087bf4d4acf17315ed0ee9905af26a2039f63beb20aacaf905a6702b837b25',1,'SSD1306.h']]],
+  ['ssd1306_5fok_1',['SSD1306_OK',['../SSD1306_8h.html#a3cd087bf4d4acf17315ed0ee9905af26ab26e32b0f76830ed30b1607ee99cce34',1,'SSD1306.h']]]
 ];

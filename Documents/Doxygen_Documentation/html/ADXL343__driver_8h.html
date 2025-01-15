@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">2425_ESE_Projet_TagBot<span id="projectnumber">&#160;1.0</span>
+   <div id="projectname">2425_ESE_Projet_TagBot<span id="projectnumber">&#160;1.1</span>
    </div>
    <div id="projectbrief">This is the documentation for the TagBot CubeIDE project.</div>
   </td>
@@ -91,7 +91,9 @@ $(document).ready(function(){initNavTree('ADXL343__driver_8h.html',''); initResi
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">ADXL343_driver.h File Reference</div></div>
 </div><!--header-->
@@ -126,103 +128,104 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="ADXL343__driver_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a528fa0678527604af38dc5cb174f2b3c" id="r_a528fa0678527604af38dc5cb174f2b3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a528fa0678527604af38dc5cb174f2b3c">ADXL343_REG_DEVID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="memdesc:a528fa0678527604af38dc5cb174f2b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device ID Register.  <br /></td></tr>
 <tr class="separator:a528fa0678527604af38dc5cb174f2b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67dceb2a59b69b7555c9b4cc4464c7e1" id="r_a67dceb2a59b69b7555c9b4cc4464c7e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a67dceb2a59b69b7555c9b4cc4464c7e1">ADXL343_REG_THRESH_TAP</a>&#160;&#160;&#160;0x1D</td></tr>
-<tr class="memdesc:a67dceb2a59b69b7555c9b4cc4464c7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tap Threshold Register.  <br /></td></tr>
 <tr class="separator:a67dceb2a59b69b7555c9b4cc4464c7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a345d1a51631ba506d6bddb3b8e7fb74b" id="r_a345d1a51631ba506d6bddb3b8e7fb74b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a345d1a51631ba506d6bddb3b8e7fb74b">ADXL343_REG_OFFSX</a>&#160;&#160;&#160;0x1E</td></tr>
-<tr class="memdesc:a345d1a51631ba506d6bddb3b8e7fb74b"><td class="mdescLeft">&#160;</td><td class="mdescRight">X-axis Offset Register.  <br /></td></tr>
 <tr class="separator:a345d1a51631ba506d6bddb3b8e7fb74b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c62a3efe85dd6657356b9274b599161" id="r_a4c62a3efe85dd6657356b9274b599161"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a4c62a3efe85dd6657356b9274b599161">ADXL343_REG_OFFSY</a>&#160;&#160;&#160;0x1F</td></tr>
-<tr class="memdesc:a4c62a3efe85dd6657356b9274b599161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Y-axis Offset Register.  <br /></td></tr>
 <tr class="separator:a4c62a3efe85dd6657356b9274b599161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a063b675872d95030b0eed432565e9814" id="r_a063b675872d95030b0eed432565e9814"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a063b675872d95030b0eed432565e9814">ADXL343_REG_OFFSZ</a>&#160;&#160;&#160;0x20</td></tr>
-<tr class="memdesc:a063b675872d95030b0eed432565e9814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Z-axis Offset Register.  <br /></td></tr>
 <tr class="separator:a063b675872d95030b0eed432565e9814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26167ef539102aeebb747447ad1b10ab" id="r_a26167ef539102aeebb747447ad1b10ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a26167ef539102aeebb747447ad1b10ab">ADXL343_REG_DUR</a>&#160;&#160;&#160;0x21</td></tr>
-<tr class="memdesc:a26167ef539102aeebb747447ad1b10ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tap Duration Register.  <br /></td></tr>
 <tr class="separator:a26167ef539102aeebb747447ad1b10ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c01242e4ef84a3f97983c95d8b39201" id="r_a7c01242e4ef84a3f97983c95d8b39201"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a7c01242e4ef84a3f97983c95d8b39201">ADXL343_REG_LATENT</a>&#160;&#160;&#160;0x22</td></tr>
-<tr class="memdesc:a7c01242e4ef84a3f97983c95d8b39201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Latency Register.  <br /></td></tr>
 <tr class="separator:a7c01242e4ef84a3f97983c95d8b39201"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a059581b3db85086481390035d1c697f3" id="r_a059581b3db85086481390035d1c697f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a059581b3db85086481390035d1c697f3">ADXL343_REG_THRESH_ACT</a>&#160;&#160;&#160;0x24</td></tr>
-<tr class="memdesc:a059581b3db85086481390035d1c697f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activity Threshold Register.  <br /></td></tr>
 <tr class="separator:a059581b3db85086481390035d1c697f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5c2307df1335ac843649e81cc2f2593" id="r_ae5c2307df1335ac843649e81cc2f2593"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#ae5c2307df1335ac843649e81cc2f2593">ADXL343_REG_TAP_AXES</a>&#160;&#160;&#160;0x2A</td></tr>
-<tr class="memdesc:ae5c2307df1335ac843649e81cc2f2593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tap Axes Register.  <br /></td></tr>
 <tr class="separator:ae5c2307df1335ac843649e81cc2f2593"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7646e1c70e5cd26212ec0c13d5f52154" id="r_a7646e1c70e5cd26212ec0c13d5f52154"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a7646e1c70e5cd26212ec0c13d5f52154">ADXL343_REG_BW_RATE</a>&#160;&#160;&#160;0x2C</td></tr>
-<tr class="memdesc:a7646e1c70e5cd26212ec0c13d5f52154"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bandwidth Rate Register.  <br /></td></tr>
 <tr class="separator:a7646e1c70e5cd26212ec0c13d5f52154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeae5292b8ad20121fd5b227125ef04f1" id="r_aeae5292b8ad20121fd5b227125ef04f1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#aeae5292b8ad20121fd5b227125ef04f1">ADXL343_REG_POWER_CTL</a>&#160;&#160;&#160;0x2D</td></tr>
-<tr class="memdesc:aeae5292b8ad20121fd5b227125ef04f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power Control Register.  <br /></td></tr>
 <tr class="separator:aeae5292b8ad20121fd5b227125ef04f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c93a9d7553536e7bde1afda293d8a3b" id="r_a6c93a9d7553536e7bde1afda293d8a3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a6c93a9d7553536e7bde1afda293d8a3b">ADXL343_REG_INT_ENABLE</a>&#160;&#160;&#160;0x2E</td></tr>
-<tr class="memdesc:a6c93a9d7553536e7bde1afda293d8a3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt Enable Register.  <br /></td></tr>
 <tr class="separator:a6c93a9d7553536e7bde1afda293d8a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a079ab817f5d95196229f26c69469d899" id="r_a079ab817f5d95196229f26c69469d899"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a079ab817f5d95196229f26c69469d899">ADXL343_REG_INT_MAP</a>&#160;&#160;&#160;0x2F</td></tr>
-<tr class="memdesc:a079ab817f5d95196229f26c69469d899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt Mapping Register.  <br /></td></tr>
 <tr class="separator:a079ab817f5d95196229f26c69469d899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a0123afda3b149eda856b8f5e28552d" id="r_a3a0123afda3b149eda856b8f5e28552d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a3a0123afda3b149eda856b8f5e28552d">ADXL343_REG_INT_SOURCE</a>&#160;&#160;&#160;0x30</td></tr>
-<tr class="memdesc:a3a0123afda3b149eda856b8f5e28552d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt Source Register.  <br /></td></tr>
 <tr class="separator:a3a0123afda3b149eda856b8f5e28552d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02ccfa71660cb2181fdf951ff6bcc9b2" id="r_a02ccfa71660cb2181fdf951ff6bcc9b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a02ccfa71660cb2181fdf951ff6bcc9b2">ADXL343_REG_DATA_FORMAT</a>&#160;&#160;&#160;0x31</td></tr>
-<tr class="memdesc:a02ccfa71660cb2181fdf951ff6bcc9b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data Format Register.  <br /></td></tr>
 <tr class="separator:a02ccfa71660cb2181fdf951ff6bcc9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a842ebb5a4191b1a2b685403a7dbfa9" id="r_a0a842ebb5a4191b1a2b685403a7dbfa9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a0a842ebb5a4191b1a2b685403a7dbfa9">ADXL343_REG_DATAX0</a>&#160;&#160;&#160;0x32</td></tr>
-<tr class="memdesc:a0a842ebb5a4191b1a2b685403a7dbfa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">X-axis Data 0 Register.  <br /></td></tr>
 <tr class="separator:a0a842ebb5a4191b1a2b685403a7dbfa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af132fd8c772a5295b38b7c97158b4d7b" id="r_af132fd8c772a5295b38b7c97158b4d7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#af132fd8c772a5295b38b7c97158b4d7b">ADXL343_REG_DATAX1</a>&#160;&#160;&#160;0x33</td></tr>
-<tr class="memdesc:af132fd8c772a5295b38b7c97158b4d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">X-axis Data 1 Register.  <br /></td></tr>
 <tr class="separator:af132fd8c772a5295b38b7c97158b4d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27ad66205a5c7bd03381d8db41a8d59c" id="r_a27ad66205a5c7bd03381d8db41a8d59c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a27ad66205a5c7bd03381d8db41a8d59c">ADXL343_REG_DATAY0</a>&#160;&#160;&#160;0x34</td></tr>
-<tr class="memdesc:a27ad66205a5c7bd03381d8db41a8d59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Y-axis Data 0 Register.  <br /></td></tr>
 <tr class="separator:a27ad66205a5c7bd03381d8db41a8d59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bcffa093c4f612a97ed8170425b0549" id="r_a2bcffa093c4f612a97ed8170425b0549"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a2bcffa093c4f612a97ed8170425b0549">ADXL343_REG_DATAY1</a>&#160;&#160;&#160;0x35</td></tr>
-<tr class="memdesc:a2bcffa093c4f612a97ed8170425b0549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Y-axis Data 1 Register.  <br /></td></tr>
 <tr class="separator:a2bcffa093c4f612a97ed8170425b0549"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89ad1be51f4bd97b35ed20b64487816e" id="r_a89ad1be51f4bd97b35ed20b64487816e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a89ad1be51f4bd97b35ed20b64487816e">ADXL343_REG_DATAZ0</a>&#160;&#160;&#160;0x36</td></tr>
-<tr class="memdesc:a89ad1be51f4bd97b35ed20b64487816e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Z-axis Data 0 Register.  <br /></td></tr>
 <tr class="separator:a89ad1be51f4bd97b35ed20b64487816e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6927f8cbcac93adc5a145828413a4d04" id="r_a6927f8cbcac93adc5a145828413a4d04"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a6927f8cbcac93adc5a145828413a4d04">ADXL343_REG_DATAZ1</a>&#160;&#160;&#160;0x37</td></tr>
-<tr class="memdesc:a6927f8cbcac93adc5a145828413a4d04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Z-axis Data 1 Register.  <br /></td></tr>
 <tr class="separator:a6927f8cbcac93adc5a145828413a4d04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28d0bfd6779ac1aa100c8bda205bbc19" id="r_a28d0bfd6779ac1aa100c8bda205bbc19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a28d0bfd6779ac1aa100c8bda205bbc19">ADXL343_Task_Priority</a>&#160;&#160;&#160;8</td></tr>
 <tr class="separator:a28d0bfd6779ac1aa100c8bda205bbc19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8a93adf0c0929d5cd331b61b64d9bbb" id="r_ae8a93adf0c0929d5cd331b61b64d9bbb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#ae8a93adf0c0929d5cd331b61b64d9bbb">TAP_THRESHOLD</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:ae8a93adf0c0929d5cd331b61b64d9bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a484db64e1c3e6501f8442b6ad521b041" id="r_a484db64e1c3e6501f8442b6ad521b041"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a484db64e1c3e6501f8442b6ad521b041">TAP_DURATION</a>&#160;&#160;&#160;0x10</td></tr>
+<tr class="separator:a484db64e1c3e6501f8442b6ad521b041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd687fc2dbcc614aa0cded29f56687a" id="r_affd687fc2dbcc614aa0cded29f56687a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#affd687fc2dbcc614aa0cded29f56687a">TAP_LATENT</a>&#160;&#160;&#160;0xC8</td></tr>
+<tr class="separator:affd687fc2dbcc614aa0cded29f56687a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:aed962ce1893866d8adaa21216dd118e4" id="r_aed962ce1893866d8adaa21216dd118e4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4">ADXL343_Status_t</a> { <a class="el" href="ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4a6f3004b5653d9bb9d04d94a60c3ea403">ADXL343_STATUS_NOT_DETECTED</a> = 0
+, <a class="el" href="ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4af67d53a462341f694420c128c75a4c21">ADXL343_STATUS_INITIALIZED</a> = 1
+ }</td></tr>
+<tr class="separator:aed962ce1893866d8adaa21216dd118e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab436f2d83d737f9e7f81e21311af13c9" id="r_ab436f2d83d737f9e7f81e21311af13c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9">ADXL343_Axis_t</a> { <a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9af46b35b3e3673b3af8acaa60e6b78b32">ADXL343_AXIS_X</a> = 0
+, <a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9a7c0bb1b16b161d3796c8c2a6000074c3">ADXL343_AXIS_Y</a> = 1
+, <a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9a4e2a39e52cbcedee8afa9aa7e2d264e6">ADXL343_AXIS_Z</a> = 2
+ }</td></tr>
+<tr class="separator:ab436f2d83d737f9e7f81e21311af13c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3cf9945771df2ed7fe959fdee3a4045" id="r_af3cf9945771df2ed7fe959fdee3a4045"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045">ADXL343_TapStatus_t</a> { <a class="el" href="ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045a1f8628705b8e66d0d1abe1630be9c883">ADXL343_TAP_NONE</a> = 0
+, <a class="el" href="ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045a33b718380c0e2727d5a6d7cbb0353b56">ADXL343_TAP_SINGLE</a> = 1
+ }</td></tr>
+<tr class="separator:af3cf9945771df2ed7fe959fdee3a4045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a69e2b890c9b8b41dc65313f69b092a" id="r_a8a69e2b890c9b8b41dc65313f69b092a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092a">RobotState_t</a> { <a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092aa717f1b05f6cb5c976f4577799521a3c9">ROBOT_STATE_CHAT</a>
+, <a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092aad6aecbe26297a5f60dae45abcea12f5f">ROBOT_STATE_SOURIS</a>
+ }</td></tr>
+<tr class="separator:a8a69e2b890c9b8b41dc65313f69b092a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab69552f9f90668a8ed107c5d060b5c25" id="r_ab69552f9f90668a8ed107c5d060b5c25"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#ab69552f9f90668a8ed107c5d060b5c25">ADXL343_Init</a> (void)</td></tr>
-<tr class="memdesc:ab69552f9f90668a8ed107c5d060b5c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the ADXL343 accelerometer.  <br /></td></tr>
-<tr class="separator:ab69552f9f90668a8ed107c5d060b5c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dd70495fb48d10b8521388e446934b7" id="r_a6dd70495fb48d10b8521388e446934b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a6dd70495fb48d10b8521388e446934b7">ADXL343_Configure</a> (void)</td></tr>
-<tr class="memdesc:a6dd70495fb48d10b8521388e446934b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the ADXL343 accelerometer settings.  <br /></td></tr>
-<tr class="separator:a6dd70495fb48d10b8521388e446934b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1946b25b2ee9ad9f88690943bcb52c7" id="r_ac1946b25b2ee9ad9f88690943bcb52c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#ac1946b25b2ee9ad9f88690943bcb52c7">ADXL343_Init</a> (<a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *handle)</td></tr>
+<tr class="separator:ac1946b25b2ee9ad9f88690943bcb52c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a757859ffcf26697024a4df172da37a10" id="r_a757859ffcf26697024a4df172da37a10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a757859ffcf26697024a4df172da37a10">ADXL343_Configure</a> (<a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *handle)</td></tr>
+<tr class="separator:a757859ffcf26697024a4df172da37a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ef718df71a7da3c3254869733e66f48" id="r_a7ef718df71a7da3c3254869733e66f48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a7ef718df71a7da3c3254869733e66f48">ADXL343_ReadRegister</a> (uint8_t reg, int8_t *rx_data, size_t length)</td></tr>
-<tr class="memdesc:a7ef718df71a7da3c3254869733e66f48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from a specific register of the ADXL343.  <br /></td></tr>
 <tr class="separator:a7ef718df71a7da3c3254869733e66f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a606021acd0c025e7adec64ff8908e099" id="r_a606021acd0c025e7adec64ff8908e099"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a606021acd0c025e7adec64ff8908e099">ADXL343_WriteRegister</a> (uint8_t reg, uint8_t data)</td></tr>
-<tr class="memdesc:a606021acd0c025e7adec64ff8908e099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data to a specific register of the ADXL343.  <br /></td></tr>
 <tr class="separator:a606021acd0c025e7adec64ff8908e099"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a774d1526d13f96af72cf2f686b74ecba" id="r_a774d1526d13f96af72cf2f686b74ecba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a774d1526d13f96af72cf2f686b74ecba">ADXL343_DetectTap</a> (void)</td></tr>
-<tr class="memdesc:a774d1526d13f96af72cf2f686b74ecba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detects tap events on the ADXL343.  <br /></td></tr>
-<tr class="separator:a774d1526d13f96af72cf2f686b74ecba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4612e98571ab1bd43fd829d4550d9fd5" id="r_a4612e98571ab1bd43fd829d4550d9fd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a4612e98571ab1bd43fd829d4550d9fd5">ADXL343_Read_XYZ</a> (int16_t *x, int16_t *y, int16_t *z)</td></tr>
-<tr class="memdesc:a4612e98571ab1bd43fd829d4550d9fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the X, Y, Z axis data from the ADXL343.  <br /></td></tr>
-<tr class="separator:a4612e98571ab1bd43fd829d4550d9fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa56fd5e31b2734a80b411207ef160f3e" id="r_aa56fd5e31b2734a80b411207ef160f3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#aa56fd5e31b2734a80b411207ef160f3e">calibrateOffsets</a> (void)</td></tr>
-<tr class="memdesc:aa56fd5e31b2734a80b411207ef160f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibrates the accelerometer offsets.  <br /></td></tr>
-<tr class="separator:aa56fd5e31b2734a80b411207ef160f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4637c892bf01dbe7d348ac5407bd5bd1" id="r_a4637c892bf01dbe7d348ac5407bd5bd1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a4637c892bf01dbe7d348ac5407bd5bd1">ADXL343_DetectTap</a> (<a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *handle)</td></tr>
+<tr class="separator:a4637c892bf01dbe7d348ac5407bd5bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a4999084260d9339510d90f61e85254" id="r_a8a4999084260d9339510d90f61e85254"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a8a4999084260d9339510d90f61e85254">ADXL343_Read_XYZ</a> (<a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *handle)</td></tr>
+<tr class="separator:a8a4999084260d9339510d90f61e85254"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3220383b2adf858a28230d8462c554e0" id="r_a3220383b2adf858a28230d8462c554e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a3220383b2adf858a28230d8462c554e0">ADXL343_Task</a> (void *unused)</td></tr>
-<tr class="memdesc:a3220383b2adf858a28230d8462c554e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADXL343 task for reading accelerometer data.  <br /></td></tr>
 <tr class="separator:a3220383b2adf858a28230d8462c554e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a527b0df26db327a1dde3e095cbc5ffbb" id="r_a527b0df26db327a1dde3e095cbc5ffbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a527b0df26db327a1dde3e095cbc5ffbb">ADXL343_TaskCreate</a> (void *unused)</td></tr>
-<tr class="memdesc:a527b0df26db327a1dde3e095cbc5ffbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and starts the ADXL343 task.  <br /></td></tr>
 <tr class="separator:a527b0df26db327a1dde3e095cbc5ffbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ccad247308d7dd4233ea33aaf5c747f" id="r_a1ccad247308d7dd4233ea33aaf5c747f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8h.html#a1ccad247308d7dd4233ea33aaf5c747f">ADXL343_CalibrateOffsets</a> (<a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *handle)</td></tr>
+<tr class="separator:a1ccad247308d7dd4233ea33aaf5c747f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Driver for ADXL343 accelerometer. </p>
@@ -242,8 +245,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Bandwidth Rate Register. </p>
-
 </div>
 </div>
 <a id="a02ccfa71660cb2181fdf951ff6bcc9b2" name="a02ccfa71660cb2181fdf951ff6bcc9b2"></a>
@@ -257,8 +258,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Data Format Register. </p>
 
 </div>
 </div>
@@ -274,8 +273,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>X-axis Data 0 Register. </p>
-
 </div>
 </div>
 <a id="af132fd8c772a5295b38b7c97158b4d7b" name="af132fd8c772a5295b38b7c97158b4d7b"></a>
@@ -289,8 +286,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>X-axis Data 1 Register. </p>
 
 </div>
 </div>
@@ -306,8 +301,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Y-axis Data 0 Register. </p>
-
 </div>
 </div>
 <a id="a2bcffa093c4f612a97ed8170425b0549" name="a2bcffa093c4f612a97ed8170425b0549"></a>
@@ -321,8 +314,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Y-axis Data 1 Register. </p>
 
 </div>
 </div>
@@ -338,8 +329,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Z-axis Data 0 Register. </p>
-
 </div>
 </div>
 <a id="a6927f8cbcac93adc5a145828413a4d04" name="a6927f8cbcac93adc5a145828413a4d04"></a>
@@ -353,8 +342,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Z-axis Data 1 Register. </p>
 
 </div>
 </div>
@@ -370,8 +357,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Device ID Register. </p>
-
 </div>
 </div>
 <a id="a26167ef539102aeebb747447ad1b10ab" name="a26167ef539102aeebb747447ad1b10ab"></a>
@@ -385,8 +370,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Tap Duration Register. </p>
 
 </div>
 </div>
@@ -402,8 +385,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Interrupt Enable Register. </p>
-
 </div>
 </div>
 <a id="a079ab817f5d95196229f26c69469d899" name="a079ab817f5d95196229f26c69469d899"></a>
@@ -417,8 +398,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Interrupt Mapping Register. </p>
 
 </div>
 </div>
@@ -434,8 +413,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Interrupt Source Register. </p>
-
 </div>
 </div>
 <a id="a7c01242e4ef84a3f97983c95d8b39201" name="a7c01242e4ef84a3f97983c95d8b39201"></a>
@@ -449,8 +426,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Latency Register. </p>
 
 </div>
 </div>
@@ -466,8 +441,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>X-axis Offset Register. </p>
-
 </div>
 </div>
 <a id="a4c62a3efe85dd6657356b9274b599161" name="a4c62a3efe85dd6657356b9274b599161"></a>
@@ -481,8 +454,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Y-axis Offset Register. </p>
 
 </div>
 </div>
@@ -498,8 +469,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Z-axis Offset Register. </p>
-
 </div>
 </div>
 <a id="aeae5292b8ad20121fd5b227125ef04f1" name="aeae5292b8ad20121fd5b227125ef04f1"></a>
@@ -513,8 +482,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Power Control Register. </p>
 
 </div>
 </div>
@@ -530,8 +497,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tap Axes Register. </p>
-
 </div>
 </div>
 <a id="a059581b3db85086481390035d1c697f3" name="a059581b3db85086481390035d1c697f3"></a>
@@ -546,8 +511,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Activity Threshold Register. </p>
-
 </div>
 </div>
 <a id="a67dceb2a59b69b7555c9b4cc4464c7e1" name="a67dceb2a59b69b7555c9b4cc4464c7e1"></a>
@@ -561,8 +524,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Tap Threshold Register. </p>
 
 </div>
 </div>
@@ -580,9 +541,154 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a484db64e1c3e6501f8442b6ad521b041" name="a484db64e1c3e6501f8442b6ad521b041"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a484db64e1c3e6501f8442b6ad521b041">&#9670;&#160;</a></span>TAP_DURATION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TAP_DURATION&#160;&#160;&#160;0x10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="affd687fc2dbcc614aa0cded29f56687a" name="affd687fc2dbcc614aa0cded29f56687a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affd687fc2dbcc614aa0cded29f56687a">&#9670;&#160;</a></span>TAP_LATENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TAP_LATENT&#160;&#160;&#160;0xC8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae8a93adf0c0929d5cd331b61b64d9bbb" name="ae8a93adf0c0929d5cd331b61b64d9bbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8a93adf0c0929d5cd331b61b64d9bbb">&#9670;&#160;</a></span>TAP_THRESHOLD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TAP_THRESHOLD&#160;&#160;&#160;0x20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ab436f2d83d737f9e7f81e21311af13c9" name="ab436f2d83d737f9e7f81e21311af13c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab436f2d83d737f9e7f81e21311af13c9">&#9670;&#160;</a></span>ADXL343_Axis_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9">ADXL343_Axis_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab436f2d83d737f9e7f81e21311af13c9af46b35b3e3673b3af8acaa60e6b78b32" name="ab436f2d83d737f9e7f81e21311af13c9af46b35b3e3673b3af8acaa60e6b78b32"></a>ADXL343_AXIS_X&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab436f2d83d737f9e7f81e21311af13c9a7c0bb1b16b161d3796c8c2a6000074c3" name="ab436f2d83d737f9e7f81e21311af13c9a7c0bb1b16b161d3796c8c2a6000074c3"></a>ADXL343_AXIS_Y&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab436f2d83d737f9e7f81e21311af13c9a4e2a39e52cbcedee8afa9aa7e2d264e6" name="ab436f2d83d737f9e7f81e21311af13c9a4e2a39e52cbcedee8afa9aa7e2d264e6"></a>ADXL343_AXIS_Z&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="aed962ce1893866d8adaa21216dd118e4" name="aed962ce1893866d8adaa21216dd118e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed962ce1893866d8adaa21216dd118e4">&#9670;&#160;</a></span>ADXL343_Status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4">ADXL343_Status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aed962ce1893866d8adaa21216dd118e4a6f3004b5653d9bb9d04d94a60c3ea403" name="aed962ce1893866d8adaa21216dd118e4a6f3004b5653d9bb9d04d94a60c3ea403"></a>ADXL343_STATUS_NOT_DETECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aed962ce1893866d8adaa21216dd118e4af67d53a462341f694420c128c75a4c21" name="aed962ce1893866d8adaa21216dd118e4af67d53a462341f694420c128c75a4c21"></a>ADXL343_STATUS_INITIALIZED&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="af3cf9945771df2ed7fe959fdee3a4045" name="af3cf9945771df2ed7fe959fdee3a4045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3cf9945771df2ed7fe959fdee3a4045">&#9670;&#160;</a></span>ADXL343_TapStatus_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045">ADXL343_TapStatus_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af3cf9945771df2ed7fe959fdee3a4045a1f8628705b8e66d0d1abe1630be9c883" name="af3cf9945771df2ed7fe959fdee3a4045a1f8628705b8e66d0d1abe1630be9c883"></a>ADXL343_TAP_NONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af3cf9945771df2ed7fe959fdee3a4045a33b718380c0e2727d5a6d7cbb0353b56" name="af3cf9945771df2ed7fe959fdee3a4045a33b718380c0e2727d5a6d7cbb0353b56"></a>ADXL343_TAP_SINGLE&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a8a69e2b890c9b8b41dc65313f69b092a" name="a8a69e2b890c9b8b41dc65313f69b092a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a69e2b890c9b8b41dc65313f69b092a">&#9670;&#160;</a></span>RobotState_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092a">RobotState_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8a69e2b890c9b8b41dc65313f69b092aa717f1b05f6cb5c976f4577799521a3c9" name="a8a69e2b890c9b8b41dc65313f69b092aa717f1b05f6cb5c976f4577799521a3c9"></a>ROBOT_STATE_CHAT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8a69e2b890c9b8b41dc65313f69b092aad6aecbe26297a5f60dae45abcea12f5f" name="a8a69e2b890c9b8b41dc65313f69b092aad6aecbe26297a5f60dae45abcea12f5f"></a>ROBOT_STATE_SOURIS&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a6dd70495fb48d10b8521388e446934b7" name="a6dd70495fb48d10b8521388e446934b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dd70495fb48d10b8521388e446934b7">&#9670;&#160;</a></span>ADXL343_Configure()</h2>
+<a id="a1ccad247308d7dd4233ea33aaf5c747f" name="a1ccad247308d7dd4233ea33aaf5c747f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ccad247308d7dd4233ea33aaf5c747f">&#9670;&#160;</a></span>ADXL343_CalibrateOffsets()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADXL343_CalibrateOffsets </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="ADXL343__driver_8h_a1ccad247308d7dd4233ea33aaf5c747f_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a1ccad247308d7dd4233ea33aaf5c747f_icgraph" alt=""/></div>
+<map name="aADXL343__driver_8h_a1ccad247308d7dd4233ea33aaf5c747f_icgraph" id="aADXL343__driver_8h_a1ccad247308d7dd4233ea33aaf5c747f_icgraph">
+<area shape="rect" title=" " alt="" coords="163,29,356,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="95,19,85,11,60,8,39,10,28,15,26,20,32,28,27,31,21,21,24,11,38,5,60,3,87,6,98,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a757859ffcf26697024a4df172da37a10" name="a757859ffcf26697024a4df172da37a10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a757859ffcf26697024a4df172da37a10">&#9670;&#160;</a></span>ADXL343_Configure()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -590,44 +696,28 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void ADXL343_Configure </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Configures the ADXL343 accelerometer settings. </p>
-<p>This function configures the ADXL343's various settings such as bandwidth rate, data format, and other device-specific settings according to application needs.</p>
-<p>Configures the ADXL343 accelerometer settings.</p>
-<p>This function configures the tap detection thresholds, duration, latency, and axes to monitor for tap events. It also enables interrupt for single tap detection. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_cgraph.png" border="0" usemap="#aADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_cgraph" id="aADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_cgraph">
-<area shape="rect" title="Configures the ADXL343 accelerometer settings." alt="" coords="5,5,156,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="204,5,381,31"/>
-<area shape="poly" title=" " alt="" coords="156,15,191,15,191,21,156,21"/>
-</map>
-</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_icgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_icgraph" id="aADXL343__driver_8h_a6dd70495fb48d10b8521388e446934b7_icgraph">
-<area shape="rect" title="Configures the ADXL343 accelerometer settings." alt="" coords="379,5,529,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,5,331,31"/>
-<area shape="poly" title=" " alt="" coords="365,21,331,21,331,15,365,15"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,5,165,31"/>
-<area shape="poly" title=" " alt="" coords="200,21,165,21,165,15,200,15"/>
+<div class="center"><img src="ADXL343__driver_8h_a757859ffcf26697024a4df172da37a10_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a757859ffcf26697024a4df172da37a10_icgraph" alt=""/></div>
+<map name="aADXL343__driver_8h_a757859ffcf26697024a4df172da37a10_icgraph" id="aADXL343__driver_8h_a757859ffcf26697024a4df172da37a10_icgraph">
+<area shape="rect" title=" " alt="" coords="163,29,313,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="91,19,82,11,60,8,41,10,32,15,30,20,35,28,31,31,25,21,28,11,40,5,60,3,84,6,94,15"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a774d1526d13f96af72cf2f686b74ecba" name="a774d1526d13f96af72cf2f686b74ecba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a774d1526d13f96af72cf2f686b74ecba">&#9670;&#160;</a></span>ADXL343_DetectTap()</h2>
+<a id="a4637c892bf01dbe7d348ac5407bd5bd1" name="a4637c892bf01dbe7d348ac5407bd5bd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4637c892bf01dbe7d348ac5407bd5bd1">&#9670;&#160;</a></span>ADXL343_DetectTap()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -635,32 +725,28 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void ADXL343_DetectTap </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Detects tap events on the ADXL343. </p>
-<p>This function checks the ADXL343 for tap events. If a tap event is detected, it can trigger an interrupt or other actions depending on the configuration.</p>
-<p>Detects tap events on the ADXL343.</p>
-<p>This function reads the interrupt source register to check if a tap event has been detected. If a tap is detected, it toggles a GPIO pin and prints a message. </p>
 <div class="dynheader">
-Here is the call graph for this function:</div>
+Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_a774d1526d13f96af72cf2f686b74ecba_cgraph.png" border="0" usemap="#aADXL343__driver_8h_a774d1526d13f96af72cf2f686b74ecba_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_a774d1526d13f96af72cf2f686b74ecba_cgraph" id="aADXL343__driver_8h_a774d1526d13f96af72cf2f686b74ecba_cgraph">
-<area shape="rect" title="Detects tap events on the ADXL343." alt="" coords="5,5,159,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="207,5,381,31"/>
-<area shape="poly" title=" " alt="" coords="159,15,193,15,193,21,159,21"/>
+<div class="center"><img src="ADXL343__driver_8h_a4637c892bf01dbe7d348ac5407bd5bd1_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a4637c892bf01dbe7d348ac5407bd5bd1_icgraph" alt=""/></div>
+<map name="aADXL343__driver_8h_a4637c892bf01dbe7d348ac5407bd5bd1_icgraph" id="aADXL343__driver_8h_a4637c892bf01dbe7d348ac5407bd5bd1_icgraph">
+<area shape="rect" title=" " alt="" coords="163,29,316,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="91,19,82,11,60,8,41,10,31,15,29,20,35,28,30,31,24,21,27,11,40,5,60,3,85,6,95,15"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="ab69552f9f90668a8ed107c5d060b5c25" name="ab69552f9f90668a8ed107c5d060b5c25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab69552f9f90668a8ed107c5d060b5c25">&#9670;&#160;</a></span>ADXL343_Init()</h2>
+<a id="ac1946b25b2ee9ad9f88690943bcb52c7" name="ac1946b25b2ee9ad9f88690943bcb52c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1946b25b2ee9ad9f88690943bcb52c7">&#9670;&#160;</a></span>ADXL343_Init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -668,79 +754,40 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">int ADXL343_Init </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Initializes the ADXL343 accelerometer. </p>
-<p>This function initializes the ADXL343 accelerometer by configuring the required registers to their default values. It prepares the device for data reading and configuration.</p>
-<dl class="section return"><dt>Returns</dt><dd>int 0 on success, non-zero error code on failure.</dd></dl>
+<p>Initializes the ADXL343 accelerometer.</p>
 <p>This function reads the device ID and verifies it to ensure the ADXL343 is connected. Then, it configures the accelerometer's power mode, data format, and measurement settings.</p>
-<dl class="section return"><dt>Returns</dt><dd>int 0 on success, non-zero error code on failure. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_cgraph.png" border="0" usemap="#aADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_cgraph" id="aADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_cgraph">
-<area shape="rect" title="Initializes the ADXL343 accelerometer." alt="" coords="5,31,115,56"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="164,5,339,31"/>
-<area shape="poly" title=" " alt="" coords="115,33,150,29,151,34,115,39"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="163,55,340,80"/>
-<area shape="poly" title=" " alt="" coords="115,48,149,52,149,57,115,53"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_icgraph.png" border="0" usemap="#aADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_icgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_icgraph" id="aADXL343__driver_8h_ab69552f9f90668a8ed107c5d060b5c25_icgraph">
-<area shape="rect" title="Initializes the ADXL343 accelerometer." alt="" coords="379,5,488,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,5,331,31"/>
-<area shape="poly" title=" " alt="" coords="365,21,331,21,331,15,365,15"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,5,165,31"/>
-<area shape="poly" title=" " alt="" coords="200,21,165,21,165,15,200,15"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a4612e98571ab1bd43fd829d4550d9fd5" name="a4612e98571ab1bd43fd829d4550d9fd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4612e98571ab1bd43fd829d4550d9fd5">&#9670;&#160;</a></span>ADXL343_Read_XYZ()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADXL343_Read_XYZ </td>
-          <td>(</td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>z</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reads the X, Y, Z axis data from the ADXL343. </p>
-<p>This function reads the accelerometer values from the X, Y, and Z axes of the ADXL343 and stores the values in the provided variables.</p>
+<dl class="section return"><dt>Returns</dt><dd>int 0 on success, non-zero error code on failure.</dd></dl>
+<p>Configures the ADXL343 accelerometer for tap detection.</p>
+<p>This function configures the tap detection thresholds, duration, latency, and axes to monitor for tap events. It also enables interrupt for single tap detection.</p>
+<p>Reads data from a register of the ADXL343.</p>
+<p>This function reads data from a specified register using SPI communication.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>The register address to read from. </td></tr>
+    <tr><td class="paramname">rx_data</td><td>Pointer to a buffer where the read data will be stored. </td></tr>
+    <tr><td class="paramname">length</td><td>The number of bytes to read from the register.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Writes data to a register of the ADXL343.</p>
+<p>This function writes data to a specified register using SPI communication.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>The register address to write to. </td></tr>
+    <tr><td class="paramname">data</td><td>The data to write to the register.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Detects tap events from the ADXL343.</p>
+<p>This function reads the interrupt source register to check if a tap event has been detected. If a tap is detected, it toggles a GPIO pin and prints a message.</p>
+<p>Reads the X, Y, Z acceleration values from the ADXL343.</p>
+<p>This function reads the 16-bit values for the X, Y, and Z axes from the ADXL343's data registers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>Pointer to store the X-axis value. </td></tr>
@@ -749,34 +796,85 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>Reads the X, Y, Z axis data from the ADXL343.</p>
-<p>This function reads the 16-bit values for the X, Y, and Z axes from the ADXL343's data registers.</p>
+<p>Calibrates the offsets for the ADXL343 accelerometer.</p>
+<p>This function reads the current accelerometer values and calculates offsets for the X, Y, and Z axes. These offsets are then written to the corresponding offset registers to correct for any sensor bias.</p>
+<p>FreeRTOS task to handle the ADXL343 accelerometer.</p>
+<p>This task initializes and configures the ADXL343 accelerometer. It continuously monitors the interrupt source register for tap events. When a tap is detected, it logs a message and can trigger additional actions.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>Pointer to store the X-axis value. </td></tr>
-    <tr><td class="paramname">y</td><td>Pointer to store the Y-axis value. </td></tr>
-    <tr><td class="paramname">z</td><td>Pointer to store the Z-axis value. </td></tr>
+    <tr><td class="paramname">unused</td><td>Unused parameter.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Creates the ADXL343 FreeRTOS task.</p>
+<p>This function initializes and starts a FreeRTOS task that monitors the ADXL343 accelerometer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">unused</td><td>Unused parameter.</td></tr>
   </table>
   </dd>
 </dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_cgraph.png" border="0" usemap="#aADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_cgraph" id="aADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_cgraph">
-<area shape="rect" title="Reads the X, Y, Z axis data from the ADXL343." alt="" coords="5,5,160,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="208,5,383,31"/>
-<area shape="poly" title=" " alt="" coords="160,15,194,15,194,21,160,21"/>
+<div class="center"><img src="ADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph.png" border="0" usemap="#aADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph" alt=""/></div>
+<map name="aADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph" id="aADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph">
+<area shape="rect" title=" " alt="" coords="5,179,115,204"/>
+<area shape="poly" title=" " alt="" coords="27,180,21,170,24,160,38,154,60,152,87,156,98,164,95,169,85,160,60,157,39,159,28,164,26,170,32,177"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a1ccad247308d7dd4233ea33aaf5c747f" title=" " alt="" coords="163,5,356,31"/>
+<area shape="poly" title=" " alt="" coords="64,178,77,149,97,112,125,73,161,40,171,34,173,39,164,44,129,76,102,114,81,151,69,180"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a757859ffcf26697024a4df172da37a10" title=" " alt="" coords="184,55,335,80"/>
+<area shape="poly" title=" " alt="" coords="69,177,106,133,132,109,161,89,175,82,177,87,164,94,135,114,110,137,73,180"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a4637c892bf01dbe7d348ac5407bd5bd1" title=" " alt="" coords="183,104,336,129"/>
+<area shape="poly" title=" " alt="" coords="82,176,119,157,162,138,185,131,187,136,164,143,121,162,84,181"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a8a4999084260d9339510d90f61e85254" title=" " alt="" coords="182,153,337,179"/>
+<area shape="poly" title=" " alt="" coords="115,182,168,175,168,180,115,187"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title=" " alt="" coords="172,203,347,228"/>
+<area shape="poly" title=" " alt="" coords="115,195,158,201,158,206,115,201"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a3220383b2adf858a28230d8462c554e0" title=" " alt="" coords="201,252,318,277"/>
+<area shape="poly" title=" " alt="" coords="86,202,164,237,191,246,189,251,162,242,84,206"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a527b0df26db327a1dde3e095cbc5ffbb" title=" " alt="" coords="179,301,339,327"/>
+<area shape="poly" title=" " alt="" coords="73,202,110,244,136,267,164,286,180,294,178,299,161,291,132,271,106,248,69,206"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title=" " alt="" coords="171,351,348,376"/>
+<area shape="poly" title=" " alt="" coords="69,203,102,267,130,304,164,336,176,343,173,348,161,340,126,308,98,270,64,205"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_icgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_icgraph" id="aADXL343__driver_8h_a4612e98571ab1bd43fd829d4550d9fd5_icgraph">
-<area shape="rect" title="Reads the X, Y, Z axis data from the ADXL343." alt="" coords="179,5,333,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#aa56fd5e31b2734a80b411207ef160f3e" title="Calibrates the offsets for the ADXL343 accelerometer." alt="" coords="5,5,131,31"/>
-<area shape="poly" title=" " alt="" coords="165,21,131,21,131,15,165,15"/>
+<div class="center"><img src="ADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph.png" border="0" usemap="#aADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph" alt=""/></div>
+<map name="aADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph" id="aADXL343__driver_8h_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph">
+<area shape="rect" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="78,18,73,11,60,8,49,10,43,14,42,20,46,28,41,30,37,21,39,12,47,5,60,3,75,6,82,14"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8a4999084260d9339510d90f61e85254" name="a8a4999084260d9339510d90f61e85254"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a4999084260d9339510d90f61e85254">&#9670;&#160;</a></span>ADXL343_Read_XYZ()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADXL343_Read_XYZ </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="ADXL343__driver_8h_a8a4999084260d9339510d90f61e85254_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a8a4999084260d9339510d90f61e85254_icgraph" alt=""/></div>
+<map name="aADXL343__driver_8h_a8a4999084260d9339510d90f61e85254_icgraph" id="aADXL343__driver_8h_a8a4999084260d9339510d90f61e85254_icgraph">
+<area shape="rect" title=" " alt="" coords="163,29,317,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="91,19,82,11,60,8,41,10,31,15,29,20,35,28,30,31,24,21,27,11,40,5,60,3,85,6,95,15"/>
 </map>
 </div>
 
@@ -813,46 +911,15 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Reads data from a specific register of the ADXL343. </p>
-<p>This function reads data from the specified register of the ADXL343 device.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>The register address to read from. </td></tr>
-    <tr><td class="paramname">rx_data</td><td>Pointer to a buffer where the read data will be stored. </td></tr>
-    <tr><td class="paramname">length</td><td>The number of bytes to read from the register.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Reads data from a specific register of the ADXL343.</p>
-<p>This function reads data from a specified register using SPI communication.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>The register address to read from. </td></tr>
-    <tr><td class="paramname">rx_data</td><td>Pointer to a buffer where the read data will be stored. </td></tr>
-    <tr><td class="paramname">length</td><td>The number of bytes to read from the register. </td></tr>
-  </table>
-  </dd>
-</dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="ADXL343__driver_8h_a7ef718df71a7da3c3254869733e66f48_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a7ef718df71a7da3c3254869733e66f48_icgraph" alt=""/></div>
 <map name="aADXL343__driver_8h_a7ef718df71a7da3c3254869733e66f48_icgraph" id="aADXL343__driver_8h_a7ef718df71a7da3c3254869733e66f48_icgraph">
-<area shape="rect" title="Reads data from a specific register of the ADXL343." alt="" coords="589,80,764,105"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a774d1526d13f96af72cf2f686b74ecba" title="Detects tap events from the ADXL343." alt="" coords="387,5,541,31"/>
-<area shape="poly" title=" " alt="" coords="630,78,540,45,506,33,508,28,542,39,631,73"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="409,55,519,80"/>
-<area shape="poly" title=" " alt="" coords="576,83,519,76,519,71,576,78"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="217,80,335,105"/>
-<area shape="poly" title=" " alt="" coords="576,95,335,95,335,90,576,90"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a4612e98571ab1bd43fd829d4550d9fd5" title="Reads the X, Y, Z acceleration values from the ADXL343." alt="" coords="387,156,541,181"/>
-<area shape="poly" title=" " alt="" coords="628,113,502,158,500,153,626,108"/>
-<area shape="poly" title=" " alt="" coords="396,79,335,87,334,82,395,74"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,80,165,105"/>
-<area shape="poly" title=" " alt="" coords="204,95,166,95,166,90,204,90"/>
-<area shape="rect" href="ADXL343__driver_8c.html#aa56fd5e31b2734a80b411207ef160f3e" title="Calibrates the offsets for the ADXL343 accelerometer." alt="" coords="213,156,339,181"/>
-<area shape="poly" title=" " alt="" coords="373,171,339,171,339,166,373,166"/>
+<area shape="rect" title=" " alt="" coords="163,29,337,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="94,19,84,11,60,8,40,10,29,15,27,20,33,28,29,31,22,21,26,11,39,5,60,3,86,6,97,15"/>
 </map>
 </div>
 
@@ -873,49 +940,15 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>ADXL343 task for reading accelerometer data. </p>
-<p>The <code>ADXL343_Task</code> runs in a loop and continuously reads accelerometer data from the ADXL343. It processes the data and performs any necessary actions, such as detecting tap events or reading accelerometer values.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">unused</td><td>Unused task parameter.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>ADXL343 task for reading accelerometer data.</p>
-<p>This task initializes and configures the ADXL343 accelerometer. It continuously monitors the interrupt source register for tap events. When a tap is detected, it logs a message and can trigger additional actions.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">unused</td><td>Unused parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_cgraph.png" border="0" usemap="#aADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_cgraph" id="aADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_cgraph">
-<area shape="rect" title="ADXL343 task for reading accelerometer data." alt="" coords="5,55,123,80"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="171,5,321,31"/>
-<area shape="poly" title=" " alt="" coords="111,52,184,32,186,37,112,57"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="191,55,301,80"/>
-<area shape="poly" title=" " alt="" coords="123,65,178,65,178,70,123,70"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="371,80,545,105"/>
-<area shape="poly" title=" " alt="" coords="108,77,171,90,267,96,357,96,357,101,266,102,170,95,107,83"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="369,31,547,56"/>
-<area shape="poly" title=" " alt="" coords="322,24,356,28,356,34,321,30"/>
-<area shape="poly" title=" " alt="" coords="300,59,355,52,356,58,301,64"/>
-<area shape="poly" title=" " alt="" coords="301,71,357,78,357,83,300,76"/>
-</map>
-</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="ADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_icgraph" alt=""/></div>
 <map name="aADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_icgraph" id="aADXL343__driver_8h_a3220383b2adf858a28230d8462c554e0_icgraph">
-<area shape="rect" title="ADXL343 task for reading accelerometer data." alt="" coords="213,5,331,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,5,165,31"/>
-<area shape="poly" title=" " alt="" coords="200,21,165,21,165,15,200,15"/>
+<area shape="rect" title=" " alt="" coords="163,29,280,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="88,19,80,11,60,8,43,10,35,15,33,20,38,28,33,31,27,21,30,11,42,5,60,3,82,6,91,15"/>
 </map>
 </div>
 
@@ -936,41 +969,15 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates and starts the ADXL343 task. </p>
-<p>This function creates a FreeRTOS task to manage the ADXL343 accelerometer. The task is created with a priority defined by <code>ADXL343_Task_Priority</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">unused</td><td>Unused task parameter.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Creates and starts the ADXL343 task.</p>
-<p>This function initializes and starts a FreeRTOS task that monitors the ADXL343 accelerometer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">unused</td><td>Unused parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
 <div class="dynheader">
-Here is the call graph for this function:</div>
+Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_cgraph.png" border="0" usemap="#aADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_cgraph" id="aADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_cgraph">
-<area shape="rect" title="Creates and starts the ADXL343 task." alt="" coords="5,55,165,80"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,55,331,80"/>
-<area shape="poly" title=" " alt="" coords="166,65,200,65,200,70,166,70"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="379,5,529,31"/>
-<area shape="poly" title=" " alt="" coords="319,52,392,32,394,37,320,57"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="399,55,509,80"/>
-<area shape="poly" title=" " alt="" coords="331,65,386,65,386,70,331,70"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="579,80,753,105"/>
-<area shape="poly" title=" " alt="" coords="316,77,379,90,475,96,565,96,565,101,474,102,378,95,315,83"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="577,31,755,56"/>
-<area shape="poly" title=" " alt="" coords="530,24,564,28,564,34,529,30"/>
-<area shape="poly" title=" " alt="" coords="508,59,563,52,564,58,509,64"/>
-<area shape="poly" title=" " alt="" coords="509,71,565,78,565,83,508,76"/>
+<div class="center"><img src="ADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_icgraph" alt=""/></div>
+<map name="aADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_icgraph" id="aADXL343__driver_8h_a527b0df26db327a1dde3e095cbc5ffbb_icgraph">
+<area shape="rect" title=" " alt="" coords="163,29,323,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="92,19,83,11,60,8,41,10,31,15,29,20,34,28,30,31,24,21,27,11,39,5,60,3,85,6,95,15"/>
 </map>
 </div>
 
@@ -1001,79 +1008,15 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Writes data to a specific register of the ADXL343. </p>
-<p>This function writes data to the specified register of the ADXL343 device.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>The register address to write to. </td></tr>
-    <tr><td class="paramname">data</td><td>The data to write to the register.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Writes data to a specific register of the ADXL343.</p>
-<p>This function writes data to a specified register using SPI communication.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>The register address to write to. </td></tr>
-    <tr><td class="paramname">data</td><td>The data to write to the register. </td></tr>
-  </table>
-  </dd>
-</dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="ADXL343__driver_8h_a606021acd0c025e7adec64ff8908e099_icgraph.png" border="0" usemap="#aADXL343__driver_8h_a606021acd0c025e7adec64ff8908e099_icgraph" alt=""/></div>
 <map name="aADXL343__driver_8h_a606021acd0c025e7adec64ff8908e099_icgraph" id="aADXL343__driver_8h_a606021acd0c025e7adec64ff8908e099_icgraph">
-<area shape="rect" title="Writes data to a specific register of the ADXL343." alt="" coords="577,55,755,80"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="379,5,529,31"/>
-<area shape="poly" title=" " alt="" coords="597,54,509,33,510,28,598,49"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="399,55,509,80"/>
-<area shape="poly" title=" " alt="" coords="563,70,509,70,509,65,563,65"/>
-<area shape="rect" href="ADXL343__driver_8c.html#aa56fd5e31b2734a80b411207ef160f3e" title="Calibrates the offsets for the ADXL343 accelerometer." alt="" coords="391,104,517,129"/>
-<area shape="poly" title=" " alt="" coords="598,86,510,107,509,101,597,81"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,31,331,56"/>
-<area shape="poly" title=" " alt="" coords="365,33,331,38,331,33,364,28"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,31,165,56"/>
-<area shape="poly" title=" " alt="" coords="200,46,165,46,165,41,200,41"/>
-<area shape="poly" title=" " alt="" coords="385,61,330,54,331,48,386,56"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="aa56fd5e31b2734a80b411207ef160f3e" name="aa56fd5e31b2734a80b411207ef160f3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa56fd5e31b2734a80b411207ef160f3e">&#9670;&#160;</a></span>calibrateOffsets()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void calibrateOffsets </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calibrates the accelerometer offsets. </p>
-<p>This function calibrates the offset values for the X, Y, and Z axes of the accelerometer to correct for any bias in the sensor readings.</p>
-<p>Calibrates the accelerometer offsets.</p>
-<p>This function reads the current accelerometer values and calculates offsets for the X, Y, and Z axes. These offsets are then written to the corresponding offset registers to correct for any sensor bias. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8h_aa56fd5e31b2734a80b411207ef160f3e_cgraph.png" border="0" usemap="#aADXL343__driver_8h_aa56fd5e31b2734a80b411207ef160f3e_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8h_aa56fd5e31b2734a80b411207ef160f3e_cgraph" id="aADXL343__driver_8h_aa56fd5e31b2734a80b411207ef160f3e_cgraph">
-<area shape="rect" title="Calibrates the accelerometer offsets." alt="" coords="5,31,131,56"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a4612e98571ab1bd43fd829d4550d9fd5" title="Reads the X, Y, Z acceleration values from the ADXL343." alt="" coords="190,5,345,31"/>
-<area shape="poly" title=" " alt="" coords="131,33,176,27,177,32,131,38"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="179,55,356,80"/>
-<area shape="poly" title=" " alt="" coords="131,48,165,52,165,58,131,54"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="404,5,579,31"/>
-<area shape="poly" title=" " alt="" coords="345,15,390,15,390,21,345,21"/>
+<area shape="rect" title=" " alt="" coords="163,29,340,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="94,19,84,11,60,8,40,10,29,15,27,20,33,28,29,31,22,21,26,11,39,5,60,3,86,6,97,15"/>
 </map>
 </div>
 

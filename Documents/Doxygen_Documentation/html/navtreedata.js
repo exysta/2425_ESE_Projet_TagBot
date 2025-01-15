@@ -51,8 +51,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ADXL343__driver_8c.html",
-"X4LIDAR__driver_8h.html#a55c2e8e6b860a9ad2d8d9236372496d4",
-"struct____SCREEN__SSD1306__HandleTypeDef.html#a91f9e46f5ac8905998b05d2ed237dd8d"
+"X4LIDAR__driver_8h.html#a1e4cbf76d2fbe426d9bb1a33fdbf5ebf",
+"structX4LIDAR__scan__header.html#adba678dc8e660bf412b1332d99d53cd0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

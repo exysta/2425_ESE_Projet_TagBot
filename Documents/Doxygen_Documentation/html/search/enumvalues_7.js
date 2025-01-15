@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['right_0',['RIGHT',['../RobotStrategy_8h.html#a4a2ca28dc704156cf20841262c96f79eaec8379af7490bb9eaaf579cf17876f38',1,'RobotStrategy.h']]]
+  ['no_5fstrat_0',['NO_Strat',['../RobotStrategy_8h.html#ac3cfeb8c4571377cc4b0e33ceb1515f2a863f3d126f53d54315472abf65545af8',1,'RobotStrategy.h']]]
 ];

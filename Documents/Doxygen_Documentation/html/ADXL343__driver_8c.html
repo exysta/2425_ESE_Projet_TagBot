@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">2425_ESE_Projet_TagBot<span id="projectnumber">&#160;1.0</span>
+   <div id="projectname">2425_ESE_Projet_TagBot<span id="projectnumber">&#160;1.1</span>
    </div>
    <div id="projectbrief">This is the documentation for the TagBot CubeIDE project.</div>
   </td>
@@ -92,7 +92,8 @@ $(document).ready(function(){initNavTree('ADXL343__driver_8c.html',''); initResi
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">ADXL343_driver.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -148,33 +149,17 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab69552f9f90668a8ed107c5d060b5c25" id="r_ab69552f9f90668a8ed107c5d060b5c25"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25">ADXL343_Init</a> (void)</td></tr>
-<tr class="memdesc:ab69552f9f90668a8ed107c5d060b5c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the ADXL343 accelerometer.  <br /></td></tr>
-<tr class="separator:ab69552f9f90668a8ed107c5d060b5c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dd70495fb48d10b8521388e446934b7" id="r_a6dd70495fb48d10b8521388e446934b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7">ADXL343_Configure</a> (void)</td></tr>
-<tr class="memdesc:a6dd70495fb48d10b8521388e446934b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the ADXL343 accelerometer for tap detection.  <br /></td></tr>
-<tr class="separator:a6dd70495fb48d10b8521388e446934b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ef718df71a7da3c3254869733e66f48" id="r_a7ef718df71a7da3c3254869733e66f48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48">ADXL343_ReadRegister</a> (uint8_t reg, int8_t *rx_data, size_t length)</td></tr>
-<tr class="memdesc:a7ef718df71a7da3c3254869733e66f48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from a register of the ADXL343.  <br /></td></tr>
 <tr class="separator:a7ef718df71a7da3c3254869733e66f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a606021acd0c025e7adec64ff8908e099" id="r_a606021acd0c025e7adec64ff8908e099"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099">ADXL343_WriteRegister</a> (uint8_t reg, uint8_t data)</td></tr>
-<tr class="memdesc:a606021acd0c025e7adec64ff8908e099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data to a register of the ADXL343.  <br /></td></tr>
 <tr class="separator:a606021acd0c025e7adec64ff8908e099"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a774d1526d13f96af72cf2f686b74ecba" id="r_a774d1526d13f96af72cf2f686b74ecba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a774d1526d13f96af72cf2f686b74ecba">ADXL343_DetectTap</a> (void)</td></tr>
-<tr class="memdesc:a774d1526d13f96af72cf2f686b74ecba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detects tap events from the ADXL343.  <br /></td></tr>
-<tr class="separator:a774d1526d13f96af72cf2f686b74ecba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4612e98571ab1bd43fd829d4550d9fd5" id="r_a4612e98571ab1bd43fd829d4550d9fd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a4612e98571ab1bd43fd829d4550d9fd5">ADXL343_Read_XYZ</a> (int16_t *x, int16_t *y, int16_t *z)</td></tr>
-<tr class="memdesc:a4612e98571ab1bd43fd829d4550d9fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the X, Y, Z acceleration values from the ADXL343.  <br /></td></tr>
-<tr class="separator:a4612e98571ab1bd43fd829d4550d9fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa56fd5e31b2734a80b411207ef160f3e" id="r_aa56fd5e31b2734a80b411207ef160f3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#aa56fd5e31b2734a80b411207ef160f3e">calibrateOffsets</a> (void)</td></tr>
-<tr class="memdesc:aa56fd5e31b2734a80b411207ef160f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibrates the offsets for the ADXL343 accelerometer.  <br /></td></tr>
-<tr class="separator:aa56fd5e31b2734a80b411207ef160f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3220383b2adf858a28230d8462c554e0" id="r_a3220383b2adf858a28230d8462c554e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0">ADXL343_Task</a> (void *unused)</td></tr>
-<tr class="memdesc:a3220383b2adf858a28230d8462c554e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">FreeRTOS task to handle the ADXL343 accelerometer.  <br /></td></tr>
-<tr class="separator:a3220383b2adf858a28230d8462c554e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a527b0df26db327a1dde3e095cbc5ffbb" id="r_a527b0df26db327a1dde3e095cbc5ffbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb">ADXL343_TaskCreate</a> (void *unused)</td></tr>
-<tr class="memdesc:a527b0df26db327a1dde3e095cbc5ffbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the ADXL343 FreeRTOS task.  <br /></td></tr>
-<tr class="separator:a527b0df26db327a1dde3e095cbc5ffbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1946b25b2ee9ad9f88690943bcb52c7" id="r_ac1946b25b2ee9ad9f88690943bcb52c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7">ADXL343_Init</a> (<a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *handle)</td></tr>
+<tr class="separator:ac1946b25b2ee9ad9f88690943bcb52c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a8765d8c0a82f3aa1886c611550a8c86b" id="r_a8765d8c0a82f3aa1886c611550a8c86b"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092a">RobotState_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ADXL343__driver_8c.html#a8765d8c0a82f3aa1886c611550a8c86b">robot_state</a> = <a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092aa717f1b05f6cb5c976f4577799521a3c9">ROBOT_STATE_CHAT</a></td></tr>
+<tr class="separator:a8765d8c0a82f3aa1886c611550a8c86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Driver implementation for the ADXL343 accelerometer. </p>
@@ -232,84 +217,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a6dd70495fb48d10b8521388e446934b7" name="a6dd70495fb48d10b8521388e446934b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dd70495fb48d10b8521388e446934b7">&#9670;&#160;</a></span>ADXL343_Configure()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADXL343_Configure </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Configures the ADXL343 accelerometer for tap detection. </p>
-<p>Configures the ADXL343 accelerometer settings.</p>
-<p>This function configures the tap detection thresholds, duration, latency, and axes to monitor for tap events. It also enables interrupt for single tap detection. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_cgraph.png" border="0" usemap="#aADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_cgraph" id="aADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_cgraph">
-<area shape="rect" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="5,5,156,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="204,5,381,31"/>
-<area shape="poly" title=" " alt="" coords="156,15,191,15,191,21,156,21"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_icgraph.png" border="0" usemap="#aADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_icgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_icgraph" id="aADXL343__driver_8c_a6dd70495fb48d10b8521388e446934b7_icgraph">
-<area shape="rect" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="379,5,529,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,5,331,31"/>
-<area shape="poly" title=" " alt="" coords="365,21,331,21,331,15,365,15"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,5,165,31"/>
-<area shape="poly" title=" " alt="" coords="200,21,165,21,165,15,200,15"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a774d1526d13f96af72cf2f686b74ecba" name="a774d1526d13f96af72cf2f686b74ecba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a774d1526d13f96af72cf2f686b74ecba">&#9670;&#160;</a></span>ADXL343_DetectTap()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADXL343_DetectTap </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Detects tap events from the ADXL343. </p>
-<p>Detects tap events on the ADXL343.</p>
-<p>This function reads the interrupt source register to check if a tap event has been detected. If a tap is detected, it toggles a GPIO pin and prints a message. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a774d1526d13f96af72cf2f686b74ecba_cgraph.png" border="0" usemap="#aADXL343__driver_8c_a774d1526d13f96af72cf2f686b74ecba_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a774d1526d13f96af72cf2f686b74ecba_cgraph" id="aADXL343__driver_8c_a774d1526d13f96af72cf2f686b74ecba_cgraph">
-<area shape="rect" title="Detects tap events from the ADXL343." alt="" coords="5,5,159,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="207,5,381,31"/>
-<area shape="poly" title=" " alt="" coords="159,15,193,15,193,21,159,21"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="ab69552f9f90668a8ed107c5d060b5c25" name="ab69552f9f90668a8ed107c5d060b5c25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab69552f9f90668a8ed107c5d060b5c25">&#9670;&#160;</a></span>ADXL343_Init()</h2>
+<a id="ac1946b25b2ee9ad9f88690943bcb52c7" name="ac1946b25b2ee9ad9f88690943bcb52c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1946b25b2ee9ad9f88690943bcb52c7">&#9670;&#160;</a></span>ADXL343_Init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -317,104 +226,98 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">int ADXL343_Init </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structADXL343__Handle__t.html">ADXL343_Handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Initializes the ADXL343 accelerometer. </p>
+<p>Initializes the ADXL343 accelerometer.</p>
 <p>This function reads the device ID and verifies it to ensure the ADXL343 is connected. Then, it configures the accelerometer's power mode, data format, and measurement settings.</p>
-<dl class="section return"><dt>Returns</dt><dd>int 0 on success, non-zero error code on failure. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_cgraph.png" border="0" usemap="#aADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_cgraph" id="aADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_cgraph">
-<area shape="rect" title="Initializes the ADXL343 accelerometer." alt="" coords="5,31,115,56"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="164,5,339,31"/>
-<area shape="poly" title=" " alt="" coords="115,33,150,29,151,34,115,39"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="163,55,340,80"/>
-<area shape="poly" title=" " alt="" coords="115,48,149,52,149,57,115,53"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_icgraph.png" border="0" usemap="#aADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_icgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_icgraph" id="aADXL343__driver_8c_ab69552f9f90668a8ed107c5d060b5c25_icgraph">
-<area shape="rect" title="Initializes the ADXL343 accelerometer." alt="" coords="379,5,488,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,5,331,31"/>
-<area shape="poly" title=" " alt="" coords="365,21,331,21,331,15,365,15"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,5,165,31"/>
-<area shape="poly" title=" " alt="" coords="200,21,165,21,165,15,200,15"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a4612e98571ab1bd43fd829d4550d9fd5" name="a4612e98571ab1bd43fd829d4550d9fd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4612e98571ab1bd43fd829d4550d9fd5">&#9670;&#160;</a></span>ADXL343_Read_XYZ()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADXL343_Read_XYZ </td>
-          <td>(</td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>z</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reads the X, Y, Z acceleration values from the ADXL343. </p>
-<p>Reads the X, Y, Z axis data from the ADXL343.</p>
+<dl class="section return"><dt>Returns</dt><dd>int 0 on success, non-zero error code on failure.</dd></dl>
+<p>Configures the ADXL343 accelerometer for tap detection.</p>
+<p>This function configures the tap detection thresholds, duration, latency, and axes to monitor for tap events. It also enables interrupt for single tap detection.</p>
+<p>Reads data from a register of the ADXL343.</p>
+<p>This function reads data from a specified register using SPI communication.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>The register address to read from. </td></tr>
+    <tr><td class="paramname">rx_data</td><td>Pointer to a buffer where the read data will be stored. </td></tr>
+    <tr><td class="paramname">length</td><td>The number of bytes to read from the register.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Writes data to a register of the ADXL343.</p>
+<p>This function writes data to a specified register using SPI communication.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>The register address to write to. </td></tr>
+    <tr><td class="paramname">data</td><td>The data to write to the register.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Detects tap events from the ADXL343.</p>
+<p>This function reads the interrupt source register to check if a tap event has been detected. If a tap is detected, it toggles a GPIO pin and prints a message.</p>
+<p>Reads the X, Y, Z acceleration values from the ADXL343.</p>
 <p>This function reads the 16-bit values for the X, Y, and Z axes from the ADXL343's data registers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>Pointer to store the X-axis value. </td></tr>
     <tr><td class="paramname">y</td><td>Pointer to store the Y-axis value. </td></tr>
-    <tr><td class="paramname">z</td><td>Pointer to store the Z-axis value. </td></tr>
+    <tr><td class="paramname">z</td><td>Pointer to store the Z-axis value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Calibrates the offsets for the ADXL343 accelerometer.</p>
+<p>This function reads the current accelerometer values and calculates offsets for the X, Y, and Z axes. These offsets are then written to the corresponding offset registers to correct for any sensor bias.</p>
+<p>FreeRTOS task to handle the ADXL343 accelerometer.</p>
+<p>This task initializes and configures the ADXL343 accelerometer. It continuously monitors the interrupt source register for tap events. When a tap is detected, it logs a message and can trigger additional actions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">unused</td><td>Unused parameter.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Creates the ADXL343 FreeRTOS task.</p>
+<p>This function initializes and starts a FreeRTOS task that monitors the ADXL343 accelerometer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">unused</td><td>Unused parameter.</td></tr>
   </table>
   </dd>
 </dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_cgraph.png" border="0" usemap="#aADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_cgraph" id="aADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_cgraph">
-<area shape="rect" title="Reads the X, Y, Z acceleration values from the ADXL343." alt="" coords="5,5,160,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="208,5,383,31"/>
-<area shape="poly" title=" " alt="" coords="160,15,194,15,194,21,160,21"/>
+<div class="center"><img src="ADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph.png" border="0" usemap="#aADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph" alt=""/></div>
+<map name="aADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph" id="aADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_cgraph">
+<area shape="rect" title=" " alt="" coords="5,179,115,204"/>
+<area shape="poly" title=" " alt="" coords="27,180,21,170,24,160,38,154,60,152,87,156,98,164,95,169,85,160,60,157,39,159,28,164,26,170,32,177"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a1ccad247308d7dd4233ea33aaf5c747f" title=" " alt="" coords="163,5,356,31"/>
+<area shape="poly" title=" " alt="" coords="64,178,77,149,97,112,125,73,161,40,171,34,173,39,164,44,129,76,102,114,81,151,69,180"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a757859ffcf26697024a4df172da37a10" title=" " alt="" coords="184,55,335,80"/>
+<area shape="poly" title=" " alt="" coords="69,177,106,133,132,109,161,89,175,82,177,87,164,94,135,114,110,137,73,180"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a4637c892bf01dbe7d348ac5407bd5bd1" title=" " alt="" coords="183,104,336,129"/>
+<area shape="poly" title=" " alt="" coords="82,176,119,157,162,138,185,131,187,136,164,143,121,162,84,181"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a8a4999084260d9339510d90f61e85254" title=" " alt="" coords="182,153,337,179"/>
+<area shape="poly" title=" " alt="" coords="115,182,168,175,168,180,115,187"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title=" " alt="" coords="172,203,347,228"/>
+<area shape="poly" title=" " alt="" coords="115,195,158,201,158,206,115,201"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a3220383b2adf858a28230d8462c554e0" title=" " alt="" coords="201,252,318,277"/>
+<area shape="poly" title=" " alt="" coords="86,202,164,237,191,246,189,251,162,242,84,206"/>
+<area shape="rect" href="ADXL343__driver_8h.html#a527b0df26db327a1dde3e095cbc5ffbb" title=" " alt="" coords="179,301,339,327"/>
+<area shape="poly" title=" " alt="" coords="73,202,110,244,136,267,164,286,180,294,178,299,161,291,132,271,106,248,69,206"/>
+<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title=" " alt="" coords="171,351,348,376"/>
+<area shape="poly" title=" " alt="" coords="69,203,102,267,130,304,164,336,176,343,173,348,161,340,126,308,98,270,64,205"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_icgraph.png" border="0" usemap="#aADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_icgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_icgraph" id="aADXL343__driver_8c_a4612e98571ab1bd43fd829d4550d9fd5_icgraph">
-<area shape="rect" title="Reads the X, Y, Z acceleration values from the ADXL343." alt="" coords="179,5,333,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#aa56fd5e31b2734a80b411207ef160f3e" title="Calibrates the offsets for the ADXL343 accelerometer." alt="" coords="5,5,131,31"/>
-<area shape="poly" title=" " alt="" coords="165,21,131,21,131,15,165,15"/>
+<div class="center"><img src="ADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph.png" border="0" usemap="#aADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph" alt=""/></div>
+<map name="aADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph" id="aADXL343__driver_8c_ac1946b25b2ee9ad9f88690943bcb52c7_icgraph">
+<area shape="rect" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="78,18,73,11,60,8,49,10,43,14,42,20,46,28,41,30,37,21,39,12,47,5,60,3,75,6,82,14"/>
 </map>
 </div>
 
@@ -451,141 +354,15 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Reads data from a register of the ADXL343. </p>
-<p>Reads data from a specific register of the ADXL343.</p>
-<p>This function reads data from a specified register using SPI communication.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>The register address to read from. </td></tr>
-    <tr><td class="paramname">rx_data</td><td>Pointer to a buffer where the read data will be stored. </td></tr>
-    <tr><td class="paramname">length</td><td>The number of bytes to read from the register. </td></tr>
-  </table>
-  </dd>
-</dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="ADXL343__driver_8c_a7ef718df71a7da3c3254869733e66f48_icgraph.png" border="0" usemap="#aADXL343__driver_8c_a7ef718df71a7da3c3254869733e66f48_icgraph" alt=""/></div>
 <map name="aADXL343__driver_8c_a7ef718df71a7da3c3254869733e66f48_icgraph" id="aADXL343__driver_8c_a7ef718df71a7da3c3254869733e66f48_icgraph">
-<area shape="rect" title="Reads data from a register of the ADXL343." alt="" coords="589,80,764,105"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a774d1526d13f96af72cf2f686b74ecba" title="Detects tap events from the ADXL343." alt="" coords="387,5,541,31"/>
-<area shape="poly" title=" " alt="" coords="630,78,540,45,506,33,508,28,542,39,631,73"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="409,55,519,80"/>
-<area shape="poly" title=" " alt="" coords="576,83,519,76,519,71,576,78"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="217,80,335,105"/>
-<area shape="poly" title=" " alt="" coords="576,95,335,95,335,90,576,90"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a4612e98571ab1bd43fd829d4550d9fd5" title="Reads the X, Y, Z acceleration values from the ADXL343." alt="" coords="387,156,541,181"/>
-<area shape="poly" title=" " alt="" coords="628,113,502,158,500,153,626,108"/>
-<area shape="poly" title=" " alt="" coords="396,79,335,87,334,82,395,74"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,80,165,105"/>
-<area shape="poly" title=" " alt="" coords="204,95,166,95,166,90,204,90"/>
-<area shape="rect" href="ADXL343__driver_8c.html#aa56fd5e31b2734a80b411207ef160f3e" title="Calibrates the offsets for the ADXL343 accelerometer." alt="" coords="213,156,339,181"/>
-<area shape="poly" title=" " alt="" coords="373,171,339,171,339,166,373,166"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a3220383b2adf858a28230d8462c554e0" name="a3220383b2adf858a28230d8462c554e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3220383b2adf858a28230d8462c554e0">&#9670;&#160;</a></span>ADXL343_Task()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADXL343_Task </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>unused</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FreeRTOS task to handle the ADXL343 accelerometer. </p>
-<p>ADXL343 task for reading accelerometer data.</p>
-<p>This task initializes and configures the ADXL343 accelerometer. It continuously monitors the interrupt source register for tap events. When a tap is detected, it logs a message and can trigger additional actions.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">unused</td><td>Unused parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_cgraph.png" border="0" usemap="#aADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_cgraph" id="aADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_cgraph">
-<area shape="rect" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="5,55,123,80"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="171,5,321,31"/>
-<area shape="poly" title=" " alt="" coords="111,52,184,32,186,37,112,57"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="191,55,301,80"/>
-<area shape="poly" title=" " alt="" coords="123,65,178,65,178,70,123,70"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="371,80,545,105"/>
-<area shape="poly" title=" " alt="" coords="108,77,171,90,267,96,357,96,357,101,266,102,170,95,107,83"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="369,31,547,56"/>
-<area shape="poly" title=" " alt="" coords="322,24,356,28,356,34,321,30"/>
-<area shape="poly" title=" " alt="" coords="300,59,355,52,356,58,301,64"/>
-<area shape="poly" title=" " alt="" coords="301,71,357,78,357,83,300,76"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_icgraph.png" border="0" usemap="#aADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_icgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_icgraph" id="aADXL343__driver_8c_a3220383b2adf858a28230d8462c554e0_icgraph">
-<area shape="rect" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,5,331,31"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,5,165,31"/>
-<area shape="poly" title=" " alt="" coords="200,21,165,21,165,15,200,15"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a527b0df26db327a1dde3e095cbc5ffbb" name="a527b0df26db327a1dde3e095cbc5ffbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a527b0df26db327a1dde3e095cbc5ffbb">&#9670;&#160;</a></span>ADXL343_TaskCreate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADXL343_TaskCreate </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>unused</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates the ADXL343 FreeRTOS task. </p>
-<p>Creates and starts the ADXL343 task.</p>
-<p>This function initializes and starts a FreeRTOS task that monitors the ADXL343 accelerometer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">unused</td><td>Unused parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_a527b0df26db327a1dde3e095cbc5ffbb_cgraph.png" border="0" usemap="#aADXL343__driver_8c_a527b0df26db327a1dde3e095cbc5ffbb_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_a527b0df26db327a1dde3e095cbc5ffbb_cgraph" id="aADXL343__driver_8c_a527b0df26db327a1dde3e095cbc5ffbb_cgraph">
-<area shape="rect" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,55,165,80"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,55,331,80"/>
-<area shape="poly" title=" " alt="" coords="166,65,200,65,200,70,166,70"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="379,5,529,31"/>
-<area shape="poly" title=" " alt="" coords="319,52,392,32,394,37,320,57"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="399,55,509,80"/>
-<area shape="poly" title=" " alt="" coords="331,65,386,65,386,70,331,70"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="579,80,753,105"/>
-<area shape="poly" title=" " alt="" coords="316,77,379,90,475,96,565,96,565,101,474,102,378,95,315,83"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="577,31,755,56"/>
-<area shape="poly" title=" " alt="" coords="530,24,564,28,564,34,529,30"/>
-<area shape="poly" title=" " alt="" coords="508,59,563,52,564,58,509,64"/>
-<area shape="poly" title=" " alt="" coords="509,71,565,78,565,83,508,76"/>
+<area shape="rect" title=" " alt="" coords="163,29,337,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="94,19,84,11,60,8,40,10,29,15,27,20,33,28,29,31,22,21,26,11,39,5,60,3,86,6,97,15"/>
 </map>
 </div>
 
@@ -616,72 +393,32 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Writes data to a register of the ADXL343. </p>
-<p>Writes data to a specific register of the ADXL343.</p>
-<p>This function writes data to a specified register using SPI communication.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reg</td><td>The register address to write to. </td></tr>
-    <tr><td class="paramname">data</td><td>The data to write to the register. </td></tr>
-  </table>
-  </dd>
-</dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="ADXL343__driver_8c_a606021acd0c025e7adec64ff8908e099_icgraph.png" border="0" usemap="#aADXL343__driver_8c_a606021acd0c025e7adec64ff8908e099_icgraph" alt=""/></div>
 <map name="aADXL343__driver_8c_a606021acd0c025e7adec64ff8908e099_icgraph" id="aADXL343__driver_8c_a606021acd0c025e7adec64ff8908e099_icgraph">
-<area shape="rect" title="Writes data to a register of the ADXL343." alt="" coords="577,55,755,80"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7" title="Configures the ADXL343 accelerometer for tap detection." alt="" coords="379,5,529,31"/>
-<area shape="poly" title=" " alt="" coords="597,54,509,33,510,28,598,49"/>
-<area shape="rect" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25" title="Initializes the ADXL343 accelerometer." alt="" coords="399,55,509,80"/>
-<area shape="poly" title=" " alt="" coords="563,70,509,70,509,65,563,65"/>
-<area shape="rect" href="ADXL343__driver_8c.html#aa56fd5e31b2734a80b411207ef160f3e" title="Calibrates the offsets for the ADXL343 accelerometer." alt="" coords="391,104,517,129"/>
-<area shape="poly" title=" " alt="" coords="598,86,510,107,509,101,597,81"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0" title="FreeRTOS task to handle the ADXL343 accelerometer." alt="" coords="213,31,331,56"/>
-<area shape="poly" title=" " alt="" coords="365,33,331,38,331,33,364,28"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb" title="Creates the ADXL343 FreeRTOS task." alt="" coords="5,31,165,56"/>
-<area shape="poly" title=" " alt="" coords="200,46,165,46,165,41,200,41"/>
-<area shape="poly" title=" " alt="" coords="385,61,330,54,331,48,386,56"/>
+<area shape="rect" title=" " alt="" coords="163,29,340,55"/>
+<area shape="rect" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" title=" " alt="" coords="149,45,115,45,115,39,149,39"/>
+<area shape="poly" title=" " alt="" coords="94,19,84,11,60,8,40,10,29,15,27,20,33,28,29,31,22,21,26,11,39,5,60,3,86,6,97,15"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="aa56fd5e31b2734a80b411207ef160f3e" name="aa56fd5e31b2734a80b411207ef160f3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa56fd5e31b2734a80b411207ef160f3e">&#9670;&#160;</a></span>calibrateOffsets()</h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a8765d8c0a82f3aa1886c611550a8c86b" name="a8765d8c0a82f3aa1886c611550a8c86b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8765d8c0a82f3aa1886c611550a8c86b">&#9670;&#160;</a></span>robot_state</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calibrateOffsets </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">volatile <a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092a">RobotState_t</a> robot_state = <a class="el" href="ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092aa717f1b05f6cb5c976f4577799521a3c9">ROBOT_STATE_CHAT</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Calibrates the offsets for the ADXL343 accelerometer. </p>
-<p>Calibrates the accelerometer offsets.</p>
-<p>This function reads the current accelerometer values and calculates offsets for the X, Y, and Z axes. These offsets are then written to the corresponding offset registers to correct for any sensor bias. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="ADXL343__driver_8c_aa56fd5e31b2734a80b411207ef160f3e_cgraph.png" border="0" usemap="#aADXL343__driver_8c_aa56fd5e31b2734a80b411207ef160f3e_cgraph" alt=""/></div>
-<map name="aADXL343__driver_8c_aa56fd5e31b2734a80b411207ef160f3e_cgraph" id="aADXL343__driver_8c_aa56fd5e31b2734a80b411207ef160f3e_cgraph">
-<area shape="rect" title="Calibrates the offsets for the ADXL343 accelerometer." alt="" coords="5,31,131,56"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a4612e98571ab1bd43fd829d4550d9fd5" title="Reads the X, Y, Z acceleration values from the ADXL343." alt="" coords="190,5,345,31"/>
-<area shape="poly" title=" " alt="" coords="131,33,176,27,177,32,131,38"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099" title="Writes data to a register of the ADXL343." alt="" coords="179,55,356,80"/>
-<area shape="poly" title=" " alt="" coords="131,48,165,52,165,58,131,54"/>
-<area shape="rect" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48" title="Reads data from a register of the ADXL343." alt="" coords="404,5,579,31"/>
-<area shape="poly" title=" " alt="" coords="345,15,390,15,390,21,345,21"/>
-</map>
-</div>
 
 </div>
 </div>

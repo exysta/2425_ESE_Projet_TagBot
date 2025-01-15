@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mouse_5fstrat_0',['MOUSE_Strat',['../RobotStrategy_8h.html#ac3cfeb8c4571377cc4b0e33ceb1515f2ad20cbb8e37e0dd0496e2363f7cc089f5',1,'RobotStrategy.h']]]
+  ['left_0',['LEFT',['../RobotStrategy_8h.html#a4a2ca28dc704156cf20841262c96f79eadb45120aafd37a973140edee24708065',1,'RobotStrategy.h']]]
 ];

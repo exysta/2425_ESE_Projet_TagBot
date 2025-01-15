@@ -1,5 +1,6 @@
 var ADXL343__driver_8h =
 [
+    [ "ADXL343_Handle_t", "structADXL343__Handle__t.html", "structADXL343__Handle__t" ],
     [ "ADXL343_REG_BW_RATE", "ADXL343__driver_8h.html#a7646e1c70e5cd26212ec0c13d5f52154", null ],
     [ "ADXL343_REG_DATA_FORMAT", "ADXL343__driver_8h.html#a02ccfa71660cb2181fdf951ff6bcc9b2", null ],
     [ "ADXL343_REG_DATAX0", "ADXL343__driver_8h.html#a0a842ebb5a4191b1a2b685403a7dbfa9", null ],
@@ -22,13 +23,33 @@ var ADXL343__driver_8h =
     [ "ADXL343_REG_THRESH_ACT", "ADXL343__driver_8h.html#a059581b3db85086481390035d1c697f3", null ],
     [ "ADXL343_REG_THRESH_TAP", "ADXL343__driver_8h.html#a67dceb2a59b69b7555c9b4cc4464c7e1", null ],
     [ "ADXL343_Task_Priority", "ADXL343__driver_8h.html#a28d0bfd6779ac1aa100c8bda205bbc19", null ],
-    [ "ADXL343_Configure", "ADXL343__driver_8h.html#a6dd70495fb48d10b8521388e446934b7", null ],
-    [ "ADXL343_DetectTap", "ADXL343__driver_8h.html#a774d1526d13f96af72cf2f686b74ecba", null ],
-    [ "ADXL343_Init", "ADXL343__driver_8h.html#ab69552f9f90668a8ed107c5d060b5c25", null ],
-    [ "ADXL343_Read_XYZ", "ADXL343__driver_8h.html#a4612e98571ab1bd43fd829d4550d9fd5", null ],
+    [ "TAP_DURATION", "ADXL343__driver_8h.html#a484db64e1c3e6501f8442b6ad521b041", null ],
+    [ "TAP_LATENT", "ADXL343__driver_8h.html#affd687fc2dbcc614aa0cded29f56687a", null ],
+    [ "TAP_THRESHOLD", "ADXL343__driver_8h.html#ae8a93adf0c0929d5cd331b61b64d9bbb", null ],
+    [ "ADXL343_Axis_t", "ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9", [
+      [ "ADXL343_AXIS_X", "ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9af46b35b3e3673b3af8acaa60e6b78b32", null ],
+      [ "ADXL343_AXIS_Y", "ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9a7c0bb1b16b161d3796c8c2a6000074c3", null ],
+      [ "ADXL343_AXIS_Z", "ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9a4e2a39e52cbcedee8afa9aa7e2d264e6", null ]
+    ] ],
+    [ "ADXL343_Status_t", "ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4", [
+      [ "ADXL343_STATUS_NOT_DETECTED", "ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4a6f3004b5653d9bb9d04d94a60c3ea403", null ],
+      [ "ADXL343_STATUS_INITIALIZED", "ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4af67d53a462341f694420c128c75a4c21", null ]
+    ] ],
+    [ "ADXL343_TapStatus_t", "ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045", [
+      [ "ADXL343_TAP_NONE", "ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045a1f8628705b8e66d0d1abe1630be9c883", null ],
+      [ "ADXL343_TAP_SINGLE", "ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045a33b718380c0e2727d5a6d7cbb0353b56", null ]
+    ] ],
+    [ "RobotState_t", "ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092a", [
+      [ "ROBOT_STATE_CHAT", "ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092aa717f1b05f6cb5c976f4577799521a3c9", null ],
+      [ "ROBOT_STATE_SOURIS", "ADXL343__driver_8h.html#a8a69e2b890c9b8b41dc65313f69b092aad6aecbe26297a5f60dae45abcea12f5f", null ]
+    ] ],
+    [ "ADXL343_CalibrateOffsets", "ADXL343__driver_8h.html#a1ccad247308d7dd4233ea33aaf5c747f", null ],
+    [ "ADXL343_Configure", "ADXL343__driver_8h.html#a757859ffcf26697024a4df172da37a10", null ],
+    [ "ADXL343_DetectTap", "ADXL343__driver_8h.html#a4637c892bf01dbe7d348ac5407bd5bd1", null ],
+    [ "ADXL343_Init", "ADXL343__driver_8h.html#ac1946b25b2ee9ad9f88690943bcb52c7", null ],
+    [ "ADXL343_Read_XYZ", "ADXL343__driver_8h.html#a8a4999084260d9339510d90f61e85254", null ],
     [ "ADXL343_ReadRegister", "ADXL343__driver_8h.html#a7ef718df71a7da3c3254869733e66f48", null ],
     [ "ADXL343_Task", "ADXL343__driver_8h.html#a3220383b2adf858a28230d8462c554e0", null ],
     [ "ADXL343_TaskCreate", "ADXL343__driver_8h.html#a527b0df26db327a1dde3e095cbc5ffbb", null ],
-    [ "ADXL343_WriteRegister", "ADXL343__driver_8h.html#a606021acd0c025e7adec64ff8908e099", null ],
-    [ "calibrateOffsets", "ADXL343__driver_8h.html#aa56fd5e31b2734a80b411207ef160f3e", null ]
+    [ "ADXL343_WriteRegister", "ADXL343__driver_8h.html#a606021acd0c025e7adec64ff8908e099", null ]
 ];

@@ -4,7 +4,7 @@ var searchData=
   ['scan_5fdata_1',['scan_data',['../structX4LIDAR__handle__t.html#a764280d39514090ffa88f0fde0812770',1,'X4LIDAR_handle_t']]],
   ['scan_5fheader_2',['scan_header',['../structX4LIDAR__scan__data.html#a537a6aec43f6ab1dc55afff64cf043fb',1,'X4LIDAR_scan_data']]],
   ['sens_5fe_3',['sens_e',['../RobotStrategy_8c.html#a33b0b2bc4608541bbcf332e3739d4859',1,'Sens_E:&#160;distSensor_driver.c'],['../distSensor__driver_8c.html#a33b0b2bc4608541bbcf332e3739d4859',1,'Sens_E:&#160;distSensor_driver.c']]],
-  ['sens_5fn_4',['sens_n',['../RobotStrategy_8c.html#a3d1c5506db2fa98c64873a8a867a871f',1,'Sens_N:&#160;distSensor_driver.c'],['../distSensor__driver_8c.html#a3d1c5506db2fa98c64873a8a867a871f',1,'Sens_N:&#160;distSensor_driver.c']]],
+  ['sens_5fn_4',['sens_n',['../distSensor__driver_8c.html#a3d1c5506db2fa98c64873a8a867a871f',1,'Sens_N:&#160;distSensor_driver.c'],['../RobotStrategy_8c.html#a3d1c5506db2fa98c64873a8a867a871f',1,'Sens_N:&#160;distSensor_driver.c']]],
   ['sens_5fs_5',['sens_s',['../RobotStrategy_8c.html#ada163e0524f002d8efdbebb7a8443409',1,'Sens_S:&#160;distSensor_driver.c'],['../distSensor__driver_8c.html#ada163e0524f002d8efdbebb7a8443409',1,'Sens_S:&#160;distSensor_driver.c']]],
   ['sens_5fw_6',['sens_w',['../RobotStrategy_8c.html#a40a9d1632e60a7e5183fb0730e52ec5e',1,'Sens_W:&#160;distSensor_driver.c'],['../distSensor__driver_8c.html#a40a9d1632e60a7e5183fb0730e52ec5e',1,'Sens_W:&#160;distSensor_driver.c']]],
   ['sensor_5fdetection_5fstatus_7',['sensor_detection_status',['../structDistSensor__handle__t.html#aff49fc4fe7844e6afa399d98524a549f',1,'DistSensor_handle_t']]],
@@ -17,9 +17,10 @@ var searchData=
   ['shell_5ffunc_5flist_5fsize_14',['shell_func_list_size',['../structh__shell__struct.html#a338c31587108ed50587165471ceb4c28',1,'h_shell_struct']]],
   ['speed_5fmotor_5fleft_15',['speed_Motor_Left',['../struct____ACTION__HandleTypeDef.html#a67c62af91fd991dd2ac070291bb19e1f',1,'__ACTION_HandleTypeDef']]],
   ['speed_5fmotor_5fright_16',['speed_Motor_Right',['../struct____ACTION__HandleTypeDef.html#a88be06cb385a2794e4b6e31c2c8f8951',1,'__ACTION_HandleTypeDef']]],
-  ['start_5fangle_17',['start_angle',['../struct____TARGET__HandleTypeDef.html#a159380e73f636648e5e1affaa9233db4',1,'__TARGET_HandleTypeDef::start_angle'],['../structX4LIDAR__scan__header.html#aecfea22b596164aeece5d47c2d50420d',1,'X4LIDAR_scan_header::start_angle']]],
+  ['start_5fangle_17',['start_angle',['../structX4LIDAR__scan__header.html#aecfea22b596164aeece5d47c2d50420d',1,'X4LIDAR_scan_header::start_angle'],['../struct____TARGET__HandleTypeDef.html#a159380e73f636648e5e1affaa9233db4',1,'__TARGET_HandleTypeDef::start_angle']]],
   ['start_5fidx_18',['start_idx',['../structX4LIDAR__scan__data.html#a322f5ec4253a1100a7e5c9bef3480fe1',1,'X4LIDAR_scan_data']]],
   ['start_5fsign_19',['start_sign',['../structX4LIDAR__response__header.html#a6c22acc8dee1be3a05abf903bc900af9',1,'X4LIDAR_response_header']]],
   ['start_5ftime_20',['start_Time',['../struct____ACTION__HandleTypeDef.html#ad8eb64fba70470c0606ee5be909aa7c7',1,'__ACTION_HandleTypeDef']]],
-  ['strategies_21',['strategies',['../RobotStrategy_8c.html#a83d5d1f5dedf85404952ae82cd0b8c6c',1,'RobotStrategy.c']]]
+  ['status_21',['status',['../structADXL343__Handle__t.html#acce67320438f3d736e628725a6e7b154',1,'ADXL343_Handle_t']]],
+  ['strategies_22',['strategies',['../RobotStrategy_8c.html#a83d5d1f5dedf85404952ae82cd0b8c6c',1,'RobotStrategy.c']]]
 ];

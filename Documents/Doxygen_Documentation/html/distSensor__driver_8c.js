@@ -7,7 +7,6 @@ var distSensor__driver_8c =
     [ "distSensor_ReadADC", "distSensor__driver_8c.html#a6e89adf3e601fd7e7cd873194c8d9f92", null ],
     [ "distSensor_ReadADC_DMA", "distSensor__driver_8c.html#aea7252a717466aa4b103f4705807623d", null ],
     [ "distSensor_Task", "distSensor__driver_8c.html#a38419717d04f5f1dbdbb320569a1ad6f", null ],
-    [ "distSensor_TaskCreate", "distSensor__driver_8c.html#a4889eb88318248c64bbb98ac6f4741d6", null ],
     [ "HAL_ADC_ConvCpltCallback", "distSensor__driver_8c.html#af20a88180db1113be1e89266917d148b", null ],
     [ "adc1_dma_buffer", "distSensor__driver_8c.html#a2b4a7df2413adca3e50723a3686d5f85", null ],
     [ "adc2_dma_buffer", "distSensor__driver_8c.html#a6f06b77e687a996a423a115807413812", null ],

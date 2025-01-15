@@ -4,6 +4,7 @@ var annotated_dup =
     [ "__SCREEN_SSD1306_HandleTypeDef", "struct____SCREEN__SSD1306__HandleTypeDef.html", "struct____SCREEN__SSD1306__HandleTypeDef" ],
     [ "__STRATEGY_HandleTypeDef", "struct____STRATEGY__HandleTypeDef.html", "struct____STRATEGY__HandleTypeDef" ],
     [ "__TARGET_HandleTypeDef", "struct____TARGET__HandleTypeDef.html", "struct____TARGET__HandleTypeDef" ],
+    [ "ADXL343_Handle_t", "structADXL343__Handle__t.html", "structADXL343__Handle__t" ],
     [ "DistSensor_handle_t", "structDistSensor__handle__t.html", "structDistSensor__handle__t" ],
     [ "drv_shell_struct", "structdrv__shell__struct.html", "structdrv__shell__struct" ],
     [ "DualDrive_handle_typed", "structDualDrive__handle__typed.html", "structDualDrive__handle__typed" ],

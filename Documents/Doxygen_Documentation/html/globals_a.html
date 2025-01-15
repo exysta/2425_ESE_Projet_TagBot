@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">2425_ESE_Projet_TagBot<span id="projectnumber">&#160;1.0</span>
+   <div id="projectname">2425_ESE_Projet_TagBot<span id="projectnumber">&#160;1.1</span>
    </div>
    <div id="projectbrief">This is the documentation for the TagBot CubeIDE project.</div>
   </td>
@@ -103,10 +103,15 @@ $(document).ready(function(){initNavTree('globals_a.html',''); initResizable(); 
 <li>adc_ready_adc2_est&#160;:&#160;<a class="el" href="distSensor__driver_8c.html#a6767cd0d70d2f5ebe5621f227bfb0cc1">distSensor_driver.c</a></li>
 <li>adc_ready_adc2_sud&#160;:&#160;<a class="el" href="distSensor__driver_8c.html#ab43377de4af10c658404685e764704e2">distSensor_driver.c</a></li>
 <li>adc_value&#160;:&#160;<a class="el" href="distSensor__driver_8c.html#a6f4661221d78df45d6974e3a1327b0ea">distSensor_driver.c</a></li>
-<li>ADXL343_Configure()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#a6dd70495fb48d10b8521388e446934b7">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#a6dd70495fb48d10b8521388e446934b7">ADXL343_driver.h</a></li>
-<li>ADXL343_DetectTap()&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a774d1526d13f96af72cf2f686b74ecba">ADXL343_driver.h</a>, <a class="el" href="ADXL343__driver_8c.html#a774d1526d13f96af72cf2f686b74ecba">ADXL343_driver.c</a></li>
-<li>ADXL343_Init()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#ab69552f9f90668a8ed107c5d060b5c25">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#ab69552f9f90668a8ed107c5d060b5c25">ADXL343_driver.h</a></li>
-<li>ADXL343_Read_XYZ()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#a4612e98571ab1bd43fd829d4550d9fd5">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#a4612e98571ab1bd43fd829d4550d9fd5">ADXL343_driver.h</a></li>
+<li>ADXL343_Axis_t&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9">ADXL343_driver.h</a></li>
+<li>ADXL343_AXIS_X&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9af46b35b3e3673b3af8acaa60e6b78b32">ADXL343_driver.h</a></li>
+<li>ADXL343_AXIS_Y&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9a7c0bb1b16b161d3796c8c2a6000074c3">ADXL343_driver.h</a></li>
+<li>ADXL343_AXIS_Z&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#ab436f2d83d737f9e7f81e21311af13c9a4e2a39e52cbcedee8afa9aa7e2d264e6">ADXL343_driver.h</a></li>
+<li>ADXL343_CalibrateOffsets()&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a1ccad247308d7dd4233ea33aaf5c747f">ADXL343_driver.h</a></li>
+<li>ADXL343_Configure()&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a757859ffcf26697024a4df172da37a10">ADXL343_driver.h</a></li>
+<li>ADXL343_DetectTap()&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a4637c892bf01dbe7d348ac5407bd5bd1">ADXL343_driver.h</a></li>
+<li>ADXL343_Init()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#ac1946b25b2ee9ad9f88690943bcb52c7">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#ac1946b25b2ee9ad9f88690943bcb52c7">ADXL343_driver.h</a></li>
+<li>ADXL343_Read_XYZ()&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a8a4999084260d9339510d90f61e85254">ADXL343_driver.h</a></li>
 <li>ADXL343_ReadRegister()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#a7ef718df71a7da3c3254869733e66f48">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#a7ef718df71a7da3c3254869733e66f48">ADXL343_driver.h</a></li>
 <li>ADXL343_REG_BW_RATE&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a7646e1c70e5cd26212ec0c13d5f52154">ADXL343_driver.h</a></li>
 <li>ADXL343_REG_DATA_FORMAT&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a02ccfa71660cb2181fdf951ff6bcc9b2">ADXL343_driver.h</a></li>
@@ -129,9 +134,15 @@ $(document).ready(function(){initNavTree('globals_a.html',''); initResizable(); 
 <li>ADXL343_REG_TAP_AXES&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#ae5c2307df1335ac843649e81cc2f2593">ADXL343_driver.h</a></li>
 <li>ADXL343_REG_THRESH_ACT&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a059581b3db85086481390035d1c697f3">ADXL343_driver.h</a></li>
 <li>ADXL343_REG_THRESH_TAP&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a67dceb2a59b69b7555c9b4cc4464c7e1">ADXL343_driver.h</a></li>
-<li>ADXL343_Task()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#a3220383b2adf858a28230d8462c554e0">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#a3220383b2adf858a28230d8462c554e0">ADXL343_driver.h</a></li>
+<li>ADXL343_STATUS_INITIALIZED&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4af67d53a462341f694420c128c75a4c21">ADXL343_driver.h</a></li>
+<li>ADXL343_STATUS_NOT_DETECTED&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4a6f3004b5653d9bb9d04d94a60c3ea403">ADXL343_driver.h</a></li>
+<li>ADXL343_Status_t&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#aed962ce1893866d8adaa21216dd118e4">ADXL343_driver.h</a></li>
+<li>ADXL343_TAP_NONE&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045a1f8628705b8e66d0d1abe1630be9c883">ADXL343_driver.h</a></li>
+<li>ADXL343_TAP_SINGLE&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045a33b718380c0e2727d5a6d7cbb0353b56">ADXL343_driver.h</a></li>
+<li>ADXL343_TapStatus_t&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#af3cf9945771df2ed7fe959fdee3a4045">ADXL343_driver.h</a></li>
+<li>ADXL343_Task()&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a3220383b2adf858a28230d8462c554e0">ADXL343_driver.h</a></li>
 <li>ADXL343_Task_Priority&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a28d0bfd6779ac1aa100c8bda205bbc19">ADXL343_driver.h</a></li>
-<li>ADXL343_TaskCreate()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#a527b0df26db327a1dde3e095cbc5ffbb">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#a527b0df26db327a1dde3e095cbc5ffbb">ADXL343_driver.h</a></li>
+<li>ADXL343_TaskCreate()&#160;:&#160;<a class="el" href="ADXL343__driver_8h.html#a527b0df26db327a1dde3e095cbc5ffbb">ADXL343_driver.h</a></li>
 <li>ADXL343_WriteRegister()&#160;:&#160;<a class="el" href="ADXL343__driver_8c.html#a606021acd0c025e7adec64ff8908e099">ADXL343_driver.c</a>, <a class="el" href="ADXL343__driver_8h.html#a606021acd0c025e7adec64ff8908e099">ADXL343_driver.h</a></li>
 <li>ARGC_MAX&#160;:&#160;<a class="el" href="shell_8h.html#a5c9eb5f174980fd31a49b496ea4ca814">shell.h</a></li>
 </ul>
