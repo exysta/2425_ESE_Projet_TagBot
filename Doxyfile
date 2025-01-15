@@ -71,4 +71,3 @@ HTML_FOOTER            =
 TAB_SIZE               = 4  # Set to your preferred tab width
 EXPAND_ONLY_PREDEF     = NO
 SKIP_FUNCTION_MACROS   = YES  # Skip macros when generating function documentation
-

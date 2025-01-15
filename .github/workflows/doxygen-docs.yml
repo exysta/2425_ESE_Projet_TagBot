@@ -22,7 +22,8 @@ jobs:
     - name: Install Doxygen
       run: |
         if [[ "$RUNNER_OS" == "Linux" ]]; then
-          sudo apt-get install doxygen graphviz
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
         elif [[ "$RUNNER_OS" == "Windows" ]]; then
           choco install doxygen.install graphviz
         elif [[ "$RUNNER_OS" == "macOS" ]]; then
@@ -31,8 +32,3 @@ jobs:
 
     - name: Generate Documentation
       run: doxygen Doxyfile
-
-    - name: Deploy Documentation
-      run: |
-        # Add commands to deploy or publish documentation
-
