@@ -328,7 +328,7 @@ L'ajout de points de test accessibles facilite la vérification des tensions d'a
 
   ## Documentation Code
 
-[voir la documentation](./Documents/Doxygen_Documentation/html/index.html)
+[voir la documentation Doxygen](https://exysta.github.io/2425_ESE_Projet_TagBot/Documents/Doxygen_Documentation/html/index.html)
   
   ## Introduction
 
